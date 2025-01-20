@@ -5,7 +5,6 @@ import HeroSection from "@/components/sections/HeroSection/HeroSection";
 import ProjectsSection from "@/components/sections/ProjectsSection/ProjectsSection";
 import SkillsSection from "@/components/sections/SkillsSection/SkillsSection";
 import TimelineSection from "@/components/sections/TimelineSection/TimelineSection";
-import Hero from "@/components/ui/Hero";
 import { SparklesCore } from "@/components/ui/sparkles-core";
 import TracingBeam from "@/components/ui/tracing-beam";
 

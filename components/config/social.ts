@@ -1,4 +1,4 @@
-import { Twitter, Github, Linkedin, Mail } from 'lucide-react';
+import { Github, Linkedin, Mail } from 'lucide-react';
 
 export const socialLinks = [
   {
@@ -13,12 +13,6 @@ export const socialLinks = [
     icon: Linkedin,
     color: '#0077b5'
   },
-  // {
-  //   name: 'Twitter',
-  //   url: 'https://twitter.com/yourhandle',
-  //   icon: Twitter,
-  //   color: '#1DA1F2'
-  // },
   {
     name: 'Email',
     url: 'mailto:aaperez06@gmail.com',

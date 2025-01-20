@@ -3,26 +3,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { cn } from "@/lib/utils";
-
 import { Spotlight } from '@/components/ui/Spotlight';
-import { skills } from '@/components/config/skills';
 import TextGenerateEffect from '@/components/ui/TextGenerateEffect';
 
-
-
-
-
-// Featured skills for hero section
-export const featuredSkills = skills.filter(skill =>
-    ['React', 'TypeScript', 'Next.js', 'C#', '.NET', 'SQL Server'].includes(skill.name)
-);
-
-const words = [
-    { text: "Full" },
-    { text: "Stack" },
-    { text: "Developer" },
-];
 
 export const HeroSection = () => {
     return (
