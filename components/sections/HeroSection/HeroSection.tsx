@@ -5,11 +5,23 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { Spotlight } from '@/components/ui/Spotlight';
 import TextGenerateEffect from '@/components/ui/TextGenerateEffect';
+import { HoverBorderGradient } from '@/components/ui/hover-border-gradient';
+import { AceternityLogo } from '@/components/AceBtn';
+import Link from 'next/link';
 
 
 export const HeroSection = () => {
+
+    const scrollToProjects = () => {
+        // Find the projects section and scroll to it smoothly
+        const projectsSection = document.querySelector('#projects');
+        projectsSection?.scrollIntoView({ behavior: 'smooth' });
+    };
+
+
     return (
-        <section className="relative min-h-screen flex items-center justify-center p-10">
+        <section className="relative min-h-screen flex justify-center
+        mx-auto">
 
             {/* Background Effects */}
             <Spotlight
@@ -39,7 +51,8 @@ export const HeroSection = () => {
                         <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden">
                             <Image
                                 src="/images/profile/headshot.png"
-                                alt="Aaron A. Perez"
+                                alt="Aaron A. Perez Portfolio Image"
+                                role="img"
                                 fill
                                 priority
                                 className="object-cover rounded-full"
@@ -65,16 +78,23 @@ export const HeroSection = () => {
                                 className="text-[40px] md:text-3xl lg:text-4xl"
                                 words="Full Stack Developer"
                             />
-                            {/* <TypewriterEffectSmooth 
-                  className="text-center text-[40px] md:text-5xl lg:text-6xl"
-                words="Hey there! I'm your friendly neighborhood code instructor."
-                /> */}
                         </div>
                         {/* Description */}
-                        <p className="text-lg max-w-2xl mx-auto lg:mx-0">
+                        <h3 className="text-lg max-w-2xl mx-auto lg:mx-0">
                             Building modern web experiences with cutting-edge technology and a focus on
                             creating intuitive user experiences and robust systems.
-                        </p>
+                        </h3>
+                        {/* Button onClick handler */}
+                        <HoverBorderGradient
+                            containerClassName="rounded-full"
+                            as="button"
+                            className="dark:bg-black bg-white text-black dark:text-white flex items-center space-x-2"
+                            onClick={scrollToProjects}
+                            aria-label="Scroll to projects section"
+                        >
+                            <span>View Projects</span>
+                        </HoverBorderGradient>
+
                     </motion.div>
                 </div>
             </div>

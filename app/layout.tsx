@@ -12,7 +12,9 @@ import ScrollToTop from "@/components/layout/ScrollToTop";
 
 // Styles
 import './globals.css';
-import { FloatingNav } from "@/components/layout/FloatingNavbar";
+import { FloatingNav } from "@/components/ui/FloatingNav";
+import Footer from "@/components/layout/Footer";
+
 
 
 
@@ -55,13 +57,27 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
 
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
-        
-        <ThemeProvider 
-          attribute="class" 
-          defaultTheme="dark" 
+         <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </head>
+
+
+      <body className={cn(
+        geistSans.variable,
+        "min-h-screen bg-white dark:bg-black",
+        "text-gray-900 dark:text-gray-100",
+        "transition-colors duration-300"
+      )}>
+
+<header role="banner">
+          <nav role="navigation" aria-label="Main navigation">
+            <FloatingNav />
+          </nav>
+        </header>
+
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
           enableSystem
         >
           {/* Initial Loading Animation */}
@@ -81,29 +97,47 @@ export default function RootLayout({
             <ScrollToTop />
           </div>
 
-          {/* Desktop Social Links */}
-          <div className={cn(
-            "fixed left-4 bottom-4 z-50",
-            "hidden md:flex flex-col gap-4",
-            "md:left-8 md:bottom-8"
-          )}>
-            <SocialLinks />
+          {/* Main Content */}
+       
+          <main id="main-content" role="main" tabIndex={-1}>
+            {/* Content sections wrapper */}
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              {children}
+            </div>
+          </main>
+          {/* Social Links */}
+          <div className="fixed left-4 bottom-4 z-50 hidden md:block">
+            <SocialLinks orientation="vertical" />
           </div>
 
           {/* Mobile Social Links */}
-          <div className={cn(
-            "fixed bottom-4 left-1/2 -translate-x-1/2 z-50",
-            "flex md:hidden flex-row gap-4"
-          )}>
+          <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 md:hidden">
             <SocialLinks orientation="horizontal" />
           </div>
-
-          {/* Main Content */}
-          <main className="relative">
-            {children}
-          </main>
+          {/* Footer */}
+          <footer role="contentinfo">
+            <Footer />
+          </footer>
         </ThemeProvider>
       </body>
     </html>
   );
 }
+
+
+// Skip to content component for accessibility
+const SkipToContent = () => (
+  <a
+    href="#main-content"
+    className={cn(
+      "sr-only focus:not-sr-only",
+      "fixed top-4 left-4 z-[100]",
+      "px-4 py-2 bg-white dark:bg-gray-900",
+      "border border-gray-200 dark:border-gray-700",
+      "rounded-md shadow-sm",
+      "focus:outline-none focus:ring-2 focus:ring-blue-500"
+    )}
+  >
+    Skip to content
+  </a>
+);

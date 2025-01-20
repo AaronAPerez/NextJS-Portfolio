@@ -1,14 +1,16 @@
-"use client";
+'use client'
 
-import React, { JSX, useState } from "react";
-import {
-  motion,
-  AnimatePresence,
-  useScroll,
-  useMotionValueEvent,
-} from "framer-motion";
 import { cn } from "@/lib/utils";
+import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "framer-motion";
 import Link from "next/link";
+
+import { useEffect, useState, JSX } from "react";
+
+interface NavItem {
+  name: string;
+  link: string;
+  icon?: JSX.Element;
+}
 
 export const FloatingNav = ({
   navItems,
@@ -22,58 +24,100 @@ export const FloatingNav = ({
   className?: string;
 }) => {
   const { scrollYProgress } = useScroll();
-
   const [visible, setVisible] = useState(false);
+  const [activeSection, setActiveSection] = useState('');
 
+    // Handle keyboard navigation
+    const handleKeyPress = (
+      event: React.KeyboardEvent<HTMLAnchorElement>,
+      link: string
+    ) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        document.querySelector(link)?.scrollIntoView({ behavior: 'smooth' });
+      }
+    };
+
+  // Track scroll position for nav visibility
   useMotionValueEvent(scrollYProgress, "change", (current) => {
-    // Check if current is not undefined and is a number
     if (typeof current === "number") {
       const direction = current! - scrollYProgress.getPrevious()!;
-
-      if (scrollYProgress.get() < 0.05) {
-        setVisible(false);
-      } else {
-        if (direction < 0) {
-          setVisible(true);
-        } else {
-          setVisible(false);
-        }
-      }
+      setVisible(scrollYProgress.get() >= 0.05 && direction < 0);
     }
   });
 
+  // Track active section
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    document.querySelectorAll('section[id]').forEach((section) => {
+      observer.observe(section);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <AnimatePresence mode="wait">
-      <motion.div
-        initial={{
-          opacity: 1,
-          y: -100,
-        }}
+      <motion.nav
+        role="navigation"
+        aria-label="Main navigation"
+        initial={{ opacity: 1, y: -100 }}
         animate={{
           y: visible ? 0 : -100,
           opacity: visible ? 1 : 0,
         }}
-        transition={{
-          duration: 0.2,
-        }}
+        transition={{ duration: 0.2 }}
         className={cn(
-          "flex max-w-fit  fixed top-10 inset-x-0 mx-auto border bg-black-100 border-white/[0.2] rounded-full shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)] z-[5000] px-10 py-5  items-center justify-center space-x-4",
+          "fixed top-4 inset-x-0 mx-auto",
+          "max-w-fit px-6 py-3",
+          "backdrop-blur-md bg-white/10 dark:bg-black/10",
+          "border border-white/10 rounded-full",
+          "z-50 flex items-center justify-center gap-2",
           className
         )}
       >
-        {navItems.map((navItem: { link: string, icon?: JSX.Element, name: string }, idx: number) => (
-          <Link
-            key={`link=${idx}`}
-            href={navItem.link}
-            className={cn(
-              "relative dark:text-neutral-50 items-center flex space-x-1 text-neutral-600 dark:hover:text-neutral-300 hover:text-neutral-500"
-            )}
-          >
-            <span className="block sm:hidden">{navItem.icon}</span>
-            <span className="text-sm">{navItem.name}</span>
-          </Link>
-        ))}
-      </motion.div>
+       <ul className="flex justify-center gap-4">
+              {navItems.map((item, index) => (
+                <li key={item.name}>
+                  <a
+                    href={item.link}
+                    className={cn(
+                      "px-4 py-2 rounded-full transition-colors",
+                      activeSection === item.link.replace('#', '') && 
+                      "text-blue-500"
+                    )}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      document.querySelector(item.link)?.scrollIntoView({
+                        behavior: 'smooth'
+                      });
+                    }}
+                    onKeyDown={(e) => handleKeyPress(e, item.link)}
+                    role="menuitem"
+                    aria-current={activeSection === item.link.replace('#', '') ? 
+                      'page' : undefined}
+                    tabIndex={0}
+                  >
+                    <span className="sr-only">{`Navigate to ${item.name} section`}</span>
+                    <span className="flex items-center gap-2">
+                      {item.icon}
+                      <span>{item.name}</span>
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+      </motion.nav>
     </AnimatePresence>
   );
 };

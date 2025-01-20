@@ -3,12 +3,31 @@
 @tailwind utilities;
 
 
+@layer base {
+  :focus-visible {
+    @apply outline-none ring-2 ring-blue-500 ring-offset-2 ring-offset-white
+    dark:ring-offset-gray-900;
+  }
+
+  /* High contrast selection */
+  ::selection {
+    @apply bg-blue-500 text-white;
+  }
+}
+
+/* Custom focus visible utility */
+.focus-visible\:custom-focus:focus-visible {
+  @apply outline-none ring-2 ring-blue-500 ring-offset-2;
+}
+
+@tailwind components;
+
 @layer utilities {
   /* Mobile First Media Queries */
   .container {
     @apply px-4 mx-auto;
     max-width: 100%;
-    
+
     @screen sm {
       max-width: 640px;
     }
@@ -27,21 +46,21 @@
 
     @screen 2xl {
       max-width: 1920px; 
-    }
   }
+}
 
-  /* Wider max-width utilities */
-  .max-w-8xl {
-    max-width: 88rem; /* 1408px */
-  }
+/* Wider max-width utilities */
+.max-w-8xl {
+  max-width: 88rem; /* 1408px */
+}
 
-  .max-w-9xl {
-    max-width: 96rem; /* 1536px */
-  }
+.max-w-9xl {
+  max-width: 96rem; /* 1536px */
+}
 
-  .max-w-screen-2xl {
-    max-width: 1920px;
-  }
+.max-w-screen-2xl {
+  max-width: 1920px;
+}
 }
 
 
@@ -54,82 +73,83 @@
   -webkit-backface-visibility: hidden;
 }
 
-  /* Responsive Typography */
-  .h1 {
-    @apply text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold;
+/* Responsive Typography */
+.h1 {
+  @apply text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold;
+}
+
+.h2 {
+  @apply text-2xl md:text-3xl lg:text-4xl font-bold;
+}
+
+.h3 {
+  @apply text-xl md:text-2xl lg:text-3xl font-semibold;
+}
+
+/* Responsive Spacing */
+.section {
+  @apply py-12 md:py-16 lg:py-20;
+}
+
+.section-sm {
+  @apply py-8 md:py-12 lg:py-16;
+}
+@layer components {
+  .project-card {
+    @apply relative overflow-hidden rounded-xl transition-all duration-300;
   }
-  
-  .h2 {
-    @apply text-2xl md:text-3xl lg:text-4xl font-bold;
+
+  .project-card-gradient {
+    @apply absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-300;
   }
-  
-  .h3 {
-    @apply text-xl md:text-2xl lg:text-3xl font-semibold;
+
+  .project-card-content {
+    @apply relative z-10 p-6 flex flex-col h-full;
   }
-  
-  /* Responsive Spacing */
-  .section {
-    @apply py-12 md:py-16 lg:py-20;
+
+  .tech-tag {
+    @apply px-3 py-1 text-xs rounded-full bg-white/20 text-white transition-colors;
   }
-  
-  .section-sm {
-    @apply py-8 md:py-12 lg:py-16;
+
+  .feature-item {
+    @apply flex items-center gap-2 text-sm text-gray-300;
   }
-  @layer components {
-    .project-card {
-      @apply relative overflow-hidden rounded-xl transition-all duration-300;
-    }
-  
-    .project-card-gradient {
-      @apply absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-300;
-    }
-  
-    .project-card-content {
-      @apply relative z-10 p-6 flex flex-col h-full;
-    }
-  
-    .tech-tag {
-      @apply px-3 py-1 text-xs rounded-full bg-white/20 text-white transition-colors;
-    }
-  
-    .feature-item {
-      @apply flex items-center gap-2 text-sm text-gray-300;
-    }
-  
-    .feature-dot {
-      @apply w-1.5 h-1.5 rounded-full bg-blue-500;
-    }
+
+  .feature-dot {
+    @apply w-1.5 h-1.5 rounded-full bg-blue-500;
   }
-  
-  /* Project Pin Cards - Start*/
-  @keyframes gradient-xy {
-    0%, 100% {
-      transform: translate(0, 0) scale(1.5);
-      opacity: 0.5;
-    }
-    25% {
-      transform: translate(150px, 150px) scale(2);
-      opacity: 0.25;
-    }
-    50% {
-      transform: translate(-150px, 150px) scale(1.5);
-      opacity: 0.5;
-    }
-    75% {
-      transform: translate(150px, -150px) scale(2);
-      opacity: 0.25;
-    }
+}
+
+/* Project Pin Cards - Start*/
+@keyframes gradient-xy {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1.5);
+    opacity: 0.5;
   }
-  
+  25% {
+    transform: translate(150px, 150px) scale(2);
+    opacity: 0.25;
+  }
+  50% {
+    transform: translate(-150px, 150px) scale(1.5);
+    opacity: 0.5;
+  }
+  75% {
+    transform: translate(150px, -150px) scale(2);
+    opacity: 0.25;
+  }
+}
+
 :root {
-  --background: #FAFAFA;
+  --background: #fafafa;
   --foreground: #121214;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #121214;
-    --foreground: #FFFFFF;
+    --foreground: #ffffff;
   }
 }
 
@@ -158,34 +178,78 @@
   box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
 }
 
-
-
-
 /* Cinematic countdown animation - START */
 @keyframes noise {
-  0%, 100% { transform: translate(0, 0); }
-  10% { transform: translate(-5%, -5%); }
-  20% { transform: translate(-10%, 5%); }
-  30% { transform: translate(5%, -10%); }
-  40% { transform: translate(-5%, 15%); }
-  50% { transform: translate(-10%, 5%); }
-  60% { transform: translate(15%, 0); }
-  70% { transform: translate(0, 10%); }
-  80% { transform: translate(-15%, 0); }
-  90% { transform: translate(10%, 5%); }
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  10% {
+    transform: translate(-5%, -5%);
+  }
+  20% {
+    transform: translate(-10%, 5%);
+  }
+  30% {
+    transform: translate(5%, -10%);
+  }
+  40% {
+    transform: translate(-5%, 15%);
+  }
+  50% {
+    transform: translate(-10%, 5%);
+  }
+  60% {
+    transform: translate(15%, 0);
+  }
+  70% {
+    transform: translate(0, 10%);
+  }
+  80% {
+    transform: translate(-15%, 0);
+  }
+  90% {
+    transform: translate(10%, 5%);
+  }
 }
 
 @keyframes scratch {
-  0%, 100% { transform: translateX(0); opacity: 0.3; }
-  10% { transform: translateX(-1%); }
-  20% { transform: translateX(1%); opacity: 0.5; }
-  30% { transform: translateX(-2%); }
-  40% { transform: translateX(3%); opacity: 0.2; }
-  50% { transform: translateX(-3%); opacity: 0.4; }
-  60% { transform: translateX(8%); }
-  70% { transform: translateX(-3%); }
-  80% { transform: translateX(10%); opacity: 0.3; }
-  90% { transform: translateX(-2%); }
+  0%,
+  100% {
+    transform: translateX(0);
+    opacity: 0.3;
+  }
+  10% {
+    transform: translateX(-1%);
+  }
+  20% {
+    transform: translateX(1%);
+    opacity: 0.5;
+  }
+  30% {
+    transform: translateX(-2%);
+  }
+  40% {
+    transform: translateX(3%);
+    opacity: 0.2;
+  }
+  50% {
+    transform: translateX(-3%);
+    opacity: 0.4;
+  }
+  60% {
+    transform: translateX(8%);
+  }
+  70% {
+    transform: translateX(-3%);
+  }
+  80% {
+    transform: translateX(10%);
+    opacity: 0.3;
+  }
+  90% {
+    transform: translateX(-2%);
+  }
 }
 
 .animate-noise {
@@ -214,7 +278,27 @@
 }
 /* Cinematic countdown animation - END */
 
+/* Add this to your globals.css */
+@keyframes meteor {
+  0% {
+    transform: rotate(215deg) translateX(0);
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(215deg) translateX(-500px);
+    opacity: 0;
+  }
+}
 
+@layer utilities {
+  .animate-meteor-effect {
+    animation: meteor linear both;
+    will-change: transform, opacity;
+  }
+}
 
 @keyframes gradient {
   0% {
@@ -228,15 +312,11 @@
   }
 }
 
-
 @layer utilities {
   .backdrop-blur-sm {
     backdrop-filter: blur(8px);
   }
 }
-
-
-
 
 .animate-gradient-xy {
   animation: gradient-xy 15s ease infinite;
@@ -256,14 +336,12 @@
   -webkit-backface-visibility: hidden;
 }
 
-
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
 }
-
-
 
 .animate-gradient {
   animation: gradient 15s ease infinite;
@@ -285,14 +363,22 @@ body {
 
 .bg-grid {
   background-size: 100px 100px;
-  background-image: linear-gradient(to right, rgba(255,255,255,.05) 1px, transparent 1px),
-                    linear-gradient(to bottom, rgba(255,255,255,.05) 1px, transparent 1px);
+  background-image: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.05) 1px,
+      transparent 1px
+    ),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
 }
 
 .bg-grid-small {
   background-size: 20px 20px;
-  background-image: linear-gradient(to right, rgba(255,255,255,.05) 1px, transparent 1px),
-                    linear-gradient(to bottom, rgba(255,255,255,.05) 1px, transparent 1px);
+  background-image: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.05) 1px,
+      transparent 1px
+    ),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
 }
 
 /* Enhanced card styles */
@@ -302,12 +388,10 @@ body {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-
 /* Neon Effects */
 .neon-card {
   border-color: var(--neon-color);
-  box-shadow: 0 0 5px var(--neon-color),
-              inset 0 0 5px var(--neon-color);
+  box-shadow: 0 0 5px var(--neon-color), inset 0 0 5px var(--neon-color);
   transition: all 0.3s ease;
 }
 
@@ -318,8 +402,7 @@ body {
 
 .neon-text {
   color: var(--neon-color);
-  text-shadow: 0 0 5px var(--neon-color),
-               0 0 10px var(--neon-color);
+  text-shadow: 0 0 5px var(--neon-color), 0 0 10px var(--neon-color);
 }
 
 .neon-text-off {
@@ -329,8 +412,7 @@ body {
 
 .neon-border {
   border-color: var(--neon-color);
-  box-shadow: 0 0 5px var(--neon-color),
-              inset 0 0 5px var(--neon-color);
+  box-shadow: 0 0 5px var(--neon-color), inset 0 0 5px var(--neon-color);
 }
 
 .neon-border-off {
@@ -348,19 +430,46 @@ body {
 }
 
 @keyframes flicker {
-  0%, 100% { opacity: 1; }
-  5% { opacity: 0.2; }
-  10% { opacity: 1; }
-  15% { opacity: 0.4; }
-  20% { opacity: 1; }
-  25% { opacity: 0.3; }
-  30% { opacity: 1; }
-  35% { opacity: 0.5; }
-  40% { opacity: 1; }
-  45% { opacity: 0.2; }
-  50% { opacity: 1; }
-  55% { opacity: 0.4; }
-  60% { opacity: 1; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  5% {
+    opacity: 0.2;
+  }
+  10% {
+    opacity: 1;
+  }
+  15% {
+    opacity: 0.4;
+  }
+  20% {
+    opacity: 1;
+  }
+  25% {
+    opacity: 0.3;
+  }
+  30% {
+    opacity: 1;
+  }
+  35% {
+    opacity: 0.5;
+  }
+  40% {
+    opacity: 1;
+  }
+  45% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 1;
+  }
+  55% {
+    opacity: 0.4;
+  }
+  60% {
+    opacity: 1;
+  }
 }
 
 /* 3D Flip Effect */
@@ -376,10 +485,10 @@ body {
 /* Background Grid */
 .bg-grid-small-white {
   background-size: 20px 20px;
-  background-image: linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px),
-                    linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px);
+  background-image: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.05) 1px,
+      transparent 1px
+    ),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
 }
-
-
-
-

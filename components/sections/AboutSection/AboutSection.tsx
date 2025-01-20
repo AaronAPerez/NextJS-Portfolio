@@ -2,13 +2,10 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-
-import { BackgroundBeams } from '@/components/ui/background-beams';
-
-import { CardBody, CardContainer, CardItem } from './CardContainer';
+import { cn } from "@/lib/utils";
 import SectionTitle from '@/components/SectionTitle';
-
-
+import { CardBody, CardContainer, CardItem } from './CardContainer';
+import Meteors from '@/components/ui/meteors';
 
 const aboutContent = {
   title: "About Me",
@@ -18,109 +15,104 @@ const aboutContent = {
 
 const AboutSection = () => {
   return (
-    <>
-      <BackgroundBeams className="absolute inset-0"/>
+    <section className="relative min-h-screen py-20 overflow-hidden">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="relative z-10 max-w-6xl mx-auto px-4"
+      >
+        {/* Section Title */}
+        <SectionTitle
+          title={aboutContent.title}
+          subtitle="Full stack developer with a passion for building intuitive and robust applications"
+        />
 
-      <div className="relative z-10 max-w-6xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="space-y-16"
-        >
-          {/* Section Title */}
-          <SectionTitle
-            title={aboutContent.title}
-            subtitle="Full stack developer with a passion for building intuitive and robust applications"
-          />
-
-          {/* Content Cards */}
-          <div className="grid sm:grid-cols-1 mx-8 md:grid-cols-1 lg:grid-cols-2">
-            {/* Background Card */}
-            <CardContainer className="w-full m-2" containerClassName={''}>
-              <CardBody className="bg-black/80 relative group/card dark:hover:shadow-2xl dark:hover:shadow-blue-500/[0.1] dark:border-white/[0.2] border-black/[0.1] w-full rounded-xl p-4 border m-2">
+        {/* Content Cards */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-12">
+          {/* Background Card */}
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="w-full h-full"
+          >
+            <CardContainer className="w-full h-full" containerClassName="w-full h-full">
+              <CardBody 
+                className={cn(
+                  "relative bg-black/80",
+                  "group/card dark:hover:shadow-2xl dark:hover:shadow-blue-500/[0.1]",
+                  "dark:border-white/[0.2] border-black/[0.1]",
+                  "w-full h-full rounded-xl p-6 border",
+                  "hover:border-blue-500/50 transition-all duration-500",
+                  "flex flex-col"
+                )}
+              >
                 <CardItem
                   translateZ="50"
-                  className="m-2 text-xl font-bold text-neutral-200 dark:text-white mb-4"
+                  className="text-xl font-bold text-neutral-200 dark:text-white mb-4"
                 >
                   Background
                 </CardItem>
                 <CardItem
+                  as="div"
                   translateZ="50"
-                  className="m-2 text-neutral-300 dark:text-neutral-200 text-sm max-w-sm mt-2 leading-relaxed"
+                  className="flex-grow overflow-y-auto"
                 >
-                  {aboutContent.background}
+                  <p className="text-neutral-300 dark:text-neutral-200 text-sm leading-relaxed">
+                    {aboutContent.background}
+                  </p>
                 </CardItem>
+                <Meteors number={10} />
               </CardBody>
             </CardContainer>
+          </motion.div>
 
-            {/* Approach Card */}
-            <CardContainer className="w-full m-2" containerClassName={''}>
-              <CardBody className="bg-black/80 relative group/card dark:hover:shadow-2xl dark:hover:shadow-violet-500/[0.1] dark:border-white/[0.2] border-black/[0.1] w-full rounded-xl p-6 border m-2">
+          {/* Approach Card */}
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3 }}
+            className="w-full h-full"
+          >
+            <CardContainer className="w-full h-full" containerClassName="w-full h-full">
+              <CardBody 
+                className={cn(
+                  "relative bg-black/80",
+                  "group/card dark:hover:shadow-2xl dark:hover:shadow-violet-500/[0.1]",
+                  "dark:border-white/[0.2] border-black/[0.1]",
+                  "w-full h-full rounded-xl p-6 border",
+                  "hover:border-violet-500/50 transition-all duration-500",
+                  "flex flex-col"
+                )}
+              >
                 <CardItem
                   translateZ="50"
-                  className="m-2 text-xl font-bold text-neutral-200 dark:text-white mb-4"
+                  className="text-xl font-bold text-neutral-200 dark:text-white mb-4"
                 >
                   Approach
                 </CardItem>
                 <CardItem
-                  as="p"
+                  as="div"
                   translateZ="50"
-                  className="m-2 text-neutral-300 dark:text-neutral-200 text-sm max-w-sm mt-2 leading-relaxed"
+                  className="flex-grow overflow-y-auto"
                 >
-                  {aboutContent.approach}
+                  <p className="text-neutral-300 dark:text-neutral-200 text-sm leading-relaxed">
+                    {aboutContent.approach}
+                  </p>
                 </CardItem>
-                <CardItem translateZ="100" className="w-full mt-4">
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="rounded-xl px-4 py-2 text-xs font-normal dark:text-white"
-                  >
-                    {/* <span className="bg-gradient-to-r from-violet-500 to-blue-500 bg-clip-text text-transparent">
-                      See Projects →
-                    </span> */}
-                  </motion.button>
-                </CardItem>
+                <Meteors number={10} className="opacity-50" />
               </CardBody>
             </CardContainer>
-          </div>
-          {/* 
-          {/* Stats *
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.4 }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12"
-          >
-            <StatCard
-              number="5+"
-              label="Years Experience"
-              gradientFrom="from-blue-500"
-              gradientTo="to-violet-500"
-            />
-            <StatCard
-              number="100+"
-              label="Projects Completed"
-              gradientFrom="from-violet-500"
-              gradientTo="to-blue-500"
-            />
-            <StatCard
-              number="1000+"
-              label="Support Tickets"
-              gradientFrom="from-blue-500"
-              gradientTo="to-violet-500"
-            />
-            <StatCard
-              number="12+"
-              label="Tech Stack"
-              gradientFrom="from-violet-500"
-              gradientTo="to-blue-500"
-            />
-          </motion.div> */}
-        </motion.div>
-      </div>
-    </>
+          </motion.div>
+        </div>
+      </motion.div>
+
+      {/* Background Effects */}
+      <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:50px]" />
+    </section>
   );
 };
 

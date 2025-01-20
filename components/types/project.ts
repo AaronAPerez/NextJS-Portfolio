@@ -1,4 +1,5 @@
 export interface Project {
+  imageAlt: string;
   id: string;
   title: string;
   description: string;

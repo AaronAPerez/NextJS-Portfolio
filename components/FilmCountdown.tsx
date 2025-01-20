@@ -125,23 +125,28 @@ export const FilmCountdown = () => {
 
   return (
     <motion.div
-      initial={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black"
+    initial={{ opacity: 1 }}
+    exit={{ opacity: 0 }}
+    className="fixed inset-0 z-50 flex items-center justify-center bg-black"
+    role="presentation"
+    aria-live="polite"
+  >
+    {/* Sound toggle button with accessibility */}
+    <button
+      onClick={toggleSound}
+      className="absolute top-4 right-4 z-50 p-2 rounded-full"
+      aria-label={isMuted ? "Unmute countdown sounds" : "Mute countdown sounds"}
+      aria-pressed={isMuted}
     >
-      {/* Sound toggle button */}
-      <button
-        onClick={toggleSound}
-        className="absolute top-4 right-4 z-50 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
-        aria-label={isMuted ? "Unmute countdown sounds" : "Mute countdown sounds"}
-      >
-        {isMuted ? (
-          <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      {isMuted ? (
+        <svg 
+          className="w-6 h-6 text-white" 
+          aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />
           </svg>
         ) : (
-          <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg className="w-6 h-6 text-white" aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
           </svg>
         )}
@@ -204,13 +209,24 @@ export const FilmCountdown = () => {
             </div>
           </motion.div>
         )}
+      </AnimatePresence>
+     {/* Countdown number with ARIA live region */}
+     <div
+        aria-live="assertive"
+        className="sr-only"
+      >
+        {count > 0 ? `Countdown: ${count}` : 'Welcome'}
+      </div>
 
-        {count === 0 && (
+      {/* Visual countdown */}
+      <AnimatePresence mode="wait">
+        {count > 0 && (
           <motion.div
             initial={{ scale: 0.5, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 2, opacity: 0 }}
             transition={{ duration: 0.5 }}
+            aria-hidden="true"
             className={cn(
               "text-6xl font-bold text-white font-mono",
               "drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]"
