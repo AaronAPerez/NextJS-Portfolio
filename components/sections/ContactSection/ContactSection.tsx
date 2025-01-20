@@ -1,8 +1,9 @@
 'use client';
 
+import SectionTitle from '@/components/SectionTitle';
 import { BackgroundBeams } from '@/components/ui/background-beams'
-import BorderMagicButton from '@/components/ui/BorderMagicButton'
-import SectionTitle from '@/components/ui/SectionTitle'
+import BorderMagicButton from '@/components/ui/BorderMagicButton';
+
 import { IconFileDownload } from '@tabler/icons-react'
 import { motion } from 'framer-motion'
 import { CopyIcon, MailIcon } from 'lucide-react'
@@ -31,9 +32,9 @@ const ContactSection = () => {
   };
 
   return (
-    <section className="relative mx-auto overflow-hidden min-h-screen">
+    <section className="relative mx-auto overflow-hidden">
       <BackgroundBeams className="absolute inset-0" />
-      <div className="relative z-10 max-w-6xl mx-auto px-4">
+      <div className="relative z-10 max-w-xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -85,7 +86,6 @@ const ContactSection = () => {
         </motion.div>
       </div>
     </section>
-
   )
 }
 

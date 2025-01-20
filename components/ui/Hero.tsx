@@ -8,19 +8,21 @@ import TextGenerateEffect from "./TextGenerateEffect";
 const Hero = () => {
     return (
         <>
-            <div className="relative min-h-screen flex items-center justify-center p-8">
+            <div className="relative min-h-screen flex items-center justify-center p-10">
                 {/* Background Effects */}
-                <div>
-                <Spotlight
-                    className="top-40 -left-10 md:-left-32 md:-top-20 h-screen"
-                     fill="white"
+       
+                    <Spotlight
+                        className="top-40 -left-10 md:-left-32 md:-top-20 h-screen"
+                        fill="white"
                     />
-                </div>
+      
                 <Spotlight
                     className="-top-40 left-0 md:left-60 md:-top-20"
                     fill="white"
                 />
+
                 <div className="absolute inset-0 bg-grid-small-white/[0.2] bg-grid" />
+
                 <div className="absolute inset-0 backdrop-blur-sm" />
 
                 <div className="relative z-10 w-full mx-auto px-4 sm:px-6 lg:px-8
@@ -30,9 +32,9 @@ const Hero = () => {
 
                             <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden">
                                 <Image src="/images/profile/headshot.png" alt="Aaron A. Perez"
-                                    className="object-cover rounded-full" 
-                                    width={24} 
-                                    height={24}/>
+                                    className="object-cover rounded-full"
+                                    width={360}
+                                    height={360} />
                                 <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/10 via-transparent to-violet-500/10" />
 
                             </div>
@@ -62,12 +64,9 @@ const Hero = () => {
                                         title="My Projects"
                                         icon={<GoProjectRoadmap />} />
                                 </a>
-
                             </div>
-
                         </div>
                     </div>
-
                 </div>
                 {/* <div className="h-screen w-full dark:bg-black-100 bg-white  dark:bg-grid-white/[0.06] bg-grid-black/[0.2] flex items-center justify-center absolute top-0 left-0">
           {/* Radial gradient for the container to give a faded look 
@@ -85,7 +84,6 @@ const Hero = () => {
 
             </div>
         </div> */}
-
             </div>
         </>
     )

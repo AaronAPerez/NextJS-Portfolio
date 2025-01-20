@@ -4,12 +4,13 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { Github, ExternalLink } from 'lucide-react';
-import { skills } from '../../../../../../Documents/.CodeStack Academy/React/GameApp/NextJS/Next_Portfolio/nextjs_portfolio/types/config/skills';
 import { cn } from '@/lib/utils';
-import SectionTitle from '@/components/ui/SectionTitle';
 import PinContainer from './3d-pin';
-import { Project } from '@/types/project';
-import { projects } from '../../../../../../Documents/.CodeStack Academy/React/GameApp/NextJS/Next_Portfolio/nextjs_portfolio/types/config/projects';
+import SectionTitle from '@/components/SectionTitle';
+import { skills } from '@/components/config/skills';
+import { Project } from '@/components/types/project';
+import { projects } from '@/components/config/projects';
+
 
 // Map skills to their icons and colors
 const techIcons = Object.fromEntries(
@@ -46,13 +47,16 @@ const ProjectCard = ({ project, isHovered }: ProjectCardProps) => {
                 h-[500px]">
             {/* Project Image */}
             <div className="relative w-full h-[250px]">
-              <Image
-                src={project.images[0]}
-                alt={`Screenshot of ${project.title}`}
-                fill
-                className="object-cover transition-transform duration-500 group-hover:scale-110"
-                priority
-              />
+              {project.images.map((image, idx) => (
+                <Image
+                  key={idx}
+                  src={image}
+                  alt={`Screenshot of ${project.title}`}
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-110"
+                  priority
+                />
+              ))}
               
               {/* Hover Actions */}
               <AnimatePresence>

@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from "@/lib/utils";
 
 import SkillCard from './SkillCard';
-import { skills } from '@/components/types/config/skills';
+import { skills } from '@/components/config/skills';
 
 
 

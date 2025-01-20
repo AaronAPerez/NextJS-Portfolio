@@ -3,8 +3,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { cn } from "@/lib/utils";
-import Spotlight from '@/components/ui/Spotlight';
-import SectionTitle from '@/components/ui/SectionTitle';
+import { Spotlight } from '@/components/ui/Spotlight';
+import SectionTitle from '@/components/SectionTitle';
+
 
 interface timelineData {
   title: string;
@@ -76,14 +77,13 @@ const timelineData = {
 
 export const TimelineSection = () => {
   return (
-
     <section className="relative py-20 overflow-hidden">
     <Spotlight
       className="-top-40 left-0 md:left-60 md:-top-20"
       fill="white"
     />
     
-    <div className="relative z-10 max-w-7xl mx-auto px-4">
+    <div className="relative z-10 max-w-7xl mx-auto px-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
