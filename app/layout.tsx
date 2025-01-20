@@ -23,10 +23,6 @@ const geistSans = Geist({
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 // Metadata
 export const metadata: Metadata = {
@@ -126,7 +122,7 @@ export default function RootLayout({
 
 
 // Skip to content component for accessibility
-const SkipToContent = () => (
+export const SkipToContent = () => (
   <a
     href="#main-content"
     className={cn(

@@ -2,7 +2,6 @@
 
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "framer-motion";
-import Link from "next/link";
 
 import { useEffect, useState, JSX } from "react";
 
@@ -12,7 +11,7 @@ interface NavItem {
   icon?: JSX.Element;
 }
 
-export const FloatingNav = ({
+const FloatingNavbar = () => ({
   navItems,
   className,
 }: {
@@ -121,3 +120,4 @@ export const FloatingNav = ({
     </AnimatePresence>
   );
 };
+export default FloatingNavbar;

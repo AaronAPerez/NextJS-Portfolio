@@ -1,6 +1,6 @@
 import { render } from '@react-three/fiber';
-
-import { describe, it } from 'node:test';
+import { describe, it, expect } from 'vitest';
+import { axe, toHaveNoViolations } from 'jest-axe';
 
 expect.extend(toHaveNoViolations);
 

@@ -1,7 +1,5 @@
 'use client';
 
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import SectionTitle from '@/components/SectionTitle';
 import { projects } from '@/components/config/projects';
 import ProjectsGrid from './ProjectGrid';

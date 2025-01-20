@@ -8,7 +8,6 @@ import HeroSection from "@/components/sections/HeroSection/HeroSection";
 import SkillsSection from "@/components/sections/SkillsSection/SkillsSection";
 import TimelineSection from "@/components/sections/TimelineSection/TimelineSection";
 import { SparklesCore } from "@/components/ui/sparkles-core";
-import TracingBeam from "@/components/ui/tracing-beam";
 
 import dynamic from 'next/dynamic';
 
