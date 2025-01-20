@@ -1,34 +1,45 @@
 "use client";
+
 import { useEffect } from "react";
 import { motion, stagger, useAnimate } from "framer-motion";
 import { cn } from "@/lib/utils";
+
+interface TextGenerateEffectProps {
+  words: string;
+  className?: string;
+  filter?: boolean;
+  duration?: number;
+}
 
 export const TextGenerateEffect = ({
   words,
   className,
   filter = true,
   duration = 0.5,
-}: {
-  words: string;
-  className?: string;
-  filter?: boolean;
-  duration?: number;
-}) => {
+}: TextGenerateEffectProps) => {
   const [scope, animate] = useAnimate();
+
   const wordsArray = words.split(" ");
+
   useEffect(() => {
-    animate(
-      "span",
-      {
-        opacity: 1,
-        filter: filter ? "blur(0px)" : "none",
-      },
-      {
-        duration: duration ? duration : 1,
-        delay: stagger(0.2),
-      }
-    );
-  }, [scope.current]);
+    const animateText = async () => {
+      await animate(
+        "span",
+        {
+          opacity: 1,
+          filter: filter ? "blur(0px)" : "none",
+        },
+        {
+          duration: duration,
+          delay: stagger(0.2),
+        }
+      );
+    };
+
+    if (scope.current) {
+      animateText();
+    }
+  }, [scope, animate, filter, duration]); 
 
   const renderWords = () => {
     return (
@@ -37,7 +48,7 @@ export const TextGenerateEffect = ({
           return (
             <motion.span
               key={word + idx}
-              className={`${idx > 3 ? 'text-purple': 'dark:text-white text-black'} opacity-0`}
+              className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-violet-500"
               style={{
                 filter: filter ? "blur(10px)" : "none",
               }}
@@ -53,10 +64,12 @@ export const TextGenerateEffect = ({
   return (
     <div className={cn("font-bold", className)}>
       <div className="mt-4">
-        <div className=" dark:text-white text-black leading-snug tracking-wide">
+        <div className="dark:text-white text-black text-2xl leading-snug tracking-wide">
           {renderWords()}
         </div>
       </div>
     </div>
   );
 };
+
+export default TextGenerateEffect;

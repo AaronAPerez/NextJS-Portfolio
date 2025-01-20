@@ -1,14 +1,8 @@
-// import Footer from "@/components/Footer";
-// import Clients from "@/components/Clients";
-
-// import Footer from "@/components/Footer";
-
+import AboutSection from "@/components/sections/AboutSection/AboutSection";
+import SkillsSection from "@/components/sections/SkillsSection/SkillsSection";
 import { FloatingNav } from "@/components/ui/FloatingNav";
 import Hero from "@/components/ui/Hero";
-// import { MatrixCard } from "@/components/ui/MatrixCard";
-
 import { navItems } from "@/data";
-// import { Suspense } from "react";
 export const dynamic = "force-dynamic";
 export const fetchCache = "force-no-store";
 
@@ -22,12 +16,8 @@ export default function Home() {
    
         <FloatingNav navItems={navItems} />
         <Hero />
-        {/* <Grid />
+        <AboutSection/>
         <SkillsSection/>
-        <RecentProjects />
-        <Clients />
-        <MatrixCard /> */}
-        {/* <Footer /> */}
 
       </div>
     </main>

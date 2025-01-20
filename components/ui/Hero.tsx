@@ -1,7 +1,8 @@
+import Image from "next/image";
 import MagicButton from "./MagicButton"
 import { Spotlight } from "./Spotlight"
-import { TextGenerateEffect } from "./TextGenerateEffect"
 import { GoProjectRoadmap } from "react-icons/go";
+import TextGenerateEffect from "./TextGenerateEffect";
 
 
 const Hero = () => {
@@ -28,8 +29,10 @@ const Hero = () => {
                         <div className="relative">
 
                             <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden">
-                                <img src="/images/profile/headshot.png" alt="Aaron A. Perez"
-                                    className="object-cover rounded-full" />
+                                <Image src="/images/profile/headshot.png" alt="Aaron A. Perez"
+                                    className="object-cover rounded-full" 
+                                    width={24} 
+                                    height={24}/>
                                 <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/10 via-transparent to-violet-500/10" />
 
                             </div>
