@@ -15,12 +15,12 @@ const aboutContent = {
 
 const AboutSection = () => {
   return (
-    <section className="relative min-h-screen py-20 overflow-hidden">
+    <section className="relative min-h-screen overflow-hidden">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="relative z-10 max-w-6xl mx-auto px-4"
+        className="relative z-10 max-w-8xl mx-auto"
       >
         {/* Section Title */}
         <SectionTitle
@@ -29,7 +29,7 @@ const AboutSection = () => {
         />
 
         {/* Content Cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 mt-12">
           {/* Background Card */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
@@ -44,7 +44,7 @@ const AboutSection = () => {
                   "relative bg-black/80",
                   "group/card dark:hover:shadow-2xl dark:hover:shadow-blue-500/[0.1]",
                   "dark:border-white/[0.2] border-black/[0.1]",
-                  "w-full h-full rounded-xl p-6 border",
+                  "w-full h-full rounded-xl pr-16 py-4 border",
                   "hover:border-blue-500/50 transition-all duration-500",
                   "flex flex-col"
                 )}
@@ -83,7 +83,7 @@ const AboutSection = () => {
                   "relative bg-black/80",
                   "group/card dark:hover:shadow-2xl dark:hover:shadow-violet-500/[0.1]",
                   "dark:border-white/[0.2] border-black/[0.1]",
-                  "w-full h-full rounded-xl p-6 border",
+                  "w-full h-full rounded-xl pr-16 py-4 border",
                   "hover:border-violet-500/50 transition-all duration-500",
                   "flex flex-col"
                 )}

@@ -62,7 +62,7 @@ export const CardContainer = ({
       style={{
         perspective: 1000,
       }}
-      className={cn("flex items-center justify-center", containerClassName)}
+      className={cn("flex justify-center px-4 my-2", containerClassName)}
     >
       <motion.div
         style={{
