@@ -26,6 +26,7 @@ export function HoverBorderGradient({
   const [hovered, setHovered] = useState<boolean>(false);
   const [direction, setDirection] = useState<Direction>("TOP");
 
+
   const rotateDirection = (currentDirection: Direction): Direction => {
     const directions: Direction[] = ["TOP", "LEFT", "BOTTOM", "RIGHT"];
     const currentIndex = directions.indexOf(currentDirection);
@@ -34,6 +35,16 @@ export function HoverBorderGradient({
       : (currentIndex + 1) % directions.length;
     return directions[nextIndex];
   };
+
+  useEffect(() => {
+    if (!hovered) {
+      const interval = setInterval(() => {
+        setDirection((prevState) => rotateDirection(prevState));
+      }, duration * 1000);
+      return () => clearInterval(interval);
+    }
+  }, [hovered, duration, (rotateDirection)]);
+
 
   const movingMap: Record<Direction, string> = {
     TOP: "radial-gradient(20.7% 50% at 50% 0%, hsl(0, 0%, 100%) 0%, rgba(255, 255, 255, 0) 100%)",
@@ -57,7 +68,7 @@ export function HoverBorderGradient({
   }, [hovered]);
   return (
     <Tag
-      onMouseEnter={(event: React.MouseEvent<HTMLDivElement>) => {
+      onMouseEnter={() => {
         setHovered(true);
       }}
       onMouseLeave={() => setHovered(false)}

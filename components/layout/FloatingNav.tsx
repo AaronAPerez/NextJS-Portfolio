@@ -4,14 +4,14 @@ import { cn } from "@/lib/utils";
 import React from "react";
 import { useState } from "react";
 
- interface NavItem = {
+interface NavItem {
   name: string;
   link: string;
-  icon: React.ReactNode;
-};
+  icon?: React.ReactNode;
+}
 
 const FloatingNav = ({ navItems }: { navItems: NavItem[] }) => {
-  const [activeSection, setActiveSection] = useState<string>('');
+  const [activeSection] = useState<string>('');
 
   // Handle keyboard navigation
   const handleKeyPress = (
@@ -31,7 +31,7 @@ const FloatingNav = ({ navItems }: { navItems: NavItem[] }) => {
       className="fixed top-4 z-50 w-full"
     >
       <ul className="flex justify-center gap-4">
-        {navItems.map((item, index) => (
+        {navItems.map((item) => (
           <li key={item.name}>
             <a
               href={item.link}

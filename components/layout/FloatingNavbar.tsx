@@ -2,8 +2,8 @@
 
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "framer-motion";
-
 import { useEffect, useState, JSX } from "react";
+
 
 interface NavItem {
   name: string;
@@ -11,17 +11,12 @@ interface NavItem {
   icon?: JSX.Element;
 }
 
-const FloatingNavbar = () => ({
-  navItems,
-  className,
-}: {
-  navItems: {
-    name: string;
-    link: string;
-    icon?: JSX.Element;
-  }[];
+interface FloatingNavbarProps {
+  navItems: NavItem[];
   className?: string;
-}) => {
+}
+
+const FloatingNavbar = ({ navItems, className }: FloatingNavbarProps) => {
   const { scrollYProgress } = useScroll();
   const [visible, setVisible] = useState(false);
   const [activeSection, setActiveSection] = useState('');
@@ -86,7 +81,7 @@ const FloatingNavbar = () => ({
         )}
       >
        <ul className="flex justify-center gap-4">
-              {navItems.map((item, index) => (
+              {navItems.map((item) => (
                 <li key={item.name}>
                   <a
                     href={item.link}
@@ -120,4 +115,5 @@ const FloatingNavbar = () => ({
     </AnimatePresence>
   );
 };
+FloatingNavbar.displayName = 'FloatingNavbar';
 export default FloatingNavbar;

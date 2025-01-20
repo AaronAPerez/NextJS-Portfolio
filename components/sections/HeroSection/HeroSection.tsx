@@ -6,8 +6,6 @@ import Image from 'next/image';
 import { Spotlight } from '@/components/ui/Spotlight';
 import TextGenerateEffect from '@/components/ui/TextGenerateEffect';
 import { HoverBorderGradient } from '@/components/ui/hover-border-gradient';
-import { AceternityLogo } from '@/components/AceBtn';
-import Link from 'next/link';
 
 
 export const HeroSection = () => {

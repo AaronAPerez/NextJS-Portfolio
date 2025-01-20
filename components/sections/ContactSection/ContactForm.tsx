@@ -6,6 +6,11 @@ import { useState } from "react";
 export const ContactForm = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
 
+const handleSubmit = (e: React.FormEvent) => {
+  e.preventDefault();
+  setErrors({}); // Add error handling logic
+};
+
   return (
     <form
       role="form"
@@ -44,7 +49,7 @@ export const ContactForm = () => {
         )}
       </div>
 
-      <button
+      <button onClick={handleSubmit}
         type="submit"
         aria-label="Send message"
         className="w-full rounded-md bg-blue-500 px-4 py-2"

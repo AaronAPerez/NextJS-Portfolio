@@ -9,13 +9,18 @@ import { useState, useEffect } from "react";
 export const ThemeSwitcher = () => {
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
-  const [isHovered, setIsHovered] = useState(false);
+  const [, setIsHovered] = useState(false);
 
   useEffect(() => setMounted(true), []);
   if (!mounted) return null;
 
+  
+
   const isDark = theme === 'dark';
 
+
+
+  
   return (
     <motion.button
       className={cn(
