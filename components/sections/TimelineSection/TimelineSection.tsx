@@ -6,15 +6,6 @@ import { cn } from "@/lib/utils";
 import { Spotlight } from '@/components/ui/Spotlight';
 import SectionTitle from '@/components/SectionTitle';
 
-
-interface timelineData {
-  title: string;
-  company?: string;
-  institution?: string;
-  period: string;
-  details: string[];
-}
-
 interface TimelineItemData {
   title: string;
   institution?: string;
@@ -78,23 +69,16 @@ const timelineData = {
 export const TimelineSection = () => {
   return (
     <section className="relative py-20 overflow-hidden">
-    <Spotlight
-      className="-top-40 left-0 md:left-60 md:-top-20"
-      fill="white"
-    />
-    
-    <div className="relative z-10 max-w-7xl mx-auto px-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-     <SectionTitle 
+      <Spotlight
+        className="-top-40 left-0 md:left-60 md:-top-20"
+        fill="white"
+      />
+
+      <div className="relative z-10 max-w-7xl mx-auto px-10">
+        <SectionTitle
           title="Experience & Education"
           subtitle="My professional journey and academic background"
         />
-        </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Education Timeline */}
@@ -102,7 +86,7 @@ export const TimelineSection = () => {
             <h3 className="text-2xl font-bold mb-8 text-center">Education</h3>
             <div className="space-y-8">
               {timelineData.education.map((item, index) => (
-                <TimelineItem 
+                <TimelineItem
                   key={`education-${index}`}
                   data={item}
                   isLeft={true}
@@ -117,7 +101,7 @@ export const TimelineSection = () => {
             <h3 className="text-2xl font-bold mb-8 text-center">Work Experience</h3>
             <div className="space-y-8">
               {timelineData.experience.map((item, index) => (
-                <TimelineItem 
+                <TimelineItem
                   key={`experience-${index}`}
                   data={item}
                   isLeft={false}
@@ -128,24 +112,12 @@ export const TimelineSection = () => {
           </div>
         </div>
       </div>
-   
-    
     </section>
-  
   );
 };
 
-const TimelineItem = ({ 
-  data, 
-  isLeft,
-  delay 
-}: TimelineItemProps) => {
+const TimelineItem = ({ data, isLeft, delay }: TimelineItemProps) => {
   return (
-    <div className={cn(
-      "bg-white dark:bg-zinc-900",
-      "text-zinc-900 dark:text-white",
-      "border-black/10 dark:border-white/10"
-    )}>
     <motion.div
       initial={{ opacity: 0, x: isLeft ? -50 : 50 }}
       whileInView={{ opacity: 1, x: 0 }}
@@ -158,20 +130,19 @@ const TimelineItem = ({
       )}
     >
       <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-blue-500 to-violet-500 rounded-l-xl" />
-      
+
       <h4 className="text-xl font-bold mb-2">{data.title}</h4>
       <p className="text-blue-400 mb-1">{data.institution || data.company}</p>
       <p className="text-sm mb-4">{data.period}</p>
-      
+
       <ul className="space-y-2">
-        {data.details.map((detail: string, index: number) => (
-          <li key={index} className="text-sm">
+        {data.details.map((detail, index) => (
+          <li key={index} className="text-sm text-gray-300">
             • {detail}
           </li>
         ))}
       </ul>
     </motion.div>
-    </div>
   );
 };
 

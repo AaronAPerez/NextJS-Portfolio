@@ -1,11 +1,11 @@
 'use client';
 
-import React from 'react';
 import { motion } from 'framer-motion';
 import { cn } from "@/lib/utils";
 import SectionTitle from '@/components/SectionTitle';
 import { CardBody, CardContainer, CardItem } from './CardContainer';
 import Meteors from '@/components/ui/meteors';
+import { BackgroundBeams } from '@/components/ui/background-beams';
 
 const aboutContent = {
   title: "About Me",
@@ -16,6 +16,8 @@ const aboutContent = {
 const AboutSection = () => {
   return (
     <section className="relative min-h-screen overflow-hidden">
+      <BackgroundBeams className="absolute inset-0" />
+
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -29,7 +31,7 @@ const AboutSection = () => {
         />
 
         {/* Content Cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 mt-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 mt-12">
           {/* Background Card */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
@@ -39,7 +41,7 @@ const AboutSection = () => {
             className="w-full h-full"
           >
             <CardContainer className="w-full h-full" containerClassName="w-full h-full">
-              <CardBody 
+              <CardBody
                 className={cn(
                   "relative bg-black/80",
                   "group/card dark:hover:shadow-2xl dark:hover:shadow-blue-500/[0.1]",
@@ -78,7 +80,7 @@ const AboutSection = () => {
             className="w-full h-full"
           >
             <CardContainer className="w-full h-full" containerClassName="w-full h-full">
-              <CardBody 
+              <CardBody
                 className={cn(
                   "relative bg-black/80",
                   "group/card dark:hover:shadow-2xl dark:hover:shadow-violet-500/[0.1]",
@@ -110,7 +112,7 @@ const AboutSection = () => {
         </div>
       </motion.div>
 
-      {/* Background Effects */}
+      {/* Background Grid */}
       <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:50px]" />
     </section>
   );

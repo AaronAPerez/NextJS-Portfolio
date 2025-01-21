@@ -1,15 +1,13 @@
 'use client';
 
+'use client';
+
 import React from 'react';
 import { motion } from 'framer-motion';
-
 import { cn } from "@/lib/utils";
-
 import NeonSkillsGrid from '@/components/sections/SkillsSection/NeonSkillsGrid';
 import SectionTitle from '@/components/SectionTitle';
 import { BackgroundBeams } from '@/components/ui/background-beams';
-
-
 
 const skillsDescription = {
   title: "Skills & Technologies",

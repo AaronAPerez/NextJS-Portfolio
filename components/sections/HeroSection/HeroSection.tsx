@@ -2,38 +2,29 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import Image from 'next/image';
+import { SparklesCore } from '@/components/ui/sparkles-core';
 import { Spotlight } from '@/components/ui/Spotlight';
 import TextGenerateEffect from '@/components/ui/TextGenerateEffect';
 import { HoverBorderGradient } from '@/components/ui/hover-border-gradient';
-
+import Image from 'next/image';
 
 export const HeroSection = () => {
-
     const scrollToProjects = () => {
-        // Find the projects section and scroll to it smoothly
-        const projectsSection = document.querySelector('#projects');
-        projectsSection?.scrollIntoView({ behavior: 'smooth' });
+        document.querySelector('#projects')?.scrollIntoView({ behavior: 'smooth' });
     };
 
-
     return (
-        <section className="relative min-h-screen flex justify-center
-        mx-auto">
-
+        <section className="relative min-h-screen flex justify-center mx-auto">
             {/* Background Effects */}
             <Spotlight
                 className="top-40 -left-10 md:-left-32 md:-top-20 h-screen"
                 fill="white"
             />
-            <Spotlight
-                className="-top-40 left-0 md:left-60 md:-top-20"
-                fill="white"
-            />
             <div className="absolute inset-0 bg-grid-small-white/[0.2] bg-grid" />
             <div className="absolute inset-0 backdrop-blur-sm" />
+
             <div className="relative z-10 w-full mx-auto px-4 sm:px-6 lg:px-8
-                max-w-7xl xl:max-w-8xl 2xl:max-w-9xl 3xl:max-w-screen-2xl">
+        max-w-7xl xl:max-w-8xl 2xl:max-w-9xl 3xl:max-w-screen-2xl">
                 <div className="flex flex-col lg:flex-row items-center gap-12">
                     {/* Image Column */}
                     <motion.div
@@ -77,12 +68,14 @@ export const HeroSection = () => {
                                 words="Full Stack Developer"
                             />
                         </div>
+
                         {/* Description */}
                         <h3 className="text-lg max-w-2xl mx-auto lg:mx-0">
                             Building modern web experiences with cutting-edge technology and a focus on
                             creating intuitive user experiences and robust systems.
                         </h3>
-                        {/* Button onClick handler */}
+
+                        {/* CTA Button */}
                         <HoverBorderGradient
                             containerClassName="rounded-full"
                             as="button"
@@ -92,7 +85,6 @@ export const HeroSection = () => {
                         >
                             <span>View Projects</span>
                         </HoverBorderGradient>
-
                     </motion.div>
                 </div>
             </div>

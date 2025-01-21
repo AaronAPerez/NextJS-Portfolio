@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist} from "next/font/google";
+import { Geist } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "./provider";
 import { cn } from "@/lib/utils";
@@ -12,8 +12,11 @@ import ScrollToTop from "@/components/layout/ScrollToTop";
 
 // Styles
 import './globals.css';
-import { FloatingNav } from "@/components/ui/FloatingNav";
 import Footer from "@/components/layout/Footer";
+import Navbar from "@/components/layout/Navbar";
+import FloatingNavbar from "@/components/layout/FloatingNavbar";
+import FloatingNav from "@/components/layout/FloatingNav";
+
 
 
 
@@ -53,7 +56,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
 
-         <head>
+      <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
 
@@ -65,9 +68,9 @@ export default function RootLayout({
         "transition-colors duration-300"
       )}>
 
-<header role="banner">
+        <header role="banner">
           <nav role="navigation" aria-label="Main navigation">
-            <FloatingNav />
+            <FloatingNavbar navItems={navItems} />
           </nav>
         </header>
 
@@ -80,8 +83,10 @@ export default function RootLayout({
           <FilmCountdown />
 
           {/* Navigation */}
-          <FloatingNav navItems={navItems}
-            className="fixed top-4"/>
+          <div className="fixed top-4">
+            <Navbar />
+          </div>
+
 
           {/* Theme Switcher */}
           <div className="fixed top-4 right-4 z-50">
@@ -94,7 +99,7 @@ export default function RootLayout({
           </div>
 
           {/* Main Content */}
-       
+
           <main id="main-content" role="main" tabIndex={-1}>
             {/* Content sections wrapper */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

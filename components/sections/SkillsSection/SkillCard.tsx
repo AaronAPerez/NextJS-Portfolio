@@ -1,5 +1,7 @@
 'use client';
 
+'use client';
+
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
@@ -29,7 +31,7 @@ const SkillCard = ({ skill, isVisible = true }: SkillCardProps) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="relative w-32 h-32 cursor-pointer"
+      className="relative w-28 h-32 cursor-pointer"
       onHoverStart={() => setIsFlipped(true)}
       onHoverEnd={() => setIsFlipped(false)}
     >
@@ -97,5 +99,7 @@ const SkillCard = ({ skill, isVisible = true }: SkillCardProps) => {
 };
 
 export default SkillCard;
+
+
 
 
