@@ -18,8 +18,6 @@ export const ThemeSwitcher = () => {
 
   const isDark = theme === 'dark';
 
-
-
   
   return (
     <motion.button

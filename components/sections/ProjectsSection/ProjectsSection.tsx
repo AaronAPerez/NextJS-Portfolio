@@ -6,7 +6,7 @@ import ProjectsGrid from './ProjectGrid';
 
 const ProjectsSection = () => {
   return (
-    <section className="relative py-20 px-4 min-h-screen overflow-hidden">
+    <>
 
       {/* Background Effects */}
       <div className="absolute inset-0 bg-gradient-to-b from-blue-500/5 via-transparent to-violet-500/5" />
@@ -14,15 +14,15 @@ const ProjectsSection = () => {
 
       {/* Content Container */}
       <div className="relative z-10 max-w-7xl mx-auto">
-        <SectionTitle
-          title="Featured Projects"
-          subtitle="A showcase of my technical expertise and creative problem-solving."
-        />
+      <SectionTitle 
+        title="Featured Projects"
+        subtitle="A showcase of my technical expertise and creative problem-solving"
+      />
 
         {/* Projects Grid */}
         <ProjectsGrid projects={projects} />
       </div>
-    </section>
+    </>
   );
 };
 

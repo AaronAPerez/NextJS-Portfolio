@@ -1,48 +1,39 @@
-import React from 'react'
-import { Home, User, Code2, FileText, Mail } from 'lucide-react';
-import { FloatingNav } from './FloatingNavbar';
+import { useState } from "react";
 
-
-
-const Navigation = () => {
-  const navItems = [
-    {
-      name: "Home",
-      link: "#home",
-      icon: <Home className="h-4 w-4" />,
-    },
-    {
-      name: "About",
-      link: "#about",
-      icon: <User className="h-4 w-4" />,
-    },
-    {
-      name: "Projects",
-      link: "#projects",
-      icon: <Code2 className="h-4 w-4" />,
-    },
-    {
-      name: "Experience",
-      link: "#experience",
-      icon: <FileText className="h-4 w-4" />,
-    },
-    {
-      name: "Skills",
-      link: "#skills",
-      icon: <Mail className="h-4 w-4" />,
-    },
-  ];
-
+export function Navigation() {
+  const [isOpen, setIsOpen] = useState(false);
+  
   return (
-    <div className="relative w-full z-50">
-      <nav
-        role="navigation"
-        aria-label="Main navigation"
+    <nav role="navigation" aria-label="Main navigation">
+      {/* Desktop Navigation */}
+      <div className="hidden md:flex">
+        {/* Desktop menu items */}
+      </div>
+      
+      {/* Mobile Navigation */}
+      <button
+        className="md:hidden"
+        onClick={() => setIsOpen(!isOpen)}
+        aria-expanded={isOpen}
+        aria-controls="mobile-menu"
+        aria-label={isOpen ? 'Close menu' : 'Open menu'}
       >
-        <FloatingNav navItems={navItems} />
-      </nav>
-    </div>
+        {/* Menu icon */}
+      </button>
+      
+      {isOpen && (
+        <div
+          id="mobile-menu"
+          className="md:hidden"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Mobile navigation menu"
+        >
+          {/* Mobile menu items */}
+        </div>
+      )}
+    </nav>
   );
-};
+}
 
 export default Navigation;

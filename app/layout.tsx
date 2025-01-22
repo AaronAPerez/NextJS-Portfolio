@@ -13,11 +13,7 @@ import ScrollToTop from "@/components/layout/ScrollToTop";
 // Styles
 import './globals.css';
 import Footer from "@/components/layout/Footer";
-import Navbar from "@/components/layout/Navbar";
 import FloatingNavbar from "@/components/layout/FloatingNavbar";
-import FloatingNav from "@/components/layout/FloatingNav";
-
-
 
 
 
@@ -81,11 +77,6 @@ export default function RootLayout({
         >
           {/* Initial Loading Animation */}
           <FilmCountdown />
-
-          {/* Navigation */}
-          <div className="fixed top-4">
-            <Navbar />
-          </div>
 
 
           {/* Theme Switcher */}

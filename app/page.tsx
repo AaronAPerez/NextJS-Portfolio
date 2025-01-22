@@ -23,63 +23,41 @@ export const fetchCache = "force-no-store";
 export default function Home() {
   return (
     <>
-      <main className="min-h-screen
-      text-neutral-200 dark:text-white
-      bg-white dark:bg-black/[0.96] 
-      antialiased relative overflow-hidden 
-      justify-center align-middle">
+      {/* Main Content Container */}
+      <Container as="div" className="relative z-10">
 
-        {/* Background Effects */}
-        <div className="absolute inset-0 w-full h-full">
-          <SparklesCore
-            id="tsparticlesfullpage"
-            background="transparent"
-            className="w-full h-full"
-            particleColor="currentColor"
-          />
-        </div>
+        {/* Hero/Overview Section */}
+        <Section id="home" spacing="none">
+          <HeroSection />
+        </Section>
 
-        {/* Content Wrapper */}
-        <div className="relative z-10 w-full mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl xl:max-w-8xl 2xl:max-w-9xl 3xl:max-w-screen-2xl">
+        {/* About Section */}
+        <Section id="about">
+          <AboutSection />
+        </Section>
 
-          {/* Hero/Overview Section */}
-          <Section id="home"
-            className="flex justify-center align-middle"
-            fullWidth>
-            <HeroSection />
+        {/* About Section */}
+        <section id="skills" className="py-20">
+          <SkillsSection />
+        </section>
 
-          </Section>
+        {/* Projects Section */}
+        <section id="projects" className="py-20">
+          <ProjectsSection />
+        </section>
 
-          {/* About Section */}
-          <Section id="about">
-
-            <AboutSection />
-
-          </Section>
-
-          {/* About Section */}
-          <section id="skills" className="min-h-screen py-10">
-            <SkillsSection />
-          </section>
-
-          {/* Projects Section */}
-          <section id="projects" className="min-h-screen py-10">
-            <ProjectsSection />
-          </section>
+        {/* Experience Section */}
+        <section id="experience" className="py-20">
+          <TimelineSection />
+        </section>
 
 
-
-          {/* Experience Section */}
-          <section id="experience" className="min-h-screen py-10">
-            <TimelineSection />
-          </section>
-        </div>
         {/* Contact Section with Social Links */}
-        <section id="contact" className="min-h-screen pt-10">
+        <section id="contact" className="py-20">
           <ContactSection />
         </section>
 
-      </main>
+      </Container>
     </>
   );
 }

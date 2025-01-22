@@ -33,8 +33,9 @@ export const skills = [
     id: 'react',
     name: "React",
     icon: "/icons/frontend/react.svg",
-    color: "#61DAFB",
     category: "frontend",
+    color: "#61DAFB",
+    description: "Building modern user interfaces"
   },
   {
     id: 'typescript',

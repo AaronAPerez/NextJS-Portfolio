@@ -2,128 +2,183 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Root theme variables*/
+:root {
+  /* Base colors */
+  --background: #ffffff;
+  --foreground: #000000;
 
+  /* Theme colors */
+  --primary: #3b82f6;
+  --primary-foreground: #ffffff;
+  --secondary: #f3f4f6;
+  --secondary-foreground: #1f2937;
+  --muted: #f3f4f6;
+  --muted-foreground: #6b7280;
+  --accent: #f3f4f6;
+  --accent-foreground: #1f2937;
+  
+  /* Card colors */
+  --card: #ffffff;
+  --card-foreground: #000000;
+
+  /* Animation durations */
+  --transition-slow: 0.5s;
+  --transition-medium: 0.3s;
+  --transition-fast: 0.15s;
+
+  /* Z-index levels */
+  --z-negative: -1;
+  --z-normal: 1;
+  --z-elevated: 10;
+  --z-sticky: 100;
+  --z-modal: 1000;
+}
+
+/* Dark mode overrides */
+:root[class="dark"] {
+  --background: #000000;
+  --foreground: #ffffff;
+  --primary: #3b82f6;
+  --primary-foreground: #ffffff;
+  --secondary: #1f2937;
+  --secondary-foreground: #f3f4f6;
+  --muted: #1f2937;
+  --muted-foreground: #9ca3af;
+  --accent: #1f2937;
+  --accent-foreground: #f3f4f6;
+  --card: #1f2937;
+  --card-foreground: #ffffff;
+}
+
+/* Base styles */
 @layer base {
+  body {
+    @apply antialiased;
+    color: var(--foreground);
+    background: var(--background);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      "Helvetica Neue", Arial, sans-serif;
+  }
+
+  /* Focus styles */
   :focus-visible {
     @apply outline-none ring-2 ring-blue-500 ring-offset-2 ring-offset-white
     dark:ring-offset-gray-900;
   }
 
-  /* High contrast selection */
+  /* Selection styles */
   ::selection {
     @apply bg-blue-500 text-white;
   }
 }
 
-/* Custom focus visible utility */
-.focus-visible\:custom-focus:focus-visible {
-  @apply outline-none ring-2 ring-blue-500 ring-offset-2;
-}
-
-@tailwind components;
-
-@layer utilities {
-  /* Mobile First Media Queries */
+/* Component styles*/
+@layer components {
+  /* Container sizes */
   .container {
     @apply px-4 mx-auto;
     max-width: 100%;
 
-    @screen sm {
-      max-width: 640px;
-    }
-    
-    @screen md {
-      max-width: 768px;
-    }
-    
-    @screen lg {
-      max-width: 1024px;
-    }
-    
-    @screen xl {
-      max-width: 1536px; 
-    }
-
-    @screen 2xl {
-      max-width: 1920px; 
+    @screen sm { max-width: 640px; }
+    @screen md { max-width: 768px; }
+    @screen lg { max-width: 1024px; }
+    @screen xl { max-width: 1536px; }
+    @screen 2xl { max-width: 1920px; }
   }
-}
 
-/* Wider max-width utilities */
-.max-w-8xl {
-  max-width: 88rem; /* 1408px */
-}
+  /* Typography scale */
+  .h1 {
+    @apply text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold;
+  }
 
-.max-w-9xl {
-  max-width: 96rem; /* 1536px */
-}
+  .h2 {
+    @apply text-2xl md:text-3xl lg:text-4xl font-bold;
+  }
 
-.max-w-screen-2xl {
-  max-width: 1920px;
-}
-}
+  .h3 {
+    @apply text-xl md:text-2xl lg:text-3xl font-semibold;
+  }
 
+  /* Section spacing */
+  .section {
+    @apply py-12 md:py-16 lg:py-20;
+  }
 
-.preserve-3d {
-  transform-style: preserve-3d;
-}
+  .section-sm {
+    @apply py-8 md:py-12 lg:py-16;
+  }
 
-.backface-hidden {
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-}
+  /* Card styles */
+  .card {
+    @apply bg-opacity-95 border border-blue-500/20 shadow-md;
+    background: var(--card);
+    color: var(--card-foreground);
+  }
 
-/* Responsive Typography */
-.h1 {
-  @apply text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold;
-}
-
-.h2 {
-  @apply text-2xl md:text-3xl lg:text-4xl font-bold;
-}
-
-.h3 {
-  @apply text-xl md:text-2xl lg:text-3xl font-semibold;
-}
-
-/* Responsive Spacing */
-.section {
-  @apply py-12 md:py-16 lg:py-20;
-}
-
-.section-sm {
-  @apply py-8 md:py-12 lg:py-16;
-}
-@layer components {
+  /* Project cards */
   .project-card {
     @apply relative overflow-hidden rounded-xl transition-all duration-300;
   }
 
   .project-card-gradient {
-    @apply absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-300;
+    @apply absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 
+    transition-opacity duration-300;
   }
 
   .project-card-content {
     @apply relative z-10 p-6 flex flex-col h-full;
   }
 
+  /* Tech tags */
   .tech-tag {
     @apply px-3 py-1 text-xs rounded-full bg-white/20 text-white transition-colors;
   }
 
-  .feature-item {
-    @apply flex items-center gap-2 text-sm text-gray-300;
-  }
-
-  .feature-dot {
-    @apply w-1.5 h-1.5 rounded-full bg-blue-500;
+  /* Glass morphism */
+  .glass-morphism {
+    @apply backdrop-blur-md bg-opacity-80 border border-white/10;
+    background: rgba(32, 32, 36, 0.8);
   }
 }
 
-/* Project Pin Cards - Start*/
+/* Utility classes */
+@layer utilities {
+  /* Extended max widths */
+  .max-w-8xl { max-width: 88rem; }
+  .max-w-9xl { max-width: 96rem; }
+  .max-w-screen-2xl { max-width: 1920px; }
+
+  /* 3D transforms */
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+
+  .backface-hidden {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  .rotateY-180 {
+    transform: rotateY(180deg);
+  }
+
+  /* Backdrop blur */
+  .backdrop-blur-sm {
+    backdrop-filter: blur(8px);
+  }
+}
+
+/* Animations */
+/* Gradient animations */
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
 @keyframes gradient-xy {
-  0%,
-  100% {
+  0%, 100% {
     transform: translate(0, 0) scale(1.5);
     opacity: 0.5;
   }
@@ -141,144 +196,13 @@
   }
 }
 
-:root {
-  --background: #fafafa;
-  --foreground: #121214;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #121214;
-    --foreground: #ffffff;
-  }
-}
-
-/* ParallaxSkillGrid  */
+/* Scroll animation */
 @keyframes scroll {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
-.animate-scroll {
-  animation: scroll 50s linear infinite;
-  min-width: max-content;
-}
-
-/* hover effects for the skill cards */
-.group:hover {
-  z-index: 10;
-}
-
-.group:hover .skill-card {
-  transform: scale(1.05);
-  box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
-}
-
-/* Cinematic countdown animation - START */
-@keyframes noise {
-  0%,
-  100% {
-    transform: translate(0, 0);
-  }
-  10% {
-    transform: translate(-5%, -5%);
-  }
-  20% {
-    transform: translate(-10%, 5%);
-  }
-  30% {
-    transform: translate(5%, -10%);
-  }
-  40% {
-    transform: translate(-5%, 15%);
-  }
-  50% {
-    transform: translate(-10%, 5%);
-  }
-  60% {
-    transform: translate(15%, 0);
-  }
-  70% {
-    transform: translate(0, 10%);
-  }
-  80% {
-    transform: translate(-15%, 0);
-  }
-  90% {
-    transform: translate(10%, 5%);
-  }
-}
-
-@keyframes scratch {
-  0%,
-  100% {
-    transform: translateX(0);
-    opacity: 0.3;
-  }
-  10% {
-    transform: translateX(-1%);
-  }
-  20% {
-    transform: translateX(1%);
-    opacity: 0.5;
-  }
-  30% {
-    transform: translateX(-2%);
-  }
-  40% {
-    transform: translateX(3%);
-    opacity: 0.2;
-  }
-  50% {
-    transform: translateX(-3%);
-    opacity: 0.4;
-  }
-  60% {
-    transform: translateX(8%);
-  }
-  70% {
-    transform: translateX(-3%);
-  }
-  80% {
-    transform: translateX(10%);
-    opacity: 0.3;
-  }
-  90% {
-    transform: translateX(-2%);
-  }
-}
-
-.animate-noise {
-  animation: noise 0.5s steps(10) infinite;
-}
-
-.animate-scratch {
-  animation: scratch 0.45s steps(10) infinite;
-}
-
-.bg-noise {
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-}
-
-.bg-scratch {
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cline x1='0' y1='50' x2='100' y2='50' stroke='white' stroke-width='0.5'/%3E%3C/svg%3E");
-}
-
-.bg-vignette {
-  background: radial-gradient(
-    circle at center,
-    transparent 0%,
-    rgba(0, 0, 0, 0.2) 50%,
-    rgba(0, 0, 0, 0.5) 100%
-  );
-}
-/* Cinematic countdown animation - END */
-
-/* Add this to your globals.css */
+/* Meteor animation */
 @keyframes meteor {
   0% {
     transform: rotate(215deg) translateX(0);
@@ -293,111 +217,78 @@
   }
 }
 
-@layer utilities {
-  .animate-meteor-effect {
-    animation: meteor linear both;
-    will-change: transform, opacity;
-  }
+.animate-meteor-effect {
+  animation: meteor linear both;
+  will-change: transform, opacity;
 }
 
-@keyframes gradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+/* Noise animation */
+@keyframes noise {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-5%, -5%); }
+  20% { transform: translate(-10%, 5%); }
+  30% { transform: translate(5%, -10%); }
+  40% { transform: translate(-5%, 15%); }
+  50% { transform: translate(-10%, 5%); }
+  60% { transform: translate(15%, 0); }
+  70% { transform: translate(0, 10%); }
+  80% { transform: translate(-15%, 0); }
+  90% { transform: translate(10%, 5%); }
 }
 
-@layer utilities {
-  .backdrop-blur-sm {
-    backdrop-filter: blur(8px);
-  }
+/* Animation classes */
+.animate-gradient {
+  animation: gradient 15s ease infinite;
+  background-size: 200% 200%;
 }
 
 .animate-gradient-xy {
   animation: gradient-xy 15s ease infinite;
 }
 
-.animation-delay-1000 {
-  animation-delay: 1s;
-}
-/* Project Pin Cards - End */
-
-.preserve-3d {
-  transform-style: preserve-3d;
+.animate-scroll {
+  animation: scroll 50s linear infinite;
+  min-width: max-content;
 }
 
-.backface-hidden {
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
+.animate-noise {
+  animation: noise 0.5s steps(10) infinite;
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, sans-serif;
-}
-
-.animate-gradient {
-  animation: gradient 15s ease infinite;
-  background-size: 200% 200%;
-}
-
-/* Modern glow effect for text */
-.glow-text {
-  text-shadow: 0 0 10px rgba(29, 161, 242, 0.5);
-}
-
-/* Enhanced glass morphism effect */
-.glass-morphism {
-  background: rgba(32, 32, 36, 0.8);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
+/* Background patterns */
 .bg-grid {
   background-size: 100px 100px;
   background-image: linear-gradient(
-      to right,
-      rgba(255, 255, 255, 0.05) 1px,
-      transparent 1px
-    ),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    to right,
+    rgba(255, 255, 255, 0.05) 1px,
+    transparent 1px
+  ),
+  linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.05) 1px,
+    transparent 1px
+  );
 }
 
 .bg-grid-small {
   background-size: 20px 20px;
   background-image: linear-gradient(
-      to right,
-      rgba(255, 255, 255, 0.05) 1px,
-      transparent 1px
-    ),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    to right,
+    rgba(255, 255, 255, 0.05) 1px,
+    transparent 1px
+  ),
+  linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.05) 1px,
+    transparent 1px
+  );
 }
 
-/* Enhanced card styles */
-.card {
-  background: rgba(32, 32, 36, 0.95);
-  border: 1px solid rgba(66, 153, 225, 0.2);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-/* Neon Effects */
+/* Neon effects */
 .neon-card {
   border-color: var(--neon-color);
   box-shadow: 0 0 5px var(--neon-color), inset 0 0 5px var(--neon-color);
   transition: all 0.3s ease;
-}
-
-.neon-card-off {
-  border-color: rgba(255, 255, 255, 0.1);
-  box-shadow: none;
 }
 
 .neon-text {
@@ -405,9 +296,8 @@ body {
   text-shadow: 0 0 5px var(--neon-color), 0 0 10px var(--neon-color);
 }
 
-.neon-text-off {
-  color: rgba(255, 255, 255, 0.3);
-  text-shadow: none;
+.neon-icon {
+  filter: drop-shadow(0 0 3px var(--neon-color));
 }
 
 .neon-border {
@@ -415,64 +305,30 @@ body {
   box-shadow: 0 0 5px var(--neon-color), inset 0 0 5px var(--neon-color);
 }
 
-.neon-border-off {
-  border-color: rgba(255, 255, 255, 0.1);
-  box-shadow: none;
-}
-
-.neon-icon {
-  filter: drop-shadow(0 0 3px var(--neon-color));
-}
-
-/* Flicker Animation */
 .neon-flicker {
   animation: flicker 1.5s ease-in-out;
 }
 
 @keyframes flicker {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  5% {
-    opacity: 0.2;
-  }
-  10% {
-    opacity: 1;
-  }
-  15% {
-    opacity: 0.4;
-  }
-  20% {
-    opacity: 1;
-  }
-  25% {
-    opacity: 0.3;
-  }
-  30% {
-    opacity: 1;
-  }
-  35% {
-    opacity: 0.5;
-  }
-  40% {
-    opacity: 1;
-  }
-  45% {
-    opacity: 0.2;
-  }
-  50% {
-    opacity: 1;
-  }
-  55% {
-    opacity: 0.4;
-  }
-  60% {
-    opacity: 1;
-  }
+  0%, 100% { opacity: 1; }
+  5% { opacity: 0.2; }
+  10% { opacity: 1; }
+  15% { opacity: 0.4; }
+  20% { opacity: 1; }
+  25% { opacity: 0.3; }
+  30% { opacity: 1; }
 }
 
-/* 3D Flip Effect */
+/* Hover effects */
+.group:hover {
+  z-index: 10;
+}
+
+.group:hover .skill-card {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
+}
+
 .backface-hidden {
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
@@ -480,15 +336,4 @@ body {
 
 .rotateY-180 {
   transform: rotateY(180deg);
-}
-
-/* Background Grid */
-.bg-grid-small-white {
-  background-size: 20px 20px;
-  background-image: linear-gradient(
-      to right,
-      rgba(255, 255, 255, 0.05) 1px,
-      transparent 1px
-    ),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
 }

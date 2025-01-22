@@ -1,40 +1,53 @@
+'use client';
+
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 
 interface SectionProps {
-    id: string;
-    className?: string;
-    children: React.ReactNode;
-    fullWidth?: boolean;
-  }
-  
-  export const Section = ({
-    id,
-    className,
-    children,
-    fullWidth = false
-  }: SectionProps) => {
-    return (
-      <section
-        id={id}
-        className={cn(
-          "min-h-screen py-20 relative",
-          !fullWidth && "px-4 sm:px-6 lg:px-8",
-          className
-        )}
-      >
-        {/* Background Effects */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute inset-0 bg-gradient-to-b from-blue-500/5 via-transparent to-violet-500/5 opacity-50" />
-          <div className="absolute inset-0 bg-grid-small-white/[0.2]" />
-        </div>
-  
-        {/* Content */}
-        <div className={cn(
-          "relative z-10",
-          !fullWidth && "max-w-7xl mx-auto"
-        )}>
-          {children}
-        </div>
-      </section>
-    );
+  id?: string;
+  className?: string;
+  children: React.ReactNode;
+  spacing?: 'none' | 'sm' | 'md' | 'lg';
+}
+
+export function Section({
+  id,
+  className,
+  children,
+  spacing = 'md'
+}: SectionProps) {
+  // Predefined spacing classes
+  const spacingClasses = {
+    none: '',
+    sm: 'py-8 sm:py-12',
+    md: 'py-12 sm:py-16 lg:py-20',
+    lg: 'py-16 sm:py-20 lg:py-24'
   };
+
+  // Fade-in animation variants
+  const variants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 }
+  };
+
+  return (
+    <motion.section
+      id={id}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+      variants={variants}
+      transition={{ duration: 0.6 }}
+      className={cn(
+        // Base styles
+        "relative w-full",
+        // Spacing classes
+        spacingClasses[spacing],
+        // Custom classes
+        className
+      )}
+    >
+      {children}
+    </motion.section>
+  );
+}
