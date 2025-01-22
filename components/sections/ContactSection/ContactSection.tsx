@@ -30,7 +30,7 @@ export const ContactSection = () => {
       await navigator.clipboard.writeText("aaperez06@gmail.com");
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
-    } catch (error) {
+    } catch {
       console.error("Failed to copy email");
     }
   };
@@ -44,7 +44,7 @@ export const ContactSection = () => {
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-    } catch (error) {
+    } catch {
       console.error("Failed to download resume");
     }
   };
@@ -142,7 +142,7 @@ export const ContactSection = () => {
             className="text-center text-gray-400 mt-12 max-w-2xl mx-auto"
           >
             Feel free to reach out for collaborations or just to say hello! 
-            I'm always open to discussing new projects and opportunities.
+            I&apos;m always open to discussing new projects and opportunities.
           </motion.p>
         </motion.div>
       </div>

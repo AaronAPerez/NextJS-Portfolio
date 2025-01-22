@@ -41,7 +41,7 @@ export const HeroSection = () => {
 
       {/* Main Content */}
       <motion.div 
-        className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8"
+        className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8"
         variants={containerVariants}
         initial="hidden"
         animate="visible"

@@ -42,12 +42,12 @@ export default function Home() {
         </section>
 
         {/* Projects Section */}
-        <section id="projects" className="py-20">
+        <section id="projects" className="py-20 px-10">
           <ProjectsSection />
         </section>
 
         {/* Experience Section */}
-        <section id="experience" className="py-20">
+        <section id="experience" className="py-20 px-6">
           <TimelineSection />
         </section>
 

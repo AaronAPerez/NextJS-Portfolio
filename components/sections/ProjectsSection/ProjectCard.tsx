@@ -20,7 +20,7 @@ const techIcons = Object.fromEntries(
   skills.map(skill => [skill.name, { icon: skill.icon, color: skill.color }])
 );
 
-export const ProjectCard = ({ project, index, isHovered, onHover }: ProjectCardProps) => {
+export const ProjectCard = ({ project, index, isHovered }: ProjectCardProps) => {
   const cardId = `project-${project.id}`;
   const gradient = project.gradient ?? {
     from: '#3B82F6',
@@ -35,9 +35,6 @@ export const ProjectCard = ({ project, index, isHovered, onHover }: ProjectCardP
     }
   };
 
-  const handleCardKeyPress = (e: KeyboardEvent) => {
-    handleKeyPress(e, () => onHover(isHovered ? null : index));
-  };
 
   return (
     <>

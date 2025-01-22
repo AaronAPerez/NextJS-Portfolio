@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { motion, stagger, useAnimate } from "framer-motion";
-import { cn } from "@/lib/utils";
+
 
 interface TextGenerateEffectProps {
   words: string;
@@ -13,7 +13,6 @@ interface TextGenerateEffectProps {
 
 export const TextGenerateEffect = ({
   words,
-  className,
   filter = true,
   duration = 0.5,
 }: TextGenerateEffectProps) => {
