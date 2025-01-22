@@ -42,6 +42,7 @@ interface SkillCardProps {
   description?: string;
 }
 
+// Update SkillCard component
 const SkillCard = ({ name, icon, color, description }: SkillCardProps) => {
   const [isFlipped, setIsFlipped] = useState(false);
 
@@ -50,12 +51,12 @@ const SkillCard = ({ name, icon, color, description }: SkillCardProps) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="relative w-28 h-32 cursor-pointer group"
+      className="w-full max-w-[112px] aspect-square cursor-pointer group" // Fixed aspect ratio and max width
       onHoverStart={() => setIsFlipped(true)}
       onHoverEnd={() => setIsFlipped(false)}
     >
       <motion.div
-        className="absolute w-full h-full"
+        className="w-full h-full"
         initial={false}
         animate={{ rotateY: isFlipped ? 180 : 0 }}
         transition={{ duration: 0.6, type: "spring" }}
@@ -65,80 +66,47 @@ const SkillCard = ({ name, icon, color, description }: SkillCardProps) => {
         <div 
           className={cn(
             "absolute w-full h-full backface-hidden rounded-xl",
-            "flex flex-col items-center justify-center gap-2",
+            "flex flex-col items-center justify-center gap-2 p-2",
             "border backdrop-blur-sm transition-all duration-500",
-            "neon-card bg-black/40" // Added neon effect
+            "neon-card bg-black/40"
           )}
           style={{ '--neon-color': color } as React.CSSProperties}
         >
-          <div className="relative w-12 h-12">
+          <div className="relative w-1/2 aspect-square"> {/* Responsive icon size */}
             <Image
               src={icon}
               alt={name}
-              width={48}
-              height={48}
+              fill
               className={cn(
-                "w-full h-full object-contain transition-all duration-500",
-                "neon-icon" // Added neon effect
+                "object-contain transition-all duration-500",
+                "neon-icon"
               )}
             />
           </div>
           <span className={cn(
-            "text-sm font-medium text-center",
-            "neon-text" // Added neon effect
+            "text-xs sm:text-sm font-medium text-center line-clamp-2", // Responsive text and line clamp
+            "neon-text"
           )}>
             {name}
           </span>
-
-          {/* Glow Effect */}
-          <motion.div
-            className="absolute inset-0 opacity-0 group-hover:opacity-25 rounded-xl"
-            animate={{
-              background: [
-                `radial-gradient(circle at center, ${color}00 0%, ${color}00 100%)`,
-                `radial-gradient(circle at center, ${color}40 0%, ${color}00 100%)`
-              ]
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              repeatType: "reverse"
-            }}
-          />
         </div>
 
         {/* Back of card */}
         <div
           className={cn(
             "absolute w-full h-full backface-hidden rounded-xl rotateY-180",
-            "flex items-center justify-center p-4 text-center",
+            "flex items-center justify-center p-3",
             "border backdrop-blur-sm bg-black/40",
-            "neon-card" // Added neon effect
+            "neon-card"
           )}
           style={{ '--neon-color': color } as React.CSSProperties}
         >
           <p className={cn(
-            "text-xs font-medium",
-            "neon-text" // Added neon effect
+            "text-xs font-medium text-center line-clamp-4", // line clamp
+            "neon-text"
           )}>
             {description || `${name} Development`}
           </p>
-
-          {/* Glow Effect */}
-          <motion.div
-            className="absolute inset-0 opacity-0 group-hover:opacity-25 rounded-xl"
-            animate={{
-              background: [
-                `radial-gradient(circle at center, ${color}00 0%, ${color}00 100%)`,
-                `radial-gradient(circle at center, ${color}40 0%, ${color}00 100%)`
-              ]
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              repeatType: "reverse"
-            }}
-          />
         </div>
       </motion.div>
     </motion.div>
@@ -147,7 +115,7 @@ const SkillCard = ({ name, icon, color, description }: SkillCardProps) => {
 
 const SkillsGrid = ({ category }: { category: string }) => {
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 md:gap-6">
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7 gap-4 max-w-6xl mx-auto px-4">
       <AnimatePresence mode="wait">
         {skills
           .filter(skill => category === 'all' || skill.category === category)
@@ -159,6 +127,7 @@ const SkillsGrid = ({ category }: { category: string }) => {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
               transition={{ type: "spring", duration: 0.5 }}
+              className="flex justify-center" // Center cards in grid cells
             >
               <SkillCard {...skill} />
             </motion.div>
@@ -183,11 +152,11 @@ export const SkillsSection = () => {
   };
 
   return (
-    <div className="relative w-full overflow-hidden">
+    <div className="relative w-full overflow-hidden min-h-screen py-20">
       {/* Background Effects */}
       <BackgroundBeams className="absolute inset-0" />
 
-      <div className="relative z-10">
+      <div className="relative z-10 container mx-auto"> 
         {/* Section Title */}
         <SectionTitle
           title="Skills & Technologies"

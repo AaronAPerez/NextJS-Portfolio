@@ -1,10 +1,7 @@
 'use client';
 
-'use client';
-
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { cn } from "@/lib/utils";
 import { BackgroundBeams } from '@/components/ui/background-beams';
 import SectionTitle from '@/components/SectionTitle';
 import { CopyIcon, MailIcon, DownloadIcon, Github, Linkedin } from 'lucide-react';

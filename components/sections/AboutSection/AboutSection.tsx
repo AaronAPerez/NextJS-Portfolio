@@ -61,34 +61,28 @@ const InfoCard = ({ title, content, delay, className }: {
       transition={{ delay }}
       className="w-full h-full"
     >
-      <CardContainer className="w-full">
+      <CardContainer className="h-full">
         <CardBody
           className={cn(
-            "relative w-full bg-black/80",
+            "relative bg-black/80 h-full",
             "group/card dark:hover:shadow-2xl",
             "dark:border-white/[0.2] border-black/[0.1]",
-            "rounded-xl p-8", // Increased padding
+            "rounded-xl p-6 border",
             "hover:border-slate-500/50 transition-all duration-500",
-            "overflow-hidden", // Added to contain content
+            "flex flex-col",
             className
           )}
         >
-          {/* Content Container */}
-          <div className="relative z-20"> {/* Added z-index and wrapper */}
-            <CardItem
-              translateZ="50"
-              className="text-xl font-bold text-neutral-200 dark:text-white mb-6" // Increased margin
-            >
-              {title}
-            </CardItem>
-            <CardItem
-              as="p"
-              translateZ="50"
-              className="text-neutral-300 dark:text-neutral-200 text-sm leading-relaxed max-w-full mx-8" // Added max-width
-            >
-              {content}
-            </CardItem>
-          </div>
+          <CardItem
+            className="text-xl font-bold text-neutral-200 dark:text-white mb-4"
+          >
+            {title}
+          </CardItem>
+          <CardItem
+            className="text-neutral-300 dark:text-neutral-200 text-sm leading-relaxed"
+          >
+            {content}
+          </CardItem>
 
           {/* Continuous Meteor Effect */}
           <div className="absolute inset-0 overflow-hidden rounded-xl">

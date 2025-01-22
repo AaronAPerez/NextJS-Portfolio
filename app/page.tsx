@@ -2,14 +2,11 @@ import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import AboutSection from "@/components/sections/AboutSection/AboutSection";
-import AboutSkillsGrid from "@/components/sections/AboutSkillsGrid";
 import ContactSection from "@/components/sections/ContactSection/ContactSection";
 import HeroSection from "@/components/sections/HeroSection/HeroSection";
-
 import SkillsSection from "@/components/sections/SkillsSection/SkillsSection";
 import TimelineSection from "@/components/sections/TimelineSection/TimelineSection";
-import { BentoGrid } from "@/components/ui/BentoGrid";
-import { SparklesCore } from "@/components/ui/sparkles-core";
+
 
 import dynamic from 'next/dynamic';
 
@@ -37,7 +34,10 @@ export default function Home() {
         </Section>
 
         {/* About Section */}
-        <section id="skills" className="py-20">
+        <section 
+        id="skills"     
+        className="custom-classes" 
+        >
           <SkillsSection />
         </section>
 
