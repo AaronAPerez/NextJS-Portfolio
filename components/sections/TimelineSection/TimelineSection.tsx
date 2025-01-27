@@ -62,14 +62,14 @@ interface TimelineCardProps {
   delay?: number;
 }
 
-const TimelineCard: React.FC<TimelineCardProps> = ({
+const TimelineCard = ({
   title,
   company,
   institution,
   period,
   details,
   delay = 0
-}) => {
+}: TimelineCardProps) => {
   return (
     <>
     <motion.div
