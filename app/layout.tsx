@@ -3,6 +3,7 @@ import { Geist } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "./provider";
 import { cn } from "@/lib/utils";
+import { Analytics } from "@vercel/analytics/react"
 
 // Components
 import ThemeSwitcher from "@/components/ThemeSwitcher";
@@ -95,6 +96,7 @@ export default function RootLayout({
             {/* Content sections wrapper */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               {children}
+              <Analytics />
             </div>
           </main>
           {/* Social Links */}
