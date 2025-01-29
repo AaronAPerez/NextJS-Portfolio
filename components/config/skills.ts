@@ -60,6 +60,20 @@ export const skills = [
     category: "frontend",
   },
   {
+    id: 'css3',
+    name: "CSS3",
+    icon: "/icons/frontend/css3-original.svg",
+    color: "#3178C6",
+    category: "frontend",
+  },
+  {
+    id: 'chakra',
+    name: "Chakra UI",
+    icon: "/icons/frontend/chakra-ui.svg",
+    color: "#7fffd4",
+    category: "frontend",
+  },
+  {
     id: 'reactbootstrap',
     name: "React Bootstrap",
     icon: "/icons/frontend/reactbootstrap.svg",

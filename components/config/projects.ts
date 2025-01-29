@@ -1,6 +1,46 @@
-import { Project } from '@/types/project';
+import { Project } from "../types/project";
 
-export const projects: Project[] = [
+export const projects: Project = [
+  {
+    id: 'game-database',
+    title: "Video Game Database",
+    description: "Feature-rich video game discovery platform using RAWG.IO API. Users can search games, apply multiple filters, view detailed game information, and sort by various criteria such as genre, platform, and ratings. Built with React, TypeScript and Chakra UI, emphasizing responsive design and accessibility.",
+    tech: [
+      "React", 
+      "TypeScript", 
+      "Chakra UI", 
+      "Axios", 
+      "React Query",
+      "React Router",
+      "RAWG API"
+    ],
+    features: [
+      "Dynamic search with debouncing",
+      "Advanced filtering system",
+      "Infinite scroll pagination",
+      "Responsive grid layout",
+      "Dark/Light mode toggle",
+      "Loading skeletons",
+      "Error handling",
+      "Accessibility optimized"
+    ],
+    images: ["/images/projects/game-database/GameAPI.svg"], // Update with actual image path
+    codeLink: "https://github.com/AaronAPerez/Videogame_API_App", // Update with actual repo
+    demoLink: "https://videogame-api-app.vercel.app/",
+    gradient: {
+      from: "#553C9A", // Purple
+      to: "#00B5D8"    // Cyan
+    },
+    technical: [
+      "Implemented React Query for efficient API data caching and management",
+      "Built custom hooks for search and filter logic",
+      "Used TypeScript interfaces for type-safe API responses",
+      "Optimized performance with debounced search",
+      "Integrated Chakra UI components for consistent design",
+      "Implemented responsive design using Chakra UI's responsive styles",
+      "Added keyboard navigation and screen reader support"
+    ]
+  },
   {
     id: 'expense-tracker',
     title: "Expense Tracker",
