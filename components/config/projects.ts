@@ -42,6 +42,19 @@ export const projects: Project = [
     ]
   },
   {
+    id: 'goldmine-communications',
+    title: "Goldmine Communications - IN PROGRESS....",
+    description: "Modern website for telecommunications infrastructure company featuring responsive design, dynamic content sections, and professional branding. Built with Next.js and TypeScript.",
+    tech: ["Next.js", "React", "TypeScript", "Tailwind"],
+    images: ["/projects/goldmine_website/goldmine_1.svg"],
+    codeLink: "https://github.com/AaronAPerez/Goldmine_Communications_Construction_Website",
+    demoLink: "https://goldmine-communications-website.vercel.app/",
+    gradient: {
+      from: "#FFD700",
+      to: "#DAA520" 
+    }
+  },
+  {
     id: 'expense-tracker',
     title: "Expense Tracker",
     description: "Full-stack expense tracking application with real-time updates and visualization. Built with TypeScript, React, and .NET",
