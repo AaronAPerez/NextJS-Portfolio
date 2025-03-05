@@ -42,7 +42,7 @@ export default function Home() {
         </section>
 
         {/* Projects Section */}
-        <section id="projects" className="py-20 px-10">
+        <section id="projects" className="py-20 px-12">
           <ProjectsSection />
         </section>
 
@@ -53,7 +53,7 @@ export default function Home() {
 
 
         {/* Contact Section with Social Links */}
-        <section id="contact" className="py-20">
+        <section id="contact" className="pt-10">
           <ContactSection />
         </section>
 

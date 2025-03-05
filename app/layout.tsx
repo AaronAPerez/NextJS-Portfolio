@@ -91,7 +91,6 @@ export default function RootLayout({
           </div>
 
           {/* Main Content */}
-
           <main id="main-content" role="main" tabIndex={-1}>
             {/* Content sections wrapper */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

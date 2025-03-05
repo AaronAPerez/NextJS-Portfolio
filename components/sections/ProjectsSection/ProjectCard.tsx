@@ -48,9 +48,9 @@ export const ProjectCard = ({ project, index, isHovered }: ProjectCardProps) => 
           title={project.title}
           className="w-full"
         >
-          <div className="group relative flex flex-col 
-                w-[320px] sm:w-[380px] lg:w-[400px] xl:w-[450px] 2xl:w-[500px] 
-                h-[500px]">
+          <div className="group relative flex flex-col
+               w-[400px] sm:w-[520px] md:w-[560px] lg:w-[580px] xl:w-[500px] 2xl:w-[500px] 
+                ">
 
             {/* Project Image with Improved Accessibility */}
             <div
@@ -127,7 +127,7 @@ export const ProjectCard = ({ project, index, isHovered }: ProjectCardProps) => 
             {/* Project Details with Semantic Structure */}
             <div className="flex flex-col flex-1 p-6 bg-black/20 backdrop-blur-sm">
               <h3
-                className="text-xl sm:text-2xl font-bold mb-3 bg-clip-text text-transparent"
+                className="text-xl sm:text-3xl font-bold mb-4 bg-clip-text text-transparent"
                 style={{
                   backgroundImage: `linear-gradient(to right, ${gradient.from}, ${gradient.to})`
                 }}
@@ -135,7 +135,7 @@ export const ProjectCard = ({ project, index, isHovered }: ProjectCardProps) => 
                 {project.title}
               </h3>
 
-              <p className="text-gray-300 text-sm sm:text-base mb-6 flex-1 line-clamp-3">
+              <p className="text-gray-300 text-sm sm:text-base mb-6 flex-1 line-clamp-5">
                 {project.description}
               </p>
 
@@ -144,7 +144,7 @@ export const ProjectCard = ({ project, index, isHovered }: ProjectCardProps) => 
               <div
                 role="list"
                 aria-label={`Technologies used in ${project.title}`}
-                className="flex flex-wrap gap-2"
+                className="flex flex-wrap gap-4 justify-self-start"
               >
                 {project.tech.map((tech) => {
                   const techData = techIcons[tech];
@@ -154,21 +154,20 @@ export const ProjectCard = ({ project, index, isHovered }: ProjectCardProps) => 
                       role="listitem"
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
-                      className="flex items-center gap-1.5 px-2 py-1 rounded-full 
-                             bg-white/5 border border-white/10"
-                      style={{ borderColor: `${techData?.color || '#4B5563'}20` }}
+                      className="flex items-center gap-1 px-3 py-1 rounded-full bg-zinc-800/50 border transition-colors duration-200 hover:border-opacity-50"
+                      style={{ borderColor: `${techData?.color}40` }}
                     >
                       {techData?.icon && (
                         <Image
                           src={techData.icon}
-                          alt=""
-                          width={12}
-                          height={12}
+                          alt={`${tech} icon`}
+                          width={24}
+                          height={24}
                           className="object-contain"
                         />
                       )}
                       <span
-                        className="text-xs font-medium"
+                        className="text-sm font-medium"
                         style={{ color: techData?.color || '#9CA3AF' }}
                       >
                         {tech}
@@ -191,6 +190,7 @@ export const ProjectCard = ({ project, index, isHovered }: ProjectCardProps) => 
           </div>
         </PinContainer>
       </div>
+      
     </>
   );
 };
