@@ -3,7 +3,6 @@ import { Project } from "../types/project";
 export const projects: Project = [
   {
     id: 'goldmine-communications',
-    
     title: "Goldmine Communications & Construction - IN PROGRESS",
     description: "Modern website for telecommunications infrastructure company featuring responsive design, dynamic content sections, and professional branding. Built with Next.js and TypeScript.",
     tech: ["Next.js", "React", "TypeScript", "Tailwind"],
@@ -13,6 +12,19 @@ export const projects: Project = [
     gradient: {
       from: "#FFD700",
       to: "#DAA520" 
+    }
+  },
+  {
+    id: 'interactive-form',
+    title: "Interactive Form System",
+    description: "A dynamic form system with conditional logic, validation, and real-time preview capabilities.",
+    tech: ["React", "TypeScript", "Tailwind CSS", "React Hook Form"],
+    images: ["/projects/interactive-form/interactive-form-1.svg"],
+    codeLink: "https://github.com/AaronAPerez/form-showcase",
+    websiteLink: "https://form-showcase.vercel.app//",
+    gradient: {
+      from: "#8B5CF6",
+      to: "#EC4899"
     }
   },
   {
@@ -28,23 +40,15 @@ export const projects: Project = [
       "React Router",
       "RAWG API"
     ],
-    // features: [
-    //   "Dynamic search with debouncing",
-    //   "Advanced filtering system",
-    //   "Infinite scroll pagination",
-    //   "Responsive grid layout",
-    //   "Dark/Light mode toggle",
-    //   "Loading skeletons",
-    //   "Error handling",
-    //   "Accessibility optimized"
-    // ],
-    images: ["/images/projects/game-database/GameAPI.svg"], // Update with actual image path
-    codeLink: "https://github.com/AaronAPerez/Videogame_API_App", // Update with actual repo
+    images: ["/images/projects/game-database/GameAPI.svg"],
+    codeLink: "https://github.com/AaronAPerez/Videogame_API_App",
     demoLink: "https://videogame-api-app.vercel.app/",
     gradient: {
       from: "#553C9A", // Purple
       to: "#00B5D8"    // Cyan
     }
+  },
+];
     // technical: [
     //   "Implemented React Query for efficient API data caching and management",
     //   "Built custom hooks for search and filter logic",
@@ -54,20 +58,20 @@ export const projects: Project = [
     //   "Implemented responsive design using Chakra UI's responsive styles",
     //   "Added keyboard navigation and screen reader support"
     // ]
-  },
-  {
-    id: 'expense-tracker',
-    title: "Expense Tracker",
-    description: "Full-stack expense tracking application with real-time updates and visualization. Built with TypeScript, React, and .NET",
-    tech: ["TypeScript", "React", "Bootstrap", ".NET", "SQL Server"],
-    images: ["/images/projects/expense-tracker/expense-tracker-1.png"],
-    codeLink: "https://github.com/AaronAPerez/FullStack_Expense_App_Part-2/tree/Set",
-    gradient: {
-      from: "#c49a1c",
-      to: "#ffd700"
-    }
-  }
-];
+//   },
+//   {
+//     id: 'expense-tracker',
+//     title: "Expense Tracker",
+//     description: "Full-stack expense tracking application with real-time updates and visualization. Built with TypeScript, React, and .NET",
+//     tech: ["TypeScript", "React", "Bootstrap", ".NET", "SQL Server"],
+//     images: ["/images/projects/expense-tracker/expense-tracker-1.png"],
+//     codeLink: "https://github.com/AaronAPerez/FullStack_Expense_App_Part-2/tree/Set",
+//     gradient: {
+//       from: "#c49a1c",
+//       to: "#ffd700"
+//     }
+//   }
+// ];
 
   // {
   //   id: 'west-valley-bowl',
@@ -93,3 +97,13 @@ export const projects: Project = [
   //     to: "#06B6D4"
   //   }
   // }
+    // features: [
+    //   "Dynamic search with debouncing",
+    //   "Advanced filtering system",
+    //   "Infinite scroll pagination",
+    //   "Responsive grid layout",
+    //   "Dark/Light mode toggle",
+    //   "Loading skeletons",
+    //   "Error handling",
+    //   "Accessibility optimized"
+    // ],
