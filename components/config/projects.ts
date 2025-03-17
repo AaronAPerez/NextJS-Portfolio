@@ -28,6 +28,19 @@ export const projects: Project = [
     }
   },
   {
+    id: 'data-migration-tool',
+    title: "Data Migration Tool",
+    description: "Enterprise-grade tool for seamless data migration between systems with validation, transformation, and error handling.",
+    tech: ["Node.js", "TypeScript", "Express", "MongoDB", "React"],
+    images: ["/projects/data-migration-tool/data-migration-1.svg"],
+    codeLink: "https://github.com/AaronAPerez/data-migration-tool",
+    websiteLink: "https://data-migration-demo.vercel.app/",
+    gradient: {
+      from: "#10B981",
+      to: "#3B82F6"
+    }
+  },
+  {
     id: 'game-database',
     title: "Video Game Database",
     description: "Feature-rich video game discovery platform using RAWG.IO API. Users can search games, apply multiple filters, view detailed game information, and sort by various criteria such as genre, platform, and ratings. Built with React, TypeScript and Chakra UI, emphasizing responsive design and accessibility.",

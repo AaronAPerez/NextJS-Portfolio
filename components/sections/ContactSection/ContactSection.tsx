@@ -37,7 +37,7 @@ export const ContactSection = () => {
 
   const handleDownload = () => {
     try {
-      const resumeUrl = "/A.Perez_Resume.pdf";
+      const resumeUrl = "/A.Perez - Fullstack Resume.pdf";
       const link = document.createElement("a");
       link.href = resumeUrl;
       link.download = "A.Perez_Resume.pdf";
