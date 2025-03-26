@@ -2,11 +2,24 @@ import { Project } from "../types/project";
 
 export const projects: Project = [
   {
+    id: 'glamping-spot',
+    title: "The Glamping Spot",
+    description: "Luxury camping booking platform with interactive map, reservation system, and user reviews. Responsive design optimized for all devices.",
+    tech: ["Next.js", "React", "TypeScript", "Tailwind", "Node.js", "Express", "MongoDB", "Mapbox API"],
+    images: ["/images/projects/theglampingspot/glamping-1.png"],
+    codeLink: "https://github.com/AaronAPerez/glamping-spot",
+    websiteLink: "https://the-glamping-spot.vercel.app/",
+    gradient: {
+      from: "#F59E0B",
+      to: "#15803D"
+    }
+  },
+  {
     id: 'goldmine-communications',
     title: "Goldmine Communications & Construction - IN PROGRESS",
     description: "Modern website for telecommunications infrastructure company featuring responsive design, dynamic content sections, and professional branding. Built with Next.js and TypeScript.",
     tech: ["Next.js", "React", "TypeScript", "Tailwind"],
-    images: ["/projects/goldmine_website/goldmine_1.svg"],
+    images: ["/images/projects/goldmine_website/goldmine_1.svg"],
     codeLink: "https://github.com/AaronAPerez/Goldmine_Communications_Construction_Website",
     demoLink: "https://goldmine-communications-website.vercel.app/",
     gradient: {
@@ -18,8 +31,8 @@ export const projects: Project = [
     id: 'interactive-form',
     title: "Interactive Form System",
     description: "A dynamic form system with conditional logic, validation, and real-time preview capabilities.",
-    tech: ["React", "TypeScript", "Tailwind CSS", "React Hook Form"],
-    images: ["/projects/interactive-form/interactive-form-1.svg"],
+    tech: ["Next.js", "React", "TypeScript", "Tailwind", "React Hook Form"],
+    images: ["/images/projects/interactive-form/interactive-form-1.svg"],
     codeLink: "https://github.com/AaronAPerez/form-showcase",
     websiteLink: "https://form-showcase.vercel.app//",
     gradient: {
@@ -31,8 +44,8 @@ export const projects: Project = [
     id: 'data-migration-tool',
     title: "Data Migration Tool",
     description: "Enterprise-grade tool for seamless data migration between systems with validation, transformation, and error handling.",
-    tech: ["Node.js", "TypeScript", "Express", "MongoDB", "React"],
-    images: ["/projects/data-migration-tool/data-migration-1.svg"],
+    tech: ["Next.js", "React", "TypeScript", "Tailwind", "Node.js", "TypeScript", "Express", "MongoDB"],
+    images: ["/images/projects/data-migration-tool/data-migration-1.svg"],
     codeLink: "https://github.com/AaronAPerez/data-migration-tool",
     websiteLink: "https://data-migration-demo.vercel.app/",
     gradient: {
