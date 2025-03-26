@@ -6,7 +6,7 @@ export const projects: Project = [
     title: "The Glamping Spot",
     description: "Luxury camping booking platform with interactive map, reservation system, and user reviews. Responsive design optimized for all devices.",
     tech: ["Next.js", "React", "TypeScript", "Tailwind", "Node.js", "Express", "MongoDB", "Mapbox API"],
-    images: ["/images/projects/theglampingspot/glamping-1.png"],
+    images: ["/images/projects/the-glamping-spot/glamping-1.png"],
     codeLink: "https://github.com/AaronAPerez/glamping-spot",
     websiteLink: "https://the-glamping-spot.vercel.app/",
     gradient: {
