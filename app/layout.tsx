@@ -65,11 +65,8 @@ export default function RootLayout({
         "transition-colors duration-300"
       )}>
 
-        <header role="banner">
-          <nav role="navigation" aria-label="Main navigation">
-            <FloatingNavbar navItems={navItems} />
-          </nav>
-        </header>
+        {/* Skip to content - moved to top for better accessibility */}
+        <SkipToContent />
 
         <ThemeProvider
           attribute="class"
@@ -79,11 +76,17 @@ export default function RootLayout({
           {/* Initial Loading Animation */}
           <FilmCountdown />
 
-
-          {/* Theme Switcher */}
-          <div className="fixed top-4 right-4 z-50">
-            <ThemeSwitcher />
-          </div>
+          {/* Header with Navigation */}
+          <header role="banner">
+            <nav role="navigation" aria-label="Main navigation">
+              <FloatingNavbar navItems={navItems} />
+            </nav>
+            
+            {/* Theme Switcher - positioned differently on mobile and desktop */}
+            <div className="fixed top-4 sm:top-6 right-4 sm:right-6 z-50">
+              <ThemeSwitcher />
+            </div>
+          </header>
 
           {/* Scroll To Top Button */}
           <div className="fixed bottom-4 right-4 z-50">
@@ -98,15 +101,17 @@ export default function RootLayout({
               <Analytics />
             </div>
           </main>
+          
           {/* Social Links */}
-          <div className="fixed left-4 bottom-4 z-50 hidden md:block">
+          <div className="fixed left-4 bottom-4 z-40 hidden md:block">
             <SocialLinks orientation="vertical" />
           </div>
 
           {/* Mobile Social Links */}
-          <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 md:hidden">
+          <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 md:hidden">
             <SocialLinks orientation="horizontal" />
           </div>
+          
           {/* Footer */}
           <footer role="contentinfo">
             <Footer />
