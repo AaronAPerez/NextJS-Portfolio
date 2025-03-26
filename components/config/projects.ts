@@ -8,7 +8,7 @@ export const projects: Project = [
     tech: ["Next.js", "React", "TypeScript", "Tailwind", "Node.js", "Express", "MongoDB", "Mapbox API"],
     images: ["/images/projects/the-glamping-spot/glamping-1.png"],
     codeLink: "https://github.com/AaronAPerez/glamping-spot",
-    websiteLink: "https://www.theglampingspot.net",
+    websiteLink: "https://www.theglampingspot.nett",
     gradient: {
       from: "#F59E0B",
       to: "#15803D"
