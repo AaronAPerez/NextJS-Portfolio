@@ -7,7 +7,7 @@ export const projects: Project = [
     description: "Luxury camping booking platform with interactive map, reservation system, and user reviews. Responsive design optimized for all devices.",
     tech: ["Next.js", "React", "TypeScript", "Tailwind", "Node.js", "Express", "MongoDB", "Mapbox API"],
     images: ["/images/projects/the-glamping-spot/glamping-1.png"],
-    codeLink: "https://github.com/AaronAPerez/glamping-spot",
+    codeLink: "https://github.com/AaronAPerez/glamping-sphttps://github.com/AaronAPerez/the-glamping-spot",
     websiteLink: "https://www.theglampingspot.net",
     gradient: {
       from: "#F59E0B",
