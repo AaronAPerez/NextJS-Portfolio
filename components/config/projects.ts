@@ -1,14 +1,29 @@
 import { Project } from "../types/project";
 
 export const projects: Project = [
+{
+    id: 'amp-vending',
+    title: "AMP Vending",
+    description: "Modern vending machine service website featuring responsive design, service information, and product catalog. Built with attention to accessibility and user experience.",
+    tech: ["Next.js", "React", "TypeScript", "Tailwind", "Responsive Design"],
+    images: ["/images/projects/amp-vending/amp-vending-1.png"],
+    demoLink: "https://the-glamping-spot.vercel.app",
+    codeLink: "https://github.com/AaronAPerez/the-glamping-spot",
+    websiteLink: "https://amp-vending-website.vercel.app",
+    gradient: {
+      from: "#FD5A1E", // orange
+      to: "#A5ACAF"    // silver
+    }
+  },
   {
     id: 'glamping-spot',
     title: "The Glamping Spot",
     description: "Luxury camping booking platform with interactive map, reservation system, and user reviews. Responsive design optimized for all devices.",
     tech: ["Next.js", "React", "TypeScript", "Tailwind", "Node.js", "Express", "MongoDB", "Mapbox API"],
     images: ["/images/projects/theglampingspot/glamping-1.png"],
-    codeLink: "https://github.com/AaronAPerez/glamping-spot",
-    websiteLink: "https://the-glamping-spot.vercel.app/",
+    demoLink: "https://the-glamping-spot.vercel.app",
+    codeLink: "https://github.com/AaronAPerez/the-glamping-spot",
+    websiteLink: "https://www.theglampingspot.net",
     gradient: {
       from: "#F59E0B",
       to: "#15803D"
@@ -16,15 +31,16 @@ export const projects: Project = [
   },
   {
     id: 'goldmine-communications',
-    title: "Goldmine Communications & Construction - IN PROGRESS",
+    title: "Goldmine Communications & Construction",
     description: "Modern website for telecommunications infrastructure company featuring responsive design, dynamic content sections, and professional branding. Built with Next.js and TypeScript.",
     tech: ["Next.js", "React", "TypeScript", "Tailwind"],
     images: ["/images/projects/goldmine_website/goldmine_1.svg"],
+    websiteLink: "https://goldminecommnet-website.vercel.app",
     codeLink: "https://github.com/AaronAPerez/Goldmine_Communications_Construction_Website",
-    demoLink: "https://goldmine-communications-website.vercel.app/",
+    demoLink: "https://goldminecommnet-website.vercel.app",
     gradient: {
-      from: "#FFD700",
-      to: "#DAA520" 
+      from: "#bf9b30",
+      to: "#d4af37" 
     }
   },
   {
@@ -33,6 +49,7 @@ export const projects: Project = [
     description: "A dynamic form system with conditional logic, validation, and real-time preview capabilities.",
     tech: ["Next.js", "React", "TypeScript", "Tailwind", "React Hook Form"],
     images: ["/images/projects/interactive-form/interactive-form-1.svg"],
+    demoLink: "#",
     codeLink: "https://github.com/AaronAPerez/form-showcase",
     websiteLink: "https://form-showcase.vercel.app//",
     gradient: {
@@ -46,8 +63,8 @@ export const projects: Project = [
     description: "Enterprise-grade tool for seamless data migration between systems with validation, transformation, and error handling.",
     tech: ["Next.js", "React", "TypeScript", "Tailwind", "Node.js", "TypeScript", "Express", "MongoDB"],
     images: ["/images/projects/data-migration-tool/data-migration-1.svg"],
+    demoLink: "#",
     codeLink: "https://github.com/AaronAPerez/data-migration-tool",
-    websiteLink: "https://data-migration-demo.vercel.app/",
     gradient: {
       from: "#10B981",
       to: "#3B82F6"
@@ -67,8 +84,8 @@ export const projects: Project = [
       "RAWG API"
     ],
     images: ["/images/projects/game-database/GameAPI.svg"],
+    demoLink: "#",
     codeLink: "https://github.com/AaronAPerez/Videogame_API_App",
-    demoLink: "https://videogame-api-app.vercel.app/",
     gradient: {
       from: "#553C9A", // Purple
       to: "#00B5D8"    // Cyan

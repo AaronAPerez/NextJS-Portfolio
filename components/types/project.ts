@@ -1,4 +1,5 @@
 export interface Project {
+  websiteLink: string | undefined;
   imageAlt: string;
   id: string;
   title: string;

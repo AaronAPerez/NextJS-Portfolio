@@ -4,6 +4,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { cn } from "@/lib/utils";
 import { Spotlight } from '@/components/ui/Spotlight';
+import { SpotlightNew } from '@/components/ui/SpotlightNew';
 import TextGenerateEffect from '@/components/ui/TextGenerateEffect';
 import { HoverBorderGradient } from '@/components/ui/hover-border-gradient';
 import Image from 'next/image';
@@ -27,19 +28,34 @@ export const HeroSection = () => {
   };
 
   return (
-    <div className="relative min-h-[calc(100vh-5rem)] w-full flex items-center justify-center">
+    <div className="relative min-h-[calc(100vh-5rem)] w-full flex items-center justify-center overflow-hidden">
       {/* Background Effects */}
-      <div className="absolute inset-0 w-full h-full overflow-hidden">
+      <div className="absolute inset-0 w-full h-full">
+        {/* Using the new Spotlight component */}
+        <SpotlightNew 
+          className="-top-40 left-0"
+          translateY={-300}
+          xOffset={100}
+        />
+        
         <Spotlight
-          className="-top-40 left-0 md:left-60 md:-top-20"
+          className="hidden md:block md:left-60 md:-top-20"
           fill="white"
         />
         <div className="absolute inset-0 bg-grid-small-white/[0.2] bg-grid" />
       </div>
 
+      {/* Welcome Text Hover Effect */}
+      {/* <div className="absolute top-24 left-0 right-0 z-10">
+        <TextHoverEffect 
+          text="Welcome" 
+          className="mx-auto"
+        />
+      </div> */}
+
       {/* Main Content */}
       <motion.div 
-        className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8"
+        className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 mt-24"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
@@ -98,15 +114,15 @@ export const HeroSection = () => {
 
             {/* CTA Button */}
             <div className="flex justify-center lg:justify-start">
-              <HoverBorderGradient
-                containerClassName="rounded-full"
-                as="button"
-                className="dark:bg-black bg-white text-black dark:text-white flex items-center space-x-2 px-6 py-3"
-                onClick={scrollToProjects}
-                aria-label="View my projects"
-              >
-                <span>View Projects</span>
-              </HoverBorderGradient>
+              <div onClick={scrollToProjects}>
+                <HoverBorderGradient
+                  containerClassName="rounded-full"
+                  as="button"
+                  className="dark:bg-black bg-white text-black dark:text-white flex items-center space-x-2 px-6 py-3"
+                >
+                  <span>View Projects</span>
+                </HoverBorderGradient>
+              </div>
             </div>
           </motion.div>
         </div>

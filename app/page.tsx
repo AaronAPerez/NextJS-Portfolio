@@ -24,7 +24,7 @@ export default function Home() {
       <Container as="div" className="relative z-10">
 
         {/* Hero/Overview Section */}
-        <Section id="home" spacing="none">
+        <Section id="home" spacing="none" >
           <HeroSection />
         </Section>
 
@@ -34,8 +34,7 @@ export default function Home() {
         </Section>
 
         {/* About Section */}
-        <section 
-        id="skills"     
+        <section id="skills"     
         className="custom-classes" 
         >
           <SkillsSection />
