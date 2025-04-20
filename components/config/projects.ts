@@ -30,6 +30,19 @@ export const projects: Project = [
     }
   },
   {
+    id: 'glamping-spot',
+    title: "The Glamping Spot",
+    description: "Luxury camping booking platform with interactive map, reservation system, and user reviews. Responsive design optimized for all devices.",
+    tech: ["Next.js", "React", "TypeScript", "Tailwind", "Node.js", "Express", "MongoDB", "Mapbox API"],
+    images: ["/images/projects/the-glamping-spot/glamping-1.png"],
+    codeLink: "https://github.com/AaronAPerez/the-glamping-spot",
+    websiteLink: "https://www.theglampingspot.net",
+    gradient: {
+      from: "#F59E0B",
+      to: "#15803D"
+    }
+  },
+  {
     id: 'goldmine-communications',
     title: "Goldmine Communications & Construction",
     description: "Modern website for telecommunications infrastructure company featuring responsive design, dynamic content sections, and professional branding. Built with Next.js and TypeScript.",
