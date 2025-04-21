@@ -55,7 +55,7 @@ export const HeroSection = () => {
 
       {/* Main Content */}
       <motion.div 
-        className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 mt-24"
+        className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 my-12"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
@@ -72,7 +72,7 @@ export const HeroSection = () => {
                 alt="Aaron A. Perez - Full Stack Developer"
                 fill
                 priority
-                className="object-cover rounded-full"
+                className="object-cover rounded-full bg-black"
                 sizes="(max-width: 768px) 192px, (max-width: 1280px) 256px, 288px"
               />
               <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-blue-500/20 to-violet-500/20 blur-2xl" />
@@ -118,7 +118,7 @@ export const HeroSection = () => {
                 <HoverBorderGradient
                   containerClassName="rounded-full"
                   as="button"
-                  className="dark:bg-black bg-white text-black dark:text-white flex items-center space-x-2 px-6 py-3"
+                  className="dark:bg-black bg-gray-100 text-black dark:text-gray-50 flex items-center space-x-2 px-6 py-3"
                 >
                   <span>View Projects</span>
                 </HoverBorderGradient>

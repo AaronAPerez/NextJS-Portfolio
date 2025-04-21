@@ -51,7 +51,7 @@ export const ProjectCard = ({ project, index, isHovered, onHover }: ProjectCardP
                w-[300px] sm:w-[420px] md:w-[460px] lg:w-[480px] xl:w-[500px] 2xl:w-[500px] h-[400px] sm:h-[520px] md:h-[560px] lg:h-[580px] xl:h-[600px] 2xl:h-[600px] bg-black/10 rounded-xl shadow-lg overflow-hidden transition-transform duration-500 group-hover:scale-105
                 ">
 
-            {/* Project Image with Improved Accessibility */}
+            {/* Project Image with Accessibility */}
             <div
               className="relative w-full aspect-[16/9]"
               role="img"
@@ -119,8 +119,8 @@ export const ProjectCard = ({ project, index, isHovered, onHover }: ProjectCardP
                         <Image
                           src={techData.icon}
                           alt={`${tech} icon`}
-                          width={24}
-                          height={24}
+                          width={22}
+                          height={22}
                           className="object-contain"
                         />
                       )}

@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
-import "./globals.css";
 import { ThemeProvider } from "./provider";
 import { cn } from "@/lib/utils";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
-import FilmCountdown from "@/components/FilmCountdown";
 import { SocialLinks } from "@/components/layout/SocialLinks";
 import ScrollToTop from "@/components/layout/ScrollToTop";
 
@@ -58,21 +56,18 @@ export default function RootLayout({
 
       <body className={cn(
         geistSans.variable,
-        "min-h-screen bg-white dark:bg-black",
+        "min-h-screen bg-gray-100 dark:bg-black",
         "text-gray-900 dark:text-gray-100",
         "transition-colors duration-300"
       )}>
 
-        {/* Skip to content - moved to top for better accessibility */}
+        {/* Skip to content - on top for better accessibility */}
         <SkipToContent />
-
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
           enableSystem
         >
-          {/* Initial Loading Animation */}
-          <FilmCountdown />
 
           {/* Header with Navigation */}
           <header role="banner">

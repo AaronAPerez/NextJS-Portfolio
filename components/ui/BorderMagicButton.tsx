@@ -1,7 +1,7 @@
 "use client";
 
 import React, { JSX, ReactNode } from "react";
-import { motion, HTMLMotionProps } from "framer-motion"; // Import HTMLMotionProps
+import { motion, HTMLMotionProps } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 // interface for component props
@@ -13,11 +13,6 @@ interface BorderMagicButtonProps {
   otherClasses?: string;
 }
 
-/*
-   BorderMagicButton - A reusable animated button component with border effects
-  @param {BorderMagicButtonProps} props - Component props
-  @returns {JSX.Element} Animated button with magic border effect
- */
 const BorderMagicButton = ({
   title,
   icon,

@@ -24,7 +24,7 @@
 // }: SectionLayoutProps) => {
 //   const backgroundEffects = {
 //     gradient: "bg-gradient-to-b from-gray-900/5 via-transparent to-gray-900/5",
-//     grid: "bg-grid-small-white/[0.2] relative",
+//     // grid: "bg-grid-small-white/[0.2] relative",
 //     none: ""
 //   };
 

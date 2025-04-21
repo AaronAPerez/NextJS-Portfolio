@@ -7,8 +7,9 @@ export const projects: Project = [
     description: "Modern vending machine service website featuring responsive design, service information, and product catalog. Built with attention to accessibility and user experience.",
     tech: ["Next.js", "React", "TypeScript", "Tailwind", "Responsive Design"],
     images: ["/images/projects/amp-vending/amp-vending-1.png"],
-    demoLink: "https://the-glamping-spot.vercel.app",
-    codeLink: "https://github.com/AaronAPerez/the-glamping-spot",
+    imagesAlt: ["/images/projects/amp-vending/amp-vending-1.png"],
+    demoLink: "https://amp-vending-website.vercel.app",
+    codeLink: "https://github.com/AaronAPerez/AMP-Vending_Website",
     websiteLink: "https://amp-vending-website.vercel.app",
     gradient: {
       from: "#FD5A1E", // orange
@@ -21,20 +22,8 @@ export const projects: Project = [
     description: "Luxury camping booking platform with interactive map, reservation system, and user reviews. Responsive design optimized for all devices.",
     tech: ["Next.js", "React", "TypeScript", "Tailwind", "Node.js", "Express", "MongoDB", "Mapbox API"],
     images: ["/images/projects/theglampingspot/glamping-1.png"],
+    imagesAlt: ["/images/projects/theglampingspot/glamping-1.png"],
     demoLink: "https://the-glamping-spot.vercel.app",
-    codeLink: "https://github.com/AaronAPerez/the-glamping-spot",
-    websiteLink: "https://www.theglampingspot.net",
-    gradient: {
-      from: "#F59E0B",
-      to: "#15803D"
-    }
-  },
-  {
-    id: 'glamping-spot',
-    title: "The Glamping Spot",
-    description: "Luxury camping booking platform with interactive map, reservation system, and user reviews. Responsive design optimized for all devices.",
-    tech: ["Next.js", "React", "TypeScript", "Tailwind", "Node.js", "Express", "MongoDB", "Mapbox API"],
-    images: ["/images/projects/the-glamping-spot/glamping-1.png"],
     codeLink: "https://github.com/AaronAPerez/the-glamping-spot",
     websiteLink: "https://www.theglampingspot.net",
     gradient: {
@@ -48,9 +37,10 @@ export const projects: Project = [
     description: "Modern website for telecommunications infrastructure company featuring responsive design, dynamic content sections, and professional branding. Built with Next.js and TypeScript.",
     tech: ["Next.js", "React", "TypeScript", "Tailwind"],
     images: ["/images/projects/goldmine_website/goldmine_1.svg"],
-    websiteLink: "https://goldminecommnet-website.vercel.app",
-    codeLink: "https://github.com/AaronAPerez/Goldmine_Communications_Construction_Website",
+    imagesAlt: ["/images/projects/goldmine_website/goldmine_1.svg"],
     demoLink: "https://goldminecommnet-website.vercel.app",
+    codeLink: "https://github.com/AaronAPerez/Goldmine_Communications_Construction_Website",
+    websiteLink: "https://www.goldminecomm.net",
     gradient: {
       from: "#bf9b30",
       to: "#d4af37" 
@@ -62,6 +52,7 @@ export const projects: Project = [
     description: "A dynamic form system with conditional logic, validation, and real-time preview capabilities.",
     tech: ["Next.js", "React", "TypeScript", "Tailwind", "React Hook Form"],
     images: ["/images/projects/interactive-form/interactive-form-1.svg"],
+    imagesAlt: ["/images/projects/interactive-form/interactive-form-1.svg"],
     demoLink: "#",
     codeLink: "https://github.com/AaronAPerez/form-showcase",
     websiteLink: "https://form-showcase.vercel.app//",
@@ -76,6 +67,7 @@ export const projects: Project = [
     description: "Enterprise-grade tool for seamless data migration between systems with validation, transformation, and error handling.",
     tech: ["Next.js", "React", "TypeScript", "Tailwind", "Node.js", "TypeScript", "Express", "MongoDB"],
     images: ["/images/projects/data-migration-tool/data-migration-1.svg"],
+    imagesAlt: ["/images/projects/data-migration-tool/data-migration-1.svg"],
     demoLink: "#",
     codeLink: "https://github.com/AaronAPerez/data-migration-tool",
     gradient: {
@@ -97,6 +89,7 @@ export const projects: Project = [
       "RAWG API"
     ],
     images: ["/images/projects/game-database/GameAPI.svg"],
+    imagesAlt: ["/images/projects/game-database/GameAPI.svg"],
     demoLink: "#",
     codeLink: "https://github.com/AaronAPerez/Videogame_API_App",
     gradient: {

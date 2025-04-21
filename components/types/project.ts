@@ -1,13 +1,14 @@
 export interface Project {
-  websiteLink: string | undefined;
   imageAlt: string;
   id: string;
   title: string;
   description: string;
   tech: string[];
   images: string[];
-  codeLink: string;
+  imagesAlt: string[];
   demoLink?: string;
+  codeLink: string;
+  websiteLink?: string;
   gradient?: {
     from: string;
     to: string;

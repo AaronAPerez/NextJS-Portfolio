@@ -5,10 +5,9 @@ import AboutSection from "@/components/sections/AboutSection/AboutSection";
 import ContactSection from "@/components/sections/ContactSection/ContactSection";
 import HeroSection from "@/components/sections/HeroSection/HeroSection";
 import SkillsSection from "@/components/sections/SkillsSection/SkillsSection";
-import TimelineSection from "@/components/sections/TimelineSection/TimelineSection";
-
-
+import { TimelineSection } from "@/components/sections/TimelineSection/TimelineSection";
 import dynamic from 'next/dynamic';
+
 
 const ProjectsSection = dynamic(() => import('@/components/sections/ProjectsSection/ProjectsSection'), {
   loading: () => <LoadingSpinner />
@@ -49,7 +48,6 @@ export default function Home() {
         <section id="experience" className="py-20 px-6">
           <TimelineSection />
         </section>
-
 
         {/* Contact Section with Social Links */}
         <section id="contact" className="pt-10">
