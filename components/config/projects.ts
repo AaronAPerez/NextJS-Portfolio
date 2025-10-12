@@ -1,7 +1,7 @@
 import { Project } from "../types/project";
 
 export const projects: Project = [
-{
+  {
     id: 'amp-vending',
     title: "AMP Vending",
     description: "Modern vending machine service website featuring responsive design, service information, and product catalog. Built with attention to accessibility and user experience.",
@@ -14,6 +14,35 @@ export const projects: Project = [
     gradient: {
       from: "#FD5A1E", // orange
       to: "#A5ACAF"    // silver
+    }
+  },
+    {
+    id: 'cloudgov-dashboard',
+    title: "CloudGov Dashboard",
+    description: "Production-ready enterprise cloud governance platform for AWS resource management, cost optimization, and security compliance. Demonstrates full-stack development expertise with real-time monitoring, AI-powered recommendations, and comprehensive testing. Built for LLNL Junior Software Developer position showcasing modern development practices and measurable business impact ($150K+ annual cost savings).",
+    tech: [
+      "Next.js 14",
+      "React 18", 
+      "TypeScript",
+      "Tailwind CSS",
+      "Node.js",
+      "SWR",
+      "Recharts",
+      "Jest",
+      "Playwright",
+      "Zod",
+      "RESTful API",
+      "CI/CD",
+      "Docker"
+    ],
+    images: ["/images/projects/cloudgov-dashboard/cloudgov-1.png"],
+    imagesAlt: ["/images/projects/cloudgov-dashboard/cloudgov-dashboard-preview.png"],
+    demoLink: "https://cloudgov-dashboard.vercel.app",
+    codeLink: "https://github.com/YOUR_USERNAME/cloudgov-dashboard",
+    websiteLink: "https://cloudgov-dashboard.vercel.app",
+    gradient: {
+      from: "#2563EB", // Primary blue
+      to: "#16A34A"    // Success green
     }
   },
   {
@@ -46,28 +75,4 @@ export const projects: Project = [
       to: "#d4af37" 
     }
   },
-  
-  {
-    id: 'game-database',
-    title: "Video Game Database",
-    description: "Feature-rich video game discovery platform using RAWG.IO API. Users can search games, apply multiple filters, view detailed game information, and sort by various criteria such as genre, platform, and ratings. Built with React, TypeScript and Chakra UI, emphasizing responsive design and accessibility.",
-    tech: [
-      "React", 
-      "TypeScript", 
-      "Chakra UI", 
-      "Axios", 
-      "React Query",
-      "React Router",
-      "RAWG API"
-    ],
-    images: ["/images/projects/game-database/GameAPI.svg"],
-    imagesAlt: ["/images/projects/game-database/GameAPI.svg"],
-    demoLink: "#",
-    codeLink: "https://github.com/AaronAPerez/Videogame_API_App",
-    gradient: {
-      from: "#553C9A", // Purple
-      to: "#00B5D8"    // Cyan
-    }
-  },
 ];
-    
