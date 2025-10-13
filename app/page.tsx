@@ -2,7 +2,7 @@ import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import AboutSection from "@/components/sections/AboutSection/AboutSection";
-import ContactSection from "@/components/sections/ContactSection/ContactSection";
+import ContactSection from "@/components/sections/ContactSection";
 import HeroSection from "@/components/sections/HeroSection";
 import SkillsSection from "@/components/sections/SkillsSection/SkillsSection";
 import { TimelineSection } from "@/components/sections/TimelineSection/TimelineSection";
