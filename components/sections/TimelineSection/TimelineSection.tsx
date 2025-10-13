@@ -128,11 +128,13 @@ const TimelineCard = ({
 
 export const TimelineSection = () => {
   return (
-    <>
-      {/* Background Effects */}
+    <div className="relative w-full overflow-hidden py-20">
+      {/* Background Effects - consistent with other sections */}
       <BackgroundBeams className="absolute inset-0" />
+      <div className="absolute inset-0 bg-gradient-to-b from-blue-500/5 via-transparent to-violet-500/5" />
+      <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:50px]" />
 
-      <div className="relative z-10">
+      <div className="relative z-10 container mx-auto px-4">
         {/* Section Title */}
         <SectionTitle
           title="Experience & Education"
@@ -182,10 +184,7 @@ export const TimelineSection = () => {
           </div>
         </div>
       </div>
-
-      {/* Background Grid */}
-      <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:50px]" />
-    </>
+    </div>
   );
 };
 
