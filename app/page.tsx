@@ -3,7 +3,7 @@ import { Section } from "@/components/layout/Section";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import AboutSection from "@/components/sections/AboutSection/AboutSection";
 import ContactSection from "@/components/sections/ContactSection/ContactSection";
-import HeroSection from "@/components/sections/HeroSection/HeroSection";
+import HeroSection from "@/components/sections/HeroSection";
 import SkillsSection from "@/components/sections/SkillsSection/SkillsSection";
 import { TimelineSection } from "@/components/sections/TimelineSection/TimelineSection";
 import dynamic from 'next/dynamic';

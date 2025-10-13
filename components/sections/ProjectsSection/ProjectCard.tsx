@@ -83,7 +83,7 @@ export const ProjectCard = ({ project, index, isHovered, onHover }: ProjectCardP
             </div>
 
             {/* Project Details with Semantic Structure */}
-            <div className="flex flex-col flex-1 p-6 bg-black/20 backdrop-blur-sm">
+            <div className="flex flex-col flex-1 p-6 bg-black/20 backdrop-blur-sm overflow-visible">
               <h3
                 id={`${cardId}-title`}
                 className="text-xl sm:text-3xl font-bold mb-4 bg-clip-text text-transparent"
@@ -94,7 +94,7 @@ export const ProjectCard = ({ project, index, isHovered, onHover }: ProjectCardP
                 {project.title}
               </h3>
 
-              <p className="text-gray-300 text-sm sm:text-base mb-6 flex-1 line-clamp-5">
+              <p className="text-gray-300 text-sm sm:text-base mb-4 flex-1 line-clamp-4">
                 {project.description}
               </p>
 
@@ -102,7 +102,7 @@ export const ProjectCard = ({ project, index, isHovered, onHover }: ProjectCardP
               <div
                 role="list"
                 aria-label={`Technologies used in ${project.title}`}
-                className="flex flex-wrap gap-4 justify-self-start"
+                className="flex flex-wrap gap-2 sm:gap-3 mt-auto pt-2"
               >
                 {project.tech.map((tech, techIndex) => {
                   const techData = techIcons[tech];
@@ -112,20 +112,20 @@ export const ProjectCard = ({ project, index, isHovered, onHover }: ProjectCardP
                       role="listitem"
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
-                      className="flex items-center gap-1 px-3 py-1 rounded-full bg-zinc-800/50 border transition-colors duration-200 hover:border-opacity-50"
+                      className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-full bg-zinc-800/50 border transition-colors duration-200 hover:border-opacity-50 whitespace-nowrap"
                       style={{ borderColor: `${techData?.color}40` }}
                     >
                       {techData?.icon && (
                         <Image
                           src={techData.icon}
                           alt={`${tech} icon`}
-                          width={22}
-                          height={22}
-                          className="object-contain"
+                          width={18}
+                          height={18}
+                          className="object-contain flex-shrink-0"
                         />
                       )}
                       <span
-                        className="text-sm font-medium"
+                        className="text-xs sm:text-sm font-medium"
                         style={{ color: techData?.color || '#9CA3AF' }}
                       >
                         {tech}
