@@ -35,7 +35,7 @@ const SectionTitle = ({ title, subtitle, className }: SectionTitleProps) => {
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-500/20 to-transparent blur-sm" />
         
         {/* Main Title */}   
-        <h2 className="relative z-10">
+        <h1 className="relative z-10">
 
         <div className="relative">
           <TextGenerateEffect
@@ -61,7 +61,7 @@ const SectionTitle = ({ title, subtitle, className }: SectionTitleProps) => {
             style={{ transform: 'translateX(-50%)' }}
           />
         </div>
-        </h2>
+        </h1>
       </div>
       
       {/* Subtitle with Enhanced Styling */}
