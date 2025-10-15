@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from "@/lib/utils";
 import Image from 'next/image';
 import SectionTitle from '@/components/SectionTitle';
-import { BackgroundBeams } from '@/components/ui/background-beams';
 import { skills } from '@/components/config/skills';
 
 const categories = [
@@ -153,10 +152,7 @@ export const SkillsSection = () => {
 
   return (
     <div className="relative w-full overflow-hidden min-h-screen py-20">
-      {/* Background Effects */}
-      <BackgroundBeams className="absolute inset-0" />
-
-      <div className="relative z-10 container mx-auto"> 
+      <div className="relative z-10 container mx-auto">
         {/* Section Title */}
         <SectionTitle
           title="Skills & Technologies"
@@ -214,9 +210,6 @@ export const SkillsSection = () => {
         {/* Skills Grid */}
         <SkillsGrid category={selectedCategory} />
       </div>
-
-      {/* Background Grid */}
-      <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:50px]" />
     </div>
   );
 };
