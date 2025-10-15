@@ -5,20 +5,11 @@ import { motion } from 'framer-motion'
 import {
   GraduationCap,
   Briefcase,
-  Calendar,
-  MapPin,
-  CheckCircle,
-  Star,
   ArrowRight,
-  Building,
-  Award,
-  ExternalLink,
   Globe,
-  Zap
 } from 'lucide-react'
-import { cn } from "@/lib/utils"
 import SectionTitle from '@/components/SectionTitle'
-import { BackgroundBeams } from '@/components/ui/background-beams'
+import TimelineCard from '../TimelineCard'
 
 // Enhanced timeline data with improved structure and new role
 const timelineData = {
@@ -29,8 +20,8 @@ const timelineData = {
       institution: "CodeStack Academy",
       period: "2023 - 2024",
       location: "San Joaquin County, CA",
-      type: "certification",
-      status: "completed",
+      type: "certification" as const,
+      status: "completed" as const,
       details: [
         "Frontend Development: React, TypeScript, Next.js, Tailwind CSS with advanced component architecture",
         "Backend Development: C#, .NET Core, SQL Server, RESTful APIs with authentication and authorization",
@@ -53,8 +44,8 @@ const timelineData = {
       institution: "ITT Technical Institute",
       period: "Graduated 2016",
       location: "Rancho Cordova, CA",
-      type: "degree",
-      status: "completed",
+      type: "degree" as const,
+      status: "completed" as const,
       details: [
         "Network Systems Administration and Security with hands-on lab experience",
         "Information Security and Risk Management including vulnerability assessments",
@@ -79,8 +70,8 @@ const timelineData = {
       company: "AMP Vending Machines",
       period: "Mar 2025 - Present",
       location: "Modesto, CA (Remote)",
-      type: "work",
-      status: "current",
+      type: "work" as const,
+      status: "current" as const,
       website: "https://www.ampvendingmachines.com",
       details: [
         "Architected and developed complete digital presence showcasing premium vending solutions for Central California businesses",
@@ -108,8 +99,8 @@ const timelineData = {
       company: "San Joaquin County Office of Education - CodeStack",
       period: "2017 - Present",
       location: "Stockton, CA",
-      type: "work",
-      status: "current",
+      type: "work" as const,
+      status: "current" as const,
       details: [
         "QA testing and validation for educational software systems ensuring 99% uptime for critical SEIS platform",
         "Technical support and troubleshooting for SEIS (Special Education Information System) serving 50+ school districts",
@@ -134,8 +125,8 @@ const timelineData = {
       company: "San Joaquin County - Information Systems Division",
       period: "2017",
       location: "Stockton, CA",
-      type: "work",
-      status: "completed",
+      type: "work" as const,
+      status: "completed" as const,
       details: [
         "Help desk support for 2,000+ county employees across 15+ departments with 24/7 coverage",
         "Workstation setup, configuration, and maintenance including Windows domain management",
@@ -154,222 +145,6 @@ const timelineData = {
       ]
     }
   ]
-}
-
-// TypeScript interfaces for better type safety
-interface TimelineItem {
-  id: string
-  title: string
-  company?: string
-  institution?: string
-  period: string
-  location: string
-  type: 'work' | 'education' | 'certification' | 'degree'
-  status: 'completed' | 'current'
-  details: string[]
-  skills: string[]
-  gradient: string
-  achievements?: string[]
-  website?: string
-}
-
-interface TimelineCardProps extends TimelineItem {
-  delay?: number
-}
-
-/**
- * Individual Timeline Card Component
- */
-const TimelineCard = ({
-  title,
-  company,
-  institution,
-  period,
-  location,
-  details,
-  skills,
-  delay = 0,
-  type,
-  status,
-  gradient,
-  achievements = [],
-  website
-}: TimelineCardProps) => {
-  const getIcon = () => {
-    switch (type) {
-      case 'work':
-        return <Briefcase className="w-6 h-6" aria-hidden="true" />
-      case 'education':
-      case 'degree':
-        return <GraduationCap className="w-6 h-6" aria-hidden="true" />
-      case 'certification':
-        return <Award className="w-6 h-6" aria-hidden="true" />
-      default:
-        return <Star className="w-6 h-6" aria-hidden="true" />
-    }
-  }
-
-  const getStatusBadge = () => {
-    if (status === 'current') {
-      return (
-        <div
-          className="flex items-center gap-2 px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 text-xs font-semibold rounded-full"
-          role="status"
-          aria-label="Currently employed"
-        >
-          <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" aria-hidden="true" />
-          Current
-        </div>
-      )
-    }
-    return (
-      <div
-        className="flex items-center gap-2 px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 text-xs font-semibold rounded-full"
-        role="status"
-        aria-label="Previously completed"
-      >
-        <CheckCircle className="w-3 h-3" aria-hidden="true" />
-        Completed
-      </div>
-    )
-  }
-
-  return (
-    <motion.article
-      initial={{ opacity: 0, y: 50, scale: 0.9 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.6, delay }}
-      className="group relative"
-      role="article"
-      aria-labelledby={`${type}-${title.replace(/\s+/g, '-').toLowerCase()}`}
-      tabIndex={0}
-    >
-      {/* Main card with consistent styling */}
-      <div className="relative h-full backdrop-blur-sm bg-black/40 border border-white/10 dark:border-gray-700/50 rounded-2xl overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-blue-500/10 hover:-translate-y-2 hover:border-slate-500/50 focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-offset-2">
-
-        {/* Gradient header */}
-        <div className={cn("p-6 bg-gradient-to-r", gradient, "relative overflow-hidden")}>
-          <div className="absolute inset-0 opacity-10" aria-hidden="true">
-            <div className="absolute inset-0 bg-grid-white/20" />
-          </div>
-
-          <div className="relative z-10">
-            <div className="flex items-start justify-between mb-4">
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
-                  {getIcon()}
-                </div>
-                {getStatusBadge()}
-              </div>
-              {website && (
-                <a
-                  href={website}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-2 bg-white/20 rounded-lg backdrop-blur-sm hover:bg-white/30 transition-colors"
-                  aria-label={`Visit ${company || institution} website`}
-                >
-                  <ExternalLink className="w-4 h-4 text-white" />
-                </a>
-              )}
-            </div>
-
-            <h3
-              id={`${type}-${title.replace(/\s+/g, '-').toLowerCase()}`}
-              className="text-xl md:text-2xl font-bold text-white mb-2 leading-tight"
-            >
-              {title}
-            </h3>
-
-            <div className="space-y-1 text-white/90">
-              <div className="flex items-center gap-2 text-sm">
-                <Building className="w-4 h-4" aria-hidden="true" />
-                <span>{company || institution}</span>
-              </div>
-              <div className="flex items-center gap-2 text-sm">
-                <Calendar className="w-4 h-4" aria-hidden="true" />
-                <time>{period}</time>
-              </div>
-              <div className="flex items-center gap-2 text-sm">
-                <MapPin className="w-4 h-4" aria-hidden="true" />
-                <span>{location}</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="absolute -right-8 -bottom-8 w-32 h-32 bg-white/10 rounded-full" aria-hidden="true" />
-          <div className="absolute -right-4 -bottom-4 w-20 h-20 bg-white/5 rounded-full" aria-hidden="true" />
-        </div>
-
-        {/* Card content */}
-        <div className="p-6">
-          <div className="mb-6">
-            <h4 className="text-sm font-semibold text-gray-300 dark:text-gray-300 mb-4 flex items-center gap-2">
-              <ArrowRight className="w-4 h-4" aria-hidden="true" />
-              Key Responsibilities & Achievements
-            </h4>
-            <ul className="space-y-3" role="list">
-              {details.map((detail, idx) => (
-                <motion.li
-                  key={idx}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: delay + (idx * 0.1), duration: 0.4 }}
-                  className="flex items-start gap-3 text-sm text-gray-400 dark:text-gray-300"
-                  role="listitem"
-                >
-                  <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2 flex-shrink-0" aria-hidden="true" />
-                  <span className="leading-relaxed">{detail}</span>
-                </motion.li>
-              ))}
-            </ul>
-          </div>
-
-          {achievements.length > 0 && (
-            <div className="mb-6">
-              <h4 className="text-sm font-semibold text-gray-300 dark:text-gray-300 mb-3 flex items-center gap-2">
-                <Zap className="w-4 h-4" aria-hidden="true" />
-                Key Achievements
-              </h4>
-              <ul className="space-y-2" role="list">
-                {achievements.map((achievement, idx) => (
-                  <li
-                    key={idx}
-                    className="flex items-start gap-2 text-sm text-gray-400 dark:text-gray-300"
-                    role="listitem"
-                  >
-                    <Star className="w-3 h-3 text-yellow-500 mt-1 flex-shrink-0" aria-hidden="true" />
-                    <span>{achievement}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          <div>
-            <h4 className="text-sm font-semibold text-gray-300 dark:text-gray-300 mb-3">
-              Skills & Technologies
-            </h4>
-            <div className="flex flex-wrap gap-2" role="list" aria-label="Skills and technologies used">
-              {skills.map((skill) => (
-                <span
-                  key={skill}
-                  className="px-3 py-1 text-xs font-medium bg-gray-800/50 dark:bg-gray-800 text-gray-300 dark:text-gray-300 rounded-full border border-gray-700 dark:border-gray-700 hover:bg-gray-700 dark:hover:bg-gray-700 transition-colors"
-                  role="listitem"
-                >
-                  {skill}
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" aria-hidden="true" />
-      </div>
-    </motion.article>
-  )
 }
 
 /**
@@ -424,8 +199,7 @@ const TimelineCard = ({
 export const TimelineSection = () => {
   return (
     <div className="relative w-full overflow-hidden py-20">
-      {/* Background Effects - consistent with other sections */}
-      <BackgroundBeams className="absolute inset-0" />
+
       <div className="absolute inset-0 bg-gradient-to-b from-blue-500/5 via-transparent to-violet-500/5" />
       <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:50px]" />
 

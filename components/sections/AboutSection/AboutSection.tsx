@@ -5,7 +5,6 @@ import { motion } from 'framer-motion';
 import { cn } from "@/lib/utils";
 import SectionTitle from '@/components/SectionTitle';
 import { CardBody, CardContainer, CardItem } from './CardContainer';
-import { BackgroundBeams } from '@/components/ui/background-beams';
 
 const aboutContent = {
   background: {
@@ -97,9 +96,6 @@ const InfoCard = ({ title, content, delay, className }: {
 export const AboutSection = () => {
   return (
     <div className="relative w-full overflow-hidden">
-      {/* Background Effects */}
-      <BackgroundBeams className="absolute inset-0" />
-
       <div className="relative z-10">
         <SectionTitle
           title="About Me"
@@ -122,9 +118,6 @@ export const AboutSection = () => {
           />
         </div>
       </div>
-
-      {/* Background Grid */}
-      <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:50px]" />
     </div>
   );
 };

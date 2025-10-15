@@ -19,7 +19,7 @@ import {
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import SectionTitle from '@/components/SectionTitle'
-import { BackgroundBeams } from '@/components/ui/background-beams'
+
 
 // Contact information and social links data
 const contactInfo = {
@@ -314,8 +314,6 @@ export const ContactSection = () => {
 
   return (
     <div className="relative w-full overflow-hidden py-20">
-      {/* Background Effects - consistent with other sections */}
-      <BackgroundBeams className="absolute inset-0" />
       <div className="absolute inset-0 bg-gradient-to-b from-blue-500/5 via-transparent to-violet-500/5" />
       <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:50px]" />
 

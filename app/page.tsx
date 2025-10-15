@@ -27,7 +27,7 @@ export default function Home() {
       </section>
 
       {/* Projects Section */}
-      <section id="projects" className="py-24">
+      <section id="projects">
         <ProjectsSection />
       </section>
 
