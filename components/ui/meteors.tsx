@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import React from "react";
+import React, { useMemo } from "react";
 
 export const Meteors = ({
   number = 20,
@@ -10,10 +10,17 @@ export const Meteors = ({
   number?: number;
   className?: string;
 }) => {
-  const meteors = new Array(number || 20).fill(true);
+  const meteors = useMemo(() => {
+    return new Array(number || 20).fill(true).map(() => ({
+      left: Math.floor(Math.random() * (400 - -400) + -400),
+      animationDelay: Math.random() * (0.8 - 0.2) + 0.2,
+      animationDuration: Math.floor(Math.random() * (10 - 2) + 2),
+    }));
+  }, [number]);
+
   return (
     <>
-      {meteors.map((el, idx) => (
+      {meteors.map((meteor, idx) => (
         <span
           key={"meteor" + idx}
           className={cn(
@@ -23,9 +30,9 @@ export const Meteors = ({
           )}
           style={{
             top: 0,
-            left: Math.floor(Math.random() * (400 - -400) + -400) + "px",
-            animationDelay: Math.random() * (0.8 - 0.2) + 0.2 + "s",
-            animationDuration: Math.floor(Math.random() * (10 - 2) + 2) + "s",
+            left: meteor.left + "px",
+            animationDelay: meteor.animationDelay + "s",
+            animationDuration: meteor.animationDuration + "s",
           }}
         ></span>
       ))}

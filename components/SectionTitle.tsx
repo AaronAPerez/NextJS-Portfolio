@@ -45,7 +45,7 @@ const SectionTitle = ({ title, subtitle, className }: SectionTitleProps) => {
                "text-3xl sm:text-4xl md:text-5xl font-bold",
                "tracking-tight leading-tight",
                "bg-clip-text text-transparent",
-            "bg-gradient-to-r from-gray-900 to-gray-600 dark:from-gray-100 dark:to-gray-400",
+            "bg-gradient-to-r from-gray-100 to-gray-400",
               "pb-4", 
               "mb-2" 
             )}
@@ -73,9 +73,9 @@ const SectionTitle = ({ title, subtitle, className }: SectionTitleProps) => {
           className={cn(
             "mt-6",
             "text-base sm:text-lg",
-            "text-gray-600 dark:text-gray-400",
+            "text-gray-400",
             "max-w-2xl mx-auto",
-            "leading-relaxed"
+            "leading-normal"
           )}
         >
           {subtitle}

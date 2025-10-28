@@ -1,29 +1,55 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
-import { ThemeProvider } from "./provider";
+import { Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
-import ThemeSwitcher from "@/components/ThemeSwitcher";
-import { SocialLinks } from "@/components/layout/SocialLinks";
-import ScrollToTop from "@/components/layout/ScrollToTop";
+import { AIChat } from "@/components/AIAssistant/AIChat";
 
 // Styles
 import './globals.css';
-import Footer from "@/components/layout/Footer";
 import FloatingNavbar from "@/components/layout/FloatingNavbar";
 import { Analytics } from '@vercel/analytics/react';
 
-
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// Optimized font loading
+const inter = Inter({
   subsets: ["latin"],
+  display: 'swap',
+  preload: true,
+  variable: '--font-inter',
+  fallback: ['system-ui', '-apple-system', 'sans-serif'],
+  adjustFontFallback: true,
 });
 
 
-// Metadata
+// Metadata with enhanced SEO
 export const metadata: Metadata = {
   title: 'Aaron A. Perez - FullStack Developer',
-  description: 'Portfolio of Aaron A. Perez, showcasing full-stack development projects and skills.',
+  description: 'Portfolio of Aaron A. Perez, showcasing full-stack development projects and skills in React, Next.js, Node.js, TypeScript, AWS, and modern web technologies.',
+  keywords: ['Full Stack Developer', 'Web Developer', 'React', 'Next.js', 'TypeScript', 'Node.js', 'AWS', 'Portfolio'],
+  authors: [{ name: 'Aaron A. Perez' }],
+  creator: 'Aaron A. Perez',
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: 'https://www.aaronaperez.dev',
+    title: 'Aaron A. Perez - FullStack Developer',
+    description: 'Portfolio showcasing full-stack development projects and skills',
+    siteName: 'Aaron A. Perez Portfolio',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Aaron A. Perez - FullStack Developer',
+    description: 'Portfolio showcasing full-stack development projects and skills',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
 };
 
 // Navigation configuration
@@ -47,70 +73,60 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en"
+          suppressHydrationWarning
+      className="scroll-smooth"
+      >
 
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-         <meta name="facebook-domain-verification" content="6iqzzcn0b2ao92l7p9ctgxqn2e1s64" />
+        <meta name="facebook-domain-verification" content="6iqzzcn0b2ao92l7p9ctgxqn2e1s64" />
+
+        {/* Performance optimizations - Vercel Analytics */}
+        {/* <link rel="preconnect" href="https://va.vercel-scripts.com" />
+        <link rel="dns-prefetch" href="https://vitals.vercel-insights.com" /> */}
+
+        {/* Preload critical assets */}
+        <link
+          rel="preload"
+          as="image"
+          href="/images/profile/headshot.png"
+          fetchPriority="high"
+          type="image/png"
+        />
       </head>
 
-
       <body className={cn(
-        geistSans.variable,
-        "min-h-screen bg-gray-100 dark:bg-black",
-        "text-gray-900 dark:text-gray-100",
-        "transition-colors duration-300"
+        inter.variable,
+        "min-h-screen bg-black",
+        "text-gray-100",
+        "font-sans"
       )}>
 
         {/* Skip to content - on top for better accessibility */}
         <SkipToContent />
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-        >
 
-          {/* Header with Navigation */}
-          <header role="banner">
-            <nav role="navigation" aria-label="Main navigation">
-              <FloatingNavbar navItems={navItems} />
-            </nav>
-            
-            {/* Theme Switcher - positioned differently on mobile and desktop */}
-            <div className="fixed top-4 sm:top-6 right-4 sm:right-6 z-50">
-              <ThemeSwitcher />
-            </div>
-          </header>
+        {/* Header with Navigation */}
+        <header role="banner">
+          <nav role="navigation" aria-label="Main navigation">
+            <FloatingNavbar navItems={navItems} />
+          </nav>
+        </header>
 
-          {/* Scroll To Top Button */}
-          <div className="fixed bottom-4 right-4 z-50">
-            <ScrollToTop />
+        {/* AI Assistant */}
+        <AIChat />
+
+        {/* Main Content */}
+        <main id="main-content" role="main" tabIndex={-1}>
+          {/* Content sections wrapper */}
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            {children}
+            <Analytics />
           </div>
+        </main>
 
-          {/* Main Content */}
-          <main id="main-content" role="main" tabIndex={-1}>
-            {/* Content sections wrapper */}
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              {children}
-              <Analytics />
-            </div>
-          </main>
-          
-          {/* Social Links */}
-          <div className="fixed left-4 bottom-4 z-40 hidden md:block">
-            <SocialLinks orientation="vertical" />
-          </div>
 
-          {/* Mobile Social Links */}
-          <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 md:hidden">
-            <SocialLinks orientation="horizontal" />
-          </div>
-          
-          {/* Footer */}
-          <footer role="contentinfo">
-            <Footer />
-          </footer>
-        </ThemeProvider>
+
       </body>
     </html>
   );
@@ -124,8 +140,8 @@ export const SkipToContent = () => (
     className={cn(
       "sr-only focus:not-sr-only",
       "fixed top-4 left-4 z-[100]",
-      "px-4 py-2 bg-white dark:bg-gray-900",
-      "border border-gray-200 dark:border-gray-700",
+      "px-4 py-2 bg-gray-900",
+      "border border-gray-700",
       "rounded-md shadow-sm",
       "focus:outline-none focus:ring-2 focus:ring-blue-500"
     )}
