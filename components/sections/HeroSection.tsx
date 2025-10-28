@@ -1,7 +1,7 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useState, useEffect, memo } from 'react'
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import {
   ArrowDown,
   Download,
@@ -9,14 +9,9 @@ import {
   Linkedin,
   Mail,
   MapPin,
-  Calendar,
-  Star,
-  Trophy,
-  Code
 } from 'lucide-react'
 import Image from 'next/image'
 import { HeroHighlight, Highlight } from "../ui/hero-highlight";
-import { BackgroundBeams } from '@/components/ui/background-beams';
 
 // Extend the Window interface to include gtag
 declare global {
@@ -25,79 +20,62 @@ declare global {
   }
 }
 
+// Memoized social link component for better performance
+const SocialLink = memo(({ social }: { social: { icon: typeof Github; href: string; label: string; hoverColor: string; bgHover: string } }) => {
+  const IconComponent = social.icon
+  const prefersReducedMotion = useReducedMotion()
+
+  return (
+    <motion.a
+      href={social.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={social.label}
+      className={`touch-target p-3 backdrop-blur-sm bg-gray-800/30 rounded-full shadow-md transition-all duration-300 text-gray-400 min-h-[44px] min-w-[44px] flex items-center justify-center ${social.hoverColor} ${social.bgHover}`}
+      whileHover={prefersReducedMotion ? {} : { scale: 1.1, y: -2 }}
+      whileTap={prefersReducedMotion ? {} : { scale: 0.95 }}
+    >
+      <IconComponent className="w-5 h-5" />
+    </motion.a>
+  )
+})
+SocialLink.displayName = 'SocialLink'
+
+// Static tech data outside component
+const TECHNOLOGIES = [
+  { name: 'React', color: 'react-blue' },
+  { name: 'TypeScript', color: 'typescript-blue' },
+  { name: 'Next.js', color: 'text-white' },
+  { name: 'Node.js', color: 'node-green' },
+  { name: 'Azure', color: 'azure-blue' },
+  { name: 'C#', color: 'csharp-indigo' }
+]
+
+
 /**
- * Enhanced Hero Section with Professional Styling
- * Optimized for recruiter appeal with quantifiable metrics
+ * Performance-optimized Hero Section
+ * - Reduced animations for better FPS
+ * - Memoized components
+ * - Lazy-loaded images
+ * - Respects prefers-reduced-motion
  */
 export default function HeroSection() {
   const [mounted, setMounted] = useState(false)
-  const [, setCurrentMetric] = useState(0)
-
-  // Professional metrics that recruiters want to see
-  const heroMetrics = [
-    {
-      label: 'Projects Delivered',
-      value: '15+',
-      icon: Trophy,
-      color: 'text-blue-600 dark:text-blue-400',
-      description: 'Successfully completed',
-      bgColor: 'bg-blue-50 dark:bg-blue-900/30'
-    },
-    {
-      label: 'Client Satisfaction',
-      value: '100%',
-      icon: Star,
-      color: 'text-yellow-600 dark:text-yellow-400',
-      description: 'Positive feedback',
-      bgColor: 'bg-yellow-50 dark:bg-yellow-900/30'
-    },
-    {
-      label: 'Years Experience',
-      value: '3+',
-      icon: Calendar,
-      color: 'text-green-600 dark:text-green-400',
-      description: 'Professional development',
-      bgColor: 'bg-green-50 dark:bg-green-900/30'
-    },
-    {
-      label: 'Technologies',
-      value: '20+',
-      icon: Code,
-      color: 'text-indigo-600 dark:text-indigo-400',
-      description: 'Modern tech stack',
-      bgColor: 'bg-indigo-50 dark:bg-indigo-900/30'
-    }
-  ]
-
-  // Rotating technologies with enhanced styling
-  const technologies = [
-    { name: 'React', color: 'react-blue' },
-    { name: 'TypeScript', color: 'typescript-blue' },
-    { name: 'Next.js', color: 'text-gray-900 dark:text-white' },
-    { name: 'Node.js', color: 'node-green' },
-    { name: 'Azure', color: 'azure-blue' },
-    { name: 'C#', color: 'csharp-indigo' }
-  ]
   const [currentTech, setCurrentTech] = useState(0)
+  const prefersReducedMotion = useReducedMotion()
 
   useEffect(() => {
     setMounted(true)
 
-    // Rotate metrics every 3.5 seconds
-    const metricInterval = setInterval(() => {
-      setCurrentMetric((prev) => (prev + 1) % heroMetrics.length)
-    }, 3500)
-
-    // Rotate technologies every 2.5 seconds
+    // Only rotate technologies, removed unused metric rotation
     const techInterval = setInterval(() => {
-      setCurrentTech((prev) => (prev + 1) % technologies.length)
+      setCurrentTech((prev) => (prev + 1) % TECHNOLOGIES.length)
     }, 2500)
 
     return () => {
-      clearInterval(metricInterval)
       clearInterval(techInterval)
     }
-  }, [heroMetrics.length, technologies.length])
+  }, [])
 
   if (!mounted) return null
 
@@ -121,17 +99,16 @@ export default function HeroSection() {
 
   return (
     <div className="relative w-full overflow-hidden min-h-screen">
-      {/* Background Effects - consistent with other sections */}
-      <BackgroundBeams className="absolute inset-0" />
+      {/* Simplified Background Effects */}
       <div className="absolute inset-0 bg-gradient-to-b from-blue-500/5 via-transparent to-violet-500/5" />
-      <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:50px]" />
 
-      {/* Additional Hero-specific gradient orbs */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-20 left-20 w-72 h-72 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 dark:opacity-10 animate-blob"></div>
-        <div className="absolute top-40 right-20 w-72 h-72 bg-indigo-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 dark:opacity-10 animate-blob animation-delay-2000"></div>
-        <div className="absolute -bottom-8 left-1/2 w-72 h-72 bg-green-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 dark:opacity-10 animate-blob animation-delay-4000"></div>
-      </div>
+      {/* Reduced gradient orbs - only show if motion is not reduced */}
+      {!prefersReducedMotion && (
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-20 left-20 w-72 h-72 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-10"></div>
+          <div className="absolute top-40 right-20 w-72 h-72 bg-indigo-400 rounded-full mix-blend-multiply filter blur-xl opacity-10"></div>
+        </div>
+      )}
 
       <section className="relative z-10 min-h-screen flex items-center justify-center overflow-hidden py-20 md:py-24 lg:py-28 px-4 sm:px-6 lg:px-8">
         <div className="relative max-w-7xl mx-auto w-full">
@@ -139,18 +116,18 @@ export default function HeroSection() {
 
             {/* Left Column - Enhanced Content */}
             <motion.div
-              initial={{ opacity: 0, x: -50 }}
+              initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, ease: 'easeOut' }}
+              transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.5, ease: 'easeOut' }}
               className="space-y-6 md:space-y-8 w-full text-center lg:text-left"
             >
               {/* Enhanced Main Heading */}
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2, duration: 0.6 }}
+                transition={prefersReducedMotion ? { duration: 0 } : { delay: 0.1, duration: 0.4 }}
               >
-                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 leading-tight text-gray-900 dark:text-white">
+                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 leading-tight text-white">
                   <span>
                     Aaron A. Perez
                   </span>
@@ -171,42 +148,42 @@ export default function HeroSection() {
                     duration: 0.5,
                     ease: [0.4, 0.0, 0.2, 1],
                   }}
-                  className="text-2xl sm:text-3xl py-4 md:text-4xl lg:text-5xl font-bold text-neutral-700 dark:text-white max-w-4xl leading-relaxed mx-auto lg:mx-0"
+                  className="text-2xl sm:text-3xl py-4 md:text-4xl lg:text-5xl font-bold text-white max-w-4xl leading-normal mx-auto lg:mx-0"
                 >
-                  <Highlight className="text-black dark:text-white/90">
+                  <Highlight className="text-white/90 rounded-xl">
                     Full Stack Developer
                   </Highlight>
                 </motion.h2>
               </HeroHighlight>
 
-              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-300">
+              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 text-base sm:text-lg md:text-xl text-gray-300">
                 <span>Specializing in</span>
                 <AnimatePresence mode="wait">
                   <motion.span
-                    key={technologies[currentTech].name}
-                    initial={{ opacity: 0, y: 20 }}
+                    key={TECHNOLOGIES[currentTech].name}
+                    initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.3 }}
-                    className={`font-semibold ${technologies[currentTech].color}`}
+                    exit={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: -10 }}
+                    transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.2 }}
+                    className={`font-semibold ${TECHNOLOGIES[currentTech].color}`}
                   >
-                    {technologies[currentTech].name}
+                    {TECHNOLOGIES[currentTech].name}
                   </motion.span>
                 </AnimatePresence>
               </div>
 
               {/* Enhanced CTA Buttons */}
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.8, duration: 0.6 }}
+                transition={prefersReducedMotion ? { duration: 0 } : { delay: 0.2, duration: 0.4 }}
                 className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
               >
                 <motion.button
                   onClick={scrollToProjects}
                   className="group touch-target px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 min-h-[48px]"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                  whileHover={prefersReducedMotion ? {} : { scale: 1.05 }}
+                  whileTap={prefersReducedMotion ? {} : { scale: 0.95 }}
                   aria-label="View my portfolio projects"
                 >
                   <span>View My Work</span>
@@ -217,9 +194,9 @@ export default function HeroSection() {
                   href="/A.Perez - Fullstack Resume.pdf"
                   download
                   onClick={handleResumeDownload}
-                  className="group touch-target px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg backdrop-blur-sm bg-white/10 dark:bg-gray-800/30 border-2 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 min-h-[48px] hover:bg-white/20 dark:hover:bg-gray-800/50"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                  className="group touch-target px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg backdrop-blur-sm bg-gray-800/30 border-2 border-gray-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 min-h-[48px] hover:bg-gray-800/50"
+                  whileHover={prefersReducedMotion ? {} : { scale: 1.05 }}
+                  whileTap={prefersReducedMotion ? {} : { scale: 0.95 }}
                   aria-label="Download resume PDF"
                 >
                   <Download className="w-4 h-4 group-hover:scale-110 transition-transform" />
@@ -318,8 +295,8 @@ export default function HeroSection() {
                           <Image
                             src="/images/profile/headshot.png"
                             alt="Aaron A. Perez - Full Stack Developer"
-                            width={384}
-                            height={384}
+                            width={324}
+                            height={324}
                             sizes="(max-width: 640px) 256px, (max-width: 768px) 320px, 384px"
                             className="w-full h-full object-cover"
                             priority

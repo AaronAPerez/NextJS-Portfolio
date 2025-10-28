@@ -13,12 +13,12 @@ import {
   Send,
   CheckCircle,
   ExternalLink,
-  User,
   ArrowRight,
   Star
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import SectionTitle from '@/components/SectionTitle'
+import Image from 'next/image'
 
 
 // Contact information and social links data
@@ -133,7 +133,7 @@ const ContactActionCard = ({
       aria-label={action.description}
     >
       {/* Main card with glassmorphism effect */}
-      <div className="relative p-6 backdrop-blur-sm bg-black/40 border border-white/10 dark:border-gray-700/50 rounded-2xl overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-blue-500/10 hover:-translate-y-2 hover:border-slate-500/50">
+      <div className="relative p-6 backdrop-blur-sm bg-black/40 border border-white/10 rounded-2xl overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-blue-500/10 hover:-translate-y-2 hover:border-slate-500/50">
 
         {/* Gradient background */}
         <div className={cn(
@@ -152,17 +152,17 @@ const ContactActionCard = ({
               <IconComponent className="w-6 h-6 text-white" />
             </div>
             <div className="text-left">
-              <h3 className="font-semibold text-gray-200 dark:text-white group-hover:text-white transition-colors">
+              <h4 className="font-semibold text-white group-hover:text-white transition-colors">
                 {action.title}
-              </h3>
-              <p className="text-sm text-gray-400 dark:text-gray-400 group-hover:text-white/80 transition-colors">
+              </h4>
+              <p className="text-sm text-gray-400 group-hover:text-white/80 transition-colors">
                 {action.description}
               </p>
             </div>
           </div>
 
           <div className="flex items-center justify-between">
-            <span className="text-xs text-gray-500 dark:text-gray-400 group-hover:text-white/60 transition-colors font-mono">
+            <span className="text-xs text-gray-400 group-hover:text-white/60 transition-colors font-mono">
               {action.action === 'copy' ? 'Click to copy' :
                action.action === 'mailto' ? 'Opens email client' :
                'Downloads PDF file'}
@@ -203,7 +203,7 @@ const SocialLinkCard = ({
       aria-label={`Visit my ${link.name} profile`}
     >
       {/* Main card */}
-      <div className="relative p-6 backdrop-blur-sm bg-black/40 border border-white/10 dark:border-gray-700/50 rounded-2xl overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-blue-500/10 hover:-translate-y-2 hover:border-slate-500/50">
+      <div className="relative p-6 backdrop-blur-sm bg-black/40 border border-white/10 rounded-2xl overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-blue-500/10 hover:-translate-y-2 hover:border-slate-500/50">
 
         {/* Gradient background on hover */}
         <div className={cn(
@@ -222,15 +222,15 @@ const SocialLinkCard = ({
             </div>
           </div>
 
-          <h3 className="font-bold text-lg text-gray-200 dark:text-white group-hover:text-white transition-colors mb-2">
+          <h3 className="font-bold text-lg text-white group-hover:text-white transition-colors mb-2">
             {link.name}
           </h3>
 
-          <p className="text-sm text-gray-400 dark:text-gray-400 group-hover:text-white/80 transition-colors leading-relaxed">
+          <p className="text-sm text-gray-400 group-hover:text-white/80 transition-colors leading-normal">
             {link.description}
           </p>
 
-          <div className="mt-4 flex items-center justify-center gap-2 text-xs text-gray-500 dark:text-gray-400 group-hover:text-white/60 transition-colors">
+          <div className="mt-4 flex items-center justify-center gap-2 text-xs text-gray-400 group-hover:text-white/60 transition-colors">
             <ExternalLink className="w-3 h-3" />
             Visit Profile
           </div>
@@ -253,7 +253,7 @@ const ContactInfoCard = () => (
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
     transition={{ duration: 0.6 }}
-    className="relative p-8 backdrop-blur-sm bg-black/40 border border-white/10 dark:border-gray-700/50 rounded-2xl overflow-hidden hover:border-slate-500/50 transition-all duration-500"
+    className="relative p-8 backdrop-blur-sm bg-black/40 border border-white/10 rounded-2xl overflow-hidden hover:border-slate-500/50 transition-all duration-500"
   >
     {/* Gradient background */}
     <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10" />
@@ -261,33 +261,37 @@ const ContactInfoCard = () => (
     {/* Content */}
     <div className="relative z-10">
       <div className="flex items-center gap-3 mb-6">
-        <div className="p-3 bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl">
-          <User className="w-6 h-6 text-white" />
+        <div className="px-2 pt-1 bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl">
+           <Image
+                                      src="/images/profile/headshot.png"
+                                      alt="Aaron A. Perez - Full Stack Developer"
+                                      width={60}
+                                      height={60}/>
         </div>
-        <h3 className="text-xl font-bold text-gray-200 dark:text-white">
+        <h3 className="text-xl font-bold text-white">
           Contact Information
         </h3>
       </div>
 
       <div className="space-y-4">
-        <div className="flex items-center gap-3 text-gray-300 dark:text-gray-300">
+        <div className="flex items-center gap-3 text-gray-300">
           <Mail className="w-5 h-5 text-blue-500" />
           <span className="font-mono text-sm">{contactInfo.email}</span>
         </div>
 
-        <div className="flex items-center gap-3 text-gray-300 dark:text-gray-300">
+        <div className="flex items-center gap-3 text-gray-300">
           <Phone className="w-5 h-5 text-green-500" />
           <span className="font-mono text-sm">{contactInfo.phone}</span>
         </div>
 
-        <div className="flex items-center gap-3 text-gray-300 dark:text-gray-300">
+        <div className="flex items-center gap-3 text-gray-300">
           <MapPin className="w-5 h-5 text-red-500" />
           <span className="text-sm">{contactInfo.location}</span>
         </div>
       </div>
 
-      <div className="mt-6 pt-6 border-t border-gray-700 dark:border-gray-700">
-        <p className="text-sm text-gray-400 dark:text-gray-400 leading-relaxed">
+      <div className="mt-6 pt-6 border-t border-gray-700">
+        <p className="text-sm text-gray-400 leading-normal">
           I&apos;m always open to discussing new opportunities, interesting projects,
           or just having a conversation about technology and development.
         </p>
@@ -332,7 +336,7 @@ export const ContactSection = () => {
             exit={{ opacity: 0, scale: 0.8 }}
             className="flex justify-center mb-8"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 rounded-full">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-900/30 text-green-300 rounded-full">
               <CheckCircle className="w-4 h-4" />
               Email copied to clipboard!
             </div>
@@ -350,11 +354,11 @@ export const ContactSection = () => {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="mb-8"
             >
-              <h3 className="text-2xl font-bold text-gray-200 dark:text-white mb-2 flex items-center gap-3">
+              <h3 className="text-2xl font-bold text-white mb-2 flex items-center gap-3">
                 <Star className="w-6 h-6 text-yellow-500" />
                 Quick Actions
               </h3>
-              <p className="text-gray-400 dark:text-gray-400">
+              <p className="text-gray-400">
                 Choose the best way to get in touch
               </p>
             </motion.div>
@@ -386,10 +390,10 @@ export const ContactSection = () => {
           className="mb-16"
         >
           <div className="text-center mb-8">
-            <h3 className="text-2xl font-bold text-gray-200 dark:text-white mb-2">
+            <h3 className="text-2xl font-bold text-white mb-2">
               Connect on Social
             </h3>
-            <p className="text-gray-400 dark:text-gray-400">
+            <p className="text-gray-400">
               Follow my work and connect professionally
             </p>
           </div>
@@ -413,11 +417,11 @@ export const ContactSection = () => {
           transition={{ duration: 0.6, delay: 0.6 }}
           className="text-center"
         >
-          <div className="p-8 backdrop-blur-sm bg-black/40 border border-white/10 dark:border-gray-700/50 rounded-2xl max-w-2xl mx-auto hover:border-slate-500/50 transition-all duration-500">
-            <h3 className="text-xl font-bold text-gray-200 dark:text-white mb-4">
+          <div className="p-8 backdrop-blur-sm bg-black/40 border border-white/10 rounded-2xl max-w-2xl mx-auto hover:border-slate-500/50 transition-all duration-500">
+            <h3 className="text-xl font-bold text-white mb-4">
               Ready to Start a Project?
             </h3>
-            <p className="text-gray-400 dark:text-gray-400 mb-6 leading-relaxed">
+            <p className="text-gray-400 mb-6 leading-normal">
               Whether you have a specific project in mind or just want to explore possibilities,
               I&apos;m here to help turn your vision into reality.
             </p>

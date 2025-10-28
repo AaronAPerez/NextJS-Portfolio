@@ -76,7 +76,7 @@ const TimelineCard = ({
     if (status === 'current') {
       return (
         <div
-          className="flex items-center gap-2 px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 text-xs font-semibold rounded-full"
+          className="flex items-center gap-2 px-3 py-1 bg-green-900/30 text-green-300 text-xs font-semibold rounded-full"
           role="status"
           aria-label="Currently employed"
         >
@@ -87,7 +87,7 @@ const TimelineCard = ({
     }
     return (
       <div
-        className="flex items-center gap-2 px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 text-xs font-semibold rounded-full"
+        className="flex items-center gap-2 px-3 py-1 bg-blue-900/30 text-blue-300 text-xs font-semibold rounded-full"
         role="status"
         aria-label="Previously completed"
       >
@@ -109,7 +109,7 @@ const TimelineCard = ({
       tabIndex={0}
     >
       {/* Main card with consistent styling */}
-      <div className="relative h-full backdrop-blur-sm bg-black/40 border border-white/10 dark:border-gray-700/50 rounded-2xl overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-gray-500/10 hover:-translate-y-2 hover:border-slate-500/50 focus-within:ring-2 focus-within:ring-gray-400 focus-within:ring-offset-2">
+      <div className="relative h-full backdrop-blur-sm bg-black/40 border border-white/10 rounded-2xl overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-gray-500/10 hover:-translate-y-2 hover:border-slate-500/50 focus-within:ring-2 focus-within:ring-gray-400 focus-within:ring-offset-2">
 
         {/* Gradient header */}
         <div className={cn("p-6 bg-gradient-to-r", gradient, "relative overflow-hidden")}>
@@ -165,7 +165,7 @@ const TimelineCard = ({
         {/* Card content */}
         <div className="p-6">
           <div className="mb-6">
-            <h4 className="text-sm font-semibold text-gray-300 dark:text-gray-300 mb-4 flex items-center gap-2">
+            <h4 className="text-sm font-semibold text-gray-300 mb-4 flex items-center gap-2">
               <ArrowRight className="w-4 h-4" aria-hidden="true" />
               Key Responsibilities & Achievements
             </h4>
@@ -177,11 +177,11 @@ const TimelineCard = ({
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: delay + (idx * 0.1), duration: 0.4 }}
-                  className="flex items-start gap-3 text-sm text-gray-400 dark:text-gray-300"
+                  className="flex items-start gap-3 text-sm text-gray-300"
                   role="listitem"
                 >
                   <div className="w-1.5 h-1.5 bg-gray-400 rounded-full mt-2 flex-shrink-0" aria-hidden="true" />
-                  <span className="leading-relaxed">{detail}</span>
+                  <span className="leading-normal">{detail}</span>
                 </motion.li>
               ))}
             </ul>
@@ -189,7 +189,7 @@ const TimelineCard = ({
 
           {achievements.length > 0 && (
             <div className="mb-6">
-              <h4 className="text-sm font-semibold text-gray-300 dark:text-gray-300 mb-3 flex items-center gap-2">
+              <h4 className="text-sm font-semibold text-gray-300 mb-3 flex items-center gap-2">
                 <Zap className="w-4 h-4" aria-hidden="true" />
                 Key Achievements
               </h4>
@@ -197,7 +197,7 @@ const TimelineCard = ({
                 {achievements.map((achievement, idx) => (
                   <li
                     key={idx}
-                    className="flex items-start gap-2 text-sm text-gray-400 dark:text-gray-300"
+                    className="flex items-start gap-2 text-sm text-gray-300"
                     role="listitem"
                   >
                     <Star className="w-3 h-3 text-yellow-500 mt-1 flex-shrink-0" aria-hidden="true" />
@@ -209,14 +209,14 @@ const TimelineCard = ({
           )}
 
           <div>
-            <h4 className="text-sm font-semibold text-gray-300 dark:text-gray-300 mb-3">
+            <h4 className="text-sm font-semibold text-gray-300 mb-3">
               Skills & Technologies
             </h4>
             <div className="flex flex-wrap gap-2" role="list" aria-label="Skills and technologies used">
               {skills.map((skill) => (
                 <span
                   key={skill}
-                  className="px-3 py-1 text-xs font-medium bg-gray-800/50 dark:bg-gray-800 text-gray-300 dark:text-gray-300 rounded-full border border-gray-700 dark:border-gray-700 hover:bg-gray-700 dark:hover:bg-gray-700 transition-colors"
+                  className="px-3 py-1 text-xs font-medium bg-gray-800 text-gray-300 rounded-full border border-gray-700 hover:bg-gray-700 transition-colors"
                   role="listitem"
                 >
                   {skill}

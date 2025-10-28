@@ -5,7 +5,6 @@ import { motion } from 'framer-motion';
 import SectionTitle from '@/components/SectionTitle';
 import { CopyIcon, MailIcon, DownloadIcon, Github, Linkedin } from 'lucide-react';
 import BorderMagicButton from '@/components/ui/BorderMagicButton';
-import ContactForm from './ContactForm';
 
 const socialLinks = [
   {
@@ -50,15 +49,9 @@ export const ContactSection = () => {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center py-20 bg-gradient-to-b from-black via-gray-950 to-black">
-      {/* Background decoration */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 left-0 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
-      </div>
-
+    <section className="relative min-h-screen flex items-center py-20">
       {/* Content Container */}
-      <div className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 w-full max-w-4xl mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -71,19 +64,13 @@ export const ContactSection = () => {
             subtitle="Let's connect and discuss potential opportunities"
           />
 
-          {/* Contact Form */}
-          <div className="max-w-3xl mx-auto mb-16">
-            <h3 className="text-2xl font-bold text-white mb-8 text-center">Send Me a Message</h3>
-            <ContactForm />
-          </div>
-
           {/* Contact Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Contact Actions */}
             <div className="space-y-6">
-              <h3 className="text-2xl font-bold text-white mb-8">Quick Actions</h3>
-
-              <button
+              <h3 className="text-2xl font-bold text-white mb-8">Get In Touch</h3>
+              
+              <button 
                 onClick={handleCopy}
                 className="w-full group"
               >
@@ -100,7 +87,7 @@ export const ContactSection = () => {
                 className="block w-full"
               >
                 <BorderMagicButton
-                  title="Send Direct Email"
+                  title="Send Email"
                   icon={<MailIcon className="w-5 h-5" />}
                   position="left"
                   otherClasses="w-full !bg-[#161e31] py-3"
@@ -123,7 +110,7 @@ export const ContactSection = () => {
             {/* Social Links */}
             <div className="space-y-6">
               <h3 className="text-2xl font-bold text-white mb-8">Social Links</h3>
-
+              
               {socialLinks.map((link) => (
                 <motion.a
                   key={link.id}
@@ -155,9 +142,6 @@ export const ContactSection = () => {
           </motion.p>
         </motion.div>
       </div>
-
-      {/* Background Grid */}
-      <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:50px]" />
     </section>
   );
 };

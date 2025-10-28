@@ -16,7 +16,7 @@ const timelineData = {
   education: [
     {
       id: 'codestack',
-      title: "Full Stack Development Certification",
+      title: "Software Development Certification",
       institution: "CodeStack Academy",
       period: "2023 - 2024",
       location: "San Joaquin County, CA",
@@ -32,11 +32,11 @@ const timelineData = {
       ],
       skills: ["React", "TypeScript", "Next.js", "C#", ".NET Core", "SQL Server", "Azure", "Tailwind CSS"],
       gradient: "from-blue-500 to-cyan-500",
-      achievements: [
-        "Top 10% of cohort for project completion",
-        "Built 5 production-ready applications",
-        "100% test coverage on final capstone project"
-      ]
+      // achievements: [
+      //   "Top 10% of cohort for project completion",
+      //   "Built 5 production-ready applications",
+      //   "100% test coverage on final capstone project"
+      // ]
     },
     {
       id: 'itt-tech',
@@ -56,11 +56,11 @@ const timelineData = {
       ],
       skills: ["Network Security", "Database Management", "System Administration", "Risk Management"],
       gradient: "from-purple-500 to-pink-500",
-      achievements: [
-        "Cum Laude Graduate (GPA: 3.5)",
-        "Dean's List: 4 semesters",
-        "Senior Capstone Award recipient"
-      ]
+      // achievements: [
+      //   "Graduate (GPA: 3.5)",
+      //   "Dean's List: 4 semesters",
+      //   "Senior Capstone Award recipient"
+      // ]
     }
   ],
   experience: [
@@ -97,7 +97,7 @@ const timelineData = {
       id: 'user-support',
       title: "User Support Specialist",
       company: "San Joaquin County Office of Education - CodeStack",
-      period: "2017 - Present",
+      period: "Aug. 2017 - Jan. 2025",
       location: "Stockton, CA",
       type: "work" as const,
       status: "current" as const,
@@ -112,12 +112,12 @@ const timelineData = {
       ],
       skills: ["QA Testing", "Technical Support", "Database Management", "Freshdesk", "Zoho", "Documentation", "Training"],
       gradient: "from-green-500 to-emerald-500",
-      achievements: [
-        "Maintained 99% system uptime",
-        "95% first-call resolution rate",
-        "Reduced QA testing time by 60%",
-        "Zero compliance violations in 7 years"
-      ]
+      // achievements: [
+      //   "Maintained 99% system uptime",
+      //   "95% first-call resolution rate",
+      //   "Reduced QA testing time by 60%",
+      //   "Zero compliance violations in 7 years"
+      // ]
     },
     {
       id: 'systems-analyst',
@@ -137,39 +137,41 @@ const timelineData = {
       ],
       skills: ["Help Desk", "System Administration", "Network Support", "Active Directory", "SCCM", "Windows Server"],
       gradient: "from-orange-500 to-red-500",
-      achievements: [
-        "Supported 2,000+ users across 15 departments",
-        "Average ticket resolution: 4 hours",
-        "98% customer satisfaction rating",
-        "Led emergency response for critical outages"
-      ]
+      // achievements: [
+      //   "Supported 2,000+ users across 15 departments",
+      //   "Average ticket resolution: 4 hours",
+      //   "98% customer satisfaction rating",
+      //   "Led emergency response for critical outages"
+      // ]
     }
   ]
 }
 
 /**
  * Statistics Component
+ * Commented out - not currently in use
  */
-// const Statistics = () => {
-  // const stats = [
-  //   { label: 'Years Experience', value: '8+', color: 'text-blue-600 dark:text-blue-400', icon: Briefcase },
-  //   { label: 'Education Programs', value: '2', color: 'text-purple-600 dark:text-purple-400', icon: GraduationCap },
-  //   { label: 'Current Roles', value: '2', color: 'text-green-600 dark:text-green-400', icon: Building },
-  //   { label: 'Projects Built', value: '10+', color: 'text-orange-600 dark:text-orange-400', icon: Code }
-  // ]
+/*
+const Statistics = () => {
+  const stats = [
+    { label: 'Years Experience', value: '8+', color: 'text-blue-400', icon: Briefcase },
+    { label: 'Education Programs', value: '2', color: 'text-purple-400', icon: GraduationCap },
+    { label: 'Current Roles', value: '2', color: 'text-green-400', icon: Building },
+    { label: 'Projects Built', value: '10+', color: 'text-orange-400', icon: Code }
+  ]
 
-  // return (
-  //   <motion.div
-  //     initial={{ opacity: 0, y: 30 }}
-  //     whileInView={{ opacity: 1, y: 0 }}
-  //     viewport={{ once: true }}
-  //     transition={{ duration: 0.6, delay: 0.8 }}
-  //     className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16"
-  //     role="region"
-  //     aria-label="Professional statistics"
-  //   >
-      {/* {stats.map((stat, index) => { */}
-        {/* const IconComponent = stat.icon
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6, delay: 0.8 }}
+      className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16"
+      role="region"
+      aria-label="Professional statistics"
+    >
+      {stats.map((stat, index) => {
+        const IconComponent = stat.icon
         return (
           <motion.div
             key={stat.label}
@@ -177,21 +179,22 @@ const timelineData = {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.8 + (index * 0.1), duration: 0.4 }}
-            className="text-center p-6 backdrop-blur-sm bg-black/40 rounded-xl border border-white/10 dark:border-gray-700/50 hover:bg-black/50 dark:hover:bg-gray-800/70 hover:border-slate-500/50 transition-all duration-500"
+            className="text-center p-6 backdrop-blur-sm bg-black/40 rounded-xl border border-white/10 hover:bg-black/50 hover:border-slate-500/50 transition-all duration-500"
           >
             <IconComponent className={cn("w-8 h-8 mx-auto mb-3", stat.color)} aria-hidden="true" />
             <div className={cn("text-3xl font-bold mb-2", stat.color)}>
               {stat.value}
             </div>
-            <div className="text-sm text-gray-400 dark:text-gray-400 font-medium">
+            <div className="text-sm text-gray-400 font-medium">
               {stat.label}
             </div>
-          </motion.div> */}
-        {/* ) */}
-      {/* })} */}
-//     </motion.div>
-//   )
-// }
+          </motion.div>
+        )
+      })}
+    </motion.div>
+  )
+}
+*/
 
 /**
  * Main Timeline Section Component
@@ -229,7 +232,7 @@ export const TimelineSection = () => {
                 <Briefcase className="w-6 h-6 text-green-600" aria-hidden="true" />
                 Work Experience
               </h3>
-              <p className="text-gray-400 dark:text-gray-400">
+              <p className="text-gray-400">
                 Professional experience spanning systems administration to full-stack development
               </p>
             </div>
@@ -261,7 +264,7 @@ export const TimelineSection = () => {
                 <GraduationCap className="w-6 h-6 text-purple-600" aria-hidden="true" />
                 Education & Certifications
               </h3>
-              <p className="text-gray-400 dark:text-gray-400">
+              <p className="text-gray-400">
                 Academic foundation and continuous learning in technology and development
               </p>
             </div>
@@ -286,7 +289,7 @@ export const TimelineSection = () => {
           transition={{ duration: 0.6, delay: 1 }}
           className="text-center mt-20"
         >
-          <p className="text-gray-400 dark:text-gray-300 mb-6 text-lg">
+          <p className="text-gray-300 mb-6 text-lg">
             Ready to see these skills in action?
           </p>
           <motion.button
