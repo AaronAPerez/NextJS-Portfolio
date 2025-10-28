@@ -51,29 +51,6 @@ const TECHNOLOGIES = [
   { name: 'C#', color: 'csharp-indigo' }
 ]
 
-const SOCIAL_LINKS = [
-  {
-    icon: Github,
-    href: 'https://github.com/AaronAPerez',
-    label: 'GitHub',
-    hoverColor: 'hover:text-white',
-    bgHover: 'hover:bg-gray-700'
-  },
-  {
-    icon: Linkedin,
-    href: 'https://linkedin.com/in/aaronaperezdev',
-    label: 'LinkedIn',
-    hoverColor: 'hover:text-blue-600',
-    bgHover: 'hover:bg-blue-900/30'
-  },
-  {
-    icon: Mail,
-    href: 'mailto:aaperez06@gmail.com',
-    label: 'Email',
-    hoverColor: 'hover:text-red-500',
-    bgHover: 'hover:bg-red-900/30'
-  }
-]
 
 /**
  * Performance-optimized Hero Section
