@@ -1,17 +1,17 @@
-export interface Skill {
-  id: string;
-  name: string;
-  icon: string;
-  color: string;
-  category: 'frontend' | 'backend' | 'tools' | 'game';
-  description?: string;
-  proficiency?: number;
-}
+// export interface Skill {
+//   id: string;
+//   name: string;
+//   icon: string;
+//   color: string;
+//   category: 'frontend' | 'backend' | 'tools' | 'game';
+//   description?: string;
+//   proficiency?: number;
+// }
 
-export interface SkillCardProps {
-  skill: Skill;
-  isVisible?: boolean;
-}
+// export interface SkillCardProps {
+//   skill: Skill;
+//   isVisible?: boolean;
+// }
 
 
 

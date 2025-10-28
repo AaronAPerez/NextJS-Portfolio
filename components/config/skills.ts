@@ -50,6 +50,12 @@ export const skills = [
     color: "#808080",
     category: "frontend",
   },
+  { id: 'nestjs',
+    name: "Nest.js",
+    icon: "/icons/frontend/nestjs.svg",
+    color: "#808080",
+    category: "frontend",
+  },
 
   // Frontend UI
   {
@@ -141,6 +147,20 @@ export const skills = [
     category: "tools",
   },
   {
+    id: 'prisma',
+    name: "Prisma",
+    icon: "/icons/tools/prisma.svg",
+    color: "#671ddf",
+    category: "tools",
+  },
+  {
+    id: 'socketio',
+    name: "Socket IO",
+    icon: "/icons/tools/socketio.svg",
+    color: "#671ddf",
+    category: "tools",
+  },
+  {
     id: 'postman',
     name: "Postman",
     icon: "/icons/tools/postman.svg",
@@ -172,6 +192,20 @@ export const skills = [
     id: 'azure',
     name: "Azure",
     icon: "/icons/tools/azure.svg",
+    color: "#0078D4",
+    category: "tools",
+  },
+  {
+    id: 'googlecloud',
+    name: "Google Cloud",
+    icon: "/icons/tools/googlecloud.svg",
+    color: "#F7DF1E",
+    category: "tools",
+  },
+  {
+    id: 'docker',
+    name: "Docker",
+    icon: "/icons/tools/docker.svg",
     color: "#0078D4",
     category: "tools",
   },

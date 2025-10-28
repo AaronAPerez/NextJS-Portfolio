@@ -4,243 +4,418 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from "@/lib/utils";
 import Image from 'next/image';
-import SectionTitle from '@/components/SectionTitle';
-import { skills } from '@/components/config/skills';
+import { Skill, skills } from '@/components/config/skills';
+import { Container } from '@/components/layout/Container';
+import { Section } from '@/components/layout/Section';
+import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
+import { useTheme } from '@/lib/theme-context';
 
+// Category configuration
 const categories = [
   {
     id: 'all',
     name: 'All Skills',
-    color: '#6366f1',
-    gradient: 'from-indigo-500 to-purple-500',
-    description: 'Full technology stack and tools'
+    color: '#3B82F6',
+    description: 'Complete technology stack and development tools',
+    icon: '🚀'
   },
   {
     id: 'frontend',
     name: 'Frontend',
-    color: '#ec4899',
-    gradient: 'from-pink-500 to-rose-500',
-    description: 'UI/UX & Web Technologies'
+    color: '#EC4899',
+    description: 'User interfaces and web technologies',
+    icon: '🎨'
   },
   {
     id: 'backend',
     name: 'Backend',
-    color: '#10b981',
-    gradient: 'from-emerald-500 to-teal-500',
-    description: 'Server & Database Development'
+    color: '#10B981',
+    description: 'Server-side development and APIs',
+    icon: '⚙️'
+  },
+  {
+    id: 'database',
+    name: 'Database',
+    color: '#8B5CF6',
+    description: 'Data storage and management systems',
+    icon: '🗄️'
   },
   {
     id: 'tools',
-    name: 'Dev Tools',
-    color: '#f59e0b',
-    gradient: 'from-amber-500 to-orange-500',
-    description: 'Development & API Tools'
+    name: 'Tools',
+    color: '#F59E0B',
+    description: 'Development tools and workflows',
+    icon: '🛠️'
+  },
+  {
+    id: 'cloud',
+    name: 'Cloud',
+    color: '#06B6D4',
+    description: 'Cloud services and deployment',
+    icon: '☁️'
+  },
+  {
+    id: 'game',
+    name: 'Game Dev',
+    color: '#EF4444',
+    description: 'Game development and engines',
+    icon: '🎮'
   }
-] as const;
+] as const
+
+type CategoryId = typeof categories[number]['id']
 
 interface SkillCardProps {
-  name: string;
-  icon: string;
-  category: string;
-  description?: string;
+  skill: Skill
+  isVisible: boolean
+  index: number
 }
 
-// Modern SkillCard component with gradient borders
-const SkillCard = ({ name, icon, category, description }: SkillCardProps) => {
-  const [isFlipped, setIsFlipped] = useState(false);
-  const [imageError, setImageError] = useState(false);
-
-  const categoryData = categories.find(cat => cat.id === category);
+// Individual skill card component with fixed icon display
+const SkillCard = ({ skill, isVisible, index }: SkillCardProps) => {
+  const { resolvedTheme } = useTheme()
+  const [isFlipped, setIsFlipped] = useState(false)
+  const [imageError, setImageError] = useState(false)
+  const [imageLoaded, setImageLoaded] = useState(false)
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="w-full max-w-[112px] aspect-square cursor-pointer group"
-      onHoverStart={() => setIsFlipped(true)}
-      onHoverEnd={() => setIsFlipped(false)}
-    >
+    <div className={`p-4 ${resolvedTheme === 'dark' ? 'bg-gray-800' : 'bg-white'}`}>
       <motion.div
-        className="w-full h-full"
-        initial={false}
-        animate={{ rotateY: isFlipped ? 180 : 0 }}
-        transition={{ duration: 0.6, type: "spring" }}
-        style={{ transformStyle: "preserve-3d" }}
+        initial={{ opacity: 0, scale: 0.8, y: 20 }}
+        animate={isVisible ? {
+          opacity: 1,
+          scale: 1,
+          y: 0,
+          transition: { delay: index * 0.05, duration: 0.5 }
+        } : {}}
+        className="group cursor-pointer"
+        onHoverStart={() => setIsFlipped(true)}
+        onHoverEnd={() => setIsFlipped(false)}
+        style={{ perspective: '1000px' }}
       >
-        {/* Front of card - Modern gradient border */}
-        <div
-          className="absolute w-full h-full backface-hidden"
-          style={{ backfaceVisibility: 'hidden' }}
+        <motion.div
+          className="relative w-full aspect-square"
+          animate={{ rotateY: isFlipped ? 180 : 0 }}
+          transition={{ duration: 0.6, type: "spring", stiffness: 300 }}
+          style={{ transformStyle: "preserve-3d" }}
         >
+          {/* Front of card */}
           <div className={cn(
-            "relative w-full h-full rounded-2xl p-[1px]",
-            "bg-gradient-to-br",
-            categoryData?.gradient || "from-gray-500 to-gray-700",
-            "group-hover:scale-105 transition-transform duration-300"
-          )}>
-            <div className={cn(
-              "w-full h-full rounded-2xl",
-              "bg-gray-950",
-              "flex flex-col items-center justify-center gap-2 p-2",
-              "backdrop-blur-xl"
-            )}>
-              <div className="relative w-1/2 aspect-square">
-                {!imageError ? (
-                  <Image
-                    src={icon}
-                    alt={name}
-                    fill
-                    sizes="(max-width: 640px) 56px, (max-width: 768px) 64px, 80px"
-                    loading="lazy"
-                    className="object-contain transition-all duration-300 group-hover:scale-110"
-                    onError={() => setImageError(true)}
-                  />
-                ) : (
-                  <div
-                    className={cn(
-                      "w-full h-full rounded-lg flex items-center justify-center",
-                      "text-white font-bold text-xl",
-                      "bg-gradient-to-br",
-                      categoryData?.gradient || "from-gray-500 to-gray-700"
-                    )}
-                  >
-                    {name.charAt(0).toUpperCase()}
-                  </div>
-                )}
-              </div>
-              <span className="text-xs sm:text-sm font-semibold text-center line-clamp-2 text-white">
-                {name}
+            "absolute inset-0 w-full h-full backface-hidden",
+            "bg-card border border-border rounded-xl",
+            "flex flex-col items-center justify-center p-4 gap-3",
+            "transition-all duration-300 group-hover:shadow-lg",
+            "backdrop-blur-sm bg-card/80"
+          )}
+            style={{
+              backfaceVisibility: 'hidden',
+              borderColor: skill.color,
+              boxShadow: `0 4px 20px ${skill.color}20`
+            }}>
+
+            {/* Skill icon */}
+            <div className="relative w-12 h-12 flex-shrink-0 z-10">
+              {!imageError ? (
+                <Image
+                  src={skill.icon}
+                  alt={`${skill.name} icon`}
+                  fill
+                  className={cn(
+                    "object-contain transition-all duration-300",
+                    imageLoaded ? "opacity-100" : "opacity-0",
+                    "group-hover:scale-110"
+                  )}
+                  onLoad={() => setImageLoaded(true)}
+                  onError={() => setImageError(true)}
+                  sizes="64px"
+                  priority={index < 6} // Prioritize first 6 images
+                />
+              ) : (
+                // Fallback icon with proper styling
+                <div
+                  className="w-full h-full rounded-lg flex items-center justify-center text-white font-bold text-2xl shadow-md"
+                  style={{ backgroundColor: skill.color }}
+                >
+                  {skill.name.charAt(0).toUpperCase()}
+                </div>
+              )}
+            </div>
+
+            {/* Skill name  */}
+            <h3 className="text-md font-semibold text-center text-gray-300 dark:text-white leading-tight px-1">
+              {skill.name}
+            </h3>
+
+            {/* Category indicator */}
+            <div className="flex items-center gap-2 mt-auto">
+              <div
+                className="w-2 h-2 rounded-full"
+                style={{ backgroundColor: skill.color }}
+              />
+              <span className="text-sm text-gray-300 dark:text-gray-400 capitalize font-medium">
+                {skill.category}
               </span>
             </div>
           </div>
-        </div>
 
-        {/* Back of card - Modern design */}
-        <div
-          className="absolute w-full h-full"
-          style={{
-            backfaceVisibility: 'hidden',
-            transform: 'rotateY(180deg)'
-          }}
-        >
+          {/* Back of card */}
           <div className={cn(
-            "relative w-full h-full rounded-2xl p-[1px]",
-            "bg-gradient-to-br",
-            categoryData?.gradient || "from-gray-500 to-gray-700"
-          )}>
-            <div className={cn(
-              "w-full h-full rounded-2xl",
-              "bg-gray-950",
-              "flex items-center justify-center p-3",
-              "backdrop-blur-xl"
-            )}>
-              <p className="text-xs font-semibold text-center line-clamp-4 text-gray-400">
-                {description || `${name} Development`}
+            "absolute inset-0 w-full h-full",
+            "bg-gray-50 dark:bg-gray-400 text-gray-200 border-2 rounded-xl shadow-lg",
+            "flex flex-col items-center justify-center p-4 pb-2 text-center"
+          )}
+            style={{
+              backfaceVisibility: 'hidden',
+              transform: 'rotateY(180deg)',
+              borderColor: skill.color,
+              backgroundColor: `${skill.color}08`
+            }}>
+            <div className="space-y-3">
+              {/* Category icon */}
+              <div
+                className="w-10 h-10 mx-auto rounded-full flex items-center justify-center text-white font-bold text-lg shadow-md"
+                style={{ backgroundColor: skill.color }}
+              >
+                {categories.find(cat => cat.id === skill.category)?.icon}
+              </div>
+
+              {/* Skill name */}
+              <h3 className="font-bold text-sm" style={{ color: skill.color }}>
+                {skill.name}
+              </h3>
+
+              {/* Description */}
+              <p className="text-sm text-gray-200 dark:text-gray-300 leading-relaxed line-clamp-4 pb-2">
+                {skill.description || `Professional experience with ${skill.name} for modern development.`}
               </p>
             </div>
           </div>
-        </div>
+        </motion.div>
       </motion.div>
-    </motion.div>
-  );
-};
-
-const SkillsGrid = React.memo(({ category }: { category: string }) => {
-  const filteredSkills = React.useMemo(() =>
-    skills.filter(skill => category === 'all' || skill.category === category),
-    [category]
-  );
-
-  return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7 gap-4 max-w-6xl mx-auto px-4">
-      <AnimatePresence mode="wait">
-        {filteredSkills.map((skill) => (
-          <motion.div
-            key={skill.name}
-            layout
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.8, opacity: 0 }}
-            transition={{ type: "spring", duration: 0.3, bounce: 0.2 }}
-            className="flex justify-center" // Center cards in grid cells
-          >
-            <SkillCard {...skill} />
-          </motion.div>
-        ))}
-      </AnimatePresence>
     </div>
-  );
-});
+  )
+}
 
-SkillsGrid.displayName = 'SkillsGrid';
 
-export const SkillsSection = () => {
-  const [selectedCategory, setSelectedCategory] = useState<typeof categories[number]['id']>('all');
-
-  const handleCategoryClick = (categoryId: typeof categories[number]['id']) => {
-    setSelectedCategory(categoryId);
-  };
+// Skills grid component
+const SkillsGrid = ({ category, isVisible }: { category: CategoryId; isVisible: boolean }) => {
+  const { resolvedTheme } = useTheme()
+  const filteredSkills = skills.filter(skill =>
+    category === 'all' || skill.category === category
+  )
 
   return (
-    <div className="relative w-full overflow-hidden min-h-screen py-20 bg-gradient-to-b from-black via-gray-950 to-black">
-      {/* Modern background effects */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-pink-500/10 rounded-full blur-3xl" />
-      </div>
-
-      <div className="relative z-10 container mx-auto px-4">
-        {/* Section Title */}
-        <SectionTitle
-          title="Skills & Technologies"
-          subtitle="Technologies learned at CodeStack Academy and through personal projects"
-        />
-
-        {/* Category Filters - Modern design */}
-        <div className="flex flex-wrap justify-center gap-3 mb-12">
-          {categories.map((category) => (
-            <motion.button
-              key={category.id}
-              onClick={() => handleCategoryClick(category.id)}
-              className={cn(
-                "relative px-6 py-3 rounded-xl font-semibold transition-all duration-300",
-                "border-2 overflow-hidden backdrop-blur-sm min-h-[44px]",
-                selectedCategory === category.id
-                  ? "text-white shadow-xl scale-105 border-transparent"
-                  : "bg-gray-900/50 text-gray-300 border-gray-800 hover:border-gray-700"
-              )}
-              whileHover={{ scale: selectedCategory === category.id ? 1.05 : 1.02 }}
-              whileTap={{ scale: 0.98 }}
+    <div className={`p-4 ${resolvedTheme === 'dark' ? 'bg-gray-800' : 'bg-white'}`}>
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-6 max-w-7xl mx-auto">
+        <AnimatePresence mode="wait">
+          {filteredSkills.map((skill, index) => (
+            <motion.div
+              key={`${category}-${skill.id}`}
+              layout
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              transition={{
+                type: "spring",
+                duration: 0.5,
+                delay: index * 0.03
+              }}
             >
-              {/* Gradient background for selected state */}
-              {selectedCategory === category.id && (
-                <div className={cn(
-                  "absolute inset-0 bg-gradient-to-r",
-                  category.gradient
-                )} />
-              )}
-              <span className="relative z-10">{category.name}</span>
-            </motion.button>
+              <SkillCard
+                skill={skill}
+                isVisible={isVisible}
+                index={index}
+              />
+            </motion.div>
           ))}
-        </div>
-
-        {/* Category Description */}
-        <motion.p
-          key={selectedCategory}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center text-gray-400 mb-12 text-lg"
-        >
-          {categories.find(cat => cat.id === selectedCategory)?.description}
-        </motion.p>
-
-        {/* Skills Grid */}
-        <SkillsGrid category={selectedCategory} />
+        </AnimatePresence>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default SkillsSection;
+// Category filter button component
+const CategoryButton = ({
+  category,
+  isSelected,
+  onClick
+}: {
+  category: typeof categories[number]
+  isSelected: boolean
+  onClick: () => void
+}) => (
+  <motion.button
+    onClick={onClick}
+    className={cn(
+      "relative px-6 py-3 rounded-full font-medium transition-all duration-300",
+      "border-2 overflow-hidden group backdrop-blur-sm min-h-[44px] min-w-[44px] touch-manipulation select-none",
+      isSelected
+        ? "text-white shadow-xl scale-105"
+        : "bg-white/10 dark:bg-gray-800/50 text-gray-400 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500"
+    )}
+    style={isSelected ? {
+      backgroundColor: category.color,
+      borderColor: category.color,
+      boxShadow: `0 8px 25px ${category.color}40`
+    } : {}}
+    whileHover={{ scale: isSelected ? 1.05 : 1.02 }}
+    whileTap={{ scale: 0.98 }}
+  >
+    {/* Background glow effect */}
+    {isSelected && (
+      <motion.div
+        className="absolute inset-0"
+        style={{ backgroundColor: `${category.color}30` }}
+        animate={{
+          opacity: [0.2, 0.4, 0.2],
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      />
+    )}
+
+    {/* Content */}
+    <div className="relative flex items-center gap-2 z-10">
+      <span className="text-lg">{category.icon}</span>
+      <span className="font-semibold">{category.name}</span>
+      {isSelected && (
+        <motion.div
+          className="w-2 h-2 bg-white rounded-full"
+          animate={{ scale: [1, 1.3, 1] }}
+          transition={{ duration: 1, repeat: Infinity }}
+        />
+      )}
+    </div>
+  </motion.button>
+)
+
+// Main SkillsSection component
+export default function SkillsSection() {
+  const { resolvedTheme } = useTheme()
+
+  const [selectedCategory, setSelectedCategory] = useState<CategoryId>('all')
+  const { isIntersecting } = useIntersectionObserver({ threshold: 0.1 })
+
+  const selectedCategoryData = categories.find(cat => cat.id === selectedCategory)
+  const skillCount = skills.filter(skill =>
+    selectedCategory === 'all' || skill.category === selectedCategory
+  ).length
+
+  return (
+    <div className={`p-4 ${resolvedTheme === 'dark' ? 'bg-gray-800' : 'bg-white'}`}>
+      <Section id="skills" className="relative overflow-hidden">
+        {/* Background effects */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-blue-500/5" />
+        <div className="absolute inset-0 bg-grid-small opacity-30" />
+
+        <Container className="relative z-10">
+          {/* Section header */}
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={isIntersecting ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900 dark:text-white">
+              Skills & Technologies
+            </h2>
+            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8 leading-relaxed">
+              A comprehensive showcase of the technologies and tools I use to build
+              modern, scalable applications and deliver exceptional user experiences.
+            </p>
+
+            {/* Stats */}
+            <div className="flex justify-center gap-8 mb-8">
+              <div className="text-center">
+                <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">{skills.length}</div>
+                <div className="text-sm text-gray-500 dark:text-gray-400 font-medium">Technologies</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">
+                  {categories.length - 1}
+                </div>
+                <div className="text-sm text-gray-300 dark:text-gray-400 font-medium">Categories</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">3+</div>
+                <div className="text-sm text-gray-500 dark:text-gray-400 font-medium">Years Experience</div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Category filters */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={isIntersecting ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="flex flex-wrap justify-center gap-4 mb-12"
+          >
+            {categories.map((category) => (
+              <CategoryButton
+                key={category.id}
+                category={category}
+                isSelected={selectedCategory === category.id}
+                onClick={() => setSelectedCategory(category.id)}
+              />
+            ))}
+          </motion.div>
+
+          {/* Category description */}
+          <motion.div
+            key={selectedCategory}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+            className="text-center mb-12"
+          >
+            <p className="text-gray-600 dark:text-gray-300 mb-2 text-lg">
+              {selectedCategoryData?.description}
+            </p>
+            <p className="text-sm text-gray-500 dark:text-gray-400 font-medium">
+              Showing {skillCount} {skillCount === 1 ? 'skill' : 'skills'}
+            </p>
+          </motion.div>
+
+          {/* Skills grid */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={isIntersecting ? { opacity: 1 } : {}}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
+            <SkillsGrid category={selectedCategory} isVisible={isIntersecting} />
+          </motion.div>
+
+          {/* Call to action */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={isIntersecting ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.8 }}
+            className="text-center mt-20"
+          >
+            <p className="text-gray-200 dark:text-gray-300 mb-6 text-lg">
+              Want to see these skills in action?
+            </p>
+            <motion.button
+              onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
+              className="px-8 py-4 bg-blue-600 hover:bg-blue-400 text-white font-semibold rounded-full transition-all duration-300 shadow-lg hover:shadow-xl group min-h-[44px] min-w-[44px] touch-manipulation select-none"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              View My Projects
+              <motion.span
+                className="ml-2 inline-block"
+                animate={{ x: [0, 4, 0] }}
+                transition={{ duration: 1.5, repeat: Infinity }}
+              >
+                →
+              </motion.span>
+            </motion.button>
+          </motion.div>
+        </Container>
+      </Section>
+    </div>
+  )
+}

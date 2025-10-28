@@ -51,7 +51,6 @@ const TECHNOLOGIES = [
   { name: 'C#', color: 'csharp-indigo' }
 ]
 
-
 /**
  * Performance-optimized Hero Section
  * - Reduced animations for better FPS
@@ -109,6 +108,7 @@ export default function HeroSection() {
           <div className="absolute top-40 right-20 w-72 h-72 bg-indigo-400 rounded-full mix-blend-multiply filter blur-xl opacity-10"></div>
         </div>
       )}
+      
 
       <section className="relative z-10 min-h-screen flex items-center justify-center overflow-hidden py-20 md:py-24 lg:py-28 px-4 sm:px-6 lg:px-8">
         <div className="relative max-w-7xl mx-auto w-full">
