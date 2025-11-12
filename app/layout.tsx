@@ -1,151 +1,109 @@
+import React from "react";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import { cn } from "@/lib/utils";
-import { AIChat } from "@/components/AIAssistant/AIChat";
-
-// Styles
+import { Inter, Poppins } from "next/font/google";
+import { ThemeProvider } from "@/context/ThemeContext";
 import './globals.css';
-import FloatingNavbar from "@/components/layout/FloatingNavbar";
 import { Analytics } from '@vercel/analytics/react';
+import { SkipToContent } from "@/components/accessibility/SkipToContent";
+import { generatePersonSchema, generateWebsiteSchema } from "@/lib/utils";
+import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
 
-// Optimized font loading
+
 const inter = Inter({
   subsets: ["latin"],
-  display: 'swap',
+  variable: "--font-inter",
+  display: "swap",
   preload: true,
-  variable: '--font-inter',
-  fallback: ['system-ui', '-apple-system', 'sans-serif'],
-  adjustFontFallback: true,
 });
 
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-poppins",
+  display: "swap",
+  preload: true,
+});
 
-// Metadata with enhanced SEO
 export const metadata: Metadata = {
-  title: 'Aaron A. Perez - FullStack Developer',
-  description: 'Portfolio of Aaron A. Perez, showcasing full-stack development projects and skills in React, Next.js, Node.js, TypeScript, AWS, and modern web technologies.',
-  keywords: ['Full Stack Developer', 'Web Developer', 'React', 'Next.js', 'TypeScript', 'Node.js', 'AWS', 'Portfolio'],
-  authors: [{ name: 'Aaron A. Perez' }],
-  creator: 'Aaron A. Perez',
+  title: "Aaron A. Perez | Full Stack Developer",
+  description: "Full Stack Developer specializing in React, TypeScript, Next.js, and modern web technologies. Building accessible, SEO-optimized web applications.",
+  keywords: [
+    "React Developer",
+    "TypeScript",
+    "Next.js",
+    "Full Stack Developer",
+    "Web Developer",
+    "Stockton CA",
+  ],
+  authors: [{ name: "Aaron A. Perez" }],
+  creator: "Aaron A. Perez",
   openGraph: {
-    type: 'website',
-    locale: 'en_US',
-    url: 'https://www.aaronaperez.dev',
-    title: 'Aaron A. Perez - FullStack Developer',
-    description: 'Portfolio showcasing full-stack development projects and skills',
-    siteName: 'Aaron A. Perez Portfolio',
+    type: "website",
+    locale: "en_US",
+    url: "https://aaronaperez.dev",
+    siteName: "Aaron A. Perez Portfolio",
+    title: "Aaron A. Perez | Full Stack Developer",
+    description: "Full Stack Developer specializing in React, TypeScript, and Next.js",
+    images: [
+      {
+        url: "/images/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Aaron A. Perez - Full Stack Developer",
+      },
+    ],
   },
   twitter: {
-    card: 'summary_large_image',
-    title: 'Aaron A. Perez - FullStack Developer',
-    description: 'Portfolio showcasing full-stack development projects and skills',
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
+    card: "summary_large_image",
+    title: "Aaron A. Perez | Full Stack Developer",
+    description: "Building modern web applications with React, TypeScript, and Next.js",
+    images: ["/images/og-image.jpg"],
   },
 };
 
-// Navigation configuration
-interface NavItem {
-  name: string;
-  link: string;
-}
-
-const navItems: NavItem[] = [
-  { name: "Home", link: "#home" },
-  { name: "About", link: "#about" },
-  { name: "Projects", link: "#projects" },
-  { name: "Experience", link: "#experience" },
-  { name: "Contact", link: "#contact" },
-];
 
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en"
-          suppressHydrationWarning
-      className="scroll-smooth"
-      >
-
+    <html
+      lang="en"
+      className={`${inter.variable} ${poppins.variable}`}
+      suppressHydrationWarning
+    >
       <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="facebook-domain-verification" content="6iqzzcn0b2ao92l7p9ctgxqn2e1s64" />
-
-        {/* Performance optimizations - Vercel Analytics */}
-        {/* <link rel="preconnect" href="https://va.vercel-scripts.com" />
-        <link rel="dns-prefetch" href="https://vitals.vercel-insights.com" /> */}
-
-        {/* Preload critical assets */}
-        <link
-          rel="preload"
-          as="image"
-          href="/images/profile/headshot.png"
-          fetchPriority="high"
-          type="image/png"
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(generatePersonSchema()),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(generateWebsiteSchema()),
+          }}
         />
       </head>
 
-      <body className={cn(
-        inter.variable,
-        "min-h-screen bg-black",
-        "text-gray-100",
-        "font-sans"
-      )}>
+      {/* Skip to content - on top for better accessibility */}
+     
 
-        {/* Skip to content - on top for better accessibility */}
-        <SkipToContent />
 
-        {/* Header with Navigation */}
-        <header role="banner">
-          <nav role="navigation" aria-label="Main navigation">
-            <FloatingNavbar navItems={navItems} />
-          </nav>
-        </header>
-
-        {/* AI Assistant */}
-        <AIChat />
-
-        {/* Main Content */}
-        <main id="main-content" role="main" tabIndex={-1}>
-          {/* Content sections wrapper */}
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            {children}
-            <Analytics />
+      <body className={inter.className}>
+         <SkipToContent />
+        <ThemeProvider>
+          <div className="flex flex-col min-h-screen">
+            <Header />
+            <main id="main-content" className="flex-1" role="main">
+              {children}
+              <Analytics />
+            </main>
+            <Footer />
           </div>
-        </main>
-
-
-
+        </ThemeProvider>
       </body>
     </html>
   );
 }
 
-
-// Skip to content component for accessibility
-export const SkipToContent = () => (
-  <a
-    href="#main-content"
-    className={cn(
-      "sr-only focus:not-sr-only",
-      "fixed top-4 left-4 z-[100]",
-      "px-4 py-2 bg-gray-900",
-      "border border-gray-700",
-      "rounded-md shadow-sm",
-      "focus:outline-none focus:ring-2 focus:ring-blue-500"
-    )}
-  >
-    Skip to content
-  </a>
-);

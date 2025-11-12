@@ -17,8 +17,8 @@ import {
   Star
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import SectionTitle from '@/components/SectionTitle'
 import Image from 'next/image'
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/Card'
 
 
 // Contact information and social links data
@@ -120,28 +120,31 @@ const ContactActionCard = ({
   }
 
   return (
-    <motion.button
+    <motion.div
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay: index * 0.1, duration: 0.5 }}
-      onClick={handleClick}
-      onMouseDown={() => setIsPressed(true)}
-      onMouseUp={() => setIsPressed(false)}
-      onMouseLeave={() => setIsPressed(false)}
       className="group relative w-full"
-      aria-label={action.description}
     >
-      {/* Main card with glassmorphism effect */}
-      <div className="relative p-6 backdrop-blur-sm bg-black/40 border border-white/10 rounded-2xl overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-blue-500/10 hover:-translate-y-2 hover:border-slate-500/50">
-
+      <Card
+        variant="elevated"
+        hoverable
+        padding="lg"
+        onClick={handleClick}
+        onMouseDown={() => setIsPressed(true)}
+        onMouseUp={() => setIsPressed(false)}
+        onMouseLeave={() => setIsPressed(false)}
+        className="cursor-pointer overflow-hidden"
+        role="button"
+        aria-label={action.description}
+      >
         {/* Gradient background */}
         <div className={cn(
-          "absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500",
+          "absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-500",
           `bg-gradient-to-br ${action.gradient}`
         )} />
 
-        {/* Content */}
         <div className="relative z-10">
           <div className="flex items-center gap-4 mb-3">
             <div className={cn(
@@ -152,29 +155,26 @@ const ContactActionCard = ({
               <IconComponent className="w-6 h-6 text-white" />
             </div>
             <div className="text-left">
-              <h4 className="font-semibold text-white group-hover:text-white transition-colors">
+              <h4 className="font-semibold text-gray-900 dark:text-white transition-colors">
                 {action.title}
               </h4>
-              <p className="text-sm text-gray-400 group-hover:text-white/80 transition-colors">
+              <p className="text-sm text-gray-600 dark:text-gray-400 transition-colors">
                 {action.description}
               </p>
             </div>
           </div>
 
           <div className="flex items-center justify-between">
-            <span className="text-xs text-gray-400 group-hover:text-white/60 transition-colors font-mono">
+            <span className="text-xs text-gray-500 dark:text-gray-400 transition-colors font-mono">
               {action.action === 'copy' ? 'Click to copy' :
                action.action === 'mailto' ? 'Opens email client' :
                'Downloads PDF file'}
             </span>
-            <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-white/80 group-hover:translate-x-1 transition-all" />
+            <ArrowRight className="w-4 h-4 text-gray-500 dark:text-gray-400 group-hover:translate-x-1 transition-all" />
           </div>
         </div>
-
-        {/* Hover effect overlay */}
-        <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-white/5 to-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-      </div>
-    </motion.button>
+      </Card>
+    </motion.div>
   )
 }
 
@@ -191,56 +191,53 @@ const SocialLinkCard = ({
   const IconComponent = link.icon
 
   return (
-    <motion.a
-      href={link.href}
-      target="_blank"
-      rel="noopener noreferrer"
+    <motion.div
       initial={{ opacity: 0, scale: 0.8 }}
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true }}
       transition={{ delay: index * 0.1, duration: 0.5 }}
-      className="group relative block"
-      aria-label={`Visit my ${link.name} profile`}
+      className="group relative"
     >
-      {/* Main card */}
-      <div className="relative p-6 backdrop-blur-sm bg-black/40 border border-white/10 rounded-2xl overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-blue-500/10 hover:-translate-y-2 hover:border-slate-500/50">
+      <a
+        href={link.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`Visit my ${link.name} profile`}
+      >
+        <Card variant="elevated" hoverable padding="lg" className="text-center overflow-hidden">
+          {/* Gradient background on hover */}
+          <div className={cn(
+            "absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-500",
+            `bg-gradient-to-br ${link.color}`
+          )} />
 
-        {/* Gradient background on hover */}
-        <div className={cn(
-          "absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500",
-          `bg-gradient-to-br ${link.color}`
-        )} />
+          {/* Content */}
+          <div className="relative z-10">
+            <div className="mb-4">
+              <div className={cn(
+                "inline-flex p-4 rounded-2xl transition-all duration-300 group-hover:scale-110",
+                `bg-gradient-to-br ${link.color}`
+              )}>
+                <IconComponent className="w-8 h-8 text-white" />
+              </div>
+            </div>
 
-        {/* Content */}
-        <div className="relative z-10 text-center">
-          <div className="mb-4">
-            <div className={cn(
-              "inline-flex p-4 rounded-2xl transition-all duration-300 group-hover:scale-110",
-              `bg-gradient-to-br ${link.color}`
-            )}>
-              <IconComponent className="w-8 h-8 text-white" />
+            <h3 className="font-bold text-lg text-gray-900 dark:text-white transition-colors mb-2">
+              {link.name}
+            </h3>
+
+            <p className="text-sm text-gray-600 dark:text-gray-400 transition-colors leading-normal">
+              {link.description}
+            </p>
+
+            <div className="mt-4 flex items-center justify-center gap-2 text-xs text-gray-500 dark:text-gray-400 transition-colors">
+              <ExternalLink className="w-3 h-3" />
+              Visit Profile
             </div>
           </div>
-
-          <h3 className="font-bold text-lg text-white group-hover:text-white transition-colors mb-2">
-            {link.name}
-          </h3>
-
-          <p className="text-sm text-gray-400 group-hover:text-white/80 transition-colors leading-normal">
-            {link.description}
-          </p>
-
-          <div className="mt-4 flex items-center justify-center gap-2 text-xs text-gray-400 group-hover:text-white/60 transition-colors">
-            <ExternalLink className="w-3 h-3" />
-            Visit Profile
-          </div>
-        </div>
-
-        {/* Decorative elements */}
-        <div className="absolute -right-8 -top-8 w-24 h-24 bg-white/5 rounded-full group-hover:bg-white/10 transition-colors" />
-        <div className="absolute -left-4 -bottom-4 w-16 h-16 bg-white/5 rounded-full group-hover:bg-white/10 transition-colors" />
-      </div>
-    </motion.a>
+        </Card>
+      </a>
+    </motion.div>
   )
 }
 
@@ -274,24 +271,24 @@ const ContactInfoCard = () => (
       </div>
 
       <div className="space-y-4">
-        <div className="flex items-center gap-3 text-gray-300">
+        <div className="flex items-center gap-3 text-gray-700 dark:text-gray-300">
           <Mail className="w-5 h-5 text-blue-500" />
           <span className="font-mono text-sm">{contactInfo.email}</span>
         </div>
 
-        <div className="flex items-center gap-3 text-gray-300">
+        <div className="flex items-center gap-3 text-gray-700 dark:text-gray-300">
           <Phone className="w-5 h-5 text-green-500" />
           <span className="font-mono text-sm">{contactInfo.phone}</span>
         </div>
 
-        <div className="flex items-center gap-3 text-gray-300">
+        <div className="flex items-center gap-3 text-gray-700 dark:text-gray-300">
           <MapPin className="w-5 h-5 text-red-500" />
           <span className="text-sm">{contactInfo.location}</span>
         </div>
       </div>
 
-      <div className="mt-6 pt-6 border-t border-gray-700">
-        <p className="text-sm text-gray-400 leading-normal">
+      <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
+        <p className="text-sm text-gray-600 dark:text-gray-400 leading-normal">
           I&apos;m always open to discussing new opportunities, interesting projects,
           or just having a conversation about technology and development.
         </p>
@@ -322,11 +319,31 @@ export const ContactSection = () => {
       <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:50px]" />
 
       <div className="relative z-10 container mx-auto px-4">
-        {/* Section Title */}
-        <SectionTitle
-          title="Let's Connect"
-          subtitle="Ready to bring your next project to life? I'd love to hear about your ideas"
-        />
+        {/* Section Header matching TimelineSection style */}
+        <motion.header
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
+          {/* Decorative line with icon */}
+          <div className="flex items-center justify-center gap-4 mb-6" aria-hidden="true">
+            <div className="h-px flex-1 bg-gradient-to-r from-transparent to-blue-500" />
+            <div className="p-3 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full">
+              <Mail className="w-6 h-6 text-white" />
+            </div>
+            <div className="h-px flex-1 bg-gradient-to-l from-transparent to-purple-500" />
+          </div>
+
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-gray-900 to-gray-600 dark:from-gray-100 dark:to-gray-400 bg-clip-text text-transparent">
+            Let's Connect
+          </h2>
+
+          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
+            Ready to bring your next project to life? I'd love to hear about your ideas
+          </p>
+        </motion.header>
 
         {/* Success message for copy action */}
         {copied && (
@@ -354,11 +371,11 @@ export const ContactSection = () => {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="mb-8"
             >
-              <h3 className="text-2xl font-bold text-white mb-2 flex items-center gap-3">
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-3">
                 <Star className="w-6 h-6 text-yellow-500" />
                 Quick Actions
               </h3>
-              <p className="text-gray-400">
+              <p className="text-gray-600 dark:text-gray-400">
                 Choose the best way to get in touch
               </p>
             </motion.div>
@@ -390,10 +407,10 @@ export const ContactSection = () => {
           className="mb-16"
         >
           <div className="text-center mb-8">
-            <h3 className="text-2xl font-bold text-white mb-2">
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
               Connect on Social
             </h3>
-            <p className="text-gray-400">
+            <p className="text-gray-600 dark:text-gray-400">
               Follow my work and connect professionally
             </p>
           </div>
@@ -417,11 +434,11 @@ export const ContactSection = () => {
           transition={{ duration: 0.6, delay: 0.6 }}
           className="text-center"
         >
-          <div className="p-8 backdrop-blur-sm bg-black/40 border border-white/10 rounded-2xl max-w-2xl mx-auto hover:border-slate-500/50 transition-all duration-500">
-            <h3 className="text-xl font-bold text-white mb-4">
+          <Card variant="elevated" padding="lg" className="max-w-2xl mx-auto text-center">
+            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
               Ready to Start a Project?
             </h3>
-            <p className="text-gray-400 mb-6 leading-normal">
+            <p className="text-gray-600 dark:text-gray-400 mb-6 leading-normal">
               Whether you have a specific project in mind or just want to explore possibilities,
               I&apos;m here to help turn your vision into reality.
             </p>
@@ -434,7 +451,7 @@ export const ContactSection = () => {
               Start the Conversation
               <Send className="ml-2 w-4 h-4 inline-block group-hover:translate-x-1 transition-transform" />
             </motion.button>
-          </div>
+          </Card>
         </motion.div>
       </div>
     </div>

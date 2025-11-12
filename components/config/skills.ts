@@ -198,7 +198,7 @@ export const skills = [
   {
     id: 'googlecloud',
     name: "Google Cloud",
-    icon: "/icons/tools/googlecloud.svg",
+    icon: "/icons/tools/google-cloud.svg",
     color: "#F7DF1E",
     category: "tools",
   },

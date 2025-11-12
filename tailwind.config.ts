@@ -1,241 +1,76 @@
 import type { Config } from "tailwindcss";
-import { fontFamily } from "tailwindcss/defaultTheme";
 
-const svgToDataUri = require("mini-svg-data-uri");
-const colors = require("tailwindcss/colors");
-const {
-  default: flattenColorPalette,
-} = require("tailwindcss/lib/util/flattenColorPalette");
-
-const config = {
-	darkMode: ["class"],
-	content: [
-	  "./pages/**/*.{ts,tsx}",
-	  "./components/**/*.{ts,tsx}",
-	  "./app/**/*.{ts,tsx}",
-	  "./src/**/*.{ts,tsx}",
-	  "./data/**/*.{ts,tsx}",
-	],
-	prefix: "",
-	theme: {
-	  container: {
-		center: true,
-		padding: "2rem",
-		screens: {
-		  "xs": "375px",
-		  "sm": "640px",
-		  "md": "768px", 
-		  "lg": "1024px",
-		  "xl": "1280px",
-		  "2xl": "1400px"
-		}
-	  },
-	  extend: {
-		fontFamily: {
-		  sans: ["var(--font-geist-sans)", ...fontFamily.sans],
-		},
-		colors: {
-		  // Brand colors
-		  primary: {
-			DEFAULT: "var(--primary)",
-			foreground: "var(--primary-foreground)",
-			'50': '#f0f9ff',
-			'100': '#e0f2fe',
-			'200': '#bae6fd',
-			'300': '#7dd3fc',
-			'400': '#38bdf8',
-			'500': '#0ea5e9',
-			'600': '#0284c7',
-			'700': '#0369a1',
-			'800': '#075985',
-			'900': '#0c4a6e',
-			'950': '#082f49',
-		  },
-		  secondary: {
-			DEFAULT: "var(--secondary)",
-			foreground: "var(--secondary-foreground)",
-		  },
-		  destructive: {
-			DEFAULT: "var(--destructive)",
-			foreground: "var(--destructive-foreground)",
-		  },
-		  muted: {
-			DEFAULT: "var(--muted)",
-			foreground: "var(--muted-foreground)",
-		  },
-		  accent: {
-			DEFAULT: "var(--accent)",
-			foreground: "var(--accent-foreground)",
-		  },
-		  // Interface colors
-		  background: "var(--background)",
-		  foreground: "var(--foreground)",
-		  card: {
-			DEFAULT: "var(--card)",
-			foreground: "var(--card-foreground)",
-		  },
-		  popover: {
-			DEFAULT: "var(--popover)",
-			foreground: "var(--popover-foreground)",
-		  },
-		  border: "var(--border)",
-		  input: "var(--input)",
-		  ring: "var(--ring)",
-		  // Custom colors
-		  black: {
-			'100': '#000319',
-			'200': 'rgba(17, 25, 40, 0.75)',
-			'300': 'rgba(255, 255, 255, 0.125)',
-			DEFAULT: '#000000'
-		  },
-		  white: {
-			'100': '#BEC1DD',
-			'200': '#C1C2D3',
-			DEFAULT: '#FFFFFF'
-		  },
-		  chart: {
-			'1': 'var(--chart-1)',
-			'2': 'var(--chart-2)',
-			'3': 'var(--chart-3)',
-			'4': 'var(--chart-4)',
-			'5': 'var(--chart-5)'
-		  }
-		},
-		borderRadius: {
-		  lg: "var(--radius)",
-		  md: "calc(var(--radius) - 2px)",
-		  sm: "calc(var(--radius) - 4px)",
-		},
-		keyframes: {
-		  "accordion-down": {
-			from: { height: "0" },
-			to: { height: "var(--radix-accordion-content-height)" },
-		  },
-		  "accordion-up": {
-			from: { height: "var(--radix-accordion-content-height)" },
-			to: { height: "0" },
-		  },
-		  spotlight: {
-			"0%": {
-			  opacity: "0",
-			  transform: "translate(-72%, -62%) scale(0.5)",
-			},
-			"100%": {
-			  opacity: "1",
-			  transform: "translate(-50%,-40%) scale(1)",
-			},
-		  },
-		  shimmer: {
-			from: { backgroundPosition: "0 0" },
-			to: { backgroundPosition: "-200% 0" },
-		  },
-		  moveHorizontal: {
-			"0%": {
-			  transform: "translateX(-50%) translateY(-10%)",
-			},
-			"50%": {
-			  transform: "translateX(50%) translateY(10%)",
-			},
-			"100%": {
-			  transform: "translateX(-50%) translateY(-10%)",
-			},
-		  },
-		  moveInCircle: {
-			"0%": { transform: "rotate(0deg)" },
-			"50%": { transform: "rotate(180deg)" },
-			"100%": { transform: "rotate(360deg)" },
-		  },
-		  moveVertical: {
-			"0%": { transform: "translateY(-50%)" },
-			"50%": { transform: "translateY(50%)" },
-			"100%": { transform: "translateY(-50%)" },
-		  },
-		  scroll: {
-			to: { transform: "translate(calc(-50% - 0.5rem))" },
-		  },
-		  meteor: {
-			"0%": { transform: "rotate(215deg) translateX(0)", opacity: "1" },
-			"70%": { opacity: "1" },
-			"100%": {
-			  transform: "rotate(215deg) translateX(-500px)",
-			  opacity: "0",
-			},
-		  },
-		  spin: {
-			"0%": { transform: "rotate(0deg)" },
-			"100%": { transform: "rotate(360deg)" },
-		  },
-		},
-		animation: {
-		  "accordion-down": "accordion-down 0.2s ease-out",
-		  "accordion-up": "accordion-up 0.2s ease-out",
-		  spotlight: "spotlight 2s ease .75s 1 forwards",
-		  shimmer: "shimmer 2s linear infinite",
-		  "meteor-effect": "meteor 5s linear infinite",
-		  first: "moveVertical 30s ease infinite",
-		  second: "moveInCircle 20s reverse infinite",
-		  third: "moveInCircle 40s linear infinite",
-		  fourth: "moveHorizontal 40s ease infinite",
-		  fifth: "moveInCircle 20s ease infinite",
-		  scroll: "scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite",
-		  "spin-slow": "spin 4s linear infinite",
-		},
-		spacing: {
-		  'safe-top': 'env(safe-area-inset-top)',
-		  'safe-bottom': 'env(safe-area-inset-bottom)',
-		  'safe-left': 'env(safe-area-inset-left)',
-		  'safe-right': 'env(safe-area-inset-right)',
-		},
-		zIndex: {
-		  '-1': '-1',
-		  '1': '1',
-		  '2': '2',
-		  '3': '3',
-		  '4': '4',
-		  '5': '5',
-		},
-	  },
-	},
-	plugins: [
-	  require("tailwindcss-animate"),
-	  addVariablesForColors,
-	  // Background patterns plugin
-	  function ({ matchUtilities, theme }: any) {
-		matchUtilities(
-		  {
-			"bg-grid": (value: any) => ({
-			  backgroundImage: `url("${svgToDataUri(
-				`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="100" height="100" fill="none" stroke="${value}"><path d="M0 .5H31.5V32"/></svg>`
-			  )}")`,
-			}),
-			"bg-grid-small": (value: any) => ({
-			  backgroundImage: `url("${svgToDataUri(
-				`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="8" height="8" fill="none" stroke="${value}"><path d="M0 .5H31.5V32"/></svg>`
-			  )}")`,
-			}),
-			"bg-dot": (value: any) => ({
-			  backgroundImage: `url("${svgToDataUri(
-				`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none"><circle fill="${value}" id="pattern-circle" cx="10" cy="10" r="1.6257413380501518"></circle></svg>`
-			  )}")`,
-			}),
-		  },
-		  { values: flattenColorPalette(theme("backgroundColor")), type: "color" }
-		);
-	  },
-	],
-  };
-
-
-// Helper function to generate CSS variables for colors
-function addVariablesForColors({ addBase, theme }: any) {
-  const colors = flattenColorPalette(theme("colors"));
-  const variables = Object.fromEntries(
-    Object.entries(colors).map(([key, val]) => [`--${key}`, val])
-  );
-  
-  addBase({
-    ":root": variables,
-  });
-}
+const config: Config = {
+  darkMode: 'class', // Enable class-based dark mode
+  content: [
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./lib/**/*.{js,ts,jsx,tsx,mdx}",
+    "./context/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        primary: {
+          50: '#f0f4ff',
+          100: '#e0e9ff',
+          200: '#c7d6fe',
+          300: '#a5bbfc',
+          400: '#8199f8',
+          500: '#667eea',
+          600: '#5568d3',
+          700: '#4453ab',
+          800: '#3a4689',
+          900: '#333d6f',
+        },
+        accent: {
+          50: '#faf5ff',
+          100: '#f3e8ff',
+          200: '#e9d5ff',
+          300: '#d8b4fe',
+          400: '#c084fc',
+          500: '#a855f7',
+          600: '#9333ea',
+          700: '#7e22ce',
+          800: '#6b21a8',
+          900: '#581c87',
+        },
+      },
+      backgroundImage: {
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+      },
+      fontFamily: {
+        sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
+        heading: ['var(--font-poppins)', 'system-ui', 'sans-serif'],
+      },
+      animation: {
+        'fade-in': 'fadeIn 0.5s ease-in-out',
+        'slide-up': 'slideUp 0.5s ease-out',
+        'slide-in': 'slideIn 0.5s ease-out',
+        'gradient': 'gradient 15s ease infinite',
+      },
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        slideUp: {
+          '0%': { transform: 'translateY(20px)', opacity: '0' },
+          '100%': { transform: 'translateY(0)', opacity: '1' },
+        },
+        slideIn: {
+          '0%': { transform: 'translateX(-20px)', opacity: '0' },
+          '100%': { transform: 'translateX(0)', opacity: '1' },
+        },
+        gradient: {
+          '0%, 100%': { backgroundPosition: '0% 50%' },
+          '50%': { backgroundPosition: '100% 50%' },
+        },
+      },
+    },
+  },
+  plugins: [],
+};
 
 export default config;

@@ -2,20 +2,23 @@
 
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
+import { forwardRef } from "react";
 
 interface SectionProps {
   id?: string;
   className?: string;
   children: React.ReactNode;
   spacing?: 'none' | 'sm' | 'md' | 'lg';
+  style?: React.CSSProperties;
 }
 
-export function Section({
+export const Section = forwardRef<HTMLElement, SectionProps>(function Section({
   id,
   className,
   children,
-  spacing = 'md'
-}: SectionProps) {
+  spacing = 'md',
+  style
+}, ref) {
   // Predefined spacing classes
   const spacingClasses = {
     none: '',
@@ -32,6 +35,7 @@ export function Section({
 
   return (
     <motion.section
+      ref={ref}
       id={id}
       initial="hidden"
       whileInView="visible"
@@ -46,8 +50,9 @@ export function Section({
         // Custom classes
         className
       )}
+      style={style}
     >
       {children}
     </motion.section>
   );
-}
+});

@@ -15,43 +15,16 @@ import {
   ExternalLink,
   Code,
   Globe,
-  Zap,
-  GlobeIcon,
-  CodeIcon
+  Zap
 } from 'lucide-react'
 import { cn } from "@/lib/utils"
-
+import Container from '@/components/layout/Container'
 
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver'
 import { Section } from '../layout/Section'
-import { Container } from '../layout/Container'
-
-// TypeScript interfaces for better type safety
-interface TimelineItem {
-  id: string
-  title: string
-  company?: string
-  institution?: string
-  period: string
-  location: string
-  type: 'work' | 'education' | 'certification' | 'degree'
-  status: 'completed' | 'current'
-  details: string[]
-  skills: string[]
-  gradient: string
-  achievements?: string[]
-  website?: string
-}
-
-interface TimelineCardProps extends TimelineItem {
-  delay?: number
-}
 
 // Enhanced timeline data with improved structure and new role
-const timelineData: {
-  education: TimelineItem[]
-  experience: TimelineItem[]
-} = {
+const timelineData = {
   education: [
     {
       id: 'codestack',
@@ -78,16 +51,16 @@ const timelineData: {
       ]
     },
     {
-      id: 'itt-tech-bs',
+      id: 'itt-tech',
       title: "BS Information Systems & Cyber Security",
       institution: "ITT Technical Institute",
-      period: "2014 - 2016",
-      location: "Lathrop, CA",
+      period: "Graduated 2016",
+      location: "Rancho Cordova, CA",
       type: "degree",
       status: "completed",
       details: [
         "Network Systems Administration and Security with hands-on lab experience",
-        "Information Security and Risk Management including vulnerability assessments",
+        "Information Security and Risk Management including vulnerability assessments", 
         "Database Design and Management using SQL Server and Oracle",
         "System Analysis and Design with UML modeling and requirements gathering",
         "Senior Capstone Project: Designed secure network infrastructure for small business",
@@ -96,33 +69,9 @@ const timelineData: {
       skills: ["Network Security", "Database Management", "System Administration", "Risk Management"],
       gradient: "from-purple-500 to-pink-500",
       achievements: [
-        "Graduate (GPA: 3.5)",
+        "Cum Laude Graduate (GPA: 3.5)",
         "Dean's List: 4 semesters",
         "Senior Capstone Award recipient"
-      ]
-    },
-    {
-      id: 'itt-tech-as',
-      title: "AS Network System Administration",
-      institution: "ITT Technical Institute",
-      period: "2012 - 2014",
-      location: "Lathrop, CA",
-      type: "degree",
-      status: "completed",
-      details: [
-        "Network Infrastructure and Administration with focus on Windows Server environments",
-        "TCP/IP protocols, routing, switching, and network topology design",
-        "Active Directory management, group policies, and domain administration",
-        "Hardware installation, configuration, and troubleshooting for enterprise systems",
-        "Network security fundamentals including firewalls, VPNs, and intrusion detection",
-        "Hands-on lab experience with Cisco networking equipment and Windows Server"
-      ],
-      skills: ["Windows Server", "Active Directory", "TCP/IP", "Network Administration", "Cisco", "System Troubleshooting"],
-      gradient: "from-indigo-500 to-blue-500",
-      achievements: [
-        "Strong foundation in network infrastructure",
-        "Hands-on experience with enterprise systems",
-        "Prepared for IT career advancement"
       ]
     }
   ],
@@ -208,6 +157,27 @@ const timelineData: {
       ]
     }
   ]
+}
+
+// TypeScript interfaces for better type safety
+interface TimelineItem {
+  id: string
+  title: string
+  company?: string
+  institution?: string
+  period: string
+  location: string
+  type: 'work' | 'education' | 'certification' | 'degree'
+  status: 'completed' | 'current'
+  details: string[]
+  skills: string[]
+  gradient: string
+  achievements?: string[]
+  website?: string
+}
+
+interface TimelineCardProps extends TimelineItem {
+  delay?: number
 }
 
 /**
@@ -454,9 +424,9 @@ const SectionHeader = () => (
 const Statistics = () => {
   const stats = [
     { label: 'Years Experience', value: '8+', color: 'text-blue-600 dark:text-blue-400', icon: Briefcase },
-    { label: 'Education Programs', value: '3', color: 'text-purple-600 dark:text-purple-400', icon: GraduationCap },
-    { label: 'CodeStack Graduate', value: '2025', color: 'text-green-600 dark:text-green-400', icon: CodeIcon },
-    { label: 'Production Websites', value: '4', color: 'text-orange-600 dark:text-orange-400', icon: GlobeIcon }
+    { label: 'Education Programs', value: '2', color: 'text-purple-600 dark:text-purple-400', icon: GraduationCap },
+    { label: 'Current Roles', value: '2', color: 'text-green-600 dark:text-green-400', icon: Building },
+    { label: 'Projects Built', value: '10+', color: 'text-orange-600 dark:text-orange-400', icon: Code }
   ]
 
   return (

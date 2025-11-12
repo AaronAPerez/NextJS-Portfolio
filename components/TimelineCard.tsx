@@ -16,6 +16,7 @@ import {
   Zap
 } from 'lucide-react'
 import { cn } from "@/lib/utils"
+import { Card, CardHeader, CardContent } from '@/components/ui/Card'
 
 
 
@@ -76,7 +77,7 @@ const TimelineCard = ({
     if (status === 'current') {
       return (
         <div
-          className="flex items-center gap-2 px-3 py-1 bg-green-900/30 text-green-300 text-xs font-semibold rounded-full"
+          className="flex items-center gap-2 px-3 py-1 bg-green-500/20 dark:bg-green-900/30 text-green-700 dark:text-green-300 text-xs font-semibold rounded-full"
           role="status"
           aria-label="Currently employed"
         >
@@ -87,7 +88,7 @@ const TimelineCard = ({
     }
     return (
       <div
-        className="flex items-center gap-2 px-3 py-1 bg-blue-900/30 text-blue-300 text-xs font-semibold rounded-full"
+        className="flex items-center gap-2 px-3 py-1 bg-blue-500/20 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs font-semibold rounded-full"
         role="status"
         aria-label="Previously completed"
       >
@@ -103,21 +104,18 @@ const TimelineCard = ({
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true }}
       transition={{ duration: 0.6, delay }}
-      className="group relative"
+      className="group relative h-full"
       role="article"
       aria-labelledby={`${type}-${title.replace(/\s+/g, '-').toLowerCase()}`}
       tabIndex={0}
     >
-      {/* Main card with consistent styling */}
-      <div className="relative h-full backdrop-blur-sm bg-black/40 border border-white/10 rounded-2xl overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-gray-500/10 hover:-translate-y-2 hover:border-slate-500/50 focus-within:ring-2 focus-within:ring-gray-400 focus-within:ring-offset-2">
-
+      <Card variant="elevated" hoverable padding="none" className="h-full overflow-hidden">
         {/* Gradient header */}
-        <div className={cn("p-6 bg-gradient-to-r", gradient, "relative overflow-hidden")}>
-
+        <CardHeader className={cn("p-6 bg-gradient-to-r", gradient, "relative overflow-hidden")}>
           <div className="relative z-10">
             <div className="flex items-start justify-between mb-4">
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+                <div className="p-2 bg-white/20 dark:bg-white/10 rounded-lg backdrop-blur-sm">
                   {getIcon()}
                 </div>
                 {getStatusBadge()}
@@ -127,7 +125,7 @@ const TimelineCard = ({
                   href={website}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2 bg-white/20 rounded-lg backdrop-blur-sm hover:bg-white/30 transition-colors"
+                  className="p-2 bg-white/20 dark:bg-white/10 rounded-lg backdrop-blur-sm hover:bg-white/30 dark:hover:bg-white/20 transition-colors"
                   aria-label={`Visit ${company || institution} website`}
                 >
                   <ExternalLink className="w-4 h-4 text-white" />
@@ -160,12 +158,12 @@ const TimelineCard = ({
 
           <div className="absolute -right-8 -bottom-8 w-32 h-32 bg-white/10 rounded-full" aria-hidden="true" />
           <div className="absolute -right-4 -bottom-4 w-20 h-20 bg-white/5 rounded-full" aria-hidden="true" />
-        </div>
+        </CardHeader>
 
         {/* Card content */}
-        <div className="p-6">
+        <CardContent className="p-6">
           <div className="mb-6">
-            <h4 className="text-sm font-semibold text-gray-300 mb-4 flex items-center gap-2">
+            <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-4 flex items-center gap-2">
               <ArrowRight className="w-4 h-4" aria-hidden="true" />
               Key Responsibilities & Achievements
             </h4>
@@ -177,10 +175,10 @@ const TimelineCard = ({
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: delay + (idx * 0.1), duration: 0.4 }}
-                  className="flex items-start gap-3 text-sm text-gray-300"
+                  className="flex items-start gap-3 text-sm text-gray-600 dark:text-gray-300"
                   role="listitem"
                 >
-                  <div className="w-1.5 h-1.5 bg-gray-400 rounded-full mt-2 flex-shrink-0" aria-hidden="true" />
+                  <div className="w-1.5 h-1.5 bg-gray-400 dark:bg-gray-500 rounded-full mt-2 flex-shrink-0" aria-hidden="true" />
                   <span className="leading-normal">{detail}</span>
                 </motion.li>
               ))}
@@ -189,7 +187,7 @@ const TimelineCard = ({
 
           {achievements.length > 0 && (
             <div className="mb-6">
-              <h4 className="text-sm font-semibold text-gray-300 mb-3 flex items-center gap-2">
+              <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3 flex items-center gap-2">
                 <Zap className="w-4 h-4" aria-hidden="true" />
                 Key Achievements
               </h4>
@@ -197,10 +195,10 @@ const TimelineCard = ({
                 {achievements.map((achievement, idx) => (
                   <li
                     key={idx}
-                    className="flex items-start gap-2 text-sm text-gray-300"
+                    className="flex items-start gap-2 text-sm text-gray-600 dark:text-gray-300"
                     role="listitem"
                   >
-                    <Star className="w-3 h-3 text-yellow-500 mt-1 flex-shrink-0" aria-hidden="true" />
+                    <Star className="w-3 h-3 text-yellow-500 dark:text-yellow-400 mt-1 flex-shrink-0" aria-hidden="true" />
                     <span>{achievement}</span>
                   </li>
                 ))}
@@ -209,14 +207,14 @@ const TimelineCard = ({
           )}
 
           <div>
-            <h4 className="text-sm font-semibold text-gray-300 mb-3">
+            <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
               Skills & Technologies
             </h4>
             <div className="flex flex-wrap gap-2" role="list" aria-label="Skills and technologies used">
               {skills.map((skill) => (
                 <span
                   key={skill}
-                  className="px-3 py-1 text-xs font-medium bg-gray-800 text-gray-300 rounded-full border border-gray-700 hover:bg-gray-700 transition-colors"
+                  className="px-3 py-1 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full border border-gray-200 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                   role="listitem"
                 >
                   {skill}
@@ -224,10 +222,8 @@ const TimelineCard = ({
               ))}
             </div>
           </div>
-        </div>
-
-        <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" aria-hidden="true" />
-      </div>
+        </CardContent>
+      </Card>
     </motion.article>
   )
 }
