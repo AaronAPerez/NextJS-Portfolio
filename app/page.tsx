@@ -4,7 +4,9 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 import HeroSection from "@/components/sections/HeroSection";
 import SectionLoader from "@/components/ui/SectionLoader";
-import Footer from '@/components/layout/Footer';
+import { LearningSection } from '@/components/sections/LearningSection';
+import { Skills } from '@/components/sections/Skills';
+
 
 // Optimized lazy loading with ssr disabled for heavy components
 const AboutSection = dynamic(() => import("@/components/sections/AboutSection/AboutSection"), {
@@ -12,15 +14,11 @@ const AboutSection = dynamic(() => import("@/components/sections/AboutSection/Ab
   ssr: false
 });
 
-const SkillsSection = dynamic(() => import("@/components/sections/SkillsSection/SkillsSection"), {
-  loading: () => <SectionLoader />,
-  ssr: false
-});
+// const SkillsSection = dynamic(() => import("@/components/sections/Skills"), {
+//   loading: () => <SectionLoader />,
+//   ssr: false
+// });
 
-const AIShowcase = dynamic(() => import("@/components/sections/AIShowcase/AIShowcase"), {
-  loading: () => <SectionLoader />,
-  ssr: false
-});
 
 const ProjectsSection = dynamic(() => import("@/components/sections/ProjectsSection/ProjectsSection"), {
   loading: () => <SectionLoader />,
@@ -44,53 +42,50 @@ export default function Home() {
         {/* Hero Section - Above the fold, strong first impression */}
         <section
           id="home"
-          className="relative"
+          className="relative bg-white-100 dark:bg-gray-950"
           aria-labelledby="hero-heading"
         >
           <HeroSection />
         </section>
 
       {/* About Section */}
-      <section id="about">
+      <section id="about" className="bg-white-100 dark:bg-gray-950">
         <AboutSection />
       </section>
 
          {/* Skills Section - Show capabilities immediately */}
         <section
           id="skills"
-          className="relative"
+          className="relative bg-white-100 dark:bg-gray-950"
           aria-labelledby="skills-heading"
         >
-          <SkillsSection />
+          <Skills/>
         </section>
 
       {/* AI Showcase Section */}
-      <section id="ai-showcase">
-        <AIShowcase />
+      <section id="learning section" className="bg-white-100 dark:bg-gray-950">
+        <LearningSection/>
       </section>
 
       {/* Projects Section */}
-      <section id="projects">
+      <section id="projects" className="bg-white-100 dark:bg-gray-950">
         <ProjectsSection />
       </section>
 
       {/* Experience Section */}
-      <section id="experience">
+      <section id="experience" className="bg-white-100 dark:bg-gray-950">
         <TimelineSection />
       </section>
         {/* Contact Section - End with clear CTA */}
         <section
           id="contact"
-          className="relative"
+          className="relative bg-white-100 dark:bg-gray-950"
           aria-labelledby="contact-heading"
         >
           <ContactSection />
         </section>
 
-                {/* Footer */}
-        <footer role="contentinfo">
-          <Footer />
-        </footer>
+          
     </>
   );
 }

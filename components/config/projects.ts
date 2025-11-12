@@ -1,11 +1,30 @@
-import { Project } from "../types/project";
+export interface Project {
+  id: string;
+  title: string;
+  description: string;
+  tech: string[];
+  category: 'production' | 'portfolio' | 'coursework';
+  isLive: boolean;
+  clientType?: 'business' | 'personal' | 'demo';
+  featured: boolean;
+  images: string[];
+  imagesAlt: string[];
+  demoLink?: string;
+  codeLink: string;
+  websiteLink?: string;
+  gradient?: { from: string; to: string };
+}
 
-export const projects: Project = [
+export const projects: Project[] = [
   {
     id: 'amp-vending',
     title: "AMP Vending",
-    description: "Modern vending machine service website featuring responsive design, service information, and product catalog. Built with attention to accessibility and user experience.",
+    description: "Production website for local vending machine business. Live and actively used by real business.",
     tech: ["Next.js", "React", "TypeScript", "Tailwind", "Responsive Design"],
+    category: 'production',
+    isLive: true,
+    clientType: 'business',
+    featured: true,
     images: ["/images/projects/amp-vending/amp-vending-1.png"],
     imagesAlt: ["/images/projects/amp-vending/amp-vending-1.png"],
     demoLink: "https://www.ampvendingmachines.com",
@@ -16,25 +35,15 @@ export const projects: Project = [
       to: "#A5ACAF"    // silver
     }
   },
-    {
+   {
     id: 'cloudgov-dashboard',
     title: "CloudGov Dashboard",
-    description: "Production-ready enterprise cloud governance platform for AWS resource management, cost optimization, and security compliance. Demonstrates full-stack development expertise with real-time monitoring, AI-powered recommendations, and comprehensive testing. Built for LLNL Junior Software Developer position showcasing modern development practices and measurable business impact ($150K+ annual cost savings).",
-    tech: [
-      "Next.js 14",
-      "React 18", 
-      "TypeScript",
-      "Tailwind CSS",
-      "Node.js",
-      "SWR",
-      "Recharts",
-      "Jest",
-      "Playwright",
-      "Zod",
-      "RESTful API",
-      "CI/CD",
-      "Docker"
-    ],
+    description: "Enterprise cloud management platform built to demonstrate qualifications for LLNL Software Developer position. Showcases full-stack skills, testing, and production-ready code.",
+    tech: ["Next.js 14", "React 18", "TypeScript", "Tailwind CSS", "Jest", "Playwright"],
+    category: 'portfolio',
+    isLive: true,
+    clientType: 'demo',
+    featured: true,
     images: ["/images/projects/cloudgov-dashboard/cloudgov-1.png"],
     imagesAlt: ["/images/projects/cloudgov-dashboard/cloudgov-dashboard-preview.png"],
     demoLink: "https://cloudgov-dashboard.vercel.app",
@@ -48,8 +57,12 @@ export const projects: Project = [
   {
     id: 'glamping-spot',
     title: "The Glamping Spot",
-    description: "Luxury camping booking platform with interactive map, reservation system, and user reviews. Responsive design optimized for all devices.",
+    description: "Booking platform for luxury camping locations. Real production website with interactive features.",
     tech: ["Next.js", "React", "TypeScript", "Tailwind", "Node.js", "Express", "MongoDB", "Mapbox API"],
+    category: 'production',
+    isLive: true,
+    clientType: 'business',
+    featured: true,
     images: ["/images/projects/theglampingspot/glamping-1.png"],
     imagesAlt: ["/images/projects/theglampingspot/glamping-1.png"],
     demoLink: "https://www.theglampingspot.net",
@@ -60,11 +73,15 @@ export const projects: Project = [
       to: "#15803D"
     }
   },
-  {
+ {
     id: 'goldmine-communications',
     title: "Goldmine Communications & Construction",
-    description: "Modern website for telecommunications infrastructure company featuring responsive design, dynamic content sections, and professional branding. Built with Next.js and TypeScript.",
-    tech: ["Next.js", "React", "TypeScript", "Tailwind"],
+    description: "Production website for telecommunications infrastructure company. Responsive design with professional branding.",
+      tech: ["Next.js", "React", "TypeScript", "Tailwind"],
+    category: 'production',
+    isLive: true,
+    clientType: 'business',
+    featured: true,
     images: ["/images/projects/goldmine_website/goldmine_1.svg"],
     imagesAlt: ["/images/projects/goldmine_website/goldmine_1.svg"],
     demoLink: "https://www.goldminecomm.net",

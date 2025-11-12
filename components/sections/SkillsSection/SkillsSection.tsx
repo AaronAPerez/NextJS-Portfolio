@@ -8,7 +8,8 @@ import { Skill, skills } from '@/components/config/skills';
 import { Container } from '@/components/layout/Container';
 import { Section } from '@/components/layout/Section';
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
-import { useTheme } from '@/lib/theme-context';
+import { useTheme } from '@/context/ThemeContext';
+
 
 // Category configuration
 const categories = [
@@ -312,16 +313,28 @@ export default function SkillsSection() {
         <div className="absolute inset-0 bg-grid-small opacity-30" />
 
         <Container className="relative z-10">
-          {/* Section header */}
-          <motion.div
+          {/* Section header matching TimelineSection style */}
+          <motion.header
             initial={{ opacity: 0, y: 50 }}
             animate={isIntersecting ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900 dark:text-white">
+            {/* Decorative line with icon */}
+            <div className="flex items-center justify-center gap-4 mb-6" aria-hidden="true">
+              <div className="h-px flex-1 bg-gradient-to-r from-transparent to-blue-500" />
+              <div className="p-3 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full">
+                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                </svg>
+              </div>
+              <div className="h-px flex-1 bg-gradient-to-l from-transparent to-purple-500" />
+            </div>
+
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-gray-900 to-gray-600 dark:from-gray-100 dark:to-gray-400 bg-clip-text text-transparent">
               Skills & Technologies
             </h2>
+
             <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8 leading-relaxed">
               A comprehensive showcase of the technologies and tools I use to build
               modern, scalable applications and deliver exceptional user experiences.
@@ -344,7 +357,7 @@ export default function SkillsSection() {
                 <div className="text-sm text-gray-500 dark:text-gray-400 font-medium">Years Experience</div>
               </div>
             </div>
-          </motion.div>
+          </motion.header>
 
           {/* Category filters */}
           <motion.div

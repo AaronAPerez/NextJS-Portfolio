@@ -108,56 +108,46 @@ export default function HeroSection() {
           <div className="absolute top-40 right-20 w-72 h-72 bg-indigo-400 rounded-full mix-blend-multiply filter blur-xl opacity-10"></div>
         </div>
       )}
-      
 
-      <section className="relative z-10 min-h-screen flex items-center justify-center overflow-hidden py-20 md:py-24 lg:py-28 px-4 sm:px-6 lg:px-8">
+
+      <section className="relative z-10 min-h-screen flex items-center justify-center overflow-hidden py-12 sm:py-16 lg:py-2 px-4 sm:px-6 lg:px-8">
         <div className="relative max-w-7xl mx-auto w-full">
-          <div className="grid lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center">
+          <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
 
-            {/* Left Column - Enhanced Content */}
+            {/* Left Column - Streamlined Content */}
             <motion.div
               initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.5, ease: 'easeOut' }}
-              className="space-y-6 md:space-y-8 w-full text-center lg:text-left"
+              className="space-y-6 w-full text-center lg:text-left order-2 lg:order-1"
             >
-              {/* Enhanced Main Heading */}
-              <motion.div
-                initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={prefersReducedMotion ? { duration: 0 } : { delay: 0.1, duration: 0.4 }}
-              >
-                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 leading-tight text-white">
-                  <span>
-                    Aaron A. Perez
-                  </span>
-                </h1>
-              </motion.div>
+              {/* Main headline */}
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight text-gray-900 dark:text-white">
+                Aaron A. Perez
+              </h1>
 
+              {/* Subtitle */}
               <HeroHighlight>
-                <motion.h2
-                  initial={{
-                    opacity: 0,
-                    y: 20,
-                  }}
-                  animate={{
-                    opacity: 1,
-                    y: [20, -5, 0],
-                  }}
-                  transition={{
-                    duration: 0.5,
-                    ease: [0.4, 0.0, 0.2, 1],
-                  }}
-                  className="text-2xl sm:text-3xl py-4 md:text-4xl lg:text-5xl font-bold text-white max-w-4xl leading-normal mx-auto lg:mx-0"
-                >
-                  <Highlight className="text-white/90 rounded-xl">
+                <motion.h2 className="text-2xl sm:text-3xl md:text-4xl font-bold max-w-4xl leading-normal mx-auto lg:mx-0">
+                  <Highlight className="text-white/90 dark:text-white/90 rounded-xl">
                     Full Stack Developer
                   </Highlight>
                 </motion.h2>
               </HeroHighlight>
 
-              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 text-base sm:text-lg md:text-xl text-gray-300">
-                <span>Specializing in</span>
+              {/* Status Tags */}
+              <div className="lex flex-wrap items-center justify-center lg:justify-start gap-2 text-base sm:text-lg md:text-xl text-gray-300 mb-4">
+                <span className="px-4 py-2 mr-1 bg-green-500/20 dark:bg-green-900/30 border border-green-500/30 dark:border-green-700 rounded-full text-green-700 dark:text-green-300 font-semibold text-sm">
+                  Recent Graduate
+                </span>
+                <span className="px-4 py-2 ml-1 bg-blue-500/20 dark:bg-blue-900/30 border border-blue-500/30 dark:border-blue-700 rounded-full text-blue-700 dark:text-blue-300 font-semibold text-sm">
+                  8+ Years IT
+                </span>
+              </div>
+
+              {/* Tech stack rotation */}
+              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 text-base sm:text-lg text-gray-700 dark:text-gray-300">
+                <span>Building with</span>
                 <AnimatePresence mode="wait">
                   <motion.span
                     key={TECHNOLOGIES[currentTech].name}
@@ -165,23 +155,23 @@ export default function HeroSection() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: -10 }}
                     transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.2 }}
-                    className={`font-semibold ${TECHNOLOGIES[currentTech].color}`}
+                    className="font-semibold text-primary-600 dark:text-primary-400"
                   >
                     {TECHNOLOGIES[currentTech].name}
                   </motion.span>
                 </AnimatePresence>
               </div>
 
-              {/* Enhanced CTA Buttons */}
+              {/* CTA Buttons */}
               <motion.div
                 initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={prefersReducedMotion ? { duration: 0 } : { delay: 0.2, duration: 0.4 }}
-                className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
+                className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-2"
               >
                 <motion.button
                   onClick={scrollToProjects}
-                  className="group touch-target px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 min-h-[48px]"
+                  className="group touch-target px-8 py-3 text-base bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 min-h-[48px]"
                   whileHover={prefersReducedMotion ? {} : { scale: 1.05 }}
                   whileTap={prefersReducedMotion ? {} : { scale: 0.95 }}
                   aria-label="View my portfolio projects"
@@ -191,10 +181,10 @@ export default function HeroSection() {
                 </motion.button>
 
                 <motion.a
-                  href="/A.Perez - Fullstack Resume.pdf"
+                  href="/resume/Aaron-Perez-Resume.pdf"
                   download
                   onClick={handleResumeDownload}
-                  className="group touch-target px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg backdrop-blur-sm bg-gray-800/30 border-2 border-gray-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 min-h-[48px] hover:bg-gray-800/50"
+                  className="group touch-target px-8 py-3 text-base backdrop-blur-sm bg-white/80 dark:bg-gray-800/80 border-2 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 min-h-[48px] hover:bg-white dark:hover:bg-gray-800"
                   whileHover={prefersReducedMotion ? {} : { scale: 1.05 }}
                   whileTap={prefersReducedMotion ? {} : { scale: 0.95 }}
                   aria-label="Download resume PDF"
@@ -204,79 +194,75 @@ export default function HeroSection() {
                 </motion.a>
               </motion.div>
 
-              {/* Enhanced Social Links */}
+              {/* Social Links */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1, duration: 0.6 }}
-                className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-4"
+                transition={{ delay: 0.4, duration: 0.6 }}
+                className="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-2"
               >
-                <span className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
-                  Connect with me:
-                </span>
-                <div className="flex flex-wrap gap-3">
-                  {[
-                    {
-                      icon: Github,
-                      href: 'https://github.com/AaronAPerez',
-                      label: 'GitHub',
-                      hoverColor: 'hover:text-gray-900 dark:hover:text-white',
-                      bgHover: 'hover:bg-gray-50 dark:hover:bg-gray-700'
-                    },
-                    {
-                      icon: Linkedin,
-                      href: 'https://linkedin.com/in/aaronaperezdev',
-                      label: 'LinkedIn',
-                      hoverColor: 'hover:text-blue-600',
-                      bgHover: 'hover:bg-blue-50 dark:hover:bg-blue-900/30'
-                    },
-                    {
-                      icon: Mail,
-                      href: 'mailto:aaperez06@gmail.com',
-                      label: 'Email',
-                      hoverColor: 'hover:text-red-500',
-                      bgHover: 'hover:bg-red-50 dark:hover:bg-red-900/30'
-                    }
-                  ].map((social) => {
-                    const IconComponent = social.icon
-                    return (
-                      <motion.a
-                        key={social.label}
-                        href={social.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={social.label}
-                        className={`touch-target p-3 backdrop-blur-sm bg-white/10 dark:bg-gray-800/30 rounded-full shadow-md transition-all duration-300 text-gray-600 dark:text-gray-400 min-h-[44px] min-w-[44px] flex items-center justify-center ${social.hoverColor} ${social.bgHover}`}
-                        whileHover={{ scale: 1.1, y: -2 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        <IconComponent className="w-5 h-5" />
-                      </motion.a>
-                    )
-                  })}
-                </div>
+                {[
+                  {
+                    icon: Github,
+                    href: 'https://github.com/AaronAPerez',
+                    label: 'GitHub',
+                    hoverColor: 'hover:text-gray-900 dark:hover:text-white',
+                    bgHover: 'hover:bg-gray-200 dark:hover:bg-gray-700'
+                  },
+                  {
+                    icon: Linkedin,
+                    href: 'https://linkedin.com/in/aaronaperezdev',
+                    label: 'LinkedIn',
+                    hoverColor: 'hover:text-blue-600',
+                    bgHover: 'hover:bg-blue-100 dark:hover:bg-blue-900/30'
+                  },
+                  {
+                    icon: Mail,
+                    href: 'mailto:aaperez06@gmail.com',
+                    label: 'Email',
+                    hoverColor: 'hover:text-red-500',
+                    bgHover: 'hover:bg-red-100 dark:hover:bg-red-900/30'
+                  }
+                ].map((social) => {
+                  const IconComponent = social.icon
+                  return (
+                    <motion.a
+                      key={social.label}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={social.label}
+                      className={`touch-target p-3 backdrop-blur-sm bg-white/80 dark:bg-gray-800/80 rounded-full shadow-md transition-all duration-300 text-gray-600 dark:text-gray-400 min-h-[44px] min-w-[44px] flex items-center justify-center ${social.hoverColor} ${social.bgHover}`}
+                      whileHover={{ scale: 1.1, y: -2 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <IconComponent className="w-5 h-5" />
+                    </motion.a>
+                  )
+                })}
               </motion.div>
 
-              {/* Professional Location */}
+              {/* Location */}
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 1.2, duration: 0.6 }}
+                transition={{ delay: 0.6, duration: 0.6 }}
                 className="flex flex-wrap items-center justify-center lg:justify-start gap-2 text-sm text-gray-600 dark:text-gray-400"
               >
                 <MapPin className="w-4 h-4" />
-                <span>Stockton, CA • Open to Remote Opportunities</span>
+                <span>Stockton, CA • Open to Remote</span>
               </motion.div>
             </motion.div>
 
-            {/* Right Column - Enhanced Visual Element */}
+            {/* Right Column - Enhanced Visual with Info */}
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, ease: 'easeOut', delay: 0.2 }}
-              className="flex justify-center lg:justify-end mt-12 lg:mt-0 pb-12 sm:pb-16"
+              className="flex flex-col items-center lg:items-end gap-6 order-1 lg:order-2 pb-12"
             >
-              <div className="relative mb-8 sm:mb-0">
+              {/* Profile Image Container */}
+              <div className="relative w-full max-w-md flex justify-center">
                 <motion.div
                   animate={{ y: [0, -20, 0] }}
                   transition={{
@@ -285,7 +271,7 @@ export default function HeroSection() {
                     repeatType: 'reverse',
                     ease: 'easeInOut'
                   }}
-                  className="relative w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96"
+                  className="relative w-56 h-56 sm:w-72 sm:h-72 md:w-80 md:h-80"
                 >
                   {/* Enhanced Profile Image Container */}
                   <div className="relative w-full h-full">
@@ -376,7 +362,7 @@ export default function HeroSection() {
                   initial={{ opacity: 0, scale: 0 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 1.5, duration: 0.5 }}
-                  className="absolute -bottom-6 sm:-bottom-12 left-12 transform -translate-x-1/2 flex flex-col sm:flex-row gap-2 items-center z-10"
+                  className="absolute -bottom-6 sm:-bottom-12 transform -translate-x-1/2 flex flex-col sm:flex-row gap-2 items-center z-10"
                 >
                   <div className="backdrop-blur-sm bg-white/90 dark:bg-gray-800/90 px-4 py-2 rounded-full shadow-lg border border-green-200 dark:border-green-800 whitespace-nowrap">
                     <div className="flex items-center gap-2">
