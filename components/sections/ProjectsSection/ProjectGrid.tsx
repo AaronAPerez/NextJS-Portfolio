@@ -1,8 +1,9 @@
 'use client'; 
 
-import { Project } from '@/components/types/project';
+
 import { useState } from 'react';
 import ProjectCard from './ProjectCard';
+import { Project } from '@/components/config/projects';
 
 interface ProjectsGridProps {
   projects: Project[];

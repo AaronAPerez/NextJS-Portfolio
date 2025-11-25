@@ -126,7 +126,7 @@ export function Footer() {
               </li>
               <li>
                 <span className="inline-flex items-center gap-2 px-3 py-1 
-                               bg-green-900/30 text-green-400 rounded-full text-sm">
+                               bg-green-400/30 text-green-600 rounded-full text-sm">
                   <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" 
                         aria-hidden="true" />
                   {PERSONAL_INFO.availability}
