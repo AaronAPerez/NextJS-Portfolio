@@ -38,7 +38,7 @@
       <p align="center"><strong>Expense Tracker</strong><br/>React + .NET Core App</p>
     </td>
     <td width="50%">
-      <img src="public/images/projects/theglampingspot/glamping-1.png" alt="The Glamping Spot"/>
+      <img src="public/images/projects/the-glamping-spot/Glamping-Spot-Hero-Screenshot.png" alt="The Glamping Spot"/>
       <p align="center"><strong>The Glamping Spot</strong><br/>Tourism & Booking Website</p>
     </td>
   </tr>
