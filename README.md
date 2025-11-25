@@ -28,8 +28,8 @@
       <p align="center"><strong>AMP Vending Machines</strong><br/>Production Next.js Site</p>
     </td>
     <td width="50%">
-      <img src="public/images/projects/game-wrld/game-wrld-1.png" alt="Game World Database"/>
-      <p align="center"><strong>Game World Database</strong><br/>Full Stack Game Library</p>
+      <img src="public/images/projects/goldmine/Goldmine-Hero-Screenshot.png" alt="Goldmine Communications & Construction Website Image"/>
+      <p align="center"><strong>Goldmine Communications & Construction Website</strong><br/>Full Stack Business Website</p>
     </td>
   </tr>
   <tr>
