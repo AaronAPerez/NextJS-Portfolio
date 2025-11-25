@@ -18,10 +18,12 @@ import {
   Zap
 } from 'lucide-react'
 import { cn } from "@/lib/utils"
-import Container from '@/components/layout/Container'
+
 
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver'
-import { Section } from '../layout/Section'
+import { Section } from '@/components/layout/Section'
+import { Container } from '@/components/layout/Container'
+
 
 // Enhanced timeline data with improved structure and new role
 const timelineData = {
