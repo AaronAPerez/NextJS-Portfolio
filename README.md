@@ -34,8 +34,8 @@
   </tr>
   <tr>
     <td width="50%">
-      <img src="public/images/projects/expense-tracker/expense-tracker-1.png" alt="Expense Tracker"/>
-      <p align="center"><strong>Expense Tracker</strong><br/>React + .NET Core App</p>
+      <img src="public/images/projects/cloudgov-dashboard/CloudGov-Screenshot.png" alt="CloudGov Dashboard"/>
+      <p align="center"><strong>CloudGov Dashboard</strong><br/>NextJS React + AWS</p>
     </td>
     <td width="50%">
       <img src="public/images/projects/the-glamping-spot/Glamping-Spot-Hero-Screenshot.png" alt="The Glamping Spot"/>
