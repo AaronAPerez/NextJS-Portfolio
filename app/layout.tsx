@@ -8,6 +8,7 @@ import { SkipToContent } from "@/components/accessibility/SkipToContent";
 import { generatePersonSchema, generateWebsiteSchema } from "@/lib/utils";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { ToastProvider } from "@/components/providers/ToastProvider";
 
 
 const inter = Inter({
@@ -93,6 +94,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={inter.className}>
          <SkipToContent />
         <ThemeProvider>
+          <ToastProvider />
           <div className="flex flex-col min-h-screen">
             <Header />
             <main id="main-content" className="flex-1" role="main">

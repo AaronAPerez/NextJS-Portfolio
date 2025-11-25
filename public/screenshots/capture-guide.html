@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Screenshot Capture Checklist</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+        }
+
+        h1 {
+            color: #1a1a1a;
+            font-size: 32px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 32px;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            margin-bottom: 32px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+
+        .section {
+            margin-bottom: 32px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #667eea;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .checklist {
+            list-style: none;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            transition: background 0.2s;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .checklist-item:hover {
+            background: #f5f5f5;
+        }
+
+        .checklist-item.completed {
+            background: #e8f5e9;
+        }
+
+        .checkbox {
+            width: 24px;
+            height: 24px;
+            border: 2px solid #999;
+            border-radius: 6px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .checklist-item.completed .checkbox {
+            background: #4caf50;
+            border-color: #4caf50;
+        }
+
+        .checkmark {
+            display: none;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .checklist-item.completed .checkmark {
+            display: block;
+        }
+
+        .item-text {
+            flex: 1;
+            color: #333;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .item-details {
+            font-size: 13px;
+            color: #666;
+            margin-top: 4px;
+        }
+
+        .screenshot-card {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            transition: all 0.3s;
+        }
+
+        .screenshot-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+
+        .screenshot-card.captured {
+            border-color: #4caf50;
+            background: #e8f5e9;
+        }
+
+        .screenshot-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .screenshot-name {
+            font-weight: 600;
+            color: #333;
+            font-size: 16px;
+        }
+
+        .screenshot-status {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-captured {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .screenshot-specs {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            font-size: 13px;
+            color: #666;
+            margin-top: 8px;
+        }
+
+        .spec-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 32px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            flex: 1;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .btn-secondary:hover {
+            background: #f5f7ff;
+        }
+
+        .tips-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 16px;
+            border-radius: 8px;
+            margin-top: 24px;
+        }
+
+        .tips-title {
+            font-weight: 600;
+            color: #1976d2;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .tips-list {
+            color: #333;
+            font-size: 14px;
+            line-height: 1.8;
+            padding-left: 20px;
+        }
+
+        .tips-list li {
+            margin-bottom: 4px;
+        }
+
+        .completion-message {
+            display: none;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 24px;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: 32px;
+            animation: slideIn 0.5s ease;
+        }
+
+        .completion-message.show {
+            display: block;
+        }
+
+        .completion-message h2 {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .emoji {
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>
+            <span class="emoji">📸</span>
+            Screenshot Capture Checklist
+        </h1>
+        <p class="subtitle">Track your progress capturing portfolio screenshots</p>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="progress-text" id="progressText">0 of 8 screenshots captured (0%)</div>
+
+        <!-- Section 1: Pre-Capture Setup -->
+        <div class="section">
+            <h2 class="section-title">
+                <span>🛠️</span>
+                Pre-Capture Setup
+            </h2>
+            <ul class="checklist">
+                <li class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"><span class="checkmark">✓</span></div>
+                    <div class="item-text">
+                        Open portfolio in browser (localhost:3000 or aaronaperez.dev)
+                        <div class="item-details">Ensure site is fully loaded</div>
+                    </div>
+                </li>
+                <li class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"><span class="checkmark">✓</span></div>
+                    <div class="item-text">
+                        Press F12 to open DevTools
+                        <div class="item-details">Chrome, Edge, or Firefox</div>
+                    </div>
+                </li>
+                <li class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"><span class="checkmark">✓</span></div>
+                    <div class="item-text">
+                        Press Ctrl+Shift+M (Windows) or Cmd+Shift+M (Mac)
+                        <div class="item-details">Enables responsive design mode</div>
+                    </div>
+                </li>
+                <li class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"><span class="checkmark">✓</span></div>
+                    <div class="item-text">
+                        Hide browser extensions and bookmarks bar
+                        <div class="item-details">For cleaner screenshots</div>
+                    </div>
+                </li>
+                <li class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"><span class="checkmark">✓</span></div>
+                    <div class="item-text">
+                        Verify zoom level is 100%
+                        <div class="item-details">Check DevTools responsive mode dropdown</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Section 2: Required Screenshots -->
+        <div class="section">
+            <h2 class="section-title">
+                <span>📷</span>
+                Required Screenshots (8)
+            </h2>
+
+            <div class="screenshot-card" onclick="toggleScreenshot(this)">
+                <div class="screenshot-header">
+                    <span class="screenshot-name">1. hero-section.png</span>
+                    <span class="screenshot-status status-pending">Pending</span>
+                </div>
+                <div class="screenshot-specs">
+                    <span class="spec-item">📐 1920x1080</span>
+                    <span class="spec-item">💻 Desktop</span>
+                    <span class="spec-item">🎨 Light/Dark</span>
+                    <span class="spec-item">📍 Hero section with profile & CTA</span>
+                </div>
+            </div>
+
+            <div class="screenshot-card" onclick="toggleScreenshot(this)">
+                <div class="screenshot-header">
+                    <span class="screenshot-name">2. skills-section.png</span>
+                    <span class="screenshot-status status-pending">Pending</span>
+                </div>
+                <div class="screenshot-specs">
+                    <span class="spec-item">📐 1920x1080</span>
+                    <span class="spec-item">💻 Desktop</span>
+                    <span class="spec-item">🎨 Light/Dark</span>
+                    <span class="spec-item">📍 Skills grid with filters</span>
+                </div>
+            </div>
+
+            <div class="screenshot-card" onclick="toggleScreenshot(this)">
+                <div class="screenshot-header">
+                    <span class="screenshot-name">3. timeline-section.png</span>
+                    <span class="screenshot-status status-pending">Pending</span>
+                </div>
+                <div class="screenshot-specs">
+                    <span class="spec-item">📐 1920x1080</span>
+                    <span class="spec-item">💻 Desktop</span>
+                    <span class="spec-item">🎨 Light/Dark</span>
+                    <span class="spec-item">📍 Experience & education cards</span>
+                </div>
+            </div>
+
+            <div class="screenshot-card" onclick="toggleScreenshot(this)">
+                <div class="screenshot-header">
+                    <span class="screenshot-name">4. mobile-hero.png</span>
+                    <span class="screenshot-status status-pending">Pending</span>
+                </div>
+                <div class="screenshot-specs">
+                    <span class="spec-item">📐 390x844</span>
+                    <span class="spec-item">📱 iPhone 12 Pro</span>
+                    <span class="spec-item">🎨 Light/Dark</span>
+                    <span class="spec-item">📍 Mobile hero layout</span>
+                </div>
+            </div>
+
+            <div class="screenshot-card" onclick="toggleScreenshot(this)">
+                <div class="screenshot-header">
+                    <span class="screenshot-name">5. tablet-view.png</span>
+                    <span class="screenshot-status status-pending">Pending</span>
+                </div>
+                <div class="screenshot-specs">
+                    <span class="spec-item">📐 768x1024</span>
+                    <span class="spec-item">📱 iPad</span>
+                    <span class="spec-item">🎨 Light/Dark</span>
+                    <span class="spec-item">📍 Any major section</span>
+                </div>
+            </div>
+
+            <div class="screenshot-card" onclick="toggleScreenshot(this)">
+                <div class="screenshot-header">
+                    <span class="screenshot-name">6. desktop-view.png</span>
+                    <span class="screenshot-status status-pending">Pending</span>
+                </div>
+                <div class="screenshot-specs">
+                    <span class="spec-item">📐 1920x1080</span>
+                    <span class="spec-item">💻 Desktop</span>
+                    <span class="spec-item">🎨 Light/Dark</span>
+                    <span class="spec-item">📍 Full page overview</span>
+                </div>
+            </div>
+
+            <div class="screenshot-card" onclick="toggleScreenshot(this)">
+                <div class="screenshot-header">
+                    <span class="screenshot-name">7. light-mode.png</span>
+                    <span class="screenshot-status status-pending">Pending</span>
+                </div>
+                <div class="screenshot-specs">
+                    <span class="spec-item">📐 1920x1080</span>
+                    <span class="spec-item">💻 Desktop</span>
+                    <span class="spec-item">☀️ Light theme only</span>
+                    <span class="spec-item">📍 Any prominent section</span>
+                </div>
+            </div>
+
+            <div class="screenshot-card" onclick="toggleScreenshot(this)">
+                <div class="screenshot-header">
+                    <span class="screenshot-name">8. dark-mode.png</span>
+                    <span class="screenshot-status status-pending">Pending</span>
+                </div>
+                <div class="screenshot-specs">
+                    <span class="spec-item">📐 1920x1080</span>
+                    <span class="spec-item">💻 Desktop</span>
+                    <span class="spec-item">🌙 Dark theme only</span>
+                    <span class="spec-item">📍 Same section as light-mode</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Post-Capture -->
+        <div class="section">
+            <h2 class="section-title">
+                <span>✨</span>
+                Post-Capture Checklist
+            </h2>
+            <ul class="checklist">
+                <li class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"><span class="checkmark">✓</span></div>
+                    <div class="item-text">
+                        Optimize all images (TinyPNG or Squoosh)
+                        <div class="item-details">Target: Under 500KB each</div>
+                    </div>
+                </li>
+                <li class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"><span class="checkmark">✓</span></div>
+                    <div class="item-text">
+                        Verify correct filenames
+                        <div class="item-details">Must match README references exactly</div>
+                    </div>
+                </li>
+                <li class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"><span class="checkmark">✓</span></div>
+                    <div class="item-text">
+                        Move all files to public/screenshots/
+                        <div class="item-details">Organize in correct directory</div>
+                    </div>
+                </li>
+                <li class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"><span class="checkmark">✓</span></div>
+                    <div class="item-text">
+                        Test README renders correctly on GitHub
+                        <div class="item-details">Preview before pushing</div>
+                    </div>
+                </li>
+                <li class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"><span class="checkmark">✓</span></div>
+                    <div class="item-text">
+                        Commit and push to GitHub
+                        <div class="item-details">git add . && git commit -m "docs: add portfolio screenshots"</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Tips Box -->
+        <div class="tips-box">
+            <div class="tips-title">💡 Pro Tips</div>
+            <ul class="tips-list">
+                <li>Capture all screenshots in one session for consistency</li>
+                <li>Use Ctrl+Shift+P in DevTools → "Capture screenshot" for quick capture</li>
+                <li>Add browser frames using Screely.com or Shots.so</li>
+                <li>Keep original high-res versions before optimization</li>
+                <li>Test images in both GitHub light and dark themes</li>
+            </ul>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button class="btn btn-secondary" onclick="resetProgress()">
+                Reset Progress
+            </button>
+            <button class="btn btn-primary" onclick="window.location.reload()">
+                Refresh Page
+            </button>
+        </div>
+
+        <!-- Completion Message -->
+        <div class="completion-message" id="completionMessage">
+            <h2>🎉 All Screenshots Captured!</h2>
+            <p>Great job! Now optimize, organize, and push to GitHub.</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleCheck(element) {
+            element.classList.toggle('completed');
+            updateOverallProgress();
+        }
+
+        function toggleScreenshot(element) {
+            element.classList.toggle('captured');
+            const status = element.querySelector('.screenshot-status');
+            if (element.classList.contains('captured')) {
+                status.textContent = 'Captured';
+                status.classList.remove('status-pending');
+                status.classList.add('status-captured');
+            } else {
+                status.textContent = 'Pending';
+                status.classList.remove('status-captured');
+                status.classList.add('status-pending');
+            }
+            updateScreenshotProgress();
+        }
+
+        function updateScreenshotProgress() {
+            const cards = document.querySelectorAll('.screenshot-card');
+            const captured = document.querySelectorAll('.screenshot-card.captured').length;
+            const total = cards.length;
+            const percentage = Math.round((captured / total) * 100);
+
+            document.getElementById('progressFill').style.width = percentage + '%';
+            document.getElementById('progressText').textContent =
+                `${captured} of ${total} screenshots captured (${percentage}%)`;
+
+            if (captured === total) {
+                document.getElementById('completionMessage').classList.add('show');
+            } else {
+                document.getElementById('completionMessage').classList.remove('show');
+            }
+        }
+
+        function updateOverallProgress() {
+            // This could be extended to track checklist items too
+            const allItems = document.querySelectorAll('.checklist-item');
+            const completed = document.querySelectorAll('.checklist-item.completed').length;
+            console.log(`Checklist: ${completed}/${allItems.length} items completed`);
+        }
+
+        function resetProgress() {
+            if (confirm('Reset all progress? This cannot be undone.')) {
+                document.querySelectorAll('.checklist-item').forEach(item => {
+                    item.classList.remove('completed');
+                });
+                document.querySelectorAll('.screenshot-card').forEach(card => {
+                    card.classList.remove('captured');
+                    const status = card.querySelector('.screenshot-status');
+                    status.textContent = 'Pending';
+                    status.classList.remove('status-captured');
+                    status.classList.add('status-pending');
+                });
+                updateScreenshotProgress();
+                updateOverallProgress();
+            }
+        }
+
+        // Initialize progress on load
+        updateScreenshotProgress();
+        updateOverallProgress();
+    </script>
+</body>
+</html>

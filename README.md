@@ -12,8 +12,84 @@
 
 ---
 
+## 📸 Screenshots
+
+<div align="center">
+
+### 🏠 Homepage Hero Section
+![Portfolio Homepage](public/screenshots/hero-section.png)
+*Modern, responsive hero section with dynamic tech stack display and glassmorphism effects*
+
+### 💼 Featured Projects
+<table>
+  <tr>
+    <td width="50%">
+      <img src="public/images/projects/amp-vending/amp-vending-1.png" alt="AMP Vending Website"/>
+      <p align="center"><strong>AMP Vending Machines</strong><br/>Production Next.js Site</p>
+    </td>
+    <td width="50%">
+      <img src="public/images/projects/game-wrld/game-wrld-1.png" alt="Game World Database"/>
+      <p align="center"><strong>Game World Database</strong><br/>Full Stack Game Library</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%">
+      <img src="public/images/projects/expense-tracker/expense-tracker-1.png" alt="Expense Tracker"/>
+      <p align="center"><strong>Expense Tracker</strong><br/>React + .NET Core App</p>
+    </td>
+    <td width="50%">
+      <img src="public/images/projects/theglampingspot/glamping-1.png" alt="The Glamping Spot"/>
+      <p align="center"><strong>The Glamping Spot</strong><br/>Tourism & Booking Website</p>
+    </td>
+  </tr>
+</table>
+
+### 🎨 Skills & Experience Timeline
+![Skills Section](public/screenshots/skills-section.png)
+*Interactive skills showcase with 40+ technologies and filterable categories*
+
+![Timeline Section](public/screenshots/timeline-section.png)
+*Professional experience and education timeline with detailed achievements*
+
+### 📱 Responsive Design
+<table>
+  <tr>
+    <td width="33%" align="center">
+      <img src="public/screenshots/mobile-hero.png" alt="Mobile Hero" width="250"/>
+      <p><strong>Mobile View</strong></p>
+    </td>
+    <td width="33%" align="center">
+      <img src="public/screenshots/tablet-view.png" alt="Tablet View" width="350"/>
+      <p><strong>Tablet View</strong></p>
+    </td>
+    <td width="33%" align="center">
+      <img src="public/screenshots/desktop-view.png" alt="Desktop View" width="500"/>
+      <p><strong>Desktop View</strong></p>
+    </td>
+  </tr>
+</table>
+
+### 🌙 Dark Mode Support
+<table>
+  <tr>
+    <td width="50%">
+      <img src="public/screenshots/light-mode.png" alt="Light Mode"/>
+      <p align="center"><strong>Light Mode</strong></p>
+    </td>
+    <td width="50%">
+      <img src="public/screenshots/dark-mode.png" alt="Dark Mode"/>
+      <p align="center"><strong>Dark Mode</strong></p>
+    </td>
+  </tr>
+</table>
+
+</div>
+
+---
+
 ## 📋 Table of Contents
 
+- [Screenshots](#-screenshots)
 - [Overview](#-overview)
 - [Key Features](#-key-features)
 - [Tech Stack](#-tech-stack)

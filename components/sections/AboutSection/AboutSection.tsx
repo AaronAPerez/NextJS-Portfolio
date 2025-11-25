@@ -61,7 +61,7 @@ const InfoCard = ({ title, content, delay, gradient }: {
     >
       <Card variant="elevated" hoverable padding="lg" className="h-full min-h-[280px] group relative overflow-hidden">
         {/* Gradient border effect */}
-        <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br ${gradient} blur-xl -z-10`} />
+        <div className={`absolute inset-0 opacity-0 group-hover:opacity-50 transition-opacity duration-500 bg-gradient-to-br ${gradient} blur-xl -z-10`} />
 
         <CardHeader>
           <CardTitle className="text-2xl bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-accent-600 dark:from-primary-400 dark:to-accent-400">
