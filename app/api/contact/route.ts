@@ -230,7 +230,7 @@ export async function POST(request: NextRequest) {
 
     // Send email to admin
     const adminEmailResult = await resend.emails.send({
-      from: 'Portfolio Contact <onboarding@resend.dev>',
+      from: 'Portfolio Contact <noreply@aaronaperez.dev>',
       to: 'contact@aaronaperez.dev',
       replyTo: email,
       subject: `Portfolio Contact: ${subject}`,
@@ -244,7 +244,7 @@ export async function POST(request: NextRequest) {
 
     // Send confirmation email to user
     const userEmailResult = await resend.emails.send({
-      from: 'Aaron A. Perez <onboarding@resend.dev>',
+      from: 'Aaron A. Perez <noreply@aaronaperez.dev>',
       to: email,
       subject: `Message Received: ${subject}`,
       html: getUserConfirmationTemplate(name, subject),
