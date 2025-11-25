@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Screenshot Browser Frame Template</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 60px 40px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1920px;
+            margin: 0 auto;
+        }
+
+        /* Browser Window Frame */
+        .browser-frame {
+            background: white;
+            border-radius: 12px;
+            box-shadow:
+                0 20px 50px rgba(0, 0, 0, 0.3),
+                0 10px 25px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            margin-bottom: 40px;
+        }
+
+        /* Browser Header */
+        .browser-header {
+            background: linear-gradient(180deg, #f5f5f5 0%, #e8e8e8 100%);
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid #d0d0d0;
+        }
+
+        .browser-dots {
+            display: flex;
+            gap: 8px;
+            margin-right: 16px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .dot.red { background: #ff5f56; }
+        .dot.yellow { background: #ffbd2e; }
+        .dot.green { background: #27c93f; }
+
+        .browser-address-bar {
+            flex: 1;
+            background: white;
+            padding: 6px 12px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .lock-icon {
+            width: 16px;
+            height: 16px;
+            color: #4caf50;
+        }
+
+        .url {
+            color: #333;
+            font-size: 14px;
+            flex: 1;
+        }
+
+        .url .domain {
+            color: #1a1a1a;
+            font-weight: 500;
+        }
+
+        .browser-controls {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            color: #666;
+        }
+
+        /* Screenshot Content Area */
+        .screenshot-content {
+            position: relative;
+            background: #fff;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .screenshot-placeholder {
+            text-align: center;
+            color: #999;
+            padding: 40px;
+        }
+
+        .screenshot-placeholder h2 {
+            font-size: 24px;
+            margin-bottom: 16px;
+            color: #666;
+        }
+
+        .screenshot-placeholder p {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .upload-btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: transform 0.2s;
+        }
+
+        .upload-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Screenshot Image */
+        .screenshot-content img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Caption */
+        .screenshot-caption {
+            text-align: center;
+            color: white;
+            font-size: 18px;
+            font-weight: 500;
+            margin-top: 20px;
+        }
+
+        /* Alternative Styles */
+        .style-minimal {
+            background: #f8fafc;
+        }
+
+        .style-minimal .browser-frame {
+            box-shadow:
+                0 4px 20px rgba(0, 0, 0, 0.1),
+                0 2px 10px rgba(0, 0, 0, 0.06);
+        }
+
+        .style-dark {
+            background: #1a1a2e;
+        }
+
+        .style-dark .browser-header {
+            background: #2d2d3a;
+            border-bottom-color: #3d3d4a;
+        }
+
+        .style-dark .browser-address-bar {
+            background: #1a1a2e;
+            color: #e0e0e0;
+        }
+
+        /* Mobile Frame */
+        .mobile-frame {
+            width: 390px;
+            height: 844px;
+            background: #1a1a1a;
+            border-radius: 40px;
+            padding: 12px;
+            box-shadow:
+                0 20px 50px rgba(0, 0, 0, 0.4),
+                0 10px 25px rgba(0, 0, 0, 0.3);
+            position: relative;
+            margin: 0 auto;
+        }
+
+        .mobile-screen {
+            width: 100%;
+            height: 100%;
+            background: white;
+            border-radius: 32px;
+            overflow: hidden;
+        }
+
+        .mobile-notch {
+            width: 150px;
+            height: 30px;
+            background: #1a1a1a;
+            border-radius: 0 0 20px 20px;
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+
+        /* Instructions */
+        .instructions {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 24px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .instructions h3 {
+            color: #333;
+            margin-bottom: 12px;
+            font-size: 20px;
+        }
+
+        .instructions ol {
+            padding-left: 20px;
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .instructions li {
+            margin-bottom: 8px;
+        }
+
+        /* Toggle Buttons */
+        .style-toggle {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .style-toggle button {
+            padding: 10px 20px;
+            margin: 0 5px;
+            background: white;
+            border: 2px solid #667eea;
+            color: #667eea;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .style-toggle button:hover,
+        .style-toggle button.active {
+            background: #667eea;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Instructions -->
+        <div class="instructions">
+            <h3>📸 How to Use This Template</h3>
+            <ol>
+                <li>Open this file in your browser</li>
+                <li>Right-click on the browser frame below</li>
+                <li>Select "Inspect" or "Inspect Element"</li>
+                <li>Find the <code>&lt;div class="screenshot-content"&gt;</code></li>
+                <li>Replace the placeholder with: <code>&lt;img src="your-screenshot.png" alt="Screenshot"&gt;</code></li>
+                <li>Take a full-page screenshot (Ctrl+Shift+P in Chrome → "Capture full size screenshot")</li>
+                <li>Or use external tools like Screely.com or Shots.so</li>
+            </ol>
+        </div>
+
+        <!-- Style Toggle -->
+        <div class="style-toggle">
+            <button onclick="changeStyle('default')" class="active">Modern</button>
+            <button onclick="changeStyle('minimal')">Minimal</button>
+            <button onclick="changeStyle('dark')">Dark</button>
+        </div>
+
+        <!-- Desktop Browser Frame -->
+        <div class="browser-frame">
+            <div class="browser-header">
+                <div class="browser-dots">
+                    <div class="dot red"></div>
+                    <div class="dot yellow"></div>
+                    <div class="dot green"></div>
+                </div>
+                <div class="browser-address-bar">
+                    <svg class="lock-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                    </svg>
+                    <span class="url"><span class="domain">aaronaperez.dev</span>/</span>
+                </div>
+                <div class="browser-controls">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"></path>
+                    </svg>
+                </div>
+            </div>
+            <div class="screenshot-content">
+                <!-- Replace this placeholder with your screenshot -->
+                <div class="screenshot-placeholder">
+                    <h2>📸 Insert Your Screenshot Here</h2>
+                    <p>Replace this content with an &lt;img&gt; tag pointing to your screenshot.</p>
+                    <p><strong>Example:</strong> &lt;img src="hero-section.png" alt="Portfolio Hero"&gt;</p>
+                    <a href="#" class="upload-btn">Instructions Above ↑</a>
+                </div>
+                <!-- Uncomment and edit the line below when ready -->
+                <!-- <img src="your-screenshot.png" alt="Portfolio Screenshot"> -->
+            </div>
+        </div>
+        <div class="screenshot-caption">Portfolio Homepage - Hero Section</div>
+
+        <!-- Mobile Frame Example -->
+        <div style="margin-top: 80px;">
+            <h3 style="color: white; text-align: center; margin-bottom: 30px; font-size: 24px;">Mobile View</h3>
+            <div class="mobile-frame">
+                <div class="mobile-notch"></div>
+                <div class="mobile-screen">
+                    <div class="screenshot-content" style="min-height: 100%;">
+                        <div class="screenshot-placeholder">
+                            <h2>📱 Mobile Screenshot</h2>
+                            <p>Insert mobile screenshot here</p>
+                            <p style="font-size: 14px;">(390x844)</p>
+                        </div>
+                        <!-- <img src="your-mobile-screenshot.png" alt="Mobile View"> -->
+                    </div>
+                </div>
+            </div>
+            <div class="screenshot-caption">Portfolio Mobile View</div>
+        </div>
+    </div>
+
+    <script>
+        function changeStyle(style) {
+            const body = document.body;
+            body.className = '';
+
+            if (style === 'minimal') {
+                body.classList.add('style-minimal');
+            } else if (style === 'dark') {
+                body.classList.add('style-dark');
+            }
+
+            // Update active button
+            document.querySelectorAll('.style-toggle button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>

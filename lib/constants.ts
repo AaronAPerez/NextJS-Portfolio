@@ -12,7 +12,7 @@ export const PERSONAL_INFO = {
   lastName: 'Perez',
   title: 'Full Stack Developer',
   tagline: 'Building accessible, SEO-optimized web applications with React, TypeScript, and Next.js',
-  bio: 'Full Stack Developer with 7+ years of IT experience and specialized training in modern web technologies. Recent CodeStack Academy graduate with expertise in React, TypeScript, Next.js, and .NET development.',
+  bio: 'Full Stack Developer with 8+ years of IT experience and specialized training in modern web technologies. Recent CodeStack Academy graduate with expertise in React, TypeScript, Next.js, and .NET development.',
   email: 'aaperez06@gmail.com',
   phone: '(209) 470-2061',
   location: 'Stockton, California',

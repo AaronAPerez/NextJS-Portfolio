@@ -8,6 +8,8 @@ import { LearningSection } from '@/components/sections/LearningSection';
 import { Skills } from '@/components/sections/Skills';
 
 
+
+
 // Optimized lazy loading with ssr disabled for heavy components
 const AboutSection = dynamic(() => import("@/components/sections/AboutSection/AboutSection"), {
   loading: () => <SectionLoader />,
@@ -30,7 +32,7 @@ const TimelineSection = dynamic(() => import("@/components/sections/TimelineSect
   ssr: false
 });
 
-const ContactSection = dynamic(() => import("@/components/sections/ContactSection"), {
+const ContactSection = dynamic(() => import("@/components/sections/ContactSection/ContactSection"), {
   loading: () => <SectionLoader />,
   ssr: false
 });
@@ -82,7 +84,10 @@ export default function Home() {
           className="relative bg-white-100 dark:bg-gray-950"
           aria-labelledby="contact-heading"
         >
+
+          
           <ContactSection />
+      
         </section>
 
           

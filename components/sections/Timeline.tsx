@@ -281,37 +281,6 @@ export const TimelineSection = () => {
             </div>
           </motion.section>
         </div>
-
-        {/* Call to action */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 1 }}
-          className="text-center mt-20"
-        >
-          <p className="text-gray-300 mb-6 text-lg">
-            Ready to see these skills in action?
-          </p>
-          <motion.button
-            onClick={() => {
-              const projectsSection = document.getElementById('projects')
-              if (projectsSection) {
-                projectsSection.scrollIntoView({ behavior: 'smooth' })
-              }
-            }}
-            className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl group focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            aria-label="Navigate to projects section"
-          >
-            <span className="flex items-center gap-2">
-              <Globe className="w-4 h-4" aria-hidden="true" />
-              View My Projects
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
-            </span>
-          </motion.button>
-        </motion.div>
       </div>
     </div>
   )

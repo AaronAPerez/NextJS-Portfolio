@@ -1,0 +1,200 @@
+# Portfolio Screenshots Guide
+
+This directory contains screenshots used in the main README.md file. Below are instructions for capturing and organizing screenshots.
+
+## 📸 Required Screenshots
+
+To complete the README showcase, capture the following screenshots:
+
+### 1. Hero Section (`hero-section.png`)
+- **Page**: Homepage
+- **Section**: Hero/Landing section
+- **Viewport**: Desktop (1920x1080 or 1440x900)
+- **Theme**: Light or Dark (your choice)
+- **What to capture**:
+  - Full hero section with profile image
+  - Tech stack rotation animation (mid-state)
+  - Navigation header
+  - "Available for Hire" badge
+
+### 2. Skills Section (`skills-section.png`)
+- **Page**: Homepage
+- **Section**: Skills & Technologies section
+- **Viewport**: Desktop (1920x1080)
+- **What to capture**:
+  - Section header with decorative lines
+  - Category filter buttons
+  - Skills grid showing multiple technology cards
+  - Stats (Technologies/Categories/Years Experience)
+
+### 3. Timeline Section (`timeline-section.png`)
+- **Page**: Homepage
+- **Section**: Professional Experience & Education
+- **Viewport**: Desktop (1920x1080)
+- **What to capture**:
+  - Section header
+  - At least one experience card and one education card
+  - Timeline layout with gradient cards
+
+### 4. Mobile View (`mobile-hero.png`)
+- **Viewport**: iPhone 12 Pro (390x844) or similar
+- **Section**: Hero section on mobile
+- **Orientation**: Portrait
+- **What to capture**: Full mobile hero layout
+
+### 5. Tablet View (`tablet-view.png`)
+- **Viewport**: iPad (768x1024) or similar
+- **Section**: Skills or Projects section
+- **Orientation**: Portrait or Landscape
+- **What to capture**: Responsive grid layout
+
+### 6. Desktop View (`desktop-view.png`)
+- **Viewport**: Desktop (1920x1080)
+- **Section**: Full homepage or projects section
+- **What to capture**: Wide desktop layout showcase
+
+### 7. Light Mode (`light-mode.png`)
+- **Theme**: Light mode active
+- **Section**: Any prominent section (Hero or About)
+- **Viewport**: Desktop
+- **What to capture**: Light theme styling
+
+### 8. Dark Mode (`dark-mode.png`)
+- **Theme**: Dark mode active
+- **Section**: Same section as light-mode.png
+- **Viewport**: Desktop
+- **What to capture**: Dark theme styling (for comparison)
+
+---
+
+## 🛠️ How to Take Screenshots
+
+### Option 1: Browser DevTools (Recommended)
+
+1. **Open your portfolio** in Chrome/Edge
+2. **Open DevTools** (F12 or Right-click → Inspect)
+3. **Toggle device toolbar** (Ctrl+Shift+M)
+4. **Select viewport size** from the dropdown or enter custom dimensions
+5. **Capture screenshot**:
+   - DevTools menu (⋮) → "Capture screenshot" or "Capture full size screenshot"
+   - Or use browser extension like "GoFullPage"
+
+### Option 2: Windows Snipping Tool
+
+1. Press **Win + Shift + S**
+2. Select area to capture
+3. Save to this directory
+
+### Option 3: Third-Party Tools
+
+**Recommended tools:**
+- [Awesome Screenshot](https://www.awesomescreenshot.com/)
+- [Nimbus Screenshot](https://nimbusweb.me/)
+- [Lightshot](https://app.prntscr.com/)
+- [ShareX](https://getsharex.com/) (Windows)
+
+---
+
+## 📏 Screenshot Specifications
+
+### Image Format
+- **Format**: PNG (preferred) or WebP
+- **Quality**: High quality, no compression
+- **File Size**: Keep under 500KB per image (optimize if needed)
+
+### Dimensions
+| Screenshot Type | Recommended Size |
+|----------------|------------------|
+| Desktop Full   | 1920x1080 or 1440x900 |
+| Mobile         | 390x844 (iPhone) or 360x800 |
+| Tablet         | 768x1024 (iPad) |
+
+### Best Practices
+- ✅ Use clean, crisp screenshots
+- ✅ Hide personal information if needed
+- ✅ Ensure text is readable
+- ✅ Capture consistent states (e.g., no loading spinners)
+- ✅ Show real data, not lorem ipsum
+- ✅ Include browser chrome if showing responsive design
+- ✅ Maintain consistent lighting/contrast
+
+---
+
+## 🎨 Optimization Tips
+
+After capturing screenshots, optimize them:
+
+### Using Online Tools
+- [TinyPNG](https://tinypng.com/) - Compress PNG files
+- [Squoosh](https://squoosh.app/) - Google's image optimizer
+
+### Using Command Line (Optional)
+```bash
+# Install ImageMagick
+# Then resize/compress:
+magick convert input.png -resize 1920x1080 -quality 85 output.png
+```
+
+---
+
+## 📝 Naming Convention
+
+Follow these naming conventions for consistency:
+
+```
+hero-section.png          # Homepage hero
+skills-section.png        # Skills showcase
+timeline-section.png      # Experience timeline
+projects-section.png      # Featured projects
+mobile-hero.png          # Mobile view
+tablet-view.png          # Tablet view
+desktop-view.png         # Desktop full view
+light-mode.png           # Light theme
+dark-mode.png            # Dark theme
+```
+
+---
+
+## ✅ Checklist
+
+Before pushing screenshots to GitHub:
+
+- [ ] All 8 required screenshots captured
+- [ ] Images optimized (under 500KB each)
+- [ ] Filenames match README references
+- [ ] PNG or WebP format
+- [ ] No personal/sensitive information visible
+- [ ] High quality and readable text
+- [ ] Consistent styling across screenshots
+
+---
+
+## 🔄 Updating Screenshots
+
+When updating the portfolio design:
+
+1. Re-capture affected screenshots
+2. Maintain same naming convention
+3. Replace old files
+4. Test README renders correctly on GitHub
+5. Commit changes with descriptive message
+
+Example commit:
+```bash
+git add public/screenshots/
+git commit -m "docs: update portfolio screenshots with new design"
+git push
+```
+
+---
+
+## 📞 Need Help?
+
+If you need assistance with screenshots:
+- Check browser DevTools documentation
+- Use [GitHub's Markdown Guide](https://guides.github.com/features/mastering-markdown/)
+- Test image links locally before pushing
+
+---
+
+**Last Updated**: December 2024
