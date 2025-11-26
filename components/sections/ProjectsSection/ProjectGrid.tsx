@@ -14,11 +14,13 @@ const ProjectsGrid = ({ projects }: ProjectsGridProps) => {
 
   return (
     <div className="
-      grid grid-cols-1 
-      md:grid-cols-2 
+      grid grid-cols-1
+      md:grid-cols-2
       lg:grid-cols-2
       xl:grid-cols-2
-      gap-8 min-w-2x1 mx-auto"
+      gap-8
+      max-w-7xl mx-auto
+      px-0"
       >
       {projects.map((project, index) => (
         <ProjectCard

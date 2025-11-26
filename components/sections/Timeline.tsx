@@ -5,14 +5,31 @@ import { motion } from 'framer-motion'
 import {
   GraduationCap,
   Briefcase,
-  ArrowRight,
-  Globe,
+  Calendar,
 } from 'lucide-react'
-import SectionTitle from '@/components/SectionTitle'
 import TimelineCard from '../TimelineCard'
+import { Container } from '../layout/Container'
+
+
+// TypeScript interfaces for better type safety
+interface TimelineItem {
+  id: string
+  title: string
+  company?: string
+  institution?: string
+  period: string
+  location: string
+  type: 'work' | 'education' | 'certification' | 'degree'
+  status: 'completed' | 'current'
+  details: string[]
+  skills: string[]
+  gradient: string
+  achievements?: string[]
+  website?: string
+}
 
 // Enhanced timeline data with improved structure and new role
-const timelineData = {
+const timelineData: { education: TimelineItem[]; experience: TimelineItem[] } = {
   education: [
     {
       id: 'codestack',
@@ -60,6 +77,30 @@ const timelineData = {
       //   "Graduate (GPA: 3.5)",
       //   "Dean's List: 4 semesters",
       //   "Senior Capstone Award recipient"
+      //]
+    },
+    {
+      id: 'itt-tech-as',
+      title: "AS Network System Administration",
+      institution: "ITT Technical Institute",
+      period: "2012 - 2014",
+      location: "Lathrop, CA",
+      type: "degree",
+      status: "completed",
+      details: [
+        "Network Infrastructure and Administration with focus on Windows Server environments",
+        "TCP/IP protocols, routing, switching, and network topology design",
+        "Active Directory management, group policies, and domain administration",
+        "Hardware installation, configuration, and troubleshooting for enterprise systems",
+        "Network security fundamentals including firewalls, VPNs, and intrusion detection",
+        "Hands-on lab experience with Cisco networking equipment and Windows Server"
+      ],
+      skills: ["Windows Server", "Active Directory", "TCP/IP", "Network Administration", "Cisco", "System Troubleshooting"],
+      gradient: "from-indigo-500 to-blue-500",
+      // achievements: [
+      //   "Strong foundation in network infrastructure",
+      //   "Hands-on experience with enterprise systems",
+      //   "Prepared for IT career advancement"
       // ]
     }
   ],
@@ -148,6 +189,38 @@ const timelineData = {
   ]
 }
 
+
+/**
+ * Section Header Component matching Contact/About section style
+ */
+const SectionHeader = () => (
+  <motion.header
+    initial={{ opacity: 0, y: 50 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.6 }}
+    className="text-center mb-16"
+  >
+    {/* Decorative line with icon */}
+    <div className="flex items-center justify-center gap-4 mb-6" aria-hidden="true">
+      <div className="h-px flex-1 bg-gradient-to-r from-transparent to-blue-500" />
+      <div className="p-3 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full">
+        <Calendar className="w-6 h-6 text-white" />
+      </div>
+      <div className="h-px flex-1 bg-gradient-to-l from-transparent to-purple-500" />
+    </div>
+
+    <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-gray-900 to-gray-600 dark:from-gray-100 dark:to-gray-400 bg-clip-text text-transparent">
+      Professional Experience & Education
+    </h2>
+
+    <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
+      My comprehensive journey in technology, showcasing continuous growth from systems administration to full-stack development
+    </p>
+  </motion.header>
+)
+
+
 /**
  * Statistics Component
  * Commented out - not currently in use
@@ -199,91 +272,96 @@ const Statistics = () => {
 
 /**
  * Main Timeline Section Component
+ * Enhanced with better SEO, accessibility, and performance optimizations
  */
-export const TimelineSection = () => {
-  return (
-    <div className="relative w-full overflow-hidden py-20">
+export const Timeline = () => {
+  /**
+   * Main Timeline Section Component
+   */
 
-      <div className="absolute inset-0 bg-gradient-to-b from-blue-500/5 via-transparent to-violet-500/5" />
-      <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:50px]" />
+    return (
+      <div
+        className="relative overflow-hidden min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50 dark:from-gray-950 dark:via-gray-900 dark:to-indigo-950 py-20 md:py-24 lg:py-28 transition-colors duration-300"
+        aria-label="Professional experience and education timeline"
+      >
 
-      <div className="relative z-10 container mx-auto px-4">
-        <SectionTitle
-          title="Professional Experience & Education"
-          subtitle="My comprehensive journey in technology, from systems administration to full-stack development"
-        />
+        <div className="absolute inset-0 bg-gradient-to-b from-blue-500/5 via-transparent to-violet-500/5" />
+        <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:50px]" />
+        <Container className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionHeader />
 
-        {/* <Statistics /> */}
+          {/* <Statistics /> */}
 
-        {/* Timeline Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 pt-12">
-          {/* Experience Column */}
-          <motion.section
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            aria-labelledby="work-experience-heading"
-          >
-            <div className="mb-8 text-center lg:text-left">
-              <h3
-                id="work-experience-heading"
-                className="text-2xl font-bold mb-4 bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent flex items-center justify-center lg:justify-start gap-3"
-              >
-                <Briefcase className="w-6 h-6 text-green-600" aria-hidden="true" />
-                Work Experience
-              </h3>
-              <p className="text-gray-400">
-                Professional experience spanning systems administration to full-stack development
-              </p>
-            </div>
 
-            <div className="space-y-6">
-              {timelineData.experience.map((item, index) => (
-                <TimelineCard
-                  key={item.id}
-                  {...item}
-                  delay={index * 0.2}
-                />
-              ))}
-            </div>
-          </motion.section>
+          {/* Timeline Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 pt-12">
+            {/* Experience Column */}
+            <motion.section
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              aria-labelledby="work-experience-heading"
+            >
+              <div className="mb-8 text-center lg:text-left">
+                <h3
+                  id="work-experience-heading"
+                  className="text-2xl font-bold mb-4 bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent flex items-center justify-center lg:justify-start gap-3"
+                >
+                  <Briefcase className="w-6 h-6 text-green-600" aria-hidden="true" />
+                  Work Experience
+                </h3>
+                <p className="text-gray-400">
+                  Professional experience spanning systems administration to full-stack development
+                </p>
+              </div>
 
-          {/* Education Column */}
-          <motion.section
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            aria-labelledby="education-heading"
-          >
-            <div className="mb-8 text-center lg:text-left">
-              <h3
-                id="education-heading"
-                className="text-2xl font-bold mb-4 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent flex items-center justify-center lg:justify-start gap-3"
-              >
-                <GraduationCap className="w-6 h-6 text-purple-600" aria-hidden="true" />
-                Education & Certifications
-              </h3>
-              <p className="text-gray-400">
-                Academic foundation and continuous learning in technology and development
-              </p>
-            </div>
+              <div className="space-y-6">
+                {timelineData.experience.map((item, index) => (
+                  <TimelineCard
+                    key={item.id}
+                    {...item}
+                    delay={index * 0.2}
+                  />
+                ))}
+              </div>
+            </motion.section>
 
-            <div className="space-y-6">
-              {timelineData.education.map((item, index) => (
-                <TimelineCard
-                  key={item.id}
-                  {...item}
-                  delay={index * 0.2}
-                />
-              ))}
-            </div>
-          </motion.section>
-        </div>
-      </div>
-    </div>
-  )
-}
+            {/* Education Column */}
+            <motion.section
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              aria-labelledby="education-heading"
+            >
+              <div className="mb-8 text-center lg:text-left">
+                <h3
+                  id="education-heading"
+                  className="text-2xl font-bold mb-4 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent flex items-center justify-center lg:justify-start gap-3"
+                >
+                  <GraduationCap className="w-6 h-6 text-purple-600" aria-hidden="true" />
+                  Education & Certifications
+                </h3>
+                <p className="text-gray-400">
+                  Academic foundation and continuous learning in technology and development
+                </p>
+              </div>
 
-export default TimelineSection
+              <div className="space-y-6">
+                {timelineData.education.map((item, index) => (
+                  <TimelineCard
+                    key={item.id}
+                    {...item}
+                    delay={index * 0.2}
+                  />
+                ))}
+              </div>
+            </motion.section>
+          </div>
+        </Container >
+      </div >
+    )
+  }
+
+export default Timeline;

@@ -45,7 +45,7 @@ export const ProjectCard = ({ project, index, isHovered, onHover }: ProjectCardP
   return (
     <>
       <div
-        className="w-full px-4 sm:px-0 pt-20"
+        className="w-full flex justify-center items-start pt-12 sm:pt-20"
         role="article"
         aria-labelledby={`${cardId}-title`}
         onMouseEnter={() => onHover(index)}
@@ -62,15 +62,15 @@ export const ProjectCard = ({ project, index, isHovered, onHover }: ProjectCardP
           className="w-full"
         >
           <div className="group relative flex flex-col
-               w-[300px] sm:w-[420px] md:w-[460px] lg:w-[480px] xl:w-[500px] 2xl:w-[520px]
-               h-[420px] sm:h-[540px] md:h-[580px] lg:h-[600px] xl:h-[620px] 2xl:h-[640px]
-               bg-gradient-to-br from-gray-100 via-white to-gray-50
-               dark:from-gray-900 dark:via-gray-800 dark:to-black
-               rounded-2xl shadow-2xl overflow-hidden
+               w-full max-w-[320px] sm:max-w-[420px] md:max-w-[460px] lg:max-w-[480px] xl:max-w-[520px]
+               min-h-[420px] sm:min-h-[500px] md:min-h-[540px] lg:min-h-[560px]
+               bg-gradient-to-br from-gray-50 via-white to-gray-100
+               dark:from-gray-900/95 dark:via-gray-800/95 dark:to-black/95
+               rounded-2xl shadow-xl overflow-hidden
                transition-all duration-500
-               hover:shadow-[0_0_40px_rgba(99,102,241,0.4)]
-               dark:hover:shadow-[0_0_40px_rgba(99,102,241,0.3)]
-               border border-gray-200 dark:border-gray-700/50
+               hover:shadow-2xl hover:shadow-indigo-500/20
+               dark:hover:shadow-2xl dark:hover:shadow-indigo-500/30
+               border border-gray-200/80 dark:border-gray-700/60
                backdrop-blur-sm
                 ">
 
@@ -110,9 +110,9 @@ export const ProjectCard = ({ project, index, isHovered, onHover }: ProjectCardP
 
               {/* Gradient overlay */}
               <div
-                className="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/20 to-transparent
-                dark:from-black/95 dark:via-black/30 dark:to-transparent
-                opacity-60 group-hover:opacity-40 transition-opacity duration-500"
+                className="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-gray-900/10 to-transparent
+                dark:from-black/90 dark:via-black/20 dark:to-transparent
+                opacity-50 group-hover:opacity-30 transition-opacity duration-500"
                 aria-hidden="true"
               />
 
@@ -123,9 +123,9 @@ export const ProjectCard = ({ project, index, isHovered, onHover }: ProjectCardP
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    className="absolute inset-0 bg-gradient-to-t from-gray-900/85 via-gray-900/30 to-transparent
-                    dark:from-black/90 dark:via-black/40 dark:to-transparent
-                    backdrop-blur-[2px]"
+                    className="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/40 to-transparent
+                    dark:from-black/95 dark:via-black/50 dark:to-transparent
+                    backdrop-blur-[3px]"
                     aria-hidden="true"
                   >
                     {/* Quick action buttons on hover */}
@@ -177,7 +177,7 @@ export const ProjectCard = ({ project, index, isHovered, onHover }: ProjectCardP
             </div>
 
             {/* Project Details with Enhanced Layout */}
-            <div className="flex flex-col flex-1 p-6 bg-gradient-to-b from-gray-900/80 to-black/90 backdrop-blur-md overflow-visible">
+            <div className="flex flex-col flex-1 p-4 sm:p-6 bg-gradient-to-b from-white/95 to-gray-50/95 dark:from-gray-900/90 dark:to-black/95 backdrop-blur-md overflow-visible border-t border-gray-200 dark:border-gray-800">
 
               {/* Title with gradient effect */}
               <motion.h3
@@ -185,7 +185,7 @@ export const ProjectCard = ({ project, index, isHovered, onHover }: ProjectCardP
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 }}
-                className="text-xl sm:text-2xl md:text-3xl font-bold mb-3 bg-clip-text text-transparent leading-tight"
+                className="text-lg sm:text-xl md:text-2xl font-bold mb-2 sm:mb-3 bg-clip-text text-transparent leading-tight"
                 style={{
                   backgroundImage: `linear-gradient(135deg, ${gradient.from}, ${gradient.to})`
                 }}
@@ -198,13 +198,13 @@ export const ProjectCard = ({ project, index, isHovered, onHover }: ProjectCardP
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.2 }}
-                className="text-gray-300 dark:text-gray-400 text-sm sm:text-base leading-relaxed mb-4 flex-1 line-clamp-3"
+                className="text-gray-700 dark:text-gray-300 text-xs sm:text-sm md:text-base leading-relaxed mb-3 sm:mb-4 flex-1 line-clamp-2 sm:line-clamp-3"
               >
                 {project.description}
               </motion.p>
 
               {/* Divider */}
-              <div className="h-px bg-gradient-to-r from-transparent via-gray-700 to-transparent mb-4" aria-hidden="true" />
+              <div className="h-px bg-gradient-to-r from-transparent via-gray-300 dark:via-gray-700 to-transparent mb-3 sm:mb-4" aria-hidden="true" />
 
               {/* Tech Stack with Enhanced Styling */}
               <div
@@ -223,10 +223,11 @@ export const ProjectCard = ({ project, index, isHovered, onHover }: ProjectCardP
                       transition={{ delay: 0.3 + techIndex * 0.05 }}
                       whileHover={{ scale: 1.1, y: -2 }}
                       whileTap={{ scale: 0.95 }}
-                      className="group/tech flex items-center gap-1.5 px-3 py-2 rounded-lg
-                        bg-gray-800/60 dark:bg-gray-800/40
-                        border border-gray-700/50
-                        hover:border-opacity-80
+                      className="group/tech flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg
+                        bg-gray-100 dark:bg-gray-800/60
+                        border border-gray-300/60 dark:border-gray-700/50
+                        hover:border-gray-400 dark:hover:border-gray-600
+                        hover:bg-gray-200 dark:hover:bg-gray-700/70
                         transition-all duration-300
                         hover:shadow-lg
                         backdrop-blur-sm
@@ -236,7 +237,7 @@ export const ProjectCard = ({ project, index, isHovered, onHover }: ProjectCardP
                       }}
                     >
                       {techData?.icon && (
-                        <div className="relative w-[18px] h-[18px] flex-shrink-0">
+                        <div className="relative w-4 h-4 sm:w-[18px] sm:h-[18px] flex-shrink-0">
                           <Image
                             src={techData.icon}
                             alt={`${tech} icon`}
@@ -247,8 +248,10 @@ export const ProjectCard = ({ project, index, isHovered, onHover }: ProjectCardP
                         </div>
                       )}
                       <span
-                        className="text-xs sm:text-sm font-semibold transition-colors duration-300"
-                        style={{ color: techData?.color || '#9CA3AF' }}
+                        className="text-[10px] sm:text-xs font-semibold transition-colors duration-300"
+                        style={{
+                          color: techData?.color || '#6B7280',
+                        }}
                       >
                         {tech}
                       </span>
@@ -260,7 +263,7 @@ export const ProjectCard = ({ project, index, isHovered, onHover }: ProjectCardP
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.6 }}
-                    className="flex items-center px-3 py-2 rounded-lg bg-gray-800/60 border border-gray-700/50 text-gray-400 text-xs font-semibold"
+                    className="flex items-center px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg bg-gray-100 dark:bg-gray-800/60 border border-gray-300/60 dark:border-gray-700/50 text-gray-600 dark:text-gray-400 text-[10px] sm:text-xs font-semibold"
                   >
                     +{project.tech.length - 6}
                   </motion.div>

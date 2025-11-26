@@ -110,16 +110,16 @@ export default function HeroSection() {
       )}
 
 
-      <section className="relative z-10 min-h-screen flex items-center justify-center overflow-hidden py-12 sm:py-16 lg:py-2 px-4 sm:px-6 lg:px-8">
+      <section className="relative z-10 min-h-screen flex items-center justify-center overflow-hidden py-8 sm:py-12 lg:py-2 px-4 sm:px-6 lg:px-8">
         <div className="relative max-w-7xl mx-auto w-full">
-          <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+          <div className="grid lg:grid-cols-2 gap-6 lg:gap-16 items-center">
 
             {/* Left Column - Streamlined Content */}
             <motion.div
               initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.5, ease: 'easeOut' }}
-              className="space-y-6 w-full text-center lg:text-left order-2 lg:order-1"
+              className="space-y-4 sm:space-y-6 w-full text-center lg:text-left order-2 lg:order-1"
             >
               {/* Main headline */}
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight text-gray-900 dark:text-white">
@@ -136,11 +136,11 @@ export default function HeroSection() {
               </HeroHighlight>
 
               {/* Status Tags */}
-              <div className="lex flex-wrap items-center justify-center lg:justify-start gap-2 text-base sm:text-lg md:text-xl text-gray-300 mb-4">
-                <span className="px-4 py-2 mr-1 bg-green-500/20 dark:bg-green-900/30 border border-green-500/30 dark:border-green-700 rounded-full text-green-700 dark:text-green-300 font-semibold text-sm">
+              <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 mb-4">
+                <span className="px-4 py-2 bg-green-500/20 dark:bg-green-900/30 border border-green-500/30 dark:border-green-700 rounded-full text-green-700 dark:text-green-300 font-semibold text-sm whitespace-nowrap">
                   Recent Graduate - Available Now
                 </span>
-                <span className="px-4 py-2 ml-1 bg-blue-500/20 dark:bg-blue-900/30 border border-blue-500/30 dark:border-blue-700 rounded-full text-blue-700 dark:text-blue-300 font-semibold text-sm">
+                <span className="px-4 py-2 bg-blue-500/20 dark:bg-blue-900/30 border border-blue-500/30 dark:border-blue-700 rounded-full text-blue-700 dark:text-blue-300 font-semibold text-sm whitespace-nowrap">
                   8+ Years IT Experience
                 </span>
               </div>
@@ -259,7 +259,7 @@ export default function HeroSection() {
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, ease: 'easeOut', delay: 0.2 }}
-              className="flex flex-col items-center lg:items-end gap-6 order-1 lg:order-2 pb-12"
+              className="flex flex-col items-center lg:items-end gap-4 order-1 lg:order-2 pb-6 sm:pb-12"
             >
               {/* Profile Image Container */}
               <div className="relative w-full max-w-md flex justify-center">
@@ -394,7 +394,7 @@ export default function HeroSection() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 2, duration: 0.6 }}
-            className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+            className="hidden sm:flex absolute bottom-8 left-1/2 transform -translate-x-1/2"
           >
             <motion.div
               animate={{ y: [0, 10, 0] }}

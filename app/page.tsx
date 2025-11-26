@@ -10,6 +10,7 @@ import { Skills } from '@/components/sections/Skills';
 
 
 
+
 // Optimized lazy loading with ssr disabled for heavy components
 const AboutSection = dynamic(() => import("@/components/sections/AboutSection/AboutSection"), {
   loading: () => <SectionLoader />,
@@ -27,7 +28,7 @@ const ProjectsSection = dynamic(() => import("@/components/sections/ProjectsSect
   ssr: false
 });
 
-const TimelineSection = dynamic(() => import("@/components/sections/TimelineSection").then(mod => ({ default: mod.TimelineSection })), {
+const Timeline = dynamic(() => import("@/components/sections/Timeline"), {
   loading: () => <SectionLoader />,
   ssr: false
 });
@@ -76,20 +77,18 @@ export default function Home() {
 
       {/* Experience Section */}
       <section id="experience" className="bg-white-100 dark:bg-gray-950">
-        <TimelineSection />
+        <Timeline />
       </section>
+
+
         {/* Contact Section - End with clear CTA */}
         <section
           id="contact"
           className="relative bg-white-100 dark:bg-gray-950"
           aria-labelledby="contact-heading"
-        >
-
-          
+        > 
           <ContactSection />
-      
         </section>
-
           
     </>
   );
