@@ -23,7 +23,7 @@ const ProjectsSection = () => {
       <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:50px]" />
 
       {/* Content Container */}
-      <div className="relative z-10 container mx-auto px-4">
+      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header matching TimelineSection style */}
         <motion.header
           initial={{ opacity: 0, y: 50 }}
