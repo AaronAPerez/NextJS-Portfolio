@@ -18,9 +18,7 @@ const ProjectsGrid = ({ projects }: ProjectsGridProps) => {
       md:grid-cols-2
       lg:grid-cols-2
       xl:grid-cols-2
-      gap-8
-      max-w-7xl mx-auto
-      px-0"
+      gap-8 min-w-2x1 mx-auto"
       >
       {projects.map((project, index) => (
         <ProjectCard
