@@ -4,7 +4,6 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 import HeroSection from "@/components/sections/HeroSection";
 import SectionLoader from "@/components/ui/SectionLoader";
-import { LearningSection } from '@/components/sections/LearningSection';
 import { Skills } from '@/components/sections/Skills';
 
 
@@ -41,7 +40,7 @@ const ContactSection = dynamic(() => import("@/components/sections/ContactSectio
 export default function Home() {
   return (
     <>
-
+      <div className="px-4">
         {/* Hero Section - Above the fold, strong first impression */}
         <section
           id="home"
@@ -51,34 +50,34 @@ export default function Home() {
           <HeroSection />
         </section>
 
-      {/* About Section */}
-      <section id="about" className="bg-white-100 dark:bg-gray-950">
-        <AboutSection />
-      </section>
+        {/* About Section */}
+        <section id="about" className="bg-white-100 dark:bg-gray-950">
+          <AboutSection />
+        </section>
 
-         {/* Skills Section - Show capabilities immediately */}
+        {/* Skills Section - Show capabilities immediately */}
         <section
           id="skills"
           className="relative bg-white-100 dark:bg-gray-950"
           aria-labelledby="skills-heading"
         >
-          <Skills/>
+          <Skills />
         </section>
 
-      {/* AI Showcase Section */}
-      <section id="learning section" className="bg-white-100 dark:bg-gray-950">
+        {/* AI Showcase Section */}
+        {/*  <section id="learning section" className="bg-white-100 dark:bg-gray-950">
         <LearningSection/>
-      </section>
+      </section> */}
 
-      {/* Projects Section */}
-      <section id="projects" className="bg-white-100 dark:bg-gray-950">
-        <ProjectsSection />
-      </section>
+        {/* Projects Section */}
+        <section id="projects" className="bg-white-100 dark:bg-gray-950">
+          <ProjectsSection />
+        </section>
 
-      {/* Experience Section */}
-      <section id="experience" className="bg-white-100 dark:bg-gray-950">
-        <Timeline />
-      </section>
+        {/* Experience Section */}
+        <section id="experience" className="bg-white-100 dark:bg-gray-950">
+          <Timeline />
+        </section>
 
 
         {/* Contact Section - End with clear CTA */}
@@ -86,10 +85,10 @@ export default function Home() {
           id="contact"
           className="relative bg-white-100 dark:bg-gray-950"
           aria-labelledby="contact-heading"
-        > 
+        >
           <ContactSection />
         </section>
-          
+      </div>
     </>
   );
 }
