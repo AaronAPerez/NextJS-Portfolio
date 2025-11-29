@@ -9,6 +9,9 @@ import { generatePersonSchema, generateWebsiteSchema } from "@/lib/utils";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { ToastProvider } from "@/components/providers/ToastProvider";
+import { WebVitals } from "./web-vitals";
+import { QueryProvider } from "@/lib/providers/query-provider";
+
 
 
 const inter = Inter({
@@ -93,17 +96,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
       <body className={inter.className} suppressHydrationWarning>
          <SkipToContent />
-        <ThemeProvider>
-          <ToastProvider />
-          <div className="flex flex-col min-h-screen">
-            <Header />
-            <main id="main-content" className="flex-1" role="main">
-              {children}
-              <Analytics />
-            </main>
-            <Footer />
-          </div>
-        </ThemeProvider>
+        <QueryProvider>
+          <ThemeProvider>
+            <ToastProvider />
+            <div className="flex flex-col min-h-screen">
+              <Header />
+              <main id="main-content" className="flex-1" role="main">
+                {children}
+                <WebVitals />
+                <Analytics />
+              </main>
+              <Footer />
+            </div>
+          </ThemeProvider>
+        </QueryProvider>
       </body>
     </html>
   );

@@ -74,13 +74,13 @@ interface SkillCardProps {
 
 // Individual skill card component with fixed icon display
 const SkillCard = ({ skill, isVisible, index }: SkillCardProps) => {
-  const { resolvedTheme } = useTheme()
+  const { theme } = useTheme()
   const [isFlipped, setIsFlipped] = useState(false)
   const [imageError, setImageError] = useState(false)
   const [imageLoaded, setImageLoaded] = useState(false)
 
   return (
-    <div className={`p-4 ${resolvedTheme === 'dark' ? 'bg-gray-800' : 'bg-white'}`}>
+    <div className={`p-4 ${theme === 'dark' ? 'bg-gray-800' : 'bg-white'}`}>
       <motion.div
         initial={{ opacity: 0, scale: 0.8, y: 20 }}
         animate={isVisible ? {
@@ -200,13 +200,13 @@ const SkillCard = ({ skill, isVisible, index }: SkillCardProps) => {
 
 // Skills grid component
 const SkillsGrid = ({ category, isVisible }: { category: CategoryId; isVisible: boolean }) => {
-  const { resolvedTheme } = useTheme()
+  const { theme } = useTheme()
   const filteredSkills = skills.filter(skill =>
     category === 'all' || skill.category === category
   )
 
   return (
-    <div className={`p-4 ${resolvedTheme === 'dark' ? 'bg-gray-800' : 'bg-white'}`}>
+    <div className={`p-4 ${theme === 'dark' ? 'bg-gray-800' : 'bg-white'}`}>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-6 max-w-7xl mx-auto">
         <AnimatePresence mode="wait">
           {filteredSkills.map((skill, index) => (
@@ -295,7 +295,7 @@ const CategoryButton = ({
 
 // Main SkillsSection component
 export default function SkillsSection() {
-  const { resolvedTheme } = useTheme()
+  const { theme } = useTheme()
 
   const [selectedCategory, setSelectedCategory] = useState<CategoryId>('all')
   const { isIntersecting } = useIntersectionObserver({ threshold: 0.1 })
@@ -306,7 +306,7 @@ export default function SkillsSection() {
   ).length
 
   return (
-    <div className={`p-4 ${resolvedTheme === 'dark' ? 'bg-gray-800' : 'bg-white'}`}>
+    <div className={`p-4 ${theme === 'dark' ? 'bg-gray-800' : 'bg-white'}`}>
       <Section id="skills" className="relative overflow-hidden">
         {/* Background effects */}
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-blue-500/5" />

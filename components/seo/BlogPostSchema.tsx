@@ -5,8 +5,29 @@
  */
 
 import Head from 'next/head';
-import { BlogPost } from '@/types/blog';
-import { siteConfig } from '@/lib/seo';
+// import { BlogPost } from '@/types/blog';
+// import { siteConfig } from '@/lib/seo';
+
+const siteConfig = {
+  name: 'Aaron A. Perez',
+  url: 'https://aaronaperez.dev',
+  ogImage: '/images/og-image.jpg',
+  creator: '@aaronaperez',
+};
+
+// Temporary type until blog is implemented
+type BlogPost = {
+  title: string;
+  description: string;
+  author: { name: string };
+  publishedDate: string;
+  publishedAt: string;
+  updatedAt?: string;
+  modifiedDate?: string;
+  imageAlt?: string;
+  category: { name: string };
+  tags: Array<{ name: string }>;
+};
 
 interface MetaTagsProps {
   title: string;

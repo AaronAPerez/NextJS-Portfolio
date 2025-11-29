@@ -116,9 +116,9 @@ export default function HeroSection() {
 
             {/* Left Column - Streamlined Content */}
             <motion.div
-              initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.5, ease: 'easeOut' }}
+              initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.3 }}
               className="space-y-4 sm:space-y-6 w-full text-center lg:text-left order-2 lg:order-1"
             >
               {/* Main headline */}
@@ -164,9 +164,9 @@ export default function HeroSection() {
 
               {/* CTA Buttons */}
               <motion.div
-                initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={prefersReducedMotion ? { duration: 0 } : { delay: 0.2, duration: 0.4 }}
+                initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.3 }}
                 className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-2"
               >
                 <motion.button
@@ -196,9 +196,9 @@ export default function HeroSection() {
 
               {/* Social Links */}
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4, duration: 0.6 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3 }}
                 className="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-2"
               >
                 {[
@@ -246,7 +246,7 @@ export default function HeroSection() {
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 0.6, duration: 0.6 }}
+                transition={{ duration: 0.3 }}
                 className="flex flex-wrap items-center justify-center lg:justify-start gap-2 text-sm text-gray-600 dark:text-gray-400"
               >
                 <MapPin className="w-4 h-4" />
@@ -256,23 +256,14 @@ export default function HeroSection() {
 
             {/* Right Column - Enhanced Visual with Info */}
             <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, ease: 'easeOut', delay: 0.2 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3 }}
               className="flex flex-col items-center lg:items-end gap-4 order-1 lg:order-2 pb-6 sm:pb-12"
             >
               {/* Profile Image Container */}
               <div className="relative w-full max-w-md flex justify-center">
-                <motion.div
-                  animate={{ y: [0, -20, 0] }}
-                  transition={{
-                    duration: 6,
-                    repeat: Infinity,
-                    repeatType: 'reverse',
-                    ease: 'easeInOut'
-                  }}
-                  className="relative w-56 h-56 sm:w-72 sm:h-72 md:w-80 md:h-80"
-                >
+                <div className="relative w-56 h-56 sm:w-72 sm:h-72 md:w-80 md:h-80">
                   {/* Enhanced Profile Image Container */}
                   <div className="relative w-full h-full">
                     <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full p-1 shadow-2xl">
@@ -293,69 +284,53 @@ export default function HeroSection() {
                     </div>
                   </div>
 
-                  {/* Enhanced Floating Tech Icons */}
-                  <motion.div
-                    animate={{ rotate: 360 }}
-                    transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-                    className="absolute -top-6 -right-6 backdrop-blur-sm bg-white/10 dark:bg-gray-800/30 w-16 h-16 rounded-full flex items-center justify-center shadow-lg"
-                  >
+                  {/* Simplified Tech Icons - No rotation animations for better FCP */}
+                  <div className="absolute -top-6 -right-6 backdrop-blur-sm bg-white/10 dark:bg-gray-800/30 w-16 h-16 rounded-full flex items-center justify-center shadow-lg">
                     <Image
                       src='/icons/frontend/react.svg'
                       alt='React'
                       width={32}
                       height={32}
                       className="react-blue"
-                      loading="lazy"
+                      priority
                     />
-                  </motion.div>
+                  </div>
 
-                  <motion.div
-                    animate={{ rotate: -360 }}
-                    transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
-                    className="absolute -bottom-6 -left-6 backdrop-blur-sm bg-white/10 dark:bg-gray-800/30 w-14 h-14 rounded-full flex items-center justify-center shadow-lg"
-                  >
+                  <div className="absolute -bottom-6 -left-6 backdrop-blur-sm bg-white/10 dark:bg-gray-800/30 w-14 h-14 rounded-full flex items-center justify-center shadow-lg">
                     <Image
                       src='/icons/backend/nodejs.svg'
                       alt='Node.js'
                       width={28}
                       height={28}
                       className="node-green"
-                      loading="lazy"
+                      priority
                     />
-                  </motion.div>
+                  </div>
 
-                  <motion.div
-                    animate={{ rotate: 360, scale: [1, 1.1, 1] }}
-                    transition={{ duration: 15, repeat: Infinity, ease: 'linear' }}
-                    className="absolute top-1/4 -left-8 backdrop-blur-sm bg-white/10 dark:bg-gray-800/30 w-12 h-12 rounded-full flex items-center justify-center shadow-lg"
-                  >
+                  <div className="absolute top-1/4 -left-8 backdrop-blur-sm bg-white/10 dark:bg-gray-800/30 w-12 h-12 rounded-full flex items-center justify-center shadow-lg">
                     <Image
                       src='/icons/frontend/typescript.svg'
                       alt='TypeScript'
                       width={32}
                       height={32}
                       className="typescript-blue"
-                      loading="lazy"
+                      priority
                     />
-                  </motion.div>
+                  </div>
 
-                  <motion.div
-                    animate={{ y: [0, -15, 0] }}
-                    transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-                    className="absolute top-1/3 -right-8 backdrop-blur-sm bg-white/10 dark:bg-gray-800/30 w-10 h-10 rounded-full flex items-center justify-center shadow-lg"
-                  >
+                  <div className="absolute top-1/3 -right-8 backdrop-blur-sm bg-white/10 dark:bg-gray-800/30 w-10 h-10 rounded-full flex items-center justify-center shadow-lg">
                     <Image
                       src='/icons/frontend/javascript.svg'
                       alt='JavaScript'
                       width={28}
                       height={28}
-                      loading="lazy"
+                      priority
                     />
-                  </motion.div>
+                  </div>
 
-                  {/* Enhanced Glow Effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-indigo-600 rounded-full blur-3xl opacity-20 animate-pulse"></div>
-                </motion.div>
+                  {/* Simplified Glow Effect */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-indigo-600 rounded-full blur-3xl opacity-20"></div>
+                </div>
 
                 {/* Enhanced Achievement Badges */}
                 <motion.div
@@ -389,25 +364,18 @@ export default function HeroSection() {
             </motion.div>
           </div>
 
-          {/* Enhanced Scroll Indicator */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 2, duration: 0.6 }}
-            className="hidden sm:flex absolute bottom-8 left-1/2 transform -translate-x-1/2"
-          >
-            <motion.div
-              animate={{ y: [0, 10, 0] }}
-              transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-              className="flex flex-col items-center gap-2 text-gray-600 dark:text-gray-400 cursor-pointer"
+          {/* Scroll Indicator */}
+          <div className="hidden sm:flex absolute bottom-8 left-1/2 transform -translate-x-1/2">
+            <div
+              className="flex flex-col items-center gap-2 text-gray-600 dark:text-gray-400 cursor-pointer animate-bounce"
               onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
             >
               <span className="text-sm">Scroll to explore</span>
               <div className="p-2 backdrop-blur-sm bg-white/10 dark:bg-gray-800/30 rounded-full">
                 <ArrowDown className="w-5 h-5" />
               </div>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         </div>
       </section>
     </div>

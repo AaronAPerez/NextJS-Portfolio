@@ -1,3 +1,21 @@
+type LocalBusinessData = {
+  name: string;
+  description: string;
+  phone: string;
+  address: {
+    city: string;
+    state: string;
+    country: string;
+  };
+  geo: {
+    latitude: number;
+    longitude: number;
+  };
+  serviceAreas: string[];
+  services: string[];
+  priceRange: string;
+};
+
 export const localBusinessData: LocalBusinessData = {
   name: 'Aaron A. Perez - Full Stack Developer',
   description: 'Professional web development services',

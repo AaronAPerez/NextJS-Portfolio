@@ -6,6 +6,39 @@ import { skills } from '@/components/config/skills';
 import PinContainer from './3d-pin';
 import { Project } from '@/components/config/projects';
 
+/**
+ * Project Card Component
+ * 
+ * Displays a 3D pinned card showcasing project details with interactive hover effects.
+ * Implements ARIA labels for accessibility and lazy-loads images for performance.
+ * 
+ * @component
+ * @example
+ * ```tsx
+ * <ProjectCard 
+ *   project={projectData}
+ *   index={0}
+ *   isHovered={hoveredCard === 0}
+ *   onHover={setHoveredCard}
+ * />
+ * ```
+ * 
+ * @param {Object} props - Component props
+ * @param {Project} props.project - Project data object containing title, description, tech stack, etc.
+ * @param {number} props.index - Card index for stagger animations
+ * @param {boolean} props.isHovered - Whether this card is currently hovered
+ * @param {(index: number | null) => void} props.onHover - Callback when card hover state changes
+ * 
+ * @performance
+ * - Uses Next.js Image for automatic optimization
+ * - Implements intersection observer for lazy loading
+ * - GPU-accelerated animations via Framer Motion
+ * 
+ * @accessibility
+ * - ARIA labels for screen readers
+ * - Keyboard navigation support
+ * - Sufficient color contrast (WCAG AA)
+ */
 
 interface ProjectCardProps {
   project: Project;
@@ -32,7 +65,7 @@ export const ProjectCard = ({ project, index, isHovered, onHover }: ProjectCardP
   return (
     <>
       <div
-        className="w-full px-4 sm:px-0 pt-10"
+        className="w-full pt-10"
         role="article"
         aria-labelledby={`${cardId}-title`}
         onMouseEnter={() => onHover(index)}
@@ -49,7 +82,7 @@ export const ProjectCard = ({ project, index, isHovered, onHover }: ProjectCardP
           className="w-full"
         >
           <div className="group relative flex flex-col
-               w-[300px] sm:w-[420px] md:w-[460px] lg:w-[480px] xl:w-[500px] 2xl:w-[500px] h-[400px] sm:h-[520px] md:h-[560px] lg:h-[580px] xl:h-[600px] 2xl:h-[600px] bg-gradient-to-br from-gray-50 via-white to-gray-100
+               w-[300px] sm:w-[560px] md:w-[580px] lg:w-[480px] xl:w-[500px] 2xl:w-[500px] h-[400px] sm:h-[620px] md:h-[560px] lg:h-[580px] xl:h-[600px] 2xl:h-[600px] bg-gradient-to-br from-gray-50 via-white to-gray-100
                dark:from-gray-900/95 dark:via-gray-800/95 dark:to-black/95
                hover:shadow-2xl hover:shadow-indigo-500/20
                dark:hover:shadow-2xl dark:hover:shadow-indigo-500/30
@@ -107,7 +140,7 @@ export const ProjectCard = ({ project, index, isHovered, onHover }: ProjectCardP
                 {project.title}
               </h3>
 
-              <p className="text-gray-800 dark:text-gray-200 text-sm sm:text-base mb-6 flex-1 line-clamp-5">
+              <p className="text-gray-800 dark:text-gray-200 text-sm sm:text-base mb-4 flex-1 line-clamp-5">
                 {project.description}
               </p>
 
@@ -125,7 +158,7 @@ export const ProjectCard = ({ project, index, isHovered, onHover }: ProjectCardP
                       role="listitem"
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
-                      className="flex items-center gap-1 px-3 py-1 rounded-full border transition-colors duration-200 hover:border-opacity-50"
+                      className="flex items-center gap-1 px-3 py-1 rounded-full border transition-colors duration-200 hover:border-opacity-20"
                       style={{ borderColor: `${techData?.color}40` }}
                     >
                       {techData?.icon && (

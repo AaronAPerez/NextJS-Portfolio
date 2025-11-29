@@ -4,29 +4,29 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import SectionTitle from '@/components/SectionTitle';
-import { FiCpu, FiMessageCircle, FiZap, FiCode, FiDatabase } from 'react-icons/fi';
+import { Cpu, MessageCircle, Zap, Code, Database } from 'lucide-react';
 
 const features = [
   {
-    icon: FiMessageCircle,
+    icon: MessageCircle,
     title: "Intelligent Chat Interface",
     description: "Natural language processing to answer questions about skills, projects, and experience",
     color: "from-blue-500 to-cyan-500"
   },
   {
-    icon: FiDatabase,
+    icon: Database,
     title: "Knowledge Base Integration",
     description: "Structured portfolio data with smart query understanding and context-aware responses",
     color: "from-violet-500 to-purple-500"
   },
   {
-    icon: FiZap,
+    icon: Zap,
     title: "Real-time Responses",
     description: "Fast, optimized API routes with edge deployment for instant user interactions",
     color: "from-orange-500 to-red-500"
   },
   {
-    icon: FiCode,
+    icon: Code,
     title: "Modern Tech Stack",
     description: "Built with Next.js 15, TypeScript, and React 19 showcasing latest development patterns",
     color: "from-green-500 to-emerald-500"
@@ -34,12 +34,12 @@ const features = [
 ];
 
 const techStack = [
-  { name: "Next.js 15", icon: FiCode, description: "App Router & API Routes" },
-  { name: "TypeScript", icon: FiCode, description: "Type-safe Development" },
-  { name: "React 19", icon: FiCode, description: "Modern Hooks & Patterns" },
-  { name: "Framer Motion", icon: FiZap, description: "Smooth Animations" },
-  { name: "Tailwind CSS", icon: FiCode, description: "Utility-first Styling" },
-  { name: "AI Integration", icon: FiCpu, description: "Smart Responses" },
+  { name: "Next.js 15", icon: Code, description: "App Router & API Routes" },
+  { name: "TypeScript", icon: Code, description: "Type-safe Development" },
+  { name: "React 19", icon: Code, description: "Modern Hooks & Patterns" },
+  { name: "Framer Motion", icon: Zap, description: "Smooth Animations" },
+  { name: "Tailwind CSS", icon: Code, description: "Utility-first Styling" },
+  { name: "AI Integration", icon: Cpu, description: "Smart Responses" },
 ];
 
 export const AIShowcase = () => {
@@ -74,7 +74,7 @@ export const AIShowcase = () => {
             <div className="relative z-10">
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-violet-500 flex items-center justify-center">
-                  <FiCpu className="w-8 h-8 text-white" />
+                  <Cpu className="w-8 h-8 text-white" />
                 </div>
                 <div>
                   <h3 className="text-2xl font-bold text-white mb-1">Interactive AI Assistant</h3>

@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { BookOpen, Code, Rocket, Target } from 'lucide-react';
-import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/components/ui/Card';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/Card';
 
 const currentLearning = [
   {

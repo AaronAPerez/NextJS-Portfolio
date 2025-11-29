@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import { FiSend, FiX, FiMessageCircle, FiCpu } from 'react-icons/fi';
+import { Send, X, MessageCircle, Cpu } from 'lucide-react';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -118,7 +118,7 @@ export const AIChat = () => {
             )}
             aria-label="Open AI Assistant"
           >
-            <FiMessageCircle className="w-7 h-7 text-white group-hover:scale-110 transition-transform" />
+            <MessageCircle className="w-7 h-7 text-white group-hover:scale-110 transition-transform" />
             <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white animate-pulse" />
           </motion.button>
         )}
@@ -152,7 +152,7 @@ export const AIChat = () => {
               <div className="flex items-center gap-3">
                 <div className="relative">
                   <div className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-violet-500 flex items-center justify-center">
-                    <FiCpu className="w-5 h-5 text-white" />
+                    <Cpu className="w-5 h-5 text-white" />
                   </div>
                   <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-gray-900" />
                 </div>
@@ -166,7 +166,7 @@ export const AIChat = () => {
                 className="text-gray-400 hover:text-white transition-colors p-2 hover:bg-white/5 rounded-lg"
                 aria-label="Close chat"
               >
-                <FiX className="w-5 h-5" />
+                <X className="w-5 h-5" />
               </button>
             </div>
 
@@ -274,7 +274,7 @@ export const AIChat = () => {
                   )}
                   aria-label="Send message"
                 >
-                  <FiSend className="w-5 h-5" />
+                  <Send className="w-5 h-5" />
                 </button>
               </div>
             </div>
