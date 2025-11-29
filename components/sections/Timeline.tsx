@@ -142,7 +142,7 @@ const timelineData: { education: TimelineItem[]; experience: TimelineItem[] } = 
       period: "Aug. 2017 - Jan. 2025",
       location: "Stockton, CA",
       type: "work" as const,
-      status: "current" as const,
+      status: "completed" as const,
       details: [
         "QA testing and validation for educational software systems ensuring 99% uptime for critical SEIS platform",
         "Technical support and troubleshooting for SEIS (Special Education Information System) serving 50+ school districts",

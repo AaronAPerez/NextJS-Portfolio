@@ -110,7 +110,7 @@ export default function HeroSection() {
       )}
 
 
-      <section className="relative z-10 min-h-screen flex items-center justify-center overflow-hidden py-8 sm:py-12 lg:py-2 px-4 sm:px-6 lg:px-8">
+      <section className="relative z-10 min-h-screen flex items-center justify-center overflow-hidden py-8 sm:py-12 lg:py-2 px-4 sm:px-6 lg:px-8 -mt-16 sm:-mt-20">
         <div className="relative max-w-7xl mx-auto w-full">
           <div className="grid lg:grid-cols-2 gap-6 lg:gap-16 items-center">
 
@@ -122,7 +122,7 @@ export default function HeroSection() {
               className="space-y-4 sm:space-y-6 w-full text-center lg:text-left order-2 lg:order-1"
             >
               {/* Main headline */}
-              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight text-gray-900 dark:text-white">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight text-gray-900 dark:text-white" id="hero-heading">
                 Aaron A. Perez
               </h1>
 
@@ -137,10 +137,10 @@ export default function HeroSection() {
 
               {/* Status Tags */}
               <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 mb-4">
-                <span className="px-4 py-2 bg-green-500/20 dark:bg-green-900/30 border border-green-500/30 dark:border-green-700 rounded-full text-green-700 dark:text-green-300 font-semibold text-sm whitespace-nowrap">
+                <span className="px-4 py-2 bg-green-500/20 dark:bg-green-900/30 border border-green-500/30 dark:border-green-700 rounded-full text-green-700 dark:text-green-300 font-medium text-sm whitespace-nowrap">
                   Recent Graduate - Available Now
                 </span>
-                <span className="px-4 py-2 bg-blue-500/20 dark:bg-blue-900/30 border border-blue-500/30 dark:border-blue-700 rounded-full text-blue-700 dark:text-blue-300 font-semibold text-sm whitespace-nowrap">
+                <span className="px-4 py-2 bg-blue-500/20 dark:bg-blue-900/30 border border-blue-500/30 dark:border-blue-700 rounded-full text-blue-700 dark:text-blue-300 font-medium text-sm whitespace-nowrap">
                   8+ Years IT Experience
                 </span>
               </div>
@@ -206,22 +206,28 @@ export default function HeroSection() {
                     icon: Github,
                     href: 'https://github.com/AaronAPerez',
                     label: 'GitHub',
-                    hoverColor: 'hover:text-gray-900 dark:hover:text-white',
-                    bgHover: 'hover:bg-gray-200 dark:hover:bg-gray-700'
+                    baseColor: 'text-[#181717] dark:text-white',
+                    hoverColor: 'hover:text-white dark:hover:text-[#181717]',
+                    baseBg: 'bg-white/80 dark:bg-gray-800/80',
+                    hoverBg: 'hover:bg-[#181717] dark:hover:bg-white'
                   },
                   {
                     icon: Linkedin,
                     href: 'https://linkedin.com/in/aaronaperezdev',
                     label: 'LinkedIn',
-                    hoverColor: 'hover:text-blue-600',
-                    bgHover: 'hover:bg-blue-100 dark:hover:bg-blue-900/30'
+                    baseColor: 'text-[#0A66C2]',
+                    hoverColor: 'hover:text-white',
+                    baseBg: 'bg-white/80 dark:bg-gray-800/80',
+                    hoverBg: 'hover:bg-[#0A66C2]'
                   },
                   {
                     icon: Mail,
                     href: 'mailto:aaperez06@gmail.com',
                     label: 'Email',
-                    hoverColor: 'hover:text-red-500',
-                    bgHover: 'hover:bg-red-100 dark:hover:bg-red-900/30'
+                    baseColor: 'text-[#EA4335]',
+                    hoverColor: 'hover:text-white',
+                    baseBg: 'bg-white/80 dark:bg-gray-800/80',
+                    hoverBg: 'hover:bg-[#EA4335]'
                   }
                 ].map((social) => {
                   const IconComponent = social.icon
@@ -232,7 +238,7 @@ export default function HeroSection() {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={social.label}
-                      className={`touch-target p-3 backdrop-blur-sm bg-white/80 dark:bg-gray-800/80 rounded-full shadow-md transition-all duration-300 text-gray-600 dark:text-gray-400 min-h-[44px] min-w-[44px] flex items-center justify-center ${social.hoverColor} ${social.bgHover}`}
+                      className={`touch-target p-3 backdrop-blur-sm rounded-full shadow-md transition-all duration-300 min-h-[44px] min-w-[44px] flex items-center justify-center ${social.baseBg} ${social.baseColor} ${social.hoverColor} ${social.hoverBg}`}
                       whileHover={{ scale: 1.1, y: -2 }}
                       whileTap={{ scale: 0.95 }}
                     >
@@ -365,7 +371,7 @@ export default function HeroSection() {
           </div>
 
           {/* Scroll Indicator */}
-          <div className="hidden sm:flex absolute bottom-8 left-1/2 transform -translate-x-1/2">
+          <div className="hidden sm:flex absolute  left-1/2 transform -translate-x-1/2">
             <div
               className="flex flex-col items-center gap-2 text-gray-600 dark:text-gray-400 cursor-pointer animate-bounce"
               onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
