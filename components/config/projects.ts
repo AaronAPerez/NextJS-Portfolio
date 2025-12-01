@@ -36,6 +36,27 @@ export const projects: Project[] = [
       to: "#A5ACAF", // silver
     },
   },
+    {
+    id: "goldmine-communications",
+    title: "Goldmine Communications & Construction",
+    description:
+      "Production website for telecommunications infrastructure company. Responsive design with professional branding.",
+    tech: ["Next.js", "React", "TypeScript", "Tailwind"],
+    category: "production",
+    isLive: true,
+    clientType: "business",
+    featured: true,
+    images: ["/images/projects/goldmine/Goldmine-Hero-Screenshot.png"],
+    imagesAlt: ["/images/projects/goldmine/Goldmine-Hero-Screenshot.spng"],
+    demoLink: "https://www.goldminecomm.net",
+    codeLink:
+      "https://github.com/AaronAPerez/Goldmine_Communications_Construction_Website",
+    websiteLink: "https://www.goldminecomm.net",
+    gradient: {
+      from: "#bf9b30",
+      to: "#d4af37",
+    },
+  },
   {
     id: "cloudgov-dashboard",
     title: "CloudGov Dashboard",
@@ -84,7 +105,7 @@ export const projects: Project[] = [
     isLive: true,
     clientType: "business",
     featured: true,
-    images: ["/images/projects/theglampingspot/glamping-1.png"],
+    images: ["/images/projects/the-glamping-spot/Glamping-Spot-Hero-Screenshot.png"],
     imagesAlt: ["/images/projects/theglampingspot/glamping-1.png"],
     demoLink: "https://www.theglampingspot.net",
     codeLink: "https://github.com/AaronAPerez/the-glamping-spot",
@@ -92,27 +113,6 @@ export const projects: Project[] = [
     gradient: {
       from: "#F59E0B",
       to: "#15803D",
-    },
-  },
-  {
-    id: "goldmine-communications",
-    title: "Goldmine Communications & Construction",
-    description:
-      "Production website for telecommunications infrastructure company. Responsive design with professional branding.",
-    tech: ["Next.js", "React", "TypeScript", "Tailwind"],
-    category: "production",
-    isLive: true,
-    clientType: "business",
-    featured: true,
-    images: ["/images/projects/goldmine_website/goldmine_1.svg"],
-    imagesAlt: ["/images/projects/goldmine/Goldmine-Hero-Screenshot.spng"],
-    demoLink: "https://www.goldminecomm.net",
-    codeLink:
-      "https://github.com/AaronAPerez/Goldmine_Communications_Construction_Website",
-    websiteLink: "https://www.goldminecomm.net",
-    gradient: {
-      from: "#bf9b30",
-      to: "#d4af37",
     },
   },
   // {

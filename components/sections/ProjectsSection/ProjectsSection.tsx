@@ -2,19 +2,19 @@
 
 import { projects } from '@/components/config/projects';
 import ProjectsGrid from './ProjectGrid';
-import { motion } from 'framer-motion';
-import { cn } from '@/lib/utils';
-import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useMemo } from 'react';
 
 
 const ProjectsSection = () => {
-  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [selectedCategory] = useState('all');
+  const [viewMode] = useState<'grid' | 'list'>('grid');
 
-  const categories = [
-    { id: 'all', label: 'All Projects', count: projects.length },
-    { id: 'production', label: 'Production Sites', count: projects.filter(p => p.category === 'production').length },
-    { id: 'portfolio', label: 'Portfolio Demos', count: projects.filter(p => p.category === 'portfolio').length },
-  ];
+
+  const filteredProjects = useMemo(() => {
+    if (selectedCategory === 'all') return projects;
+    return projects.filter(p => p.category === selectedCategory);
+  }, [selectedCategory]);
 
   return (
     <div className="relative w-full overflow-hidden py-20">
@@ -52,28 +52,105 @@ const ProjectsSection = () => {
           </p>
         </motion.header>
 
-        {/* Projects Categories */}
-        <div className="flex flex-wrap justify-center gap-4 mb-12">
-          {categories.map((cat) => (
+        {/* Controls: Categories + View Toggle */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-6 mb-12">
+          {/* Category Filters */}
+          {/* <div className="flex flex-wrap justify-center gap-3">
+            {categories.map((cat) => (
+              <motion.button
+                key={cat.id}
+                onClick={() => setSelectedCategory(cat.id)}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className={cn(
+                  "flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold transition-all duration-300 shadow-md",
+                  selectedCategory === cat.id
+                    ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-blue-500/30"
+                    : "bg-white/80 dark:bg-gray-800/80 text-gray-700 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-800 hover:shadow-lg border border-gray-200 dark:border-gray-700"
+                )}
+              >
+                {cat.icon}
+                <span>{cat.label}</span>
+                <span className={cn(
+                  "px-2 py-0.5 rounded-full text-xs font-bold",
+                  selectedCategory === cat.id
+                    ? "bg-white/20"
+                    : "bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400"
+                )}>
+                  {cat.count}
+                </span>
+              </motion.button>
+            ))}
+          </div> */}
+
+          {/* View Mode Toggle */}
+          {/* <div className="flex items-center gap-2 bg-white/80 dark:bg-gray-800/80 p-1 rounded-xl border border-gray-200 dark:border-gray-700 shadow-md">
             <button
-              key={cat.id}
-              onClick={() => setSelectedCategory(cat.id)}
+              onClick={() => setViewMode('grid')}
               className={cn(
-                "px-6 py-3 rounded-xl font-semibold transition-all",
-                selectedCategory === cat.id
-                  ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white"
-                  : "bg-white/5 text-gray-400 hover:text-white hover:bg-white/10"
+                "p-2 rounded-lg transition-all duration-300",
+                viewMode === 'grid'
+                  ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md"
+                  : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
               )}
+              aria-label="Grid view"
             >
-              {cat.label} ({cat.count})
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+              </svg>
             </button>
-          ))}
+            <button
+              onClick={() => setViewMode('list')}
+              className={cn(
+                "p-2 rounded-lg transition-all duration-300",
+                viewMode === 'list'
+                  ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md"
+                  : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
+              )}
+              aria-label="List view"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+          </div> */}
         </div>
 
-        {/* Projects Grid */}
-        <div className='py-12'>
-          <ProjectsGrid projects={projects} />
-        </div>
+        {/* Projects Grid with Animation */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={selectedCategory}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+            className='py-12'
+          >
+            {filteredProjects.length > 0 ? (
+              <ProjectsGrid projects={filteredProjects} viewMode={viewMode} />
+            ) : (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="text-center py-20"
+              >
+                <div className="max-w-md mx-auto">
+                  <div className="w-24 h-24 mx-auto mb-6 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-full flex items-center justify-center">
+                    <svg className="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                    </svg>
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-3">
+                    No Projects Found
+                  </h3>
+                  <p className="text-gray-600 dark:text-gray-400">
+                    No projects match the selected category. Try selecting a different filter.
+                  </p>
+                </div>
+              </motion.div>
+            )}
+          </motion.div>
+        </AnimatePresence>
         {/* <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
