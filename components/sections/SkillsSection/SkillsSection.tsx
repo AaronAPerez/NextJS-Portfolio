@@ -8,7 +8,6 @@ import { Skill, skills } from '@/components/config/skills';
 import { Container } from '@/components/layout/Container';
 import { Section } from '@/components/layout/Section';
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
-import { useTheme } from '@/context/ThemeContext';
 
 
 // Category configuration
@@ -74,13 +73,12 @@ interface SkillCardProps {
 
 // Individual skill card component with fixed icon display
 const SkillCard = ({ skill, isVisible, index }: SkillCardProps) => {
-  const { theme } = useTheme()
   const [isFlipped, setIsFlipped] = useState(false)
   const [imageError, setImageError] = useState(false)
   const [imageLoaded, setImageLoaded] = useState(false)
 
   return (
-    <div className={`p-4 ${theme === 'dark' ? 'bg-gray-800' : 'bg-white'}`}>
+    <div className="p-4">
       <motion.div
         initial={{ opacity: 0, scale: 0.8, y: 20 }}
         animate={isVisible ? {
@@ -103,10 +101,10 @@ const SkillCard = ({ skill, isVisible, index }: SkillCardProps) => {
           {/* Front of card */}
           <div className={cn(
             "absolute inset-0 w-full h-full backface-hidden",
-            "bg-card border border-border rounded-xl",
+            "bg-white/90 dark:bg-gray-800/90 border-2 rounded-xl",
             "flex flex-col items-center justify-center p-4 gap-3",
-            "transition-all duration-300 group-hover:shadow-lg",
-            "backdrop-blur-sm bg-card/80"
+            "transition-all duration-300 group-hover:shadow-xl",
+            "backdrop-blur-sm"
           )}
             style={{
               backfaceVisibility: 'hidden',
@@ -115,7 +113,7 @@ const SkillCard = ({ skill, isVisible, index }: SkillCardProps) => {
             }}>
 
             {/* Skill icon */}
-            <div className="relative w-12 h-12 flex-shrink-0 z-10">
+            <div className="relative w-14 h-14 flex-shrink-0 z-10">
               {!imageError ? (
                 <Image
                   src={skill.icon}
@@ -124,17 +122,16 @@ const SkillCard = ({ skill, isVisible, index }: SkillCardProps) => {
                   className={cn(
                     "object-contain transition-all duration-300",
                     imageLoaded ? "opacity-100" : "opacity-0",
-                    "group-hover:scale-110"
+                    "group-hover:scale-110 drop-shadow-lg"
                   )}
                   onLoad={() => setImageLoaded(true)}
                   onError={() => setImageError(true)}
                   sizes="64px"
-                  priority={index < 6} // Prioritize first 6 images
+                  priority={index < 6}
                 />
               ) : (
-                // Fallback icon with proper styling
                 <div
-                  className="w-full h-full rounded-lg flex items-center justify-center text-white font-bold text-2xl shadow-md"
+                  className="w-full h-full rounded-lg flex items-center justify-center text-white font-bold text-2xl shadow-lg"
                   style={{ backgroundColor: skill.color }}
                 >
                   {skill.name.charAt(0).toUpperCase()}
@@ -142,18 +139,18 @@ const SkillCard = ({ skill, isVisible, index }: SkillCardProps) => {
               )}
             </div>
 
-            {/* Skill name  */}
-            <h3 className="text-md font-semibold text-center text-gray-300 dark:text-white leading-tight px-1">
+            {/* Skill name */}
+            <h3 className="text-base font-bold text-center text-gray-900 dark:text-white leading-tight px-1">
               {skill.name}
             </h3>
 
             {/* Category indicator */}
             <div className="flex items-center gap-2 mt-auto">
               <div
-                className="w-2 h-2 rounded-full"
+                className="w-2 h-2 rounded-full shadow-sm"
                 style={{ backgroundColor: skill.color }}
               />
-              <span className="text-sm text-gray-300 dark:text-gray-400 capitalize font-medium">
+              <span className="text-xs text-gray-600 dark:text-gray-400 capitalize font-semibold">
                 {skill.category}
               </span>
             </div>
@@ -162,31 +159,31 @@ const SkillCard = ({ skill, isVisible, index }: SkillCardProps) => {
           {/* Back of card */}
           <div className={cn(
             "absolute inset-0 w-full h-full",
-            "bg-gray-50 dark:bg-gray-400 text-gray-200 border-2 rounded-xl shadow-lg",
+            "bg-white/95 dark:bg-gray-800/95 border-2 rounded-xl shadow-xl",
             "flex flex-col items-center justify-center p-4 pb-2 text-center"
           )}
             style={{
               backfaceVisibility: 'hidden',
               transform: 'rotateY(180deg)',
               borderColor: skill.color,
-              backgroundColor: `${skill.color}08`
+              backgroundColor: `${skill.color}10`
             }}>
             <div className="space-y-3">
               {/* Category icon */}
               <div
-                className="w-10 h-10 mx-auto rounded-full flex items-center justify-center text-white font-bold text-lg shadow-md"
+                className="w-12 h-12 mx-auto rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg"
                 style={{ backgroundColor: skill.color }}
               >
                 {categories.find(cat => cat.id === skill.category)?.icon}
               </div>
 
               {/* Skill name */}
-              <h3 className="font-bold text-sm" style={{ color: skill.color }}>
+              <h3 className="font-bold text-base" style={{ color: skill.color }}>
                 {skill.name}
               </h3>
 
               {/* Description */}
-              <p className="text-sm text-gray-200 dark:text-gray-300 leading-relaxed line-clamp-4 pb-2">
+              <p className="text-xs text-gray-700 dark:text-gray-300 leading-relaxed line-clamp-4 pb-2">
                 {skill.description || `Professional experience with ${skill.name} for modern development.`}
               </p>
             </div>
@@ -200,14 +197,13 @@ const SkillCard = ({ skill, isVisible, index }: SkillCardProps) => {
 
 // Skills grid component
 const SkillsGrid = ({ category, isVisible }: { category: CategoryId; isVisible: boolean }) => {
-  const { theme } = useTheme()
   const filteredSkills = skills.filter(skill =>
     category === 'all' || skill.category === category
   )
 
   return (
-    <div className={`p-4 ${theme === 'dark' ? 'bg-gray-800' : 'bg-white'}`}>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-6 max-w-7xl mx-auto">
+    <div>
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-4 sm:gap-6 max-w-7xl mx-auto">
         <AnimatePresence mode="wait">
           {filteredSkills.map((skill, index) => (
             <motion.div
@@ -248,11 +244,11 @@ const CategoryButton = ({
   <motion.button
     onClick={onClick}
     className={cn(
-      "relative px-6 py-3 rounded-full font-medium transition-all duration-300",
-      "border-2 overflow-hidden group backdrop-blur-sm min-h-[44px] min-w-[44px] touch-manipulation select-none",
+      "relative px-4 sm:px-6 py-2.5 sm:py-3 rounded-full font-semibold transition-all duration-300",
+      "border-2 overflow-hidden group backdrop-blur-sm min-h-[44px] touch-manipulation select-none text-sm sm:text-base",
       isSelected
         ? "text-white shadow-xl scale-105"
-        : "bg-white/10 dark:bg-gray-800/50 text-gray-400 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500"
+        : "bg-white/80 dark:bg-gray-800/80 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500 hover:shadow-lg"
     )}
     style={isSelected ? {
       backgroundColor: category.color,
@@ -295,8 +291,6 @@ const CategoryButton = ({
 
 // Main SkillsSection component
 export default function SkillsSection() {
-  const { theme } = useTheme()
-
   const [selectedCategory, setSelectedCategory] = useState<CategoryId>('all')
   const { isIntersecting } = useIntersectionObserver({ threshold: 0.1 })
 
@@ -306,11 +300,11 @@ export default function SkillsSection() {
   ).length
 
   return (
-    <div className={`p-4 ${theme === 'dark' ? 'bg-gray-800' : 'bg-white'}`}>
+    <div className="relative w-full overflow-hidden py-20 bg-gradient-to-br from-gray-50 via-white to-blue-50 dark:from-gray-950 dark:via-gray-900 dark:to-blue-950 transition-colors duration-300">
       <Section id="skills" className="relative overflow-hidden">
         {/* Background effects */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-blue-500/5" />
-        <div className="absolute inset-0 bg-grid-small opacity-30" />
+        <div className="absolute inset-0 bg-gradient-to-b from-blue-500/5 via-transparent to-violet-500/5" />
+        <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:50px]" />
 
         <Container className="relative z-10">
           {/* Section header matching TimelineSection style */}
@@ -341,20 +335,20 @@ export default function SkillsSection() {
             </p>
 
             {/* Stats */}
-            <div className="flex justify-center gap-8 mb-8">
+            <div className="flex flex-wrap justify-center gap-6 sm:gap-8 mb-6 md:mb-8 px-4">
               <div className="text-center">
-                <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">{skills.length}</div>
-                <div className="text-sm text-gray-500 dark:text-gray-400 font-medium">Technologies</div>
+                <div className="text-2xl sm:text-3xl font-bold text-blue-600 dark:text-blue-400">{skills.length}</div>
+                <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 font-medium">Technologies</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">
+                <div className="text-2xl sm:text-3xl font-bold text-blue-600 dark:text-blue-400">
                   {categories.length - 1}
                 </div>
-                <div className="text-sm text-gray-300 dark:text-gray-400 font-medium">Categories</div>
+                <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 font-medium">Categories</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">3+</div>
-                <div className="text-sm text-gray-500 dark:text-gray-400 font-medium">Years Experience</div>
+                <div className="text-2xl sm:text-3xl font-bold text-blue-600 dark:text-blue-400">3+</div>
+                <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 font-medium">Years Experience</div>
               </div>
             </div>
           </motion.header>
@@ -364,7 +358,7 @@ export default function SkillsSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={isIntersecting ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="flex flex-wrap justify-center gap-4 mb-12"
+            className="flex flex-wrap justify-center gap-3 sm:gap-4 mb-8 md:mb-12 px-4"
           >
             {categories.map((category) => (
               <CategoryButton
@@ -382,12 +376,12 @@ export default function SkillsSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
-            className="text-center mb-12"
+            className="text-center mb-8 md:mb-12 px-4"
           >
-            <p className="text-gray-600 dark:text-gray-300 mb-2 text-lg">
+            <p className="text-gray-600 dark:text-gray-300 mb-2 text-base sm:text-lg">
               {selectedCategoryData?.description}
             </p>
-            <p className="text-sm text-gray-500 dark:text-gray-400 font-medium">
+            <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 font-medium">
               Showing {skillCount} {skillCount === 1 ? 'skill' : 'skills'}
             </p>
           </motion.div>
@@ -406,16 +400,17 @@ export default function SkillsSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={isIntersecting ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.8 }}
-            className="text-center mt-20"
+            className="text-center mt-12 sm:mt-16 md:mt-20 px-4"
           >
-            <p className="text-gray-200 dark:text-gray-300 mb-6 text-lg">
+            <p className="text-gray-600 dark:text-gray-300 mb-4 md:mb-6 text-base sm:text-lg">
               Want to see these skills in action?
             </p>
             <motion.button
               onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
-              className="px-8 py-4 bg-blue-600 hover:bg-blue-400 text-white font-semibold rounded-full transition-all duration-300 shadow-lg hover:shadow-xl group min-h-[44px] min-w-[44px] touch-manipulation select-none"
+              className="px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-full transition-all duration-300 shadow-lg hover:shadow-xl group min-h-[48px] touch-manipulation select-none"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              aria-label="Scroll to projects section"
             >
               View My Projects
               <motion.span

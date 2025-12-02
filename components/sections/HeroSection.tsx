@@ -128,7 +128,7 @@ export default function HeroSection() {
 
               {/* Subtitle */}
               <HeroHighlight>
-                <motion.h2 className="text-2xl sm:text-3xl md:text-4xl font-bold max-w-4xl leading-normal mx-auto lg:mx-0">
+                <motion.h2 className="text-2xl sm:text-4xl md:text-5xl font-bold max-w-4xl leading-normal mx-auto lg:mx-0">
                   <Highlight className="text-white/90 dark:text-white/90 rounded-xl">
                     Full Stack Developer
                   </Highlight>
@@ -136,14 +136,14 @@ export default function HeroSection() {
               </HeroHighlight>
 
               {/* Status Tags */}
-              <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 mb-4">
+              {/* <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 mb-4">
                 <span className="px-4 py-2 bg-green-500/20 dark:bg-green-900/30 border border-green-500/30 dark:border-green-700 rounded-full text-green-700 dark:text-green-300 font-medium text-sm whitespace-nowrap">
                   Recent Graduate - Available Now
                 </span>
                 <span className="px-4 py-2 bg-blue-500/20 dark:bg-blue-900/30 border border-blue-500/30 dark:border-blue-700 rounded-full text-blue-700 dark:text-blue-300 font-medium text-sm whitespace-nowrap">
                   8+ Years IT Experience
                 </span>
-              </div>
+              </div> */}
 
               {/* Tech stack rotation */}
               <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 text-base sm:text-lg text-gray-700 dark:text-gray-300">
@@ -162,37 +162,7 @@ export default function HeroSection() {
                 </AnimatePresence>
               </div>
 
-              {/* CTA Buttons */}
-              <motion.div
-                initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.3 }}
-                className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-2"
-              >
-                <motion.button
-                  onClick={scrollToProjects}
-                  className="group touch-target px-8 py-3 text-base bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 min-h-[48px]"
-                  whileHover={prefersReducedMotion ? {} : { scale: 1.05 }}
-                  whileTap={prefersReducedMotion ? {} : { scale: 0.95 }}
-                  aria-label="View my portfolio projects"
-                >
-                  <span>View My Work</span>
-                  <ArrowDown className="w-4 h-4 group-hover:translate-y-1 transition-transform" />
-                </motion.button>
-
-                <motion.a
-                  href="/resume/Aaron-Perez-Resume.pdf"
-                  download
-                  onClick={handleResumeDownload}
-                  className="group touch-target px-8 py-3 text-base backdrop-blur-sm bg-white/80 dark:bg-gray-800/80 border-2 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 min-h-[48px] hover:bg-white dark:hover:bg-gray-800"
-                  whileHover={prefersReducedMotion ? {} : { scale: 1.05 }}
-                  whileTap={prefersReducedMotion ? {} : { scale: 0.95 }}
-                  aria-label="Download resume PDF"
-                >
-                  <Download className="w-4 h-4 group-hover:scale-110 transition-transform" />
-                  <span>Download Resume</span>
-                </motion.a>
-              </motion.div>
+           
 
               {/* Social Links */}
               <motion.div
@@ -257,6 +227,38 @@ export default function HeroSection() {
               >
                 <MapPin className="w-4 h-4" />
                 <span>Stockton, CA • Open to Remote</span>
+              </motion.div>
+
+                 {/* CTA Buttons */}
+              <motion.div
+                initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.3 }}
+                className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-2"
+              >
+                <motion.button
+                  onClick={scrollToProjects}
+                  className="group touch-target px-8 py-3 text-base bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 min-h-[48px]"
+                  whileHover={prefersReducedMotion ? {} : { scale: 1.05 }}
+                  whileTap={prefersReducedMotion ? {} : { scale: 0.95 }}
+                  aria-label="View my portfolio projects"
+                >
+                  <span>View My Work</span>
+                  <ArrowDown className="w-4 h-4 group-hover:translate-y-1 transition-transform" />
+                </motion.button>
+
+                <motion.a
+                  href="/resume/Aaron-Perez-Resume.pdf"
+                  download
+                  onClick={handleResumeDownload}
+                  className="group touch-target px-8 py-3 text-base backdrop-blur-sm bg-white/80 dark:bg-gray-800/80 border-2 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 min-h-[48px] hover:bg-white dark:hover:bg-gray-800"
+                  whileHover={prefersReducedMotion ? {} : { scale: 1.05 }}
+                  whileTap={prefersReducedMotion ? {} : { scale: 0.95 }}
+                  aria-label="Download resume PDF"
+                >
+                  <Download className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                  <span>Download Resume</span>
+                </motion.a>
               </motion.div>
             </motion.div>
 
