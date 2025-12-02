@@ -57,21 +57,53 @@ export function Footer() {
             
             {/* Social Links */}
             <div className="flex items-center gap-4">
-              {SOCIAL_LINKS.map((social) => (
-                <a
-                  key={social.name}
-                  href={social.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-gray-800 dark:bg-gray-700 flex items-center
-                           justify-center hover:bg-primary-600 dark:hover:bg-primary-500 transition-colors duration-200
-                           focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2
-                           focus:ring-offset-gray-900 dark:focus:ring-offset-gray-950"
-                  aria-label={`Visit ${PERSONAL_INFO.name} on ${social.name}`}
-                >
-                  {iconMap[social.icon]}
-                </a>
-              ))}
+              {SOCIAL_LINKS.map((social) => {
+                // Define brand colors for each social platform
+                const brandColors = {
+                  github: {
+                    bg: 'bg-gray-800 dark:bg-gray-700',
+                    hoverBg: 'hover:bg-[#181717] dark:hover:bg-white',
+                    text: 'text-white dark:text-white',
+                    hoverText: 'hover:text-white dark:hover:text-[#181717]'
+                  },
+                  linkedin: {
+                    bg: 'bg-gray-800 dark:bg-gray-700',
+                    hoverBg: 'hover:bg-[#0A66C2]',
+                    text: 'text-white dark:text-white',
+                    hoverText: 'hover:text-white'
+                  },
+                  mail: {
+                    bg: 'bg-gray-800 dark:bg-gray-700',
+                    hoverBg: 'hover:bg-[#EA4335]',
+                    text: 'text-white dark:text-white',
+                    hoverText: 'hover:text-white'
+                  },
+                  globe: {
+                    bg: 'bg-gray-800 dark:bg-gray-700',
+                    hoverBg: 'hover:bg-blue-600',
+                    text: 'text-white dark:text-white',
+                    hoverText: 'hover:text-white'
+                  }
+                };
+
+                const colors = brandColors[social.icon as keyof typeof brandColors];
+
+                return (
+                  <a
+                    key={social.name}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300
+                             focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2
+                             focus:ring-offset-gray-900 dark:focus:ring-offset-gray-950
+                             ${colors.bg} ${colors.hoverBg} ${colors.text} ${colors.hoverText}`}
+                    aria-label={`Visit ${PERSONAL_INFO.name} on ${social.name}`}
+                  >
+                    {iconMap[social.icon]}
+                  </a>
+                );
+              })}
             </div>
           </div>
 

@@ -110,25 +110,25 @@ export default function HeroSection() {
       )}
 
 
-      <section className="relative z-10 min-h-screen flex items-center justify-center overflow-hidden py-8 sm:py-12 lg:py-2 px-4 sm:px-6 lg:px-8">
+      <section className="relative z-10 min-h-screen flex items-center justify-center overflow-hidden py-8 sm:py-12 lg:py-2 px-4 sm:px-6 lg:px-8 -mt-16 sm:-mt-20">
         <div className="relative max-w-7xl mx-auto w-full">
           <div className="grid lg:grid-cols-2 gap-6 lg:gap-16 items-center">
 
             {/* Left Column - Streamlined Content */}
             <motion.div
-              initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.5, ease: 'easeOut' }}
+              initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.3 }}
               className="space-y-4 sm:space-y-6 w-full text-center lg:text-left order-2 lg:order-1"
             >
               {/* Main headline */}
-              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight text-gray-900 dark:text-white">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight text-gray-900 dark:text-white" id="hero-heading">
                 Aaron A. Perez
               </h1>
 
               {/* Subtitle */}
               <HeroHighlight>
-                <motion.h2 className="text-2xl sm:text-3xl md:text-4xl font-bold max-w-4xl leading-normal mx-auto lg:mx-0">
+                <motion.h2 className="text-2xl sm:text-4xl md:text-5xl font-bold max-w-4xl leading-normal mx-auto lg:mx-0">
                   <Highlight className="text-white/90 dark:text-white/90 rounded-xl">
                     Full Stack Developer
                   </Highlight>
@@ -136,14 +136,14 @@ export default function HeroSection() {
               </HeroHighlight>
 
               {/* Status Tags */}
-              <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 mb-4">
-                <span className="px-4 py-2 bg-green-500/20 dark:bg-green-900/30 border border-green-500/30 dark:border-green-700 rounded-full text-green-700 dark:text-green-300 font-semibold text-sm whitespace-nowrap">
+              {/* <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 mb-4">
+                <span className="px-4 py-2 bg-green-500/20 dark:bg-green-900/30 border border-green-500/30 dark:border-green-700 rounded-full text-green-700 dark:text-green-300 font-medium text-sm whitespace-nowrap">
                   Recent Graduate - Available Now
                 </span>
-                <span className="px-4 py-2 bg-blue-500/20 dark:bg-blue-900/30 border border-blue-500/30 dark:border-blue-700 rounded-full text-blue-700 dark:text-blue-300 font-semibold text-sm whitespace-nowrap">
+                <span className="px-4 py-2 bg-blue-500/20 dark:bg-blue-900/30 border border-blue-500/30 dark:border-blue-700 rounded-full text-blue-700 dark:text-blue-300 font-medium text-sm whitespace-nowrap">
                   8+ Years IT Experience
                 </span>
-              </div>
+              </div> */}
 
               {/* Tech stack rotation */}
               <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 text-base sm:text-lg text-gray-700 dark:text-gray-300">
@@ -162,11 +162,78 @@ export default function HeroSection() {
                 </AnimatePresence>
               </div>
 
-              {/* CTA Buttons */}
+           
+
+              {/* Social Links */}
               <motion.div
-                initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={prefersReducedMotion ? { duration: 0 } : { delay: 0.2, duration: 0.4 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3 }}
+                className="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-2"
+              >
+                {[
+                  {
+                    icon: Github,
+                    href: 'https://github.com/AaronAPerez',
+                    label: 'GitHub',
+                    baseColor: 'text-[#181717] dark:text-white',
+                    hoverColor: 'hover:text-white dark:hover:text-[#181717]',
+                    baseBg: 'bg-white/80 dark:bg-gray-800/80',
+                    hoverBg: 'hover:bg-[#181717] dark:hover:bg-white'
+                  },
+                  {
+                    icon: Linkedin,
+                    href: 'https://linkedin.com/in/aaronaperezdev',
+                    label: 'LinkedIn',
+                    baseColor: 'text-[#0A66C2]',
+                    hoverColor: 'hover:text-white',
+                    baseBg: 'bg-white/80 dark:bg-gray-800/80',
+                    hoverBg: 'hover:bg-[#0A66C2]'
+                  },
+                  {
+                    icon: Mail,
+                    href: 'mailto:aaperez06@gmail.com',
+                    label: 'Email',
+                    baseColor: 'text-[#EA4335]',
+                    hoverColor: 'hover:text-white',
+                    baseBg: 'bg-white/80 dark:bg-gray-800/80',
+                    hoverBg: 'hover:bg-[#EA4335]'
+                  }
+                ].map((social) => {
+                  const IconComponent = social.icon
+                  return (
+                    <motion.a
+                      key={social.label}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={social.label}
+                      className={`touch-target p-3 backdrop-blur-sm rounded-full shadow-md transition-all duration-300 min-h-[44px] min-w-[44px] flex items-center justify-center ${social.baseBg} ${social.baseColor} ${social.hoverColor} ${social.hoverBg}`}
+                      whileHover={{ scale: 1.1, y: -2 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <IconComponent className="w-5 h-5" />
+                    </motion.a>
+                  )
+                })}
+              </motion.div>
+
+              {/* Location */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3 }}
+                className="flex flex-wrap items-center justify-center lg:justify-start gap-2 text-sm text-gray-600 dark:text-gray-400"
+              >
+                <MapPin className="w-4 h-4" />
+                <span>Stockton, CA • Open to Remote</span>
+              </motion.div>
+
+                 {/* CTA Buttons */}
+              <motion.div
+                initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.3 }}
                 className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-2"
               >
                 <motion.button
@@ -193,86 +260,18 @@ export default function HeroSection() {
                   <span>Download Resume</span>
                 </motion.a>
               </motion.div>
-
-              {/* Social Links */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4, duration: 0.6 }}
-                className="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-2"
-              >
-                {[
-                  {
-                    icon: Github,
-                    href: 'https://github.com/AaronAPerez',
-                    label: 'GitHub',
-                    hoverColor: 'hover:text-gray-900 dark:hover:text-white',
-                    bgHover: 'hover:bg-gray-200 dark:hover:bg-gray-700'
-                  },
-                  {
-                    icon: Linkedin,
-                    href: 'https://linkedin.com/in/aaronaperezdev',
-                    label: 'LinkedIn',
-                    hoverColor: 'hover:text-blue-600',
-                    bgHover: 'hover:bg-blue-100 dark:hover:bg-blue-900/30'
-                  },
-                  {
-                    icon: Mail,
-                    href: 'mailto:aaperez06@gmail.com',
-                    label: 'Email',
-                    hoverColor: 'hover:text-red-500',
-                    bgHover: 'hover:bg-red-100 dark:hover:bg-red-900/30'
-                  }
-                ].map((social) => {
-                  const IconComponent = social.icon
-                  return (
-                    <motion.a
-                      key={social.label}
-                      href={social.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={social.label}
-                      className={`touch-target p-3 backdrop-blur-sm bg-white/80 dark:bg-gray-800/80 rounded-full shadow-md transition-all duration-300 text-gray-600 dark:text-gray-400 min-h-[44px] min-w-[44px] flex items-center justify-center ${social.hoverColor} ${social.bgHover}`}
-                      whileHover={{ scale: 1.1, y: -2 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      <IconComponent className="w-5 h-5" />
-                    </motion.a>
-                  )
-                })}
-              </motion.div>
-
-              {/* Location */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.6, duration: 0.6 }}
-                className="flex flex-wrap items-center justify-center lg:justify-start gap-2 text-sm text-gray-600 dark:text-gray-400"
-              >
-                <MapPin className="w-4 h-4" />
-                <span>Stockton, CA • Open to Remote</span>
-              </motion.div>
             </motion.div>
 
             {/* Right Column - Enhanced Visual with Info */}
             <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, ease: 'easeOut', delay: 0.2 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3 }}
               className="flex flex-col items-center lg:items-end gap-4 order-1 lg:order-2 pb-6 sm:pb-12"
             >
               {/* Profile Image Container */}
               <div className="relative w-full max-w-md flex justify-center">
-                <motion.div
-                  animate={{ y: [0, -20, 0] }}
-                  transition={{
-                    duration: 6,
-                    repeat: Infinity,
-                    repeatType: 'reverse',
-                    ease: 'easeInOut'
-                  }}
-                  className="relative w-56 h-56 sm:w-72 sm:h-72 md:w-80 md:h-80"
-                >
+                <div className="relative w-56 h-56 sm:w-72 sm:h-72 md:w-80 md:h-80">
                   {/* Enhanced Profile Image Container */}
                   <div className="relative w-full h-full">
                     <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full p-1 shadow-2xl">
@@ -293,69 +292,53 @@ export default function HeroSection() {
                     </div>
                   </div>
 
-                  {/* Enhanced Floating Tech Icons */}
-                  <motion.div
-                    animate={{ rotate: 360 }}
-                    transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-                    className="absolute -top-6 -right-6 backdrop-blur-sm bg-white/10 dark:bg-gray-800/30 w-16 h-16 rounded-full flex items-center justify-center shadow-lg"
-                  >
+                  {/* Simplified Tech Icons - No rotation animations for better FCP */}
+                  <div className="absolute -top-6 -right-6 backdrop-blur-sm bg-white/10 dark:bg-gray-800/30 w-16 h-16 rounded-full flex items-center justify-center shadow-lg">
                     <Image
                       src='/icons/frontend/react.svg'
                       alt='React'
                       width={32}
                       height={32}
                       className="react-blue"
-                      loading="lazy"
+                      priority
                     />
-                  </motion.div>
+                  </div>
 
-                  <motion.div
-                    animate={{ rotate: -360 }}
-                    transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
-                    className="absolute -bottom-6 -left-6 backdrop-blur-sm bg-white/10 dark:bg-gray-800/30 w-14 h-14 rounded-full flex items-center justify-center shadow-lg"
-                  >
+                  <div className="absolute -bottom-6 -left-6 backdrop-blur-sm bg-white/10 dark:bg-gray-800/30 w-14 h-14 rounded-full flex items-center justify-center shadow-lg">
                     <Image
                       src='/icons/backend/nodejs.svg'
                       alt='Node.js'
                       width={28}
                       height={28}
                       className="node-green"
-                      loading="lazy"
+                      priority
                     />
-                  </motion.div>
+                  </div>
 
-                  <motion.div
-                    animate={{ rotate: 360, scale: [1, 1.1, 1] }}
-                    transition={{ duration: 15, repeat: Infinity, ease: 'linear' }}
-                    className="absolute top-1/4 -left-8 backdrop-blur-sm bg-white/10 dark:bg-gray-800/30 w-12 h-12 rounded-full flex items-center justify-center shadow-lg"
-                  >
+                  <div className="absolute top-1/4 -left-8 backdrop-blur-sm bg-white/10 dark:bg-gray-800/30 w-12 h-12 rounded-full flex items-center justify-center shadow-lg">
                     <Image
                       src='/icons/frontend/typescript.svg'
                       alt='TypeScript'
                       width={32}
                       height={32}
                       className="typescript-blue"
-                      loading="lazy"
+                      priority
                     />
-                  </motion.div>
+                  </div>
 
-                  <motion.div
-                    animate={{ y: [0, -15, 0] }}
-                    transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-                    className="absolute top-1/3 -right-8 backdrop-blur-sm bg-white/10 dark:bg-gray-800/30 w-10 h-10 rounded-full flex items-center justify-center shadow-lg"
-                  >
+                  <div className="absolute top-1/3 -right-8 backdrop-blur-sm bg-white/10 dark:bg-gray-800/30 w-10 h-10 rounded-full flex items-center justify-center shadow-lg">
                     <Image
                       src='/icons/frontend/javascript.svg'
                       alt='JavaScript'
                       width={28}
                       height={28}
-                      loading="lazy"
+                      priority
                     />
-                  </motion.div>
+                  </div>
 
-                  {/* Enhanced Glow Effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-indigo-600 rounded-full blur-3xl opacity-20 animate-pulse"></div>
-                </motion.div>
+                  {/* Simplified Glow Effect */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-indigo-600 rounded-full blur-3xl opacity-20"></div>
+                </div>
 
                 {/* Enhanced Achievement Badges */}
                 <motion.div
@@ -389,25 +372,18 @@ export default function HeroSection() {
             </motion.div>
           </div>
 
-          {/* Enhanced Scroll Indicator */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 2, duration: 0.6 }}
-            className="hidden sm:flex absolute bottom-8 left-1/2 transform -translate-x-1/2"
-          >
-            <motion.div
-              animate={{ y: [0, 10, 0] }}
-              transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-              className="flex flex-col items-center gap-2 text-gray-600 dark:text-gray-400 cursor-pointer"
+          {/* Scroll Indicator */}
+          <div className="hidden sm:flex absolute  left-1/2 transform -translate-x-1/2">
+            <div
+              className="flex flex-col items-center gap-2 text-gray-600 dark:text-gray-400 cursor-pointer animate-bounce"
               onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
             >
               <span className="text-sm">Scroll to explore</span>
               <div className="p-2 backdrop-blur-sm bg-white/10 dark:bg-gray-800/30 rounded-full">
                 <ArrowDown className="w-5 h-5" />
               </div>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         </div>
       </section>
     </div>

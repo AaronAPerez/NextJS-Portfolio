@@ -27,10 +27,10 @@ interface TimelineCardProps extends TimelineItem {
 /**
  * Individual Timeline Card Component
  * Displays professional experience or education with enhanced accessibility and animations
- * 
+ *
  * @param props - Timeline card properties including title, company, period, etc.
  */
-const TimelineCard = ({
+export const TimelineCard = ({
   title,
   company,
   institution,

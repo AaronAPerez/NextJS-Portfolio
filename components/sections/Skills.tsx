@@ -5,7 +5,6 @@ import {
   Section,
   SectionTitle,
   SectionDescription,
-  Badge,
 } from '@/components/ui';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/Card';
 import { TECH_STACK } from '@/lib/constants';

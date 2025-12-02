@@ -2,12 +2,12 @@
 
 import React from 'react'
 import { motion } from 'framer-motion'
-import { 
-  GraduationCap, 
-  Briefcase, 
-  Calendar, 
-  MapPin, 
-  CheckCircle, 
+import {
+  GraduationCap,
+  Briefcase,
+  Calendar,
+  MapPin,
+  CheckCircle,
   Star,
   ArrowRight,
   Building,
@@ -62,7 +62,7 @@ const timelineData = {
       status: "completed",
       details: [
         "Network Systems Administration and Security with hands-on lab experience",
-        "Information Security and Risk Management including vulnerability assessments", 
+        "Information Security and Risk Management including vulnerability assessments",
         "Database Design and Management using SQL Server and Oracle",
         "System Analysis and Design with UML modeling and requirements gathering",
         "Senior Capstone Project: Designed secure network infrastructure for small business",
@@ -144,7 +144,7 @@ const timelineData = {
       details: [
         "Help desk support for 2,000+ county employees across 15+ departments with 24/7 coverage",
         "Workstation setup, configuration, and maintenance including Windows domain management",
-        "Technical troubleshooting and issue resolution with average resolution time under 4 hours", 
+        "Technical troubleshooting and issue resolution with average resolution time under 4 hours",
         "User account management and software deployment using Microsoft SCCM and Active Directory",
         "Network troubleshooting and system maintenance ensuring minimal downtime during business hours",
         "Emergency response coordination during system outages and security incidents"
@@ -222,7 +222,7 @@ const TimelineCard = ({
   const getStatusBadge = () => {
     if (status === 'current') {
       return (
-        <div 
+        <div
           className="flex items-center gap-2 px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 text-xs font-semibold rounded-full"
           role="status"
           aria-label="Currently employed"
@@ -233,7 +233,7 @@ const TimelineCard = ({
       )
     }
     return (
-      <div 
+      <div
         className="flex items-center gap-2 px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 text-xs font-semibold rounded-full"
         role="status"
         aria-label="Previously completed"
@@ -257,14 +257,14 @@ const TimelineCard = ({
     >
       {/* Main card with glassmorphism effect and enhanced hover states */}
       <div className="relative h-full bg-white/10 dark:bg-gray-900/50 backdrop-blur-lg border border-white/20 dark:border-gray-700/50 rounded-2xl overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-blue-500/10 hover:-translate-y-2 focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-offset-2">
-        
+
         {/* Gradient header with improved accessibility */}
         <div className={cn("p-6 bg-gradient-to-r", gradient, "relative overflow-hidden")}>
           {/* Background pattern for visual appeal */}
           <div className="absolute inset-0 opacity-10" aria-hidden="true">
             <div className="absolute inset-0 bg-grid-white/20" />
           </div>
-          
+
           {/* Header content with semantic structure */}
           <div className="relative z-10">
             <div className="flex items-start justify-between mb-4">
@@ -287,13 +287,13 @@ const TimelineCard = ({
               )}
             </div>
 
-            <h3 
+            <h3
               id={`${type}-${title.replace(/\s+/g, '-').toLowerCase()}`}
               className="text-xl md:text-2xl font-bold text-white mb-2 leading-tight"
             >
               {title}
             </h3>
-            
+
             <div className="space-y-1 text-white/90">
               <div className="flex items-center gap-2 text-sm">
                 <Building className="w-4 h-4" aria-hidden="true" />
@@ -325,7 +325,7 @@ const TimelineCard = ({
             </h4>
             <ul className="space-y-3" role="list">
               {details.map((detail, idx) => (
-                <motion.li 
+                <motion.li
                   key={idx}
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
@@ -350,7 +350,7 @@ const TimelineCard = ({
               </h4>
               <ul className="space-y-2" role="list">
                 {achievements.map((achievement, idx) => (
-                  <li 
+                  <li
                     key={idx}
                     className="flex items-start gap-2 text-sm text-gray-600 dark:text-gray-300"
                     role="listitem"
@@ -412,9 +412,9 @@ const SectionHeader = () => (
     <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-gray-900 to-gray-600 dark:from-gray-100 dark:to-gray-400 bg-clip-text text-transparent">
       Professional Experience & Education
     </h2>
-    
+
     <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
-      My comprehensive journey in technology, showcasing continuous growth from systems administration 
+      My comprehensive journey in technology, showcasing continuous growth from systems administration
       to full-stack development with a focus on modern web technologies and user experience.
     </p>
   </motion.header>
@@ -481,7 +481,7 @@ export const TimelineSection = () => {
       aria-label="Professional experience and education timeline"
     >
       {/* SEO-friendly structured data would be added via JSON-LD in the head */}
-      
+
       {/* Background decorative elements */}
       <div className="absolute inset-0 opacity-20" aria-hidden="true">
         <div className="absolute top-20 left-10 w-64 h-64 bg-blue-300 rounded-full mix-blend-multiply filter blur-xl animate-blob" />
@@ -491,7 +491,7 @@ export const TimelineSection = () => {
 
       <Container className="relative z-10">
         <SectionHeader />
-        
+
         <Statistics />
 
         {/* Timeline Grid with improved responsive design */}
@@ -504,7 +504,7 @@ export const TimelineSection = () => {
             aria-labelledby="work-experience-heading"
           >
             <div className="mb-8 text-center lg:text-left">
-              <h3 
+              <h3
                 id="work-experience-heading"
                 className="text-2xl font-bold mb-4 bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent flex items-center justify-center lg:justify-start gap-3"
               >
@@ -515,12 +515,14 @@ export const TimelineSection = () => {
                 Professional experience spanning systems administration to full-stack development
               </p>
             </div>
-            
+
             <div className="space-y-6">
               {timelineData.experience.map((item, index) => (
                 <TimelineCard
                   key={item.id}
                   {...item}
+                  type={item.type as 'certification' | 'degree' | 'work' | 'education'}
+                  status={item.status as 'completed' | 'current'}
                   delay={index * 0.2}
                 />
               ))}
@@ -535,7 +537,7 @@ export const TimelineSection = () => {
             aria-labelledby="education-heading"
           >
             <div className="mb-8 text-center lg:text-left">
-              <h3 
+              <h3
                 id="education-heading"
                 className="text-2xl font-bold mb-4 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent flex items-center justify-center lg:justify-start gap-3"
               >
@@ -546,12 +548,14 @@ export const TimelineSection = () => {
                 Academic foundation and continuous learning in technology and development
               </p>
             </div>
-            
+
             <div className="space-y-6">
               {timelineData.education.map((item, index) => (
                 <TimelineCard
                   key={item.id}
                   {...item}
+                  type={item.type as 'certification' | 'degree' | 'work' | 'education'}
+                  status={item.status as 'completed' | 'current'}
                   delay={index * 0.2}
                 />
               ))}

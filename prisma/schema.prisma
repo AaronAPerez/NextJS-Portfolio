@@ -1,0 +1,100 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Projects model - matches your existing Project interface
+model Project {
+  id          String   @id @default(cuid())
+  title       String
+  description String   @db.Text
+  tech        String[]
+  category    String   // "production" | "portfolio" | "coursework"
+  isLive      Boolean  @default(false)
+  clientType  String?  // "business" | "personal" | "demo"
+  featured    Boolean  @default(false)
+  images      String[]
+  imagesAlt   String[]
+  demoLink    String?
+  codeLink    String
+  websiteLink String?
+  gradientFrom String?
+  gradientTo   String?
+  order       Int      @default(0) // For drag-and-drop ordering in admin
+  published   Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([category, featured, published])
+  @@index([order])
+}
+
+// Skills model
+model Skill {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  category  String   // "Frontend" | "Backend" | "Database" | "DevOps" | "Tools"
+  icon      String?  // Icon name or path
+  proficiency Int    @default(50) // 0-100 for admin to set skill level
+  order     Int      @default(0)
+  published Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([category, published])
+  @@index([order])
+}
+
+// Contact messages from form submissions
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  subject   String?
+  message   String   @db.Text
+  read      Boolean  @default(false)
+  archived  Boolean  @default(false)
+  replied   Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([read, archived])
+  @@index([createdAt(sort: Desc)])
+}
+
+// Page analytics tracking
+model PageView {
+  id        String   @id @default(cuid())
+  path      String
+  referrer  String?
+  userAgent String?  @db.Text
+  country   String?
+  city      String?
+  device    String?
+  browser   String?
+  createdAt DateTime @default(now())
+
+  @@index([path, createdAt])
+  @@index([createdAt(sort: Desc)])
+}
+
+// Admin users
+model Admin {
+  id            String   @id @default(cuid())
+  email         String   @unique
+  name          String
+  clerkId       String   @unique // Clerk user ID
+  role          String   @default("admin") // "admin" | "superadmin"
+  lastLoginAt   DateTime?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([clerkId])
+}
