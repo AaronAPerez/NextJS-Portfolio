@@ -3,17 +3,10 @@
 import { projects } from '@/components/config/projects';
 import ProjectsGrid from './ProjectGrid';
 import { motion } from 'framer-motion';
-import { useState } from 'react';
 
 
 const ProjectsSection = () => {
-  const [selectedCategory, setSelectedCategory] = useState('all');
 
-  const categories = [
-    { id: 'all', label: 'All Projects', count: projects.length },
-    { id: 'production', label: 'Production Sites', count: projects.filter(p => p.category === 'production').length },
-    { id: 'portfolio', label: 'Portfolio Demos', count: projects.filter(p => p.category === 'portfolio').length },
-  ];
 
   return (
     <div className="relative w-full overflow-hidden py-20">

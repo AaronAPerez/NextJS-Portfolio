@@ -238,7 +238,7 @@ export default function HeroSection() {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={social.label}
-                      className={`touch-target p-3 backdrop-blur-sm bg-white/80 dark:bg-gray-800/80 rounded-full shadow-md transition-all duration-300 text-gray-600 dark:text-gray-400 min-h-[44px] min-w-[44px] flex items-center justify-center ${social.hoverColor}`}
+                      className={`touch-target p-3 backdrop-blur-sm bg-white/80 dark:bg-gray-800/80 rounded-full shadow-md transition-all duration-300 text-gray-600 dark:text-gray-400 min-h-[44px] min-w-[44px] flex items-center justify-center ${social.baseBg} ${social.baseColor} ${social.hoverColor} ${social.hoverBg}`}
                       whileHover={{ scale: 1.1, y: -2 }}
                       whileTap={{ scale: 0.95 }}
                     >
@@ -287,12 +287,12 @@ export default function HeroSection() {
                           <Image
                             src="/images/profile/headshot.png"
                             alt="Aaron A. Perez - Full Stack Developer"
+                            priority
+                            quality={85}
                             width={324}
                             height={324}
                             sizes="(max-width: 640px) 256px, (max-width: 768px) 320px, 384px"
                             className="w-full h-full object-cover"
-                            priority
-                            quality={85}
                           />
                         </div>
                       </div>

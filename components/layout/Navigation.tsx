@@ -28,7 +28,7 @@ import { Button } from '@/components/ui';
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('');
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [, setIsScrolled] = useState(false);
 
   // Handle scroll for sticky header and active section
   useEffect(() => {

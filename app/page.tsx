@@ -64,11 +64,6 @@ export default function Home() {
           <Skills />
         </section>
 
-        {/* AI Showcase Section */}
-        {/*  <section id="learning section" className="bg-white-100 dark:bg-gray-950">
-        <LearningSection/>
-      </section> */}
-
         {/* Projects Section */}
         <section id="projects" className="bg-white-100 dark:bg-gray-950">
           <ProjectsSection />

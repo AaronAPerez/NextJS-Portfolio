@@ -169,8 +169,8 @@ const ContactActionCard = ({
           <div className="flex items-center justify-between">
             <span className="text-xs text-gray-500 dark:text-gray-400 transition-colors font-mono">
               {action.action === 'copy' ? 'Click to copy' :
-               action.action === 'mailto' ? 'Opens email client' :
-               'Downloads PDF file'}
+                action.action === 'mailto' ? 'Opens email client' :
+                  'Downloads PDF file'}
             </span>
             <ArrowRight className="w-4 h-4 text-gray-500 dark:text-gray-400 group-hover:translate-x-1 transition-all" />
           </div>
@@ -193,7 +193,7 @@ const SocialLinkCard = ({
   const IconComponent = link.icon
 
   return (
-    
+
     <motion.div
       initial={{ opacity: 0, scale: 0.8 }}
       whileInView={{ opacity: 1, scale: 1 }}
@@ -253,9 +253,9 @@ const ContactInfoCard = () => (
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
     transition={{ duration: 0.6 }}
-    className="relative p-8 backdrop-blur-sm bg-black/10 border border-white/10 rounded-2xl overflow-hidden hover:border-slate-500/50 transition-all duration-500"
+    className="relative p-8 backdrop-blur-lg dark:bg-gray-800 border border-black/10 rounded-2xl overflow-hidden hover:border-slate-500/50 transition-all duration-500"
   >
-    
+
     {/* Gradient background */}
     <div className="absolute inset-0" />
 
@@ -263,13 +263,13 @@ const ContactInfoCard = () => (
     <div className="relative z-10">
       <div className="flex items-center gap-3 mb-6">
         <div className="px-2 pt-1 bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl">
-           <Image
-                                      src="/images/profile/headshot.png"
-                                      alt="Aaron A. Perez - Full Stack Developer"
-                                      width={60}
-                                      height={60}/>
+          <Image
+            src="/images/profile/headshot.png"
+            alt="Aaron A. Perez - Full Stack Developer"
+            width={60}
+            height={60} />
         </div>
-        <h3 className="text-xl font-bold text-gray-600">
+        <h3 className="text-xl font-bold text-gray-900 dark:text-white">
           Contact Information
         </h3>
       </div>
@@ -319,7 +319,7 @@ export const ContactSection = () => {
 
   return (
     <div className="relative w-full overflow-hidden py-20">
-      
+
       <div className="absolute inset-0 bg-gradient-to-b from-blue-500/5 via-transparent to-violet-500/5" />
       <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:50px]" />
 
@@ -398,7 +398,7 @@ export const ContactSection = () => {
           </div>
 
           {/* Contact Information */}
-          <div>
+          <div className='lg:mt-24 text-gray-900 dark:text-white'>
             <ContactInfoCard />
           </div>
         </div>
