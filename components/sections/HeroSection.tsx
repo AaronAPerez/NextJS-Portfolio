@@ -110,7 +110,7 @@ export default function HeroSection() {
       )}
 
 
-      <section className="relative z-10 min-h-screen flex items-center justify-center overflow-hidden py-8 sm:py-12 lg:py-2 px-4 sm:px-6 lg:px-8">
+      <section className="relative z-10 min-h-screen flex items-center justify-center overflow-hidden py-8 sm:py-12 lg:py-2 px-4 sm:px-6 lg:px-8 pt-12 sm:pt-14 lg:-mt-10">
         <div className="relative max-w-7xl mx-auto w-full">
           <div className="grid lg:grid-cols-2 gap-6 lg:gap-16 items-center">
 
@@ -122,7 +122,7 @@ export default function HeroSection() {
               className="space-y-4 sm:space-y-6 w-full text-center lg:text-left order-2 lg:order-1"
             >
               {/* Main headline */}
-              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight text-gray-900 dark:text-white">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight text-gray-900 dark:text-white" id="hero-heading">
                 Aaron A. Perez
               </h1>
 
@@ -194,15 +194,15 @@ export default function HeroSection() {
                 </motion.a>
               </motion.div>
 
-              {/* Social Links */}
+             {/* Social Links */}
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4, duration: 0.6 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3 }}
                 className="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-2"
               >
                 {[
-                 {
+                  {
                     icon: Github,
                     href: 'https://github.com/AaronAPerez',
                     label: 'GitHub',
@@ -238,7 +238,7 @@ export default function HeroSection() {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={social.label}
-                      className={`touch-target p-3 backdrop-blur-sm bg-white/80 dark:bg-gray-800/80 rounded-full shadow-md transition-all duration-300 text-gray-600 dark:text-gray-400 min-h-[44px] min-w-[44px] flex items-center justify-center ${social.baseBg} ${social.baseColor} ${social.hoverColor} ${social.hoverBg}`}
+                      className={`touch-target p-3 backdrop-blur-sm rounded-full shadow-md transition-all duration-300 min-h-[44px] min-w-[44px] flex items-center justify-center ${social.baseBg} ${social.baseColor} ${social.hoverColor} ${social.hoverBg}`}
                       whileHover={{ scale: 1.1, y: -2 }}
                       whileTap={{ scale: 0.95 }}
                     >
@@ -301,8 +301,8 @@ export default function HeroSection() {
 
                   {/* Enhanced Floating Tech Icons */}
                   <motion.div
-                    animate={{ rotate: 360 }}
-                    transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+                    // animate={{ rotate: 360 }}
+                    // transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
                     className="absolute -top-6 -right-6 backdrop-blur-sm bg-white/10 dark:bg-gray-800/30 w-16 h-16 rounded-full flex items-center justify-center shadow-lg"
                   >
                     <Image
@@ -316,9 +316,9 @@ export default function HeroSection() {
                   </motion.div>
 
                   <motion.div
-                    animate={{ rotate: -360 }}
-                    transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
-                    className="absolute -bottom-6 -left-6 backdrop-blur-sm bg-white/10 dark:bg-gray-800/30 w-14 h-14 rounded-full flex items-center justify-center shadow-lg"
+                    // animate={{ rotate: -360 }}
+                    // transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
+                    className="absolute -bottom-2 -left-6 backdrop-blur-sm bg-white/10 dark:bg-gray-800/30 w-14 h-14 rounded-full flex items-center justify-center shadow-lg"
                   >
                     <Image
                       src='/icons/backend/nodejs.svg'
@@ -331,8 +331,8 @@ export default function HeroSection() {
                   </motion.div>
 
                   <motion.div
-                    animate={{ rotate: 360, scale: [1, 1.1, 1] }}
-                    transition={{ duration: 15, repeat: Infinity, ease: 'linear' }}
+                    // animate={{ rotate: 360, scale: [1, 1.1, 1] }}
+                    // transition={{ duration: 15, repeat: Infinity, ease: 'linear' }}
                     className="absolute top-1/4 -left-8 backdrop-blur-sm bg-white/10 dark:bg-gray-800/30 w-12 h-12 rounded-full flex items-center justify-center shadow-lg"
                   >
                     <Image
@@ -346,8 +346,8 @@ export default function HeroSection() {
                   </motion.div>
 
                   <motion.div
-                    animate={{ y: [0, -15, 0] }}
-                    transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+                  // animate={{ rotate: 360, scale: [1, 1.1, 1] }}
+                  //   transition={{ duration: 15, repeat: Infinity, ease: 'linear' }}
                     className="absolute top-1/3 -right-8 backdrop-blur-sm bg-white/10 dark:bg-gray-800/30 w-10 h-10 rounded-full flex items-center justify-center shadow-lg"
                   >
                     <Image
