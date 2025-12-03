@@ -110,7 +110,7 @@ export default function HeroSection() {
       )}
 
 
-      <section className="relative z-10 min-h-screen flex items-center justify-center overflow-hidden py-8 sm:py-12 lg:py-2 px-4 sm:px-6 lg:px-8 pt-12 sm:pt-14 lg:-mt-10">
+      <section className="relative z-10 min-h-screen flex items-center justify-center overflow-hidden py-8 sm:py-12 lg:py-2 px-4 sm:px-6 lg:px-8 pt-0 sm:pt-14 lg:-mt-10">
         <div className="relative max-w-7xl mx-auto w-full">
           <div className="grid lg:grid-cols-2 gap-6 lg:gap-16 items-center">
 
@@ -368,7 +368,7 @@ export default function HeroSection() {
                   initial={{ opacity: 0, scale: 0 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 1.5, duration: 0.5 }}
-                  className="absolute -bottom-6 sm:-bottom-12 transform -translate-x-1/2 flex flex-col sm:flex-row gap-2 items-center z-10"
+                  className="absolute -bottom-8 sm:-bottom-12 transform -translate-x-1/2 flex flex-col sm:flex-row gap-2 items-center z-10"
                 >
                   <div className="backdrop-blur-sm bg-white/90 dark:bg-gray-800/90 px-4 py-2 rounded-full shadow-lg border border-green-200 dark:border-green-800 whitespace-nowrap">
                     <div className="flex items-center gap-2">

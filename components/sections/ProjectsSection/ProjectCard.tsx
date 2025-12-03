@@ -32,7 +32,7 @@ export const ProjectCard = ({ project, index, isHovered, onHover }: ProjectCardP
   return (
     <>
       <div
-        className="w-full px-4 sm:px-0 pt-10"
+        className="w-full px-4 sm:px-0 lg:pb-16 lg:pt-12"
         role="article"
         aria-labelledby={`${cardId}-title`}
         onMouseEnter={() => onHover(index)}

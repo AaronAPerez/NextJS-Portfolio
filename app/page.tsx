@@ -40,7 +40,7 @@ const ContactSection = dynamic(() => import("@/components/sections/ContactSectio
 export default function Home() {
   return (
     <>
-      <div className="px-4">
+      <div>
         {/* Hero Section - Above the fold, strong first impression */}
         <section
           id="home"

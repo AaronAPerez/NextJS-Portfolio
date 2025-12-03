@@ -45,7 +45,7 @@ const ProjectsSection = () => {
         </motion.header>
 
         {/* Projects Grid */}
-        <div className='py-12'>
+        <div>
           <ProjectsGrid projects={projects} />
         </div>
       </div>
