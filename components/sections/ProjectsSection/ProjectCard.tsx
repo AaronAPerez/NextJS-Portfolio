@@ -49,7 +49,9 @@ export const ProjectCard = ({ project, index, isHovered, onHover }: ProjectCardP
           className="w-full"
         >
           <div className="group relative flex flex-col
-               w-[300px] sm:w-[420px] md:w-[460px] lg:w-[480px] xl:w-[500px] 2xl:w-[500px] h-[400px] sm:h-[520px] md:h-[560px] lg:h-[580px] xl:h-[600px] 2xl:h-[600px] bg-gradient-to-br from-gray-50 via-white to-gray-100
+               w-[320px] sm:w-[420px] lg:w-[480px]
+               h-[480px] sm:h-[540px] lg:h-[580px]
+               bg-gradient-to-br from-gray-50 via-white to-gray-100
                dark:from-gray-900/95 dark:via-gray-800/95 dark:to-black/95
                hover:shadow-2xl hover:shadow-indigo-500/20
                dark:hover:shadow-2xl dark:hover:shadow-indigo-500/30
@@ -59,7 +61,7 @@ export const ProjectCard = ({ project, index, isHovered, onHover }: ProjectCardP
 
             {/* Project Image with Accessibility */}
             <div
-              className="relative w-full aspect-[16/9]"
+              className="relative w-full h-[180px] sm:h-[220px] lg:h-[240px] flex-shrink-0"
               role="img"
               aria-label={`Project screenshot for ${project.title}`}
             >
@@ -89,7 +91,7 @@ export const ProjectCard = ({ project, index, isHovered, onHover }: ProjectCardP
             </div>
 
             {/* Project Details with Semantic Structure */}
-            <div className="flex flex-col flex-1 px-6 py-4 bg-gradient-to-br from-gray-100 via-white/90 to-gray-200
+            <div className="flex flex-col flex-1 px-4 py-3 sm:px-6 sm:py-4 bg-gradient-to-br from-gray-100 via-white/90 to-gray-200
                dark:from-gray-900/95 dark:via-gray-800/95 dark:to-black/95
                rounded-b-2xl shadow-xl overflow-hidden
                transition-all duration-500
@@ -99,7 +101,7 @@ export const ProjectCard = ({ project, index, isHovered, onHover }: ProjectCardP
                backdrop-blur-sm">
               <h3
                 id={`${cardId}-title`}
-                className="text-xl sm:text-3xl font-bold mb-4 bg-clip-text text-transparent"
+                className="text-2xl sm:text-3xl lg:text-3xl font-bold mb-2 sm:mb-3 bg-clip-text text-transparent leading-tight"
                 style={{
                   backgroundImage: `linear-gradient(to right, ${gradient.from}, ${gradient.to})`
                 }}
@@ -107,7 +109,7 @@ export const ProjectCard = ({ project, index, isHovered, onHover }: ProjectCardP
                 {project.title}
               </h3>
 
-              <p className="text-gray-800 dark:text-gray-200 text-sm sm:text-base mb-6 flex-1 line-clamp-5">
+              <p className="text-gray-700 dark:text-gray-300 text-base sm:text-base lg:text-lg mb-3 sm:mb-4 flex-1 line-clamp-3 sm:line-clamp-4 leading-relaxed">
                 {project.description}
               </p>
 
@@ -115,7 +117,7 @@ export const ProjectCard = ({ project, index, isHovered, onHover }: ProjectCardP
               <div
                 role="list"
                 aria-label={`Technologies used in ${project.title}`}
-                className="flex flex-wrap gap-4 justify-self-start"
+                className="flex flex-wrap gap-2 sm:gap-3 justify-start items-center"
               >
                 {project.tech.map((tech, techIndex) => {
                   const techData = techIcons[tech];
@@ -125,20 +127,20 @@ export const ProjectCard = ({ project, index, isHovered, onHover }: ProjectCardP
                       role="listitem"
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
-                      className="flex items-center gap-1 px-3 py-1 rounded-full border transition-colors duration-200 hover:border-opacity-50"
+                      className="flex items-center gap-1.5 px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-full border-2 transition-all duration-200 hover:border-opacity-70 hover:shadow-md"
                       style={{ borderColor: `${techData?.color}40` }}
                     >
                       {techData?.icon && (
                         <Image
                           src={techData.icon}
                           alt={`${tech} icon`}
-                          width={22}
-                          height={22}
-                          className="object-contain"
+                          width={18}
+                          height={18}
+                          className="w-[18px] h-[18px] sm:w-[20px] sm:h-[20px] object-contain"
                         />
                       )}
                       <span
-                        className="text-sm font-medium"
+                        className="text-xs sm:text-sm font-semibold whitespace-nowrap"
                         style={{ color: techData?.color || '#9CA3AF' }}
                       >
                         {tech}

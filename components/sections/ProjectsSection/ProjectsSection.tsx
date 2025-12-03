@@ -3,7 +3,6 @@
 import { projects } from '@/components/config/projects';
 import ProjectsGrid from './ProjectGrid';
 import { motion } from 'framer-motion';
-import { cn } from '@/lib/utils';
 import { useState } from 'react';
 
 
@@ -52,43 +51,10 @@ const ProjectsSection = () => {
           </p>
         </motion.header>
 
-        {/* Projects Categories */}
-        <div className="flex flex-wrap justify-center gap-4 mb-12">
-          {categories.map((cat) => (
-            <button
-              key={cat.id}
-              onClick={() => setSelectedCategory(cat.id)}
-              className={cn(
-                "px-6 py-3 rounded-xl font-semibold transition-all",
-                selectedCategory === cat.id
-                  ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white"
-                  : "bg-white/5 text-gray-400 hover:text-white hover:bg-white/10"
-              )}
-            >
-              {cat.label} ({cat.count})
-            </button>
-          ))}
-        </div>
-
         {/* Projects Grid */}
         <div className='py-12'>
           <ProjectsGrid projects={projects} />
         </div>
-        {/* <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="text-center mt-12"
-        >
-          <Link
-            href="/projects"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold rounded-xl transition-all shadow-lg hover:shadow-xl"
-          >
-            View Detailed Case Studies
-            <ArrowRight className="w-5 h-5" />
-          </Link>
-        </motion.div> */}
-
       </div>
     </div>
   );

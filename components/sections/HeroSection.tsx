@@ -202,26 +202,32 @@ export default function HeroSection() {
                 className="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-2"
               >
                 {[
-                  {
+                 {
                     icon: Github,
                     href: 'https://github.com/AaronAPerez',
                     label: 'GitHub',
-                    hoverColor: 'hover:text-gray-900 dark:hover:text-white',
-                    bgHover: 'hover:bg-gray-200 dark:hover:bg-gray-700'
+                    baseColor: 'text-[#181717] dark:text-white',
+                    hoverColor: 'hover:text-white dark:hover:text-[#181717]',
+                    baseBg: 'bg-white/80 dark:bg-gray-800/80',
+                    hoverBg: 'hover:bg-[#181717] dark:hover:bg-white'
                   },
                   {
                     icon: Linkedin,
                     href: 'https://linkedin.com/in/aaronaperezdev',
                     label: 'LinkedIn',
-                    hoverColor: 'hover:text-blue-600',
-                    bgHover: 'hover:bg-blue-100 dark:hover:bg-blue-900/30'
+                    baseColor: 'text-[#0A66C2]',
+                    hoverColor: 'hover:text-white',
+                    baseBg: 'bg-white/80 dark:bg-gray-800/80',
+                    hoverBg: 'hover:bg-[#0A66C2]'
                   },
                   {
                     icon: Mail,
                     href: 'mailto:aaperez06@gmail.com',
                     label: 'Email',
-                    hoverColor: 'hover:text-red-500',
-                    bgHover: 'hover:bg-red-100 dark:hover:bg-red-900/30'
+                    baseColor: 'text-[#EA4335]',
+                    hoverColor: 'hover:text-white',
+                    baseBg: 'bg-white/80 dark:bg-gray-800/80',
+                    hoverBg: 'hover:bg-[#EA4335]'
                   }
                 ].map((social) => {
                   const IconComponent = social.icon
@@ -232,7 +238,7 @@ export default function HeroSection() {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={social.label}
-                      className={`touch-target p-3 backdrop-blur-sm bg-white/80 dark:bg-gray-800/80 rounded-full shadow-md transition-all duration-300 text-gray-600 dark:text-gray-400 min-h-[44px] min-w-[44px] flex items-center justify-center ${social.hoverColor} ${social.bgHover}`}
+                      className={`touch-target p-3 backdrop-blur-sm bg-white/80 dark:bg-gray-800/80 rounded-full shadow-md transition-all duration-300 text-gray-600 dark:text-gray-400 min-h-[44px] min-w-[44px] flex items-center justify-center ${social.hoverColor}`}
                       whileHover={{ scale: 1.1, y: -2 }}
                       whileTap={{ scale: 0.95 }}
                     >

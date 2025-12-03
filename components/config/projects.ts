@@ -35,45 +35,7 @@ export const projects: Project[] = [
       to: "#A5ACAF"    // silver
     }
   },
-   {
-    id: 'cloudgov-dashboard',
-    title: "CloudGov Dashboard",
-    description: "Enterprise cloud management platform built to demonstrate qualifications for LLNL Software Developer position. Showcases full-stack skills, testing, and production-ready code.",
-    tech: ["Next.js 14", "React 18", "TypeScript", "Tailwind CSS", "Jest", "Playwright"],
-    category: 'portfolio',
-    isLive: true,
-    clientType: 'demo',
-    featured: true,
-    images: ["/images/projects/cloudgov-dashboard/cloudgov-1.png"],
-    imagesAlt: ["/images/projects/cloudgov-dashboard/cloudgov-dashboard-preview.png"],
-    demoLink: "https://cloudgov-dashboard.vercel.app",
-    codeLink: "https://github.com/YOUR_USERNAME/cloudgov-dashboard",
-    websiteLink: "https://cloudgov-dashboard.vercel.app",
-    gradient: {
-      from: "#2563EB", // Primary blue
-      to: "#16A34A"    // Success green
-    }
-  },
   {
-    id: 'glamping-spot',
-    title: "The Glamping Spot",
-    description: "Booking platform for luxury camping locations. Real production website with interactive features.",
-    tech: ["Next.js", "React", "TypeScript", "Tailwind", "Node.js", "Express", "MongoDB", "Mapbox API"],
-    category: 'production',
-    isLive: true,
-    clientType: 'business',
-    featured: true,
-    images: ["/images/projects/theglampingspot/glamping-1.png"],
-    imagesAlt: ["/images/projects/theglampingspot/glamping-1.png"],
-    demoLink: "https://www.theglampingspot.net",
-    codeLink: "https://github.com/AaronAPerez/the-glamping-spot",
-    websiteLink: "https://www.theglampingspot.net",
-    gradient: {
-      from: "#F59E0B",
-      to: "#15803D"
-    }
-  },
- {
     id: 'goldmine-communications',
     title: "Goldmine Communications & Construction",
     description: "Production website for telecommunications infrastructure company. Responsive design with professional branding.",
@@ -82,14 +44,33 @@ export const projects: Project[] = [
     isLive: true,
     clientType: 'business',
     featured: true,
-    images: ["/images/projects/goldmine_website/goldmine_1.svg"],
-    imagesAlt: ["/images/projects/goldmine_website/goldmine_1.svg"],
+    images: ["/images/projects/goldmine/Goldmine-Hero-Screenshot.png"],
+    imagesAlt: ["/images/projects/goldmine/Goldmine-Hero-Screenshot.png"],
     demoLink: "https://www.goldminecomm.net",
     codeLink: "https://github.com/AaronAPerez/Goldmine_Communications_Construction_Website",
     websiteLink: "https://www.goldminecomm.net",
     gradient: {
       from: "#bf9b30",
       to: "#d4af37" 
+    }
+  },
+  {
+    id: 'glamping-spot',
+    title: "The Glamping Spot",
+    description: "Booking platform for luxury camping locations. Real production website with interactive features.",
+    tech: ["Next.js", "React", "TypeScript", "Tailwind", "Node.js"],
+    category: 'production',
+    isLive: true,
+    clientType: 'business',
+    featured: true,
+    images: ["/images/projects/the-glamping-spot/Glamping-Spot-Hero-Screenshot.png"],
+    imagesAlt: ["/images/projects/the-glamping-spot/Glamping-Spot-Hero-Screenshot.png"],
+    demoLink: "https://www.theglampingspot.net",
+    codeLink: "https://github.com/AaronAPerez/the-glamping-spot",
+    websiteLink: "https://www.theglampingspot.net",
+    gradient: {
+      from: "#F59E0B",
+      to: "#15803D"
     }
   },
 ];

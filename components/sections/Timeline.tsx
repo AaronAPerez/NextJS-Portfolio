@@ -7,8 +7,10 @@ import {
   Briefcase,
   Calendar,
 } from 'lucide-react'
-import TimelineCard from '../TimelineCard'
+
 import { Container } from '../layout/Container'
+import TimelineCard from './TimelineCard'
+
 
 
 // TypeScript interfaces for better type safety
@@ -128,12 +130,12 @@ const timelineData: { education: TimelineItem[]; experience: TimelineItem[] } = 
       ],
       skills: ["React", "Next.js", "TypeScript", "Tailwind CSS", "SEO", "WCAG Accessibility", "Zod", "Google Maps API", "Performance Optimization"],
       gradient: "from-emerald-500 to-teal-500",
-      achievements: [
-        "Improved page load speed from 3s to 800ms",
-        "Achieved 100% WCAG AA compliance",
-        "Increased organic search traffic by 150%",
-        "Built mobile-first responsive design with 98% mobile compatibility"
-      ]
+      // achievements: [
+      //   "Improved page load speed from 3s to 800ms",
+      //   "Achieved 100% WCAG AA compliance",
+      //   "Increased organic search traffic by 150%",
+      //   "Built mobile-first responsive design with 98% mobile compatibility"
+      // ]
     },
     {
       id: 'user-support',
