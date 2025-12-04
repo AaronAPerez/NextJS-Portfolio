@@ -170,6 +170,10 @@ export interface NavLink {
 }
 
 export interface SocialLink {
+  // hoverBg: any;
+  // baseBg: any;
+  // baseColor: any;
+  // hoverColor: any;
   name: string;
   url: string;
   icon: string;
