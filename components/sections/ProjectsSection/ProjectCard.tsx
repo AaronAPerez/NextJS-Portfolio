@@ -32,7 +32,7 @@ export const ProjectCard = ({ project, index, isHovered, onHover }: ProjectCardP
   return (
     <>
       <div
-        className="w-full lg:pb-16 lg:pt-12"
+        className="w-full lg:pb-16 lg:pt-12 py-4"
         role="article"
         aria-labelledby={`${cardId}-title`}
         onMouseEnter={() => onHover(index)}
@@ -49,8 +49,8 @@ export const ProjectCard = ({ project, index, isHovered, onHover }: ProjectCardP
           className="w-full"
         >
           <div className="group relative flex flex-col
-               w-[380px] sm:w-[420px] lg:w-[480px]
-               h-[480px] sm:h-[540px] lg:h-[580px]
+               min-w-[340px] w-400 sm:w-[440px] md:w[480px] lg:min-w-[440px] xl:w-[560px]
+               h-[460px] sm:h-[560px] lg:h-[570px]
                bg-gradient-to-br from-gray-50 via-white to-gray-100
                dark:from-gray-900/95 dark:via-gray-800/95 dark:to-black/95
                hover:shadow-2xl hover:shadow-indigo-500/20
