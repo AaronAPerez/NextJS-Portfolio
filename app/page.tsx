@@ -4,9 +4,6 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 import HeroSection from "@/components/sections/HeroSection";
 import SectionLoader from "@/components/ui/SectionLoader";
-import { Skills } from '@/components/sections/Skills';
-
-
 
 
 
@@ -16,10 +13,10 @@ const AboutSection = dynamic(() => import("@/components/sections/AboutSection/Ab
   ssr: false
 });
 
-// const SkillsSection = dynamic(() => import("@/components/sections/Skills"), {
-//   loading: () => <SectionLoader />,
-//   ssr: false
-// });
+const Skills = dynamic(() => import("@/components/sections/Skills"), {
+  loading: () => <SectionLoader />,
+  ssr: false
+});
 
 
 const ProjectsSection = dynamic(() => import("@/components/sections/ProjectsSection/ProjectsSection"), {
@@ -44,41 +41,40 @@ export default function Home() {
         {/* Hero Section - Above the fold, strong first impression */}
         <section
           id="home"
-          className="relative bg-white-100 dark:bg-gray-950"
           aria-labelledby="hero-heading"
         >
           <HeroSection />
         </section>
 
         {/* About Section */}
-        <section id="about" className="bg-white-100 dark:bg-gray-950">
+        <section id="about"
+        aria-label="about-section">
           <AboutSection />
         </section>
 
         {/* Skills Section - Show capabilities immediately */}
         <section
           id="skills"
-          className="relative bg-white-100 dark:bg-gray-950"
           aria-labelledby="skills-heading"
         >
           <Skills />
         </section>
 
         {/* Projects Section */}
-        <section id="projects" className="bg-white-100 dark:bg-gray-950">
+        <section id="projects"
+        aria-label="projects-section">
           <ProjectsSection />
         </section>
 
         {/* Experience Section */}
-        <section id="experience" className="bg-white-100 dark:bg-gray-950">
+        <section id="experience" 
+        aria-label="experience-section">
           <Timeline />
         </section>
 
-
-        {/* Contact Section - End with clear CTA */}
+        {/* Contact Section CTA */}
         <section
           id="contact"
-          className="relative bg-white-100 dark:bg-gray-950"
           aria-labelledby="contact-heading"
         >
           <ContactSection />

@@ -37,7 +37,7 @@ export const projects: Project[] = [
   },
   {
     id: 'goldmine-communications',
-    title: "Goldmine Communications & Construction",
+    title: "Goldmine Comm & Construction",
     description: "Production website for telecommunications infrastructure company. Responsive design with professional branding.",
       tech: ["Next.js", "React", "TypeScript", "Tailwind"],
     category: 'production',

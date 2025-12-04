@@ -113,7 +113,6 @@
 }
 
 /* Smooth dark mode transitions */
-body,
 body * {
   transition-property: background-color, border-color, color, fill, stroke;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);

@@ -32,7 +32,7 @@ export const ProjectCard = ({ project, index, isHovered, onHover }: ProjectCardP
   return (
     <>
       <div
-        className="w-full px-4 sm:px-0 lg:pb-16 lg:pt-12"
+        className="w-full lg:pb-16 lg:pt-12"
         role="article"
         aria-labelledby={`${cardId}-title`}
         onMouseEnter={() => onHover(index)}
@@ -49,7 +49,7 @@ export const ProjectCard = ({ project, index, isHovered, onHover }: ProjectCardP
           className="w-full"
         >
           <div className="group relative flex flex-col
-               w-[320px] sm:w-[420px] lg:w-[480px]
+               w-[380px] sm:w-[420px] lg:w-[480px]
                h-[480px] sm:h-[540px] lg:h-[580px]
                bg-gradient-to-br from-gray-50 via-white to-gray-100
                dark:from-gray-900/95 dark:via-gray-800/95 dark:to-black/95
@@ -61,7 +61,7 @@ export const ProjectCard = ({ project, index, isHovered, onHover }: ProjectCardP
 
             {/* Project Image with Accessibility */}
             <div
-              className="relative w-full h-[180px] sm:h-[220px] lg:h-[240px] flex-shrink-0"
+              className="relative aspect-[406/218]"
               role="img"
               aria-label={`Project screenshot for ${project.title}`}
             >
@@ -70,8 +70,8 @@ export const ProjectCard = ({ project, index, isHovered, onHover }: ProjectCardP
                   key={idx}
                   src={image}
                   alt={`Screenshot ${idx + 1} of ${project.title} project`}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  fill sizes="100vw"
+                  className="object-cover"
                   priority={index < 2}
                 />
               ))}

@@ -123,7 +123,7 @@ function SkillCard({ title, skills, icon, color }: SkillCardProps) {
   );
 }
 
-export function Skills() {
+export default function Skills() {
   return (
     <Section id="skills" background="dots">
       <SectionTitle>Skills & Technologies</SectionTitle>

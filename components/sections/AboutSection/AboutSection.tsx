@@ -8,7 +8,7 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/Card';
 const aboutContent = {
   background: {
     title: "Background",
-    content: `I am a Full Stack Developer with a solid foundation in IT, currently expanding my development skills through CodeStack Academy. My journey in technology began with an Applied Science Degree in Network Systems Administration & BS in Information Systems and Cyber Security from ITT Technical Institute, where I graduated with a 3.5 GPA.`
+    content: `I am a Full Stack Developer with a solid foundation in IT, expanding my development skills through CodeStack Academy. My journey in technology began with an Applied Science Degree in Network Systems Administration & BS in Information Systems and Cyber Security from ITT Technical Institute, where I graduated with a 3.5 GPA.`
   },
   approach: {
     title: "Approach",

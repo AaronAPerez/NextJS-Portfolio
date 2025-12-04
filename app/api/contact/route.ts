@@ -172,7 +172,7 @@ const getUserConfirmationTemplate = (name: string, subject: string) => `
                     <a href="https://github.com/AaronAPerez" style="color: #6366f1; text-decoration: none; font-size: 14px; font-weight: 500;">👨‍💻 GitHub</a>
                   </td>
                   <td style="padding: 8px; text-align: center;">
-                    <a href="https://linkedin.com/in/aaron-a-perez" style="color: #6366f1; text-decoration: none; font-size: 14px; font-weight: 500;">💼 LinkedIn</a>
+                    <a href="https://www.linkedin.com/in/aaronaperezdev" style="color: #6366f1; text-decoration: none; font-size: 14px; font-weight: 500;">💼 LinkedIn</a>
                   </td>
                 </tr>
               </table>

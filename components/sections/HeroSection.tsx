@@ -21,7 +21,7 @@ declare global {
 }
 
 // Memoized social link component for better performance
-const SocialLink = memo(({ social }: { social: { icon: typeof Github; href: string; label: string; hoverColor: string; bgHover: string } }) => {
+export const SocialLink = memo(({ social }: { social: { icon: typeof Github; href: string; label: string; hoverColor: string; bgHover: string } }) => {
   const IconComponent = social.icon
   const prefersReducedMotion = useReducedMotion()
 
@@ -110,7 +110,7 @@ export default function HeroSection() {
       )}
 
 
-      <section className="relative z-10 min-h-screen flex items-center justify-center overflow-hidden py-8 sm:py-12 lg:py-2 px-4 sm:px-6 lg:px-8 pt-0 sm:pt-14 lg:-mt-10">
+      <div className="relative z-10 min-h-screen flex items-center justify-center overflow-hidden py-8 sm:py-12 lg:py-2 px-4 sm:px-6 lg:px-8 pt-16 sm:pt-12 md:pt-14 lg:-mt-10">
         <div className="relative max-w-7xl mx-auto w-full">
           <div className="grid lg:grid-cols-2 gap-6 lg:gap-16 items-center">
 
@@ -222,7 +222,7 @@ export default function HeroSection() {
                   },
                   {
                     icon: Mail,
-                    href: 'mailto:aaperez06@gmail.com',
+                    href: 'mailto:aaronperezdev@gmail.com',
                     label: 'Email',
                     baseColor: 'text-[#EA4335]',
                     hoverColor: 'hover:text-white',
@@ -287,10 +287,9 @@ export default function HeroSection() {
                           <Image
                             src="/images/profile/headshot.png"
                             alt="Aaron A. Perez - Full Stack Developer"
+                            width={384}
+                            height={384}
                             priority
-                            quality={85}
-                            width={324}
-                            height={324}
                             sizes="(max-width: 640px) 256px, (max-width: 768px) 320px, 384px"
                             className="w-full h-full object-cover"
                           />
@@ -415,7 +414,7 @@ export default function HeroSection() {
             </motion.div>
           </motion.div>
         </div>
-      </section>
+      </div>
     </div>
   )
 }

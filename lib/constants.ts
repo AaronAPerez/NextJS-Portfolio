@@ -13,7 +13,7 @@ export const PERSONAL_INFO = {
   title: 'Full Stack Developer',
   tagline: 'Building accessible, SEO-optimized web applications with React, TypeScript, and Next.js',
   bio: 'Full Stack Developer with 8+ years of IT experience and specialized training in modern web technologies. Recent CodeStack Academy graduate with expertise in React, TypeScript, Next.js, and .NET development.',
-  email: 'aaperez06@gmail.com',
+  email: 'aaronperezdev@gmail.com',
   phone: '(209) 470-2061',
   location: 'Stockton, California',
   locationShort: 'Stockton, CA',
@@ -56,9 +56,9 @@ export const SOCIAL_LINKS: SocialLink[] = [
   },
   {
     name: 'Email',
-    url: 'mailto:aaperez06@gmail.com',
+    url: 'mailto:aaronperezdev@gmail.com',
     icon: 'mail',
-    username: 'aaperez06@gmail.com',
+    username: 'aaronperezdev@gmail.com',
   },
   {
     name: 'Portfolio',

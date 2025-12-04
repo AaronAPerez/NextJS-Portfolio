@@ -39,10 +39,7 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer
-      className="bg-gray-200 dark:bg-gray-950 text-gray-300 dark:text-gray-200"
-      role="contentinfo"
-    >
+   <footer className="bg-white/95 border-t dark:bg-gray-950 text-gray-700 dark:text-gray-300">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-12 sm:py-16">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
@@ -63,7 +60,7 @@ export function Footer() {
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-gray-800 dark:bg-gray-700 flex items-center
+                  className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center
                            justify-center hover:bg-primary-600 dark:hover:bg-primary-500 transition-colors duration-200
                            focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2
                            focus:ring-offset-gray-900 dark:focus:ring-offset-gray-950"
@@ -125,8 +122,9 @@ export function Footer() {
                 <span>{PERSONAL_INFO.location}</span>
               </li>
               <li>
-                <span className="inline-flex items-center gap-2 px-3 py-1 
-                               bg-green-400/30 text-green-600 rounded-full text-sm">
+               <span className="inline-flex items-center gap-2 px-3 py-1 bg-green-200 text-green-900 rounded-full text-sm">
+
+
                   <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" 
                         aria-hidden="true" />
                   {PERSONAL_INFO.availability}
@@ -148,13 +146,7 @@ export function Footer() {
 
           {/* Credits */}
           <p className="text-sm text-gray-800 dark:text-gray-200 flex items-center gap-1">
-            Built with{' '}
-            <Heart 
-              size={14} 
-              className="text-red-500 inline fill-current" 
-              aria-label="love"
-            />{' '}
-            using Next.js, TypeScript & Tailwind CSS
+            Built with Next.js, TypeScript, & Tailwind CSS
           </p>
         </div>
 

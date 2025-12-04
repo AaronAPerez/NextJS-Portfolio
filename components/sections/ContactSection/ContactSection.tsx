@@ -25,7 +25,7 @@ import ContactForm from './ContactForm'
 
 // Contact information and social links data
 const contactInfo = {
-  email: 'aaperez06@gmail.com',
+  email: 'aaronperezdev@gmail.com',
   phone: '+1 (209) 470-2061',
   location: 'Stockton, CA',
   resume: '/A.Perez - Fullstack Resume.pdf'
