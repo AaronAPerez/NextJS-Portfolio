@@ -267,7 +267,9 @@ const ContactInfoCard = () => (
             src="/images/profile/headshot.png"
             alt="Aaron A. Perez - Full Stack Developer"
             width={60}
-            height={60} />
+            height={60} 
+            loading='lazy'
+            />
         </div>
         <h3 className="text-xl font-bold text-gray-900 dark:text-white">
           Contact Information

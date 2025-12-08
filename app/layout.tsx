@@ -1,10 +1,9 @@
 import React from "react";
 import type { Metadata } from "next";
-import { Inter, Poppins } from "next/font/google";
+import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/context/ThemeContext";
 import './globals.css';
 import { Analytics } from '@vercel/analytics/react';
-import { SkipToContent } from "@/components/accessibility/SkipToContent";
 import { generatePersonSchema, generateWebsiteSchema } from "@/lib/utils";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -20,50 +19,34 @@ const inter = Inter({
   preload: true,
 });
 
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-poppins",
-  display: "swap",
-  preload: true,
-});
 
 export const metadata: Metadata = {
-  title: "Aaron A. Perez | Full Stack Developer",
-  description: "Full Stack Developer specializing in React, TypeScript, Next.js, and modern web technologies. Building accessible, SEO-optimized web applications.",
-  keywords: [
-    "React Developer",
-    "TypeScript",
-    "Next.js",
-    "Full Stack Developer",
-    "Web Developer",
-    "Stockton CA",
-  ],
-  authors: [{ name: "Aaron A. Perez" }],
-  creator: "Aaron A. Perez",
+  title: "Aaron A Perez Portfolio",
+  description: "Portfolio showcasing SaaS tools, projects, and design work.",
+  metadataBase: new URL("https://www.aaronaperez.dev"), // <-- FIX
   openGraph: {
-    type: "website",
-    locale: "en_US",
-    url: "https://aaronaperez.dev",
-    siteName: "Aaron A. Perez Portfolio",
-    title: "Aaron A. Perez | Full Stack Developer",
-    description: "Full Stack Developer specializing in React, TypeScript, and Next.js",
+    title: "Aaron A Perez Portfolio",
+    description: "Explore projects and tools.",
+    url: "https://www.aaronaperez.dev",
+    siteName: "Aaron A Perez",
     images: [
       {
-        url: "/images/og-image.jpg",
+        url: "/og-image.png", // relative path resolves against metadataBase
         width: 1200,
         height: 630,
-        alt: "Aaron A. Perez - Full Stack Developer",
+        alt: "Portfolio preview",
       },
     ],
+    type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Aaron A. Perez | Full Stack Developer",
-    description: "Building modern web applications with React, TypeScript, and Next.js",
-    images: ["/images/og-image.jpg"],
+    title: "Aaron A Perez Portfolio",
+    description: "Explore projects and tools.",
+    images: ["/og-image.png"],
   },
 };
+
 
 
 
@@ -71,7 +54,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${poppins.variable}`}
+      className={inter.variable}
       suppressHydrationWarning
     >
       <head>
@@ -91,12 +74,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
       {/* Skip to content - on top for better accessibility */}
       <body className={inter.className} suppressHydrationWarning>
-        <SkipToContent />
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:ring-2 ring-blue-500"
+        >
+          Skip to main content
+        </a>
         <QueryProvider>
           <ThemeProvider>
             <ToastProvider />
-            <Header />
-            <main id="main" suppressHydrationWarning>
+            <header role="banner">
+              {/* nav */}
+              <Header />
+            </header>
+            <main id="main" role="main">
               {children}
               <WebVitals />
               <Analytics />

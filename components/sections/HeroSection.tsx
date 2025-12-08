@@ -194,7 +194,7 @@ export default function HeroSection() {
                 </motion.a>
               </motion.div>
 
-             {/* Social Links */}
+              {/* Social Links */}
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -290,6 +290,7 @@ export default function HeroSection() {
                             width={384}
                             height={384}
                             priority
+                            fetchPriority="high"
                             sizes="(max-width: 640px) 256px, (max-width: 768px) 320px, 384px"
                             className="w-full h-full object-cover"
                           />
@@ -345,8 +346,8 @@ export default function HeroSection() {
                   </motion.div>
 
                   <motion.div
-                  // animate={{ rotate: 360, scale: [1, 1.1, 1] }}
-                  //   transition={{ duration: 15, repeat: Infinity, ease: 'linear' }}
+                    // animate={{ rotate: 360, scale: [1, 1.1, 1] }}
+                    //   transition={{ duration: 15, repeat: Infinity, ease: 'linear' }}
                     className="absolute top-1/3 -right-8 backdrop-blur-sm bg-white/10 dark:bg-gray-800/30 w-10 h-10 rounded-full flex items-center justify-center shadow-lg"
                   >
                     <Image

@@ -60,8 +60,7 @@ export const ProjectCard = ({ project, index, isHovered, onHover }: ProjectCardP
                 ">
 
             {/* Project Image with Accessibility */}
-            <div
-              className="relative aspect-[406/218]"
+            <div className="relative aspect-[410/220]"
               role="img"
               aria-label={`Project screenshot for ${project.title}`}
             >
@@ -70,9 +69,10 @@ export const ProjectCard = ({ project, index, isHovered, onHover }: ProjectCardP
                   key={idx}
                   src={image}
                   alt={`Screenshot ${idx + 1} of ${project.title} project`}
-                  fill sizes="100vw"
-                  className="object-cover"
-                  priority={index < 2}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  loading="lazy"
                 />
               ))}
 

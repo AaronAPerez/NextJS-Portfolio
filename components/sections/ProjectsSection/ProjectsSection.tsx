@@ -10,7 +10,6 @@ const ProjectsSection = () => {
 
   return (
     <div className="relative w-full overflow-hidden py-20">
-
       <div className="absolute inset-0 bg-gradient-to-b from-blue-500/5 via-transparent to-violet-500/5" />
       <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:50px]" />
 
