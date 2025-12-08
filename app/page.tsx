@@ -6,7 +6,6 @@ import HeroSection from "@/components/sections/HeroSection";
 import SectionLoader from "@/components/ui/SectionLoader";
 
 
-
 // Optimized lazy loading with ssr disabled for heavy components
 const AboutSection = dynamic(() => import("@/components/sections/AboutSection/AboutSection"), {
   loading: () => <SectionLoader />,
@@ -65,6 +64,7 @@ export default function Home() {
         aria-label="projects-section">
           <ProjectsSection />
         </section>
+
 
         {/* Experience Section */}
         <section id="experience" 

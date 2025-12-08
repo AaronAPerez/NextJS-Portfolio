@@ -16,34 +16,6 @@ const aboutContent = {
   }
 };
 
-// Meteor component with optimized continuous animation
-// const Meteors = ({ number }: { number: number }) => {
-//   const meteors = React.useMemo(() => new Array(number || 12).fill(true), [number]);
-//   return (
-//     <>
-//       {meteors.map((el, idx) => (
-//         <motion.span
-//           key={"meteor" + idx}
-//           className={cn(
-//             "animate-meteor-effect absolute h-0.5 w-0.5 rounded-[9999px] bg-slate-500 rotate-[215deg]",
-//             "before:content-[''] before:absolute before:top-1/2 before:-translate-y-1/2",
-//             "before:w-[50px] before:h-[1px] before:bg-gradient-to-r before:from-[#64748b] before:to-transparent"
-//           )}
-//           style={{
-//             top: 0,
-//             left: Math.floor(Math.random() * (400 - -400) + -400) + "px",
-//             animationDelay: Math.random() * (0.8 - 0.2) + 0.2 + "s",
-//             animationDuration: Math.floor(Math.random() * (10 - 2) + 2) + "s",
-//           }}
-//           initial={{ opacity: 0 }}
-//           whileInView={{ opacity: 1 }}
-//           viewport={{ once: true, margin: "100px" }}
-//         />
-//       ))}
-//     </>
-//   );
-// };
-
 // Modern card component with dark mode support
 const InfoCard = ({ title, content, delay, gradient }: {
   title: string;
