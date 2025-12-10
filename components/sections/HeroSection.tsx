@@ -98,16 +98,11 @@ export default function HeroSection() {
 
   return (
     <div className="relative w-full overflow-hidden min-h-screen">
-      {/* Simplified Background Effects */}
-      <div className="absolute inset-0 bg-gradient-to-b from-blue-500/5 via-transparent to-violet-500/5" />
-
-      {/* Reduced gradient orbs - only show if motion is not reduced */}
-      {!prefersReducedMotion && (
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-20 left-20 w-72 h-72 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-10"></div>
-          <div className="absolute top-40 right-20 w-72 h-72 bg-indigo-400 rounded-full mix-blend-multiply filter blur-xl opacity-10"></div>
-        </div>
-      )}
+       {/* Background decoration */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl" />
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
+      </div>
 
 
       <div className="relative z-10 min-h-screen flex items-center justify-center overflow-hidden py-8 sm:py-12 lg:py-2 px-4 sm:px-6 lg:px-8 pt-16 sm:pt-12 md:pt-14 lg:-mt-10">
@@ -135,18 +130,9 @@ export default function HeroSection() {
                 </motion.h2>
               </HeroHighlight>
 
-              {/* Status Tags */}
-              <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 mb-4">
-                <span className="px-4 py-2 bg-green-500/20 dark:bg-green-900/30 border border-green-500/30 dark:border-green-700 rounded-full text-green-700 dark:text-green-300 font-semibold text-sm whitespace-nowrap">
-                  Recent Graduate - Available Now
-                </span>
-                <span className="px-4 py-2 bg-blue-500/20 dark:bg-blue-900/30 border border-blue-500/30 dark:border-blue-700 rounded-full text-blue-700 dark:text-blue-300 font-semibold text-sm whitespace-nowrap">
-                  8+ Years IT Experience
-                </span>
-              </div>
 
               {/* Tech stack rotation */}
-              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 text-base sm:text-lg text-gray-700 dark:text-gray-300">
+              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 text-base sm:text-lg text-gray-700 dark:text-gray-300 pt-2">
                 <span>Building with</span>
                 <AnimatePresence mode="wait">
                   <motion.span
@@ -162,44 +148,12 @@ export default function HeroSection() {
                 </AnimatePresence>
               </div>
 
-              {/* CTA Buttons */}
-              <motion.div
-                initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={prefersReducedMotion ? { duration: 0 } : { delay: 0.2, duration: 0.4 }}
-                className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-2"
-              >
-                <motion.button
-                  onClick={scrollToProjects}
-                  className="group touch-target px-8 py-3 text-base bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 min-h-[48px]"
-                  whileHover={prefersReducedMotion ? {} : { scale: 1.05 }}
-                  whileTap={prefersReducedMotion ? {} : { scale: 0.95 }}
-                  aria-label="View my portfolio projects"
-                >
-                  <span>View My Work</span>
-                  <ArrowDown className="w-4 h-4 group-hover:translate-y-1 transition-transform" />
-                </motion.button>
-
-                <motion.a
-                  href="/resume/Aaron-Perez-Resume.pdf"
-                  download
-                  onClick={handleResumeDownload}
-                  className="group touch-target px-8 py-3 text-base backdrop-blur-sm bg-white/80 dark:bg-gray-800/80 border-2 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 min-h-[48px] hover:bg-white dark:hover:bg-gray-800"
-                  whileHover={prefersReducedMotion ? {} : { scale: 1.05 }}
-                  whileTap={prefersReducedMotion ? {} : { scale: 0.95 }}
-                  aria-label="Download resume PDF"
-                >
-                  <Download className="w-4 h-4 group-hover:scale-110 transition-transform" />
-                  <span>Download Resume</span>
-                </motion.a>
-              </motion.div>
-
-              {/* Social Links */}
+                    {/* Social Links */}
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.3 }}
-                className="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-2"
+                className="flex flex-wrap items-center justify-center lg:justify-start gap-3"
               >
                 {[
                   {
@@ -248,7 +202,40 @@ export default function HeroSection() {
                 })}
               </motion.div>
 
-              {/* Location */}
+            
+
+              {/* CTA Buttons */}
+              <motion.div
+                initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={prefersReducedMotion ? { duration: 0 } : { delay: 0.2, duration: 0.4 }}
+                className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-2"
+              >
+                <motion.button
+                  onClick={scrollToProjects}
+                  className="group touch-target px-8 py-3 text-base bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 min-h-[48px]"
+                  whileHover={prefersReducedMotion ? {} : { scale: 1.05 }}
+                  whileTap={prefersReducedMotion ? {} : { scale: 0.95 }}
+                  aria-label="View my portfolio projects"
+                >
+                  <span>View My Work</span>
+                  <ArrowDown className="w-4 h-4 group-hover:translate-y-1 transition-transform" />
+                </motion.button>
+
+                <motion.a
+                  href="/resume/Aaron-Perez-Resume.pdf"
+                  download
+                  onClick={handleResumeDownload}
+                  className="group touch-target px-8 py-3 text-base backdrop-blur-sm bg-white/80 dark:bg-gray-800/80 border-2 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 min-h-[48px] hover:bg-white dark:hover:bg-gray-800"
+                  whileHover={prefersReducedMotion ? {} : { scale: 1.05 }}
+                  whileTap={prefersReducedMotion ? {} : { scale: 0.95 }}
+                  aria-label="Download resume PDF"
+                >
+                  <Download className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                  <span>Download Resume</span>
+                </motion.a>
+              </motion.div>
+                  {/* Location */}
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -258,6 +245,7 @@ export default function HeroSection() {
                 <MapPin className="w-4 h-4" />
                 <span>Stockton, CA • Open to Remote</span>
               </motion.div>
+        
             </motion.div>
 
             {/* Right Column - Enhanced Visual with Info */}
@@ -311,7 +299,6 @@ export default function HeroSection() {
                       width={32}
                       height={32}
                       className="react-blue"
-                      loading="lazy"
                     />
                   </motion.div>
 
@@ -326,7 +313,6 @@ export default function HeroSection() {
                       width={28}
                       height={28}
                       className="node-green"
-                      loading="lazy"
                     />
                   </motion.div>
 
@@ -341,7 +327,6 @@ export default function HeroSection() {
                       width={32}
                       height={32}
                       className="typescript-blue"
-                      loading="lazy"
                     />
                   </motion.div>
 
@@ -355,7 +340,6 @@ export default function HeroSection() {
                       alt='JavaScript'
                       width={28}
                       height={28}
-                      loading="lazy"
                     />
                   </motion.div>
 
@@ -370,7 +354,7 @@ export default function HeroSection() {
                   transition={{ delay: 1.5, duration: 0.5 }}
                   className="absolute -bottom-8 sm:-bottom-12 transform -translate-x-1/2 flex flex-col sm:flex-row gap-2 items-center z-10"
                 >
-                  <div className="backdrop-blur-sm bg-white/90 dark:bg-gray-800/90 px-4 py-2 rounded-full shadow-lg border border-green-200 dark:border-green-800 whitespace-nowrap">
+                  <div className="backdrop-blur-sm px-4 py-2 bg-green-500/20 dark:bg-green-900/30 border border-green-500/30 dark:border-green-700 rounded-full text-green-700 dark:text-green-300 font-semibold text-sm whitespace-nowrap">
                     <div className="flex items-center gap-2">
                       <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
                       <span className="text-xs sm:text-sm font-semibold text-green-800 dark:text-green-300">
@@ -381,7 +365,7 @@ export default function HeroSection() {
 
                   <motion.button
                     onClick={scrollToContact}
-                    className="backdrop-blur-sm bg-white/90 dark:bg-gray-800/90 px-4 py-2 rounded-full shadow-lg border border-blue-200 dark:border-blue-800 hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors cursor-pointer whitespace-nowrap"
+                    className="backdrop-blur-sm px-4 py-2 bg-blue-500/20 dark:bg-blue-900/30 border border-blue-500/30 dark:border-blue-700 rounded-full text-blue-700 dark:text-blue-300 font-semibold text-sm whitespace-nowrap"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     aria-label="Scroll to contact section"
