@@ -311,7 +311,6 @@ export default function HeroSection() {
                       width={32}
                       height={32}
                       className="react-blue"
-                      loading="lazy"
                     />
                   </motion.div>
 
@@ -326,7 +325,6 @@ export default function HeroSection() {
                       width={28}
                       height={28}
                       className="node-green"
-                      loading="lazy"
                     />
                   </motion.div>
 
@@ -341,7 +339,6 @@ export default function HeroSection() {
                       width={32}
                       height={32}
                       className="typescript-blue"
-                      loading="lazy"
                     />
                   </motion.div>
 
@@ -355,7 +352,6 @@ export default function HeroSection() {
                       alt='JavaScript'
                       width={28}
                       height={28}
-                      loading="lazy"
                     />
                   </motion.div>
 
