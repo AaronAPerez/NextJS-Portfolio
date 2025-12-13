@@ -273,7 +273,7 @@ export default function HeroSection() {
                       <div className="w-full h-full backdrop-blur-sm bg-white/10 dark:bg-gray-800/30 rounded-full p-2">
                         <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700 rounded-full overflow-hidden">
                           <Image
-                            src="/images/profile/headshot.png"
+                            src="/images/profile/headshot.webp"
                             alt="Aaron A. Perez - Full Stack Developer"
                             width={384}
                             height={384}
