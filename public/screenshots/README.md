@@ -6,7 +6,7 @@ This directory contains screenshots used in the main README.md file. Below are i
 
 To complete the README showcase, capture the following screenshots:
 
-### 1. Hero Section (`hero-section.png`)
+### 1. Hero Section (`hero-section.webp`)
 - **Page**: Homepage
 - **Section**: Hero/Landing section
 - **Viewport**: Desktop (1920x1080 or 1440x900)
@@ -17,7 +17,7 @@ To complete the README showcase, capture the following screenshots:
   - Navigation header
   - "Available for Hire" badge
 
-### 2. Skills Section (`skills-section.png`)
+### 2. Skills Section (`skills-section.webp`)
 - **Page**: Homepage
 - **Section**: Skills & Technologies section
 - **Viewport**: Desktop (1920x1080)
@@ -27,7 +27,7 @@ To complete the README showcase, capture the following screenshots:
   - Skills grid showing multiple technology cards
   - Stats (Technologies/Categories/Years Experience)
 
-### 3. Timeline Section (`timeline-section.png`)
+### 3. Timeline Section (`timeline-section.webp`)
 - **Page**: Homepage
 - **Section**: Professional Experience & Education
 - **Viewport**: Desktop (1920x1080)
@@ -36,32 +36,32 @@ To complete the README showcase, capture the following screenshots:
   - At least one experience card and one education card
   - Timeline layout with gradient cards
 
-### 4. Mobile View (`mobile-hero.png`)
+### 4. Mobile View (`mobile-hero.webp`)
 - **Viewport**: iPhone 12 Pro (390x844) or similar
 - **Section**: Hero section on mobile
 - **Orientation**: Portrait
 - **What to capture**: Full mobile hero layout
 
-### 5. Tablet View (`tablet-view.png`)
+### 5. Tablet View (`tablet-view.webp`)
 - **Viewport**: iPad (768x1024) or similar
 - **Section**: Skills or Projects section
 - **Orientation**: Portrait or Landscape
 - **What to capture**: Responsive grid layout
 
-### 6. Desktop View (`desktop-view.png`)
+### 6. Desktop View (`desktop-view.webp`)
 - **Viewport**: Desktop (1920x1080)
 - **Section**: Full homepage or projects section
 - **What to capture**: Wide desktop layout showcase
 
-### 7. Light Mode (`light-mode.png`)
+### 7. Light Mode (`light-mode.webp`)
 - **Theme**: Light mode active
 - **Section**: Any prominent section (Hero or About)
 - **Viewport**: Desktop
 - **What to capture**: Light theme styling
 
-### 8. Dark Mode (`dark-mode.png`)
+### 8. Dark Mode (`dark-mode.webp`)
 - **Theme**: Dark mode active
-- **Section**: Same section as light-mode.png
+- **Section**: Same section as light-mode.webp
 - **Viewport**: Desktop
 - **What to capture**: Dark theme styling (for comparison)
 
@@ -98,7 +98,7 @@ To complete the README showcase, capture the following screenshots:
 ## 📏 Screenshot Specifications
 
 ### Image Format
-- **Format**: PNG (preferred) or WebP
+- **Format**: webp (preferred) or WebP
 - **Quality**: High quality, no compression
 - **File Size**: Keep under 500KB per image (optimize if needed)
 
@@ -125,14 +125,14 @@ To complete the README showcase, capture the following screenshots:
 After capturing screenshots, optimize them:
 
 ### Using Online Tools
-- [TinyPNG](https://tinypng.com/) - Compress PNG files
+- [Tinywebp](https://tinywebp.com/) - Compress webp files
 - [Squoosh](https://squoosh.app/) - Google's image optimizer
 
 ### Using Command Line (Optional)
 ```bash
 # Install ImageMagick
 # Then resize/compress:
-magick convert input.png -resize 1920x1080 -quality 85 output.png
+magick convert input.webp -resize 1920x1080 -quality 85 output.webp
 ```
 
 ---
@@ -142,15 +142,15 @@ magick convert input.png -resize 1920x1080 -quality 85 output.png
 Follow these naming conventions for consistency:
 
 ```
-hero-section.png          # Homepage hero
-skills-section.png        # Skills showcase
-timeline-section.png      # Experience timeline
-projects-section.png      # Featured projects
-mobile-hero.png          # Mobile view
-tablet-view.png          # Tablet view
-desktop-view.png         # Desktop full view
-light-mode.png           # Light theme
-dark-mode.png            # Dark theme
+hero-section.webp          # Homepage hero
+skills-section.webp        # Skills showcase
+timeline-section.webp      # Experience timeline
+projects-section.webp      # Featured projects
+mobile-hero.webp          # Mobile view
+tablet-view.webp          # Tablet view
+desktop-view.webp         # Desktop full view
+light-mode.webp           # Light theme
+dark-mode.webp            # Dark theme
 ```
 
 ---
@@ -162,7 +162,7 @@ Before pushing screenshots to GitHub:
 - [ ] All 8 required screenshots captured
 - [ ] Images optimized (under 500KB each)
 - [ ] Filenames match README references
-- [ ] PNG or WebP format
+- [ ] webp or WebP format
 - [ ] No personal/sensitive information visible
 - [ ] High quality and readable text
 - [ ] Consistent styling across screenshots

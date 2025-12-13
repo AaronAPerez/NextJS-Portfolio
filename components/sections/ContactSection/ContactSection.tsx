@@ -264,7 +264,7 @@ const ContactInfoCard = () => (
       <div className="flex items-center gap-3 mb-6">
         <div className="px-2 pt-1 bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl">
           <Image
-            src="/images/profile/headshot.png"
+            src="/images/profile/headshot.webp"
             alt="Aaron A. Perez - Full Stack Developer"
             width={60}
             height={60} 

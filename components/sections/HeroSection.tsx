@@ -98,7 +98,7 @@ export default function HeroSection() {
 
   return (
     <div className="relative w-full overflow-hidden min-h-screen">
-       {/* Background decoration */}
+      {/* Background decoration */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl" />
         <div className="absolute top-0 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
@@ -148,7 +148,7 @@ export default function HeroSection() {
                 </AnimatePresence>
               </div>
 
-                    {/* Social Links */}
+              {/* Social Links */}
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -202,7 +202,7 @@ export default function HeroSection() {
                 })}
               </motion.div>
 
-            
+
 
               {/* CTA Buttons */}
               <motion.div
@@ -235,7 +235,7 @@ export default function HeroSection() {
                   <span>Download Resume</span>
                 </motion.a>
               </motion.div>
-                  {/* Location */}
+              {/* Location */}
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -245,7 +245,7 @@ export default function HeroSection() {
                 <MapPin className="w-4 h-4" />
                 <span>Stockton, CA • Open to Remote</span>
               </motion.div>
-        
+
             </motion.div>
 
             {/* Right Column - Enhanced Visual with Info */}
@@ -273,7 +273,7 @@ export default function HeroSection() {
                       <div className="w-full h-full backdrop-blur-sm bg-white/10 dark:bg-gray-800/30 rounded-full p-2">
                         <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700 rounded-full overflow-hidden">
                           <Image
-                            src="/images/profile/headshot.png"
+                            src="/images/profile/headshot.webp"
                             alt="Aaron A. Perez - Full Stack Developer"
                             width={384}
                             height={384}
@@ -354,7 +354,7 @@ export default function HeroSection() {
                   transition={{ delay: 1.5, duration: 0.5 }}
                   className="absolute -bottom-8 sm:-bottom-12 transform -translate-x-1/2 flex flex-col sm:flex-row gap-2 items-center z-10"
                 >
-                  <div className="backdrop-blur-sm px-4 py-2 bg-green-500/20 dark:bg-green-900/30 border border-green-500/30 dark:border-green-700 rounded-full text-green-700 dark:text-green-300 font-semibold text-sm whitespace-nowrap">
+                  <div className="backdrop-blur-sm bg-white/90 dark:bg-gray-800/90 px-4 py-2 rounded-full shadow-lg border border-green-200 dark:border-green-800 whitespace-nowrap">
                     <div className="flex items-center gap-2">
                       <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
                       <span className="text-xs sm:text-sm font-semibold text-green-800 dark:text-green-300">
@@ -365,7 +365,7 @@ export default function HeroSection() {
 
                   <motion.button
                     onClick={scrollToContact}
-                    className="backdrop-blur-sm px-4 py-2 bg-blue-500/20 dark:bg-blue-900/30 border border-blue-500/30 dark:border-blue-700 rounded-full text-blue-700 dark:text-blue-300 font-semibold text-sm whitespace-nowrap"
+                    className="backdrop-blur-sm bg-white/90 dark:bg-gray-800/90 px-4 py-2 rounded-full shadow-lg border border-blue-200 dark:border-blue-800 hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors cursor-pointer whitespace-nowrap"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     aria-label="Scroll to contact section"
