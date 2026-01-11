@@ -2,6 +2,7 @@
 
 import React from 'react';
 import dynamic from 'next/dynamic';
+import { EditorWrapper } from "@/components/EditorWrapper";
 import HeroSection from "@/components/sections/HeroSection";
 import SectionLoader from "@/components/ui/SectionLoader";
 
@@ -42,13 +43,17 @@ export default function Home() {
           id="home"
           aria-labelledby="hero-heading"
         >
-          <HeroSection />
+           <EditorWrapper id="Hero" order={0}>
+              <HeroSection />
+            </EditorWrapper>
         </section>
 
         {/* About Section */}
         <section id="about"
         aria-label="about-section">
-          <AboutSection />
+          <EditorWrapper id="Projects" order={1}>
+            <AboutSection />
+          </EditorWrapper>
         </section>
 
         {/* Skills Section - Show capabilities immediately */}
@@ -56,7 +61,9 @@ export default function Home() {
           id="skills"
           aria-labelledby="skills-heading"
         >
-          <Skills />
+          <EditorWrapper id="Contact" order={2}>
+            <Skills />
+          </EditorWrapper>
         </section>
 
         {/* Projects Section */}
