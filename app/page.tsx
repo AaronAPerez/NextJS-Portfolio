@@ -43,14 +43,14 @@ export default function Home() {
           id="home"
           aria-labelledby="hero-heading"
         >
-           <EditorWrapper id="Hero" order={0}>
-              <HeroSection />
-            </EditorWrapper>
+          <EditorWrapper id="Hero" order={0}>
+            <HeroSection />
+          </EditorWrapper>
         </section>
 
         {/* About Section */}
         <section id="about"
-        aria-label="about-section">
+          aria-label="about-section">
           <EditorWrapper id="Projects" order={1}>
             <AboutSection />
           </EditorWrapper>
@@ -68,15 +68,19 @@ export default function Home() {
 
         {/* Projects Section */}
         <section id="projects"
-        aria-label="projects-section">
-          <ProjectsSection />
+          aria-label="projects-section">
+          <EditorWrapper id="Projects" order={3}>
+            <ProjectsSection />
+          </EditorWrapper>
         </section>
 
 
         {/* Experience Section */}
-        <section id="experience" 
-        aria-label="experience-section">
-          <Timeline />
+        <section id="experience"
+          aria-label="experience-section">
+          <EditorWrapper id="Timeline" order={4}>
+            <Timeline />
+          </EditorWrapper>
         </section>
 
         {/* Contact Section CTA */}
