@@ -24,21 +24,41 @@ export function EditorWrapper({ id, order = 0, children }: EditorWrapperProps) {
     }
   }, []);
 
-  function sendMessage(type: "hover" | "select", rect: DOMRect) {
+  function sendMessage(type: string, payload: any) {
     window.parent.postMessage(
       {
         type,
         id,
         order,
-        rect: {
-          x: rect.x,
-          y: rect.y,
-          width: rect.width,
-          height: rect.height,
-        },
+        ...payload,
       },
       "*"
     );
+  }
+
+  function handleInlineEdit(e: React.MouseEvent<HTMLDivElement>) {
+    // Find the closest element with a data-prop attribute
+    const target = e.target as HTMLElement;
+    const propElement = target.closest("[data-prop]") as HTMLElement | null;
+
+    if (!propElement) return;
+
+    const propName = propElement.getAttribute("data-prop");
+    if (!propName) return;
+
+    const text = propElement.textContent ?? "";
+    const rect = propElement.getBoundingClientRect();
+
+    sendMessage("inline-edit", {
+      propName,
+      currentValue: text,
+      rect: {
+        x: rect.x,
+        y: rect.y,
+        width: rect.width,
+        height: rect.height,
+      },
+    });
   }
 
   return (
@@ -47,12 +67,31 @@ export function EditorWrapper({ id, order = 0, children }: EditorWrapperProps) {
       data-editor-order={order}
       onMouseEnter={(e) => {
         const rect = e.currentTarget.getBoundingClientRect();
-        sendMessage("hover", rect);
+        sendMessage("hover", {
+          rect: {
+            x: rect.x,
+            y: rect.y,
+            width: rect.width,
+            height: rect.height,
+          },
+        });
       }}
       onClick={(e) => {
         e.preventDefault();
+
+        // 1. Normal selection
         const rect = e.currentTarget.getBoundingClientRect();
-        sendMessage("select", rect);
+        sendMessage("select", {
+          rect: {
+            x: rect.x,
+            y: rect.y,
+            width: rect.width,
+            height: rect.height,
+          },
+        });
+
+        // 2. Inline editing
+        handleInlineEdit(e);
       }}
     >
       {children}
