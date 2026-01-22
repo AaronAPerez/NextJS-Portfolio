@@ -51,6 +51,37 @@ const TECHNOLOGIES = [
   { name: 'C#', color: 'csharp-indigo' }
 ]
 
+// Static social links data outside component
+const SOCIAL_LINKS = [
+  {
+    icon: Github,
+    href: 'https://github.com/AaronAPerez',
+    label: 'GitHub',
+    baseColor: 'text-[#181717] dark:text-white',
+    hoverColor: 'hover:text-white dark:hover:text-[#181717]',
+    baseBg: 'bg-white/80 dark:bg-gray-800/80',
+    hoverBg: 'hover:bg-[#181717] dark:hover:bg-white'
+  },
+  {
+    icon: Linkedin,
+    href: 'https://linkedin.com/in/aaronaperezdev',
+    label: 'LinkedIn',
+    baseColor: 'text-[#0A66C2]',
+    hoverColor: 'hover:text-white',
+    baseBg: 'bg-white/80 dark:bg-gray-800/80',
+    hoverBg: 'hover:bg-[#0A66C2]'
+  },
+  {
+    icon: Mail,
+    href: 'mailto:aaronperezdev@gmail.com',
+    label: 'Email',
+    baseColor: 'text-[#EA4335]',
+    hoverColor: 'hover:text-white',
+    baseBg: 'bg-white/80 dark:bg-gray-800/80',
+    hoverBg: 'hover:bg-[#EA4335]'
+  }
+]
+
 /**
  * Performance-optimized Hero Section
  * - Reduced animations for better FPS
@@ -155,35 +186,7 @@ export default function HeroSection() {
                 transition={{ duration: 0.3 }}
                 className="flex flex-wrap items-center justify-center lg:justify-start gap-3"
               >
-                {[
-                  {
-                    icon: Github,
-                    href: 'https://github.com/AaronAPerez',
-                    label: 'GitHub',
-                    baseColor: 'text-[#181717] dark:text-white',
-                    hoverColor: 'hover:text-white dark:hover:text-[#181717]',
-                    baseBg: 'bg-white/80 dark:bg-gray-800/80',
-                    hoverBg: 'hover:bg-[#181717] dark:hover:bg-white'
-                  },
-                  {
-                    icon: Linkedin,
-                    href: 'https://linkedin.com/in/aaronaperezdev',
-                    label: 'LinkedIn',
-                    baseColor: 'text-[#0A66C2]',
-                    hoverColor: 'hover:text-white',
-                    baseBg: 'bg-white/80 dark:bg-gray-800/80',
-                    hoverBg: 'hover:bg-[#0A66C2]'
-                  },
-                  {
-                    icon: Mail,
-                    href: 'mailto:aaronperezdev@gmail.com',
-                    label: 'Email',
-                    baseColor: 'text-[#EA4335]',
-                    hoverColor: 'hover:text-white',
-                    baseBg: 'bg-white/80 dark:bg-gray-800/80',
-                    hoverBg: 'hover:bg-[#EA4335]'
-                  }
-                ].map((social) => {
+                {SOCIAL_LINKS.map((social) => {
                   const IconComponent = social.icon
                   return (
                     <motion.a
