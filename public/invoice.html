@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AP Designs - Invoice</title>
+    <style>
+        /* ============================================
+           CSS RESET & BASE STYLES
+           ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* ============================================
+           ROOT VARIABLES - Brand Colors & Typography
+           ============================================ */
+        :root {
+            /* Primary Brand Colors */
+            --color-primary: #00D4FF; /* Electric Blue */
+            --color-primary-dark: #0096C7;
+            --color-secondary: #4361EE; /* Indigo accent */
+            
+            /* Neutrals */
+            --color-black: #000000;
+            --color-gray-900: #0F172A;
+            --color-gray-800: #1E293B;
+            --color-gray-700: #334155;
+            --color-gray-600: #475569;
+            --color-gray-300: #CBD5E1;
+            --color-gray-100: #F1F5F9;
+            --color-white: #FFFFFF;
+            
+            /* Status Colors */
+            --color-success: #10B981;
+            --color-warning: #F59E0B;
+            --color-danger: #EF4444;
+            
+            /* Typography */
+            --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --font-display: 'Space Grotesk', var(--font-primary);
+            --font-mono: 'Courier New', monospace;
+            
+            /* Spacing System */
+            --space-xs: 0.5rem;
+            --space-sm: 1rem;
+            --space-md: 1.5rem;
+            --space-lg: 2rem;
+            --space-xl: 3rem;
+            --space-2xl: 4rem;
+            
+            /* Border Radius */
+            --radius-sm: 0.375rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 1rem;
+            
+            /* Shadows */
+            --shadow-sm: 0 1px 2px rgba(0, 212, 255, 0.05);
+            --shadow-md: 0 4px 6px rgba(0, 212, 255, 0.1);
+            --shadow-lg: 0 10px 15px rgba(0, 212, 255, 0.15);
+            --shadow-glow: 0 0 20px rgba(0, 212, 255, 0.3);
+        }
+
+        /* ============================================
+           TYPOGRAPHY IMPORTS
+           ============================================ */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+        /* ============================================
+           GLOBAL STYLES
+           ============================================ */
+        body {
+            font-family: var(--font-primary);
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--color-gray-700);
+            background: linear-gradient(135deg, var(--color-black) 0%, var(--color-gray-900) 100%);
+            min-height: 100vh;
+            padding: var(--space-lg) var(--space-md);
+        }
+
+        /* ============================================
+           INVOICE CONTAINER
+           Purpose: Main wrapper for invoice document
+           ============================================ */
+        .invoice-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--color-white);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* ============================================
+           HEADER SECTION
+           Purpose: Brand identity and invoice title
+           ============================================ */
+        .invoice-header {
+            background: linear-gradient(135deg, var(--color-black) 0%, var(--color-gray-900) 100%);
+            padding: var(--space-xl) var(--space-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Subtle animated background pattern */
+        .invoice-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(30deg, transparent 12%, rgba(0, 212, 255, 0.05) 12.5%, rgba(0, 212, 255, 0.05) 13%, transparent 13.5%);
+            background-size: 20px 20px;
+            opacity: 0.3;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: var(--space-lg);
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo-section {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .logo {
+            max-width: 220px;
+            width: 100%;
+            height: auto;
+            margin-bottom: var(--space-sm);
+            filter: drop-shadow(var(--shadow-glow));
+        }
+
+        .company-info {
+            color: var(--color-gray-100);
+            font-size: 0.9375rem;
+            line-height: 1.6;
+        }
+
+        .company-info p {
+            margin-bottom: 0.25rem;
+        }
+
+        .invoice-title-section {
+            text-align: right;
+            flex: 0 0 auto;
+        }
+
+        .invoice-title {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: var(--space-xs);
+            letter-spacing: -0.5px;
+        }
+
+        .invoice-number {
+            font-size: 1rem;
+            color: var(--color-gray-300);
+            font-weight: 500;
+        }
+
+        .invoice-date {
+            font-size: 0.9375rem;
+            color: var(--color-gray-300);
+            margin-top: 0.25rem;
+        }
+
+        /* ============================================
+           INVOICE DETAILS SECTION
+           Purpose: Bill To and Invoice Info
+           ============================================ */
+        .invoice-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--space-lg);
+            padding: var(--space-xl) var(--space-lg);
+            background: var(--color-gray-100);
+            border-bottom: 3px solid var(--color-primary);
+        }
+
+        .detail-block {
+            background: var(--color-white);
+            padding: var(--space-md);
+            border-radius: var(--radius-sm);
+            border-left: 4px solid var(--color-primary);
+        }
+
+        .detail-label {
+            font-family: var(--font-display);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--color-gray-600);
+            font-weight: 600;
+            margin-bottom: var(--space-xs);
+        }
+
+        .detail-content {
+            color: var(--color-gray-900);
+            font-size: 0.9375rem;
+            line-height: 1.6;
+        }
+
+        .detail-content p {
+            margin-bottom: 0.25rem;
+        }
+
+        .detail-content strong {
+            font-weight: 600;
+            color: var(--color-gray-900);
+        }
+
+        /* ============================================
+           LINE ITEMS TABLE
+           Purpose: Itemized list of services
+           ============================================ */
+        .line-items {
+            padding: var(--space-lg);
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-gray-900);
+            margin-bottom: var(--space-lg);
+            padding-bottom: var(--space-sm);
+            border-bottom: 2px solid var(--color-primary);
+        }
+
+        /* Responsive table wrapper */
+        .table-wrapper {
+            overflow-x: auto;
+            margin-bottom: var(--space-lg);
+        }
+
+        .items-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9375rem;
+        }
+
+        .items-table thead {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+            color: var(--color-white);
+        }
+
+        .items-table th {
+            padding: var(--space-md);
+            text-align: left;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.8125rem;
+        }
+
+        .items-table th:last-child {
+            text-align: right;
+        }
+
+        .items-table tbody tr {
+            border-bottom: 1px solid var(--color-gray-100);
+            transition: background-color 0.2s ease;
+        }
+
+        .items-table tbody tr:hover {
+            background-color: rgba(0, 212, 255, 0.05);
+        }
+
+        .items-table tbody tr:last-child {
+            border-bottom: 2px solid var(--color-gray-300);
+        }
+
+        .items-table td {
+            padding: var(--space-md);
+            color: var(--color-gray-700);
+        }
+
+        .items-table td:last-child {
+            text-align: right;
+            font-weight: 600;
+            color: var(--color-gray-900);
+        }
+
+        .item-description {
+            font-size: 0.875rem;
+            color: var(--color-gray-600);
+            margin-top: 0.25rem;
+            line-height: 1.5;
+        }
+
+        /* ============================================
+           TOTALS SECTION
+           Purpose: Summary of charges
+           ============================================ */
+        .totals-section {
+            display: flex;
+            justify-content: flex-end;
+            padding: 0 var(--space-lg) var(--space-lg);
+        }
+
+        .totals {
+            width: 100%;
+            max-width: 400px;
+            background: var(--color-gray-100);
+            border-radius: var(--radius-md);
+            padding: var(--space-lg);
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--space-sm) 0;
+            border-bottom: 1px solid var(--color-gray-300);
+        }
+
+        .total-row:last-child {
+            border-bottom: none;
+        }
+
+        .total-label {
+            font-weight: 500;
+            color: var(--color-gray-700);
+            font-size: 1rem;
+        }
+
+        .total-amount {
+            font-weight: 600;
+            color: var(--color-gray-900);
+            font-size: 1.125rem;
+        }
+
+        /* Grand total styling */
+        .grand-total {
+            margin-top: var(--space-md);
+            padding-top: var(--space-md);
+            border-top: 3px solid var(--color-primary);
+        }
+
+        .grand-total .total-label {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--color-gray-900);
+        }
+
+        .grand-total .total-amount {
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+
+        /* ============================================
+           PAYMENT SCHEDULE SECTION
+           Purpose: Deposit and balance due information
+           ============================================ */
+        .payment-schedule {
+            padding: 0 var(--space-lg) var(--space-xl);
+        }
+
+        .payment-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--space-md);
+            margin-top: var(--space-md);
+        }
+
+        .payment-card {
+            background: linear-gradient(135deg, var(--color-white) 0%, var(--color-gray-100) 100%);
+            border: 2px solid var(--color-gray-300);
+            border-radius: var(--radius-md);
+            padding: var(--space-lg);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .payment-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Deposit card - highlighted */
+        .payment-card.deposit {
+            border-color: var(--color-primary);
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(67, 97, 238, 0.05) 100%);
+        }
+
+        .payment-card-label {
+            font-family: var(--font-display);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--color-gray-600);
+            font-weight: 600;
+            margin-bottom: var(--space-xs);
+        }
+
+        .payment-card.deposit .payment-card-label {
+            color: var(--color-primary);
+        }
+
+        .payment-card-amount {
+            font-family: var(--font-display);
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: var(--color-gray-900);
+            margin-bottom: var(--space-xs);
+        }
+
+        .payment-card.deposit .payment-card-amount {
+            color: var(--color-primary);
+        }
+
+        .payment-card-timing {
+            font-size: 0.9375rem;
+            color: var(--color-gray-600);
+            line-height: 1.5;
+        }
+
+        .payment-status {
+            display: inline-block;
+            padding: 0.375rem 0.75rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: var(--space-sm);
+        }
+
+        .payment-status.due {
+            background: var(--color-warning);
+            color: var(--color-white);
+        }
+
+        .payment-status.pending {
+            background: var(--color-gray-300);
+            color: var(--color-gray-700);
+        }
+
+        /* ============================================
+           PAYMENT INSTRUCTIONS
+           Purpose: How to pay information
+           ============================================ */
+        .payment-instructions {
+            background: var(--color-gray-900);
+            color: var(--color-white);
+            padding: var(--space-xl) var(--space-lg);
+        }
+
+        .payment-instructions .section-title {
+            color: var(--color-primary);
+            border-bottom-color: var(--color-primary);
+        }
+
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--space-md);
+            margin-top: var(--space-lg);
+        }
+
+        .payment-method {
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: var(--radius-sm);
+            padding: var(--space-md);
+        }
+
+        .payment-method-title {
+            font-weight: 600;
+            color: var(--color-primary);
+            margin-bottom: var(--space-xs);
+            display: flex;
+            align-items: center;
+            font-size: 1rem;
+        }
+
+        .payment-method-title::before {
+            content: '●';
+            margin-right: var(--space-xs);
+        }
+
+        .payment-method-details {
+            color: var(--color-gray-100);
+            font-size: 0.9375rem;
+            line-height: 1.6;
+        }
+
+        .payment-method-details p {
+            margin-bottom: 0.25rem;
+        }
+
+        /* ============================================
+           TERMS & CONDITIONS
+           Purpose: Legal and business terms
+           ============================================ */
+        .terms {
+            padding: var(--space-xl) var(--space-lg);
+            background: var(--color-gray-100);
+        }
+
+        .terms .section-title {
+            font-size: 1.25rem;
+            margin-bottom: var(--space-md);
+        }
+
+        .terms-list {
+            list-style: none;
+            color: var(--color-gray-700);
+            font-size: 0.9375rem;
+            line-height: 1.7;
+        }
+
+        .terms-list li {
+            padding-left: var(--space-lg);
+            position: relative;
+            margin-bottom: var(--space-sm);
+        }
+
+        .terms-list li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--color-primary);
+            font-weight: 700;
+        }
+
+        /* ============================================
+           FOOTER
+           Purpose: Thank you message and contact info
+           ============================================ */
+        .invoice-footer {
+            background: linear-gradient(135deg, var(--color-black) 0%, var(--color-gray-900) 100%);
+            color: var(--color-white);
+            padding: var(--space-xl) var(--space-lg);
+            text-align: center;
+        }
+
+        .footer-message {
+            font-size: 1.125rem;
+            color: var(--color-primary);
+            font-weight: 600;
+            margin-bottom: var(--space-md);
+        }
+
+        .footer-contact {
+            color: var(--color-gray-100);
+            font-size: 0.9375rem;
+            line-height: 1.6;
+        }
+
+        .footer-contact a {
+            color: var(--color-primary);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-contact a:hover {
+            color: var(--color-white);
+        }
+
+        /* ============================================
+           UTILITY CLASSES
+           ============================================ */
+        .text-center {
+            text-align: center;
+        }
+
+        .mb-sm {
+            margin-bottom: var(--space-sm);
+        }
+
+        .mb-md {
+            margin-bottom: var(--space-md);
+        }
+
+        /* ============================================
+           RESPONSIVE DESIGN
+           ============================================ */
+        @media (max-width: 768px) {
+            body {
+                padding: var(--space-sm);
+            }
+
+            .invoice-header {
+                padding: var(--space-lg) var(--space-md);
+            }
+
+            .header-content {
+                flex-direction: column;
+            }
+
+            .invoice-title-section {
+                text-align: left;
+            }
+
+            .invoice-title {
+                font-size: 2rem;
+            }
+
+            .line-items,
+            .totals-section,
+            .payment-schedule,
+            .payment-instructions,
+            .terms {
+                padding-left: var(--space-md);
+                padding-right: var(--space-md);
+            }
+
+            .items-table {
+                font-size: 0.875rem;
+            }
+
+            .items-table th,
+            .items-table td {
+                padding: var(--space-sm);
+            }
+
+            .payment-card-amount {
+                font-size: 1.75rem;
+            }
+
+            .logo {
+                max-width: 180px;
+            }
+        }
+
+        /* ============================================
+           PRINT STYLES
+           Purpose: Optimized for PDF export/printing
+           ============================================ */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .invoice-container {
+                box-shadow: none;
+                max-width: 100%;
+            }
+
+            .invoice-header::before {
+                display: none;
+            }
+
+            .payment-card,
+            .payment-method {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+
+            /* Remove hover effects in print */
+            .items-table tbody tr:hover,
+            .payment-card:hover {
+                background-color: transparent;
+                transform: none;
+                box-shadow: none;
+            }
+        }
+
+        /* ============================================
+           ACCESSIBILITY IMPROVEMENTS
+           ============================================ */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Focus styles for keyboard navigation */
+        a:focus {
+            outline: 2px solid var(--color-primary);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <!-- ============================================
+         INVOICE CONTAINER
+         Purpose: Main wrapper for invoice document
+         ============================================ -->
+    <div class="invoice-container">
+        
+        <!-- ============================================
+             HEADER SECTION
+             Purpose: Brand identity and invoice information
+             ============================================ -->
+        <header class="invoice-header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <img src="/mnt/user-data/uploads/AP-Designs-Logo-Indigo-ElectricBlue-compressed.webp" 
+                         alt="AP Designs Web Development Logo" 
+                         class="logo">
+                    <div class="company-info">
+                        <p><strong>AP Designs - Web Development</strong></p>
+                        <p>Professional Web Solutions</p>
+                        <p>Stockton, California</p>
+                    </div>
+                </div>
+                
+                <div class="invoice-title-section">
+                    <h1 class="invoice-title">INVOICE</h1>
+                    <p class="invoice-number">Invoice #: <strong>APD-2025-001</strong></p>
+                    <p class="invoice-date">Date: February 7, 2026</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- ============================================
+             INVOICE DETAILS
+             Purpose: Bill to and project information
+             ============================================ -->
+        <section class="invoice-details">
+            <div class="detail-block">
+                <div class="detail-label">Bill To</div>
+                <div class="detail-content">
+                    <p><strong>[Client Name]</strong></p>
+                    <p>[Client Company]</p>
+                    <p>[Client Address]</p>
+                    <p>[City, State ZIP]</p>
+                    <p>[Client Email]</p>
+                    <p>[Client Phone]</p>
+                </div>
+            </div>
+
+            <div class="detail-block">
+                <div class="detail-label">Project Details</div>
+                <div class="detail-content">
+                    <p><strong>Project:</strong> Custom Website Development</p>
+                    <p><strong>Due Date:</strong> Upon Completion</p>
+                    <p><strong>Payment Terms:</strong> 50% Deposit, 50% on Launch</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================
+             LINE ITEMS
+             Purpose: Itemized services and charges
+             ============================================ -->
+        <section class="line-items">
+            <h2 class="section-title">Services Provided</h2>
+            
+            <div class="table-wrapper">
+                <table class="items-table">
+                    <thead>
+                        <tr>
+                            <th>Description</th>
+                            <th>Quantity</th>
+                            <th>Unit Price</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <strong>Custom Website Development</strong>
+                                <div class="item-description">
+                                    Professional responsive website with modern design, mobile optimization, 
+                                    SEO implementation, and deployment to production hosting. Includes up to 5 pages, 
+                                    content integration, and initial setup.
+                                </div>
+                            </td>
+                            <td>1</td>
+                            <td>$1,500.00</td>
+                            <td>$1,500.00</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Contact Form Add-On</strong>
+                                <div class="item-description">
+                                    Custom contact form with spam protection, email notifications, 
+                                    auto-reply functionality, and form validation. Includes configuration 
+                                    and testing.
+                                </div>
+                            </td>
+                            <td>1</td>
+                            <td>$200.00</td>
+                            <td>$200.00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ============================================
+             TOTALS SECTION
+             Purpose: Summary of total charges
+             ============================================ -->
+        <section class="totals-section">
+            <div class="totals">
+                <div class="total-row">
+                    <span class="total-label">Subtotal</span>
+                    <span class="total-amount">$1,700.00</span>
+                </div>
+                <div class="total-row">
+                    <span class="total-label">Tax (0%)</span>
+                    <span class="total-amount">$0.00</span>
+                </div>
+                <div class="total-row grand-total">
+                    <span class="total-label">Total Due</span>
+                    <span class="total-amount">$1,700.00</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================
+             PAYMENT SCHEDULE
+             Purpose: Deposit and balance information
+             ============================================ -->
+        <section class="payment-schedule">
+            <h2 class="section-title">Payment Schedule</h2>
+            
+            <div class="payment-cards">
+                <!-- Deposit Card -->
+                <div class="payment-card deposit">
+                    <div class="payment-card-label">Deposit (50%)</div>
+                    <div class="payment-card-amount">$850.00</div>
+                    <div class="payment-card-timing">
+                        <strong>Due:</strong> To begin project work
+                    </div>
+                    <span class="payment-status due">Due Now</span>
+                </div>
+
+                <!-- Balance Card -->
+                <div class="payment-card">
+                    <div class="payment-card-label">Balance (50%)</div>
+                    <div class="payment-card-amount">$850.00</div>
+                    <div class="payment-card-timing">
+                        <strong>Due:</strong> Upon project completion, before website launch
+                    </div>
+                    <span class="payment-status pending">Due on Completion</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================
+             PAYMENT INSTRUCTIONS
+             Purpose: How to pay
+             ============================================ -->
+        <section class="payment-instructions">
+            <h2 class="section-title">Payment Methods</h2>
+            
+            <div class="payment-methods">
+                <div class="payment-method">
+                    <div class="payment-method-title">Bank Transfer / ACH</div>
+                    <div class="payment-method-details">
+                        <p><strong>Bank:</strong> [Your Bank Name]</p>
+                        <p><strong>Account:</strong> [Account Number]</p>
+                        <p><strong>Routing:</strong> [Routing Number]</p>
+                    </div>
+                </div>
+
+                <div class="payment-method">
+                    <div class="payment-method-title">Credit/Debit Card</div>
+                    <div class="payment-method-details">
+                        <p>Secure payment link will be sent via email</p>
+                        <p>All major cards accepted</p>
+                    </div>
+                </div>
+
+                <div class="payment-method">
+                    <div class="payment-method-title">PayPal / Venmo</div>
+                    <div class="payment-method-details">
+                        <p><strong>PayPal:</strong> [your-email@domain.com]</p>
+                        <p><strong>Venmo:</strong> @YourHandle</p>
+                    </div>
+                </div>
+
+                <div class="payment-method">
+                    <div class="payment-method-title">Check</div>
+                    <div class="payment-method-details">
+                        <p>Make payable to: <strong>AP Designs</strong></p>
+                        <p>Mail to: [Your Mailing Address]</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================
+             TERMS & CONDITIONS
+             Purpose: Legal and business terms
+             ============================================ -->
+        <section class="terms">
+            <h2 class="section-title">Terms & Conditions</h2>
+            <ul class="terms-list">
+                <li>A 50% deposit ($850) is required to begin project work. Work will commence upon receipt of deposit payment.</li>
+                <li>The remaining balance ($850) is due upon project completion, before the website is launched to production.</li>
+                <li>Payment is due within 7 days of invoice date unless otherwise agreed upon in writing.</li>
+                <li>Late payments may incur a 1.5% monthly interest charge on outstanding balances.</li>
+                <li>Project revisions beyond the agreed scope may incur additional charges at $75/hour.</li>
+                <li>Client is responsible for providing all content (text, images, logos) in a timely manner.</li>
+                <li>Final website files and access will be transferred upon receipt of final payment.</li>
+                <li>AP Designs retains the right to showcase this project in its portfolio unless otherwise agreed.</li>
+            </ul>
+        </section>
+
+        <!-- ============================================
+             FOOTER
+             Purpose: Thank you and contact information
+             ============================================ -->
+        <footer class="invoice-footer">
+            <p class="footer-message">Thank you for your business!</p>
+            <div class="footer-contact">
+                <p>Questions about this invoice? Contact us:</p>
+                <p>Email: <a href="mailto:contact@apdesigns.com">contact@apdesigns.com</a></p>
+                <p>Phone: <a href="tel:+12095551234">(209) 555-1234</a></p>
+                <p>Web: <a href="https://apdesigns.com" target="_blank">www.apdesigns.com</a></p>
+            </div>
+        </footer>
+
+    </div>
+
+</body>
+</html>

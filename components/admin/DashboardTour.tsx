@@ -38,7 +38,7 @@ export default function DashboardTour() {
             Welcome to Your Admin Dashboard!
           </h2>
           <p className="text-earth-600">
-            Manage your Guerrero Wellness website with powerful tools
+            Manage your Portfolio website with powerful tools
           </p>
         </div>
 

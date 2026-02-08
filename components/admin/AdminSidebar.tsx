@@ -1,8 +1,9 @@
 'use client'
 
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { clsx } from 'clsx'
+import { useState } from 'react'
 
 const navigation = [
   { name: 'Dashboard', href: '/admin/dashboard', icon: '📊' },
@@ -11,12 +12,29 @@ const navigation = [
   // { name: 'Blog', href: '/admin/blog', icon: '📝' },
   { name: 'Images', href: '/admin/images', icon: '🖼️' },
   // { name: 'Analytics', href: '/admin/analytics', icon: '📈' },
+  { name: 'Invoice', href: '/admin/invoice', icon: '📋' },
+  { name: 'Hosting Options', href: '/admin/hosting-options', icon: '🌐' },
   { name: 'Exports', href: '/admin/exports', icon: '📤' },
   { name: 'Settings', href: '/admin/settings', icon: '⚙️' },
 ]
 
 export default function AdminSidebar() {
   const pathname = usePathname()
+  const router = useRouter()
+  const [isLoggingOut, setIsLoggingOut] = useState(false)
+
+  const handleLogout = async () => {
+    setIsLoggingOut(true)
+    try {
+      await fetch('/api/admin/logout', { method: 'POST' })
+      router.push('/admin/login')
+      router.refresh()
+    } catch (error) {
+      console.error('Logout failed:', error)
+    } finally {
+      setIsLoggingOut(false)
+    }
+  }
 
   return (
     <>
@@ -60,6 +78,17 @@ export default function AdminSidebar() {
                     )
                   })}
                 </ul>
+              </li>
+              {/* Logout button at bottom */}
+              <li className="mt-auto">
+                <button
+                  onClick={handleLogout}
+                  disabled={isLoggingOut}
+                  className="w-full group flex gap-x-3 rounded-md p-3 text-sm leading-6 font-semibold transition-all text-red-400 hover:text-red-300 hover:bg-red-500/10 disabled:opacity-50"
+                >
+                  <span className="text-xl">🚪</span>
+                  {isLoggingOut ? 'Logging out...' : 'Logout'}
+                </button>
               </li>
             </ul>
           </nav>
