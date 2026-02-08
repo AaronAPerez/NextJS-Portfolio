@@ -8,7 +8,6 @@ import { useState } from 'react'
 const navigation = [
   { name: 'Dashboard', href: '/admin/dashboard', icon: '📊' },
   { name: 'Messages', href: '/admin/messages', icon: '💬' },
-  // { name: 'Waitlist', href: '/admin/waitlist', icon: '📋' },
   // { name: 'Blog', href: '/admin/blog', icon: '📝' },
   { name: 'Images', href: '/admin/images', icon: '🖼️' },
   // { name: 'Analytics', href: '/admin/analytics', icon: '📈' },

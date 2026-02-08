@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import toast, { Toaster } from "react-hot-toast";
 import EyeIcon from "@/components/icons/EyeIcon";
 import EyeSlashIcon from "@/components/icons/EyeSlashIcon";
@@ -212,6 +213,15 @@ export default function AdminLogin() {
             "Sign in"
           )}
         </button>
+
+        <div className="text-center">
+          <Link
+            href="/"
+            className="text-sm text-gray-600 hover:text-blue-600 transition-colors"
+          >
+            Back to Homepage
+          </Link>
+        </div>
       </form>
     </div >
     </div >

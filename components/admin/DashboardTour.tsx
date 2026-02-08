@@ -51,20 +51,6 @@ export default function DashboardTour() {
             </div>
           </div>
           <div className="flex items-start space-x-3">
-            <span className="text-2xl">📋</span>
-            <div>
-              <h3 className="font-semibold text-earth-900">Waitlist</h3>
-              <p className="text-sm text-earth-600">Manage Hacienda Consuelo retreat signups</p>
-            </div>
-          </div>
-          <div className="flex items-start space-x-3">
-            <span className="text-2xl">📝</span>
-            <div>
-              <h3 className="font-semibold text-earth-900">Blog</h3>
-              <p className="text-sm text-earth-600">Create and publish wellness articles</p>
-            </div>
-          </div>
-          <div className="flex items-start space-x-3">
             <span className="text-2xl">🖼️</span>
             <div>
               <h3 className="font-semibold text-earth-900">Images</h3>
