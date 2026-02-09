@@ -251,14 +251,14 @@ export default function InvoiceForm() {
               margin-bottom: 24px;
             }
             .company-block { display: flex; align-items: flex-start; gap: 20px; }
-            .logo { width: 100px; height: 100px; border-radius: 50%; object-fit: contain; background: rgba(30, 58, 138, 0.9); padding: 2px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); backdrop-filter: blur(8px); }
+            .logo { width: 100px; height: 100px; border-radius: 50%; object-fit: contain; background: rgba(30, 58, 138, 0.9); padding: 2px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); backdrop-filter: blur(8px); margin-top: 8px; }
             .company-name { font-size: 24pt; font-weight: 700; color: #1e293b; margin-bottom: 6px; letter-spacing: -0.5px; margin-top: 8px; }
-            .company-info { color: #475569; font-size: 11pt; line-height: 1.7; font-weight: 500; }
+            .company-info { color: #374151; font-size: 11pt; line-height: 1.7; font-weight: 500; }
             .invoice-block { text-align: right; }
             .invoice-title { font-size: 36pt; font-weight: 800; color: #0ea5e9; letter-spacing: -1px; margin-top: 0; }
             .invoice-meta { margin-top: 12px; }
             .invoice-meta .row { display: flex; justify-content: flex-end; gap: 12px; margin: 4px 0; font-size: 10pt; }
-            .invoice-meta .label { color: #64748b; font-weight: 500; }
+            .invoice-meta .label { color: #475569; font-weight: 500; }
             .invoice-meta .value { font-weight: 600; color: #1e293b; min-width: 100px; text-align: right; }
 
             /* Bill To Section */
@@ -267,7 +267,7 @@ export default function InvoiceForm() {
             .bill-to-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
             .client-info { background: #f8fafc; padding: 16px; border-radius: 6px; border-left: 3px solid #0ea5e9; }
             .client-name { font-size: 13pt; font-weight: 600; color: #1e293b; margin-bottom: 6px; }
-            .client-detail { font-size: 10pt; color: #64748b; line-height: 1.6; }
+            .client-detail { font-size: 10pt; color: #475569; line-height: 1.6; }
 
             /* Table */
             .items-section { margin-bottom: 20px; }
@@ -288,7 +288,7 @@ export default function InvoiceForm() {
             .totals-box { width: 250px; }
             .total-row { display: flex; justify-content: space-between; padding: 8px 16px; font-size: 11pt; border-bottom: 1px solid #e2e8f0; }
             .total-row:last-child { border-bottom: none; }
-            .total-label { color: #64748b; text-align: left; }
+            .total-label { color: #475569; text-align: left; }
             .total-value { font-weight: 600; color: #334155; font-family: 'SF Mono', 'Consolas', monospace; text-align: right; min-width: 80px; }
             .total-row.grand { background: #0ea5e9; color: white; padding: 12px 16px; margin-top: 10px; border-radius: 6px; font-size: 14pt; }
             .total-row.grand .total-label { color: white; font-weight: 600; }
@@ -298,7 +298,7 @@ export default function InvoiceForm() {
             .notes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 20px; }
             .notes-box { background: #f8fafc; padding: 16px; border-radius: 6px; }
             .notes-box h4 { font-size: 11pt; font-weight: 600; color: #1e293b; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.3px; }
-            .notes-box p { font-size: 10pt; color: #64748b; line-height: 1.6; }
+            .notes-box p { font-size: 10pt; color: #475569; line-height: 1.6; }
 
             /* Payment Methods */
             .payment-section { margin-bottom: 20px; }
@@ -311,13 +311,13 @@ export default function InvoiceForm() {
             .payment-box { padding: 12px; border-radius: 6px; border: 1px solid #e2e8f0; margin-top: 12px; background: #f8fafc; }
             .payment-box.check { border-color: #d1d5db; }
             .payment-box h5 { font-size: 10pt; font-weight: 600; color: #1e293b; margin-bottom: 6px; }
-            .payment-box p { font-size: 9pt; color: #64748b; line-height: 1.4; margin: 2px 0; }
+            .payment-box p { font-size: 9pt; color: #475569; line-height: 1.4; margin: 2px 0; }
             .payment-box .label { font-weight: 600; color: #475569; }
 
             /* Footer */
             .footer { text-align: center; padding-top: 20px; border-top: 2px solid #e2e8f0; }
             .footer-thanks { font-size: 14pt; font-weight: 600; color: #0ea5e9; margin-bottom: 6px; }
-            .footer-contact { font-size: 10pt; color: #94a3b8; }
+            .footer-contact { font-size: 10pt; color: #64748b; }
           </style>
         </head>
         <body>
