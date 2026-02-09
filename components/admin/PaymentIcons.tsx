@@ -1,6 +1,8 @@
 // Payment Method Icons - Official Brand SVG logos
 // Following official brand guidelines - no custom backgrounds
 
+import Image from "next/image"
+
 interface IconProps {
   className?: string
   size?: number
@@ -25,67 +27,16 @@ export function PayPalIcon({ className = '', size = 28 }: IconProps) {
 // Venmo official wordmark - brand color: #3D95CE (Venmo Blue)
 export function VenmoIcon({ className = '', size = 28 }: IconProps) {
   return (
-    <svg
-      viewBox="0 0 512 214"
+    <Image
+      src="/icons/payment/Venmo_Logo_Blue.png"
+    alt="venmo icon"
       width={size * 2.4}
       height={size}
       className={className}
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path fill="#3D95CE" d="M444.148 0c15.954 29.363 23.12 59.648 23.12 97.951 0 121.967-104.238 280.387-188.856 391.847H99.304L0 24.453 147.697 10.316l59.26 475.383c43.723-71.038 97.768-182.988 97.768-259.193 0-37.07-5.79-62.094-14.97-83.22L444.148 0z"/>
-    </svg>
+    />
+
+
   )
 }
 
-// Cash App official logo - brand color: #00D632 (Cash App Green)
-export function CashAppIcon({ className = '', size = 28 }: IconProps) {
-  return (
-    <svg
-      viewBox="0 0 512 512"
-      width={size}
-      height={size}
-      className={className}
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path fill="#00D632" d="M256 0C114.6 0 0 114.6 0 256s114.6 256 256 256 256-114.6 256-256S397.4 0 256 0zm79.9 178.3l-23.4 24.9c-5.9 6.3-15.6 6.6-21.9.7-13.2-12.4-29.9-19.3-47.4-19.3-21.2 0-34.6 9.4-34.6 22.5 0 11.5 9.4 18 30.7 23.9l14.5 3.8c43 11 69.9 28.3 69.9 65.8 0 44.3-36.2 73.9-87.3 76.6v25c0 6.7-5.4 12.2-12.2 12.2h-22.8c-6.7 0-12.2-5.4-12.2-12.2v-25.5c-29.3-3-55.1-14.8-72.1-33.1-5.8-6.3-5.6-16.1.5-22.2l25.5-23.9c6.1-5.7 15.8-5.4 21.7.6 14 14.8 31.4 22.6 52.9 22.6 24.1 0 38.9-10.8 38.9-25.6 0-12.9-9.4-19.6-33.5-26.1l-14.8-4c-38.7-10.2-65.8-27.4-65.8-64 0-39.8 32.2-69.4 81.9-73.4v-23.6c0-6.7 5.4-12.2 12.2-12.2h22.8c6.7 0 12.2 5.4 12.2 12.2v24.2c24.4 3.3 45.1 13.5 59.6 28.5 6 6.2 5.8 16.1-.4 22.1z"/>
-    </svg>
-  )
-}
 
-export function CheckIcon({ className = '', size = 28 }: IconProps) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      width={size}
-      height={size}
-      className={className}
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <rect x="2" y="4" width="20" height="14" rx="2" fill="#6B7280" />
-      <line x1="2" y1="8" x2="22" y2="8" stroke="#4B5563" strokeWidth="1" />
-      <rect x="4" y="12" width="8" height="2" rx="1" fill="#9CA3AF" />
-      <rect x="4" y="15" width="5" height="1" rx="0.5" fill="#9CA3AF" />
-      <rect x="14" y="11" width="6" height="5" rx="1" fill="#E5E7EB" />
-      <path d="M15.5 13.5L17 15L19.5 12" stroke="#6B7280" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  )
-}
-
-export function BankIcon({ className = '', size = 28 }: IconProps) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      width={size}
-      height={size}
-      className={className}
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M3 21h18v-2H3v2zm0-4h18v-2H3v2zm2-4h2v-6H5v6zm4 0h2v-6H9v6zm4 0h2v-6h-2v6zm4 0h2v-6h-2v6zM3 7l9-4 9 4v2H3V7z"
-        fill="#22C55E"
-      />
-    </svg>
-  )
-}

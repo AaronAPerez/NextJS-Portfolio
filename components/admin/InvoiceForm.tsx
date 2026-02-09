@@ -2,7 +2,9 @@
 
 import { useState, useCallback, useEffect } from 'react'
 import { Button } from '@/components/ui/Button'
-import { PayPalIcon, VenmoIcon, CashAppIcon, CheckIcon, BankIcon } from '@/components/admin/PaymentIcons'
+import { PayPalIcon, VenmoIcon
+
+} from '@/components/admin/PaymentIcons'
 import ClientSelector from '@/components/admin/ClientSelector'
 
 interface InvoiceItem {
@@ -393,7 +395,7 @@ export default function InvoiceForm() {
               ` : ''}
               ${data.paymentMethods.venmoEnabled ? `
               <div class="payment-icon venmo">
-                <svg viewBox="0 0 2139 569" width="60" height="16"><path fill="#3D95CE" d="M410.7 0c27.8 51.2 40.3 103.9 40.3 170.7 0 212.5-181.6 488.6-329.1 682.9H0L-86.6 42.6l162.1-15.5 65 522.1c48-78 107.3-200.8 107.3-284.7 0-40.7-6.4-68.2-16.4-91.4L410.7 0z"/><path fill="#3D95CE" d="M636.4 284.5c32.6 0 117.2-13.9 117.2-57.2 0-22.1-15.5-33.5-34.4-33.5-39.4 0-77.8 39.4-82.8 90.7zm-2.5 58.8c0 63.8 35.2 88.2 80.3 88.2 45.9 0 86.1-11.4 135.4-39.4l-20.5 139.6c-35.2 18-90.7 32.7-150.4 32.7-144.6 0-198.4-85.3-198.4-192.6 0-155.2 92.4-294.8 259.8-294.8 101.3 0 161.9 55.5 161.9 135.4 0 105.5-126.5 131.5-267.9 130.7l-.2.2z"/><path fill="#3D95CE" d="M1186.9 186.6c0-12.3-3.3-23.8-11.4-23.8-29.4 0-60.5 70.5-60.5 138.8 0 18.9 4.9 35.2 16.4 35.2 34.4 0 55.5-93.2 55.5-150.2zm-226.3 184.3c0-140.4 92.4-294 265.5-294 88.2 0 139.6 47.5 139.6 122.3 0 111.3-83.6 212.5-197.6 212.5-23.8 0-41.8-4.9-52.3-14.7-7.4 55.5-23 114.7-48.4 176.8l-158.6 14.7c37.7-91.5 51.6-170.7 51.6-217.4l.2-.2z"/><path fill="#3D95CE" d="M1657.5 200.5c-34.4 0-65.5 70.5-65.5 129.1 0 26.2 9 41.8 27 41.8 32.7 0 65.5-63.8 65.5-129.1 0-24.6-9-41.8-27-41.8zm-190.1 170.7c0-134.6 97.3-294.8 274.6-294.8 106.4 0 152.7 60.5 152.7 143.8 0 138.8-100.5 294.8-277.1 294.8-107.2.2-150.2-60.5-150.2-143.8z"/><path fill="#3D95CE" d="M1900.5 556.6l60.5-346.5c11.4-63.8 18.9-131.5 23.8-185.9h150.4l-9 75.4h2.5c39.4-57.2 92.4-86.1 156.9-86.1l-34.4 175.2c-88.2 0-130.7 22.1-150.4 102.2l-41.8 265.5h-158.5z"/></svg>
+               <img src="https://www.paypalobjects.com/webstatic/mktg/logo/AM_mc_vs_dc_ae.jpg" border="0" alt="PayPal Acceptance Mark">
               </div>
               ` : ''}
               ${data.paymentMethods.cashappEnabled ? `
@@ -981,7 +983,7 @@ export default function InvoiceForm() {
                 </div>
 
                 {/* Cash App */}
-                <div className={`p-4 rounded-lg border-2 transition-all ${data.paymentMethods.cashappEnabled ? 'border-emerald-500 bg-emerald-50' : 'border-gray-200 bg-gray-50'}`}>
+                {/* <div className={`p-4 rounded-lg border-2 transition-all ${data.paymentMethods.cashappEnabled ? 'border-emerald-500 bg-emerald-50' : 'border-gray-200 bg-gray-50'}`}>
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-2">
                       <CashAppIcon size={28} />
@@ -1004,7 +1006,7 @@ export default function InvoiceForm() {
                       )}
                     </div>
                   )}
-                </div>
+                </div> */}
 
                 {/* Check */}
                 {/* <div className={`p-4 rounded-lg border-2 transition-all ${data.paymentMethods.checkEnabled ? 'border-gray-500 bg-gray-100' : 'border-gray-200 bg-gray-50'}`}>
