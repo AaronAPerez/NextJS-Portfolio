@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { clsx } from 'clsx'
 import { useState } from 'react'
+import Image from 'next/image'
 
 const navigation = [
   { name: 'Dashboard', href: '/admin/dashboard', icon: '📊' },
@@ -43,7 +44,12 @@ export default function AdminSidebar() {
           <div className="flex h-16 shrink-0 items-center">
             <Link href="/admin" className="flex items-center space-x-3">
               <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-[#d4af37] rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-xl">AP</span>
+     <Image
+     src='/AP-Designs-Logo-Indigo-Teal.webp'
+     alt='AP Design Logo'
+     width={120}
+     height={120}
+     />
               </div>
               <div>
                 <h1 className="text-white font-bold text-lg">Aaron Perez</h1>

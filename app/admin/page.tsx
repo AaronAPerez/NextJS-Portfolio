@@ -29,16 +29,6 @@ export default function AdminDashboard() {
       tooltip: 'Contact form submissions from departments',
     },
     {
-      name: 'Waitlist Entries',
-      value: analytics?.overview.totalWaitlist || 0,
-      new: analytics?.overview.activeWaitlist || 0,
-      icon: '📋',
-      href: '/admin/waitlist',
-      color: 'from-warrior-gold to-warrior-amber',
-      tour: 'waitlist',
-      tooltip: 'Hacienda Consuelo retreat signups',
-    },
-    {
       name: 'Blog Posts',
       value: analytics?.overview.totalBlogPosts || 0,
       new: analytics?.overview.publishedPosts || 0,

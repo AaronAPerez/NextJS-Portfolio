@@ -10,6 +10,23 @@ interface InvoiceItem {
   rate: number
 }
 
+interface PaymentMethods {
+  paypalEnabled: boolean
+  paypalEmail: string
+  venmoEnabled: boolean
+  venmoUsername: string
+  cashappEnabled: boolean
+  cashappUsername: string
+  checkEnabled: boolean
+  checkPayableTo: string
+  checkMailingAddress: string
+  achEnabled: boolean
+  bankName: string
+  bankAccountName: string
+  bankRoutingNumber: string
+  bankAccountLast4: string
+}
+
 interface InvoiceData {
   companyName: string
   companyAddress: string
@@ -30,6 +47,24 @@ interface InvoiceData {
   notes: string
   terms: string
   taxRate: number
+  paymentMethods: PaymentMethods
+}
+
+const defaultPaymentMethods: PaymentMethods = {
+  paypalEnabled: true,
+  paypalEmail: 'aaperez06@gmail.com',
+  venmoEnabled: true,
+  venmoUsername: 'aaperez06@gmail.com',
+  cashappEnabled: true,
+  cashappUsername: 'aaperez06@gmail.com',
+  checkEnabled: false,
+  checkPayableTo: 'Aaron Perez',
+  checkMailingAddress: '',
+  achEnabled: true,
+  bankName: 'Self Help Federal Credit Union',
+  bankAccountName: 'Aaron Perez',
+  bankRoutingNumber: '322273696',
+  bankAccountLast4: '8885',
 }
 
 const defaultInvoiceData: InvoiceData = {
@@ -49,9 +84,10 @@ const defaultInvoiceData: InvoiceData = {
   clientEmail: '',
   clientPhone: '',
   items: [{ id: '1', description: '', quantity: 1, rate: 0 }],
-  notes: 'Thank you for your business!',
+  notes: 'Thank you for your business! Debit cards accepted via PayPal, Venmo, or Cash App.',
   terms: 'Payment is due within 30 days of invoice date. Late payments may incur additional fees.',
   taxRate: 0,
+  paymentMethods: defaultPaymentMethods,
 }
 
 export default function InvoiceForm() {
@@ -99,6 +135,10 @@ export default function InvoiceForm() {
 
   const removeItem = useCallback((id: string) => {
     setData(prev => ({ ...prev, items: prev.items.filter(item => item.id !== id) }))
+  }, [])
+
+  const updatePaymentMethod = useCallback(<K extends keyof PaymentMethods>(field: K, value: PaymentMethods[K]) => {
+    setData(prev => ({ ...prev, paymentMethods: { ...prev.paymentMethods, [field]: value } }))
   }, [])
 
   const subtotal = data.items.reduce((sum, item) => sum + item.quantity * item.rate, 0)
@@ -235,6 +275,19 @@ export default function InvoiceForm() {
             .notes-box h4 { font-size: 11pt; font-weight: 600; color: #1e293b; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.3px; }
             .notes-box p { font-size: 10pt; color: #64748b; line-height: 1.6; }
 
+            /* Payment Methods */
+            .payment-section { margin-bottom: 20px; }
+            .payment-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; }
+            .payment-box { padding: 12px; border-radius: 6px; border: 2px solid #e2e8f0; }
+            .payment-box.paypal { border-color: #0070ba; background: #f0f7ff; }
+            .payment-box.venmo { border-color: #008CFF; background: #f0f9ff; }
+            .payment-box.cashapp { border-color: #00D632; background: #f0fff4; }
+            .payment-box.check { border-color: #6b7280; background: #f9fafb; }
+            .payment-box.ach { border-color: #22c55e; background: #f0fdf4; }
+            .payment-box h5 { font-size: 10pt; font-weight: 600; color: #1e293b; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+            .payment-box p { font-size: 8pt; color: #64748b; line-height: 1.4; margin: 2px 0; }
+            .payment-box .label { font-weight: 600; color: #475569; }
+
             /* Footer */
             .footer { text-align: center; padding-top: 20px; border-top: 2px solid #e2e8f0; }
             .footer-thanks { font-size: 14pt; font-weight: 600; color: #0ea5e9; margin-bottom: 6px; }
@@ -301,6 +354,53 @@ export default function InvoiceForm() {
             <div class="notes-box"><h4>Terms & Conditions</h4><p>${data.terms}</p></div>
           </div>
 
+          ${(data.paymentMethods.paypalEnabled || data.paymentMethods.venmoEnabled || data.paymentMethods.cashappEnabled || data.paymentMethods.checkEnabled || data.paymentMethods.achEnabled) ? `
+          <div class="payment-section">
+            <div class="section-header">Payment Methods</div>
+            <div class="payment-grid">
+              ${data.paymentMethods.paypalEnabled ? `
+              <div class="payment-box paypal">
+                <h5>💳 PayPal</h5>
+                <p>Send to:</p>
+                <p class="label">${data.paymentMethods.paypalEmail}</p>
+              </div>
+              ` : ''}
+              ${data.paymentMethods.venmoEnabled ? `
+              <div class="payment-box venmo">
+                <h5>📱 Venmo</h5>
+                <p>Send to:</p>
+                <p class="label">${data.paymentMethods.venmoUsername || 'Contact for username'}</p>
+              </div>
+              ` : ''}
+              ${data.paymentMethods.cashappEnabled ? `
+              <div class="payment-box cashapp">
+                <h5>💵 Cash App</h5>
+                <p>Send to:</p>
+                <p class="label">${data.paymentMethods.cashappUsername || 'Contact for $cashtag'}</p>
+              </div>
+              ` : ''}
+              ${data.paymentMethods.checkEnabled ? `
+              <div class="payment-box check">
+                <h5>📝 Check</h5>
+                <p>Make payable to:</p>
+                <p class="label">${data.paymentMethods.checkPayableTo}</p>
+                ${data.paymentMethods.checkMailingAddress ? `<p style="font-size: 7pt; margin-top: 4px;">${data.paymentMethods.checkMailingAddress}</p>` : ''}
+              </div>
+              ` : ''}
+              ${data.paymentMethods.achEnabled ? `
+              <div class="payment-box ach">
+                <h5>🏦 Bank Transfer</h5>
+                ${data.paymentMethods.bankName ? `<p><span class="label">Bank:</span> ${data.paymentMethods.bankName}</p>` : ''}
+                ${data.paymentMethods.bankAccountName ? `<p><span class="label">Name:</span> ${data.paymentMethods.bankAccountName}</p>` : ''}
+                ${data.paymentMethods.bankRoutingNumber ? `<p><span class="label">Routing:</span> ${data.paymentMethods.bankRoutingNumber}</p>` : ''}
+                ${data.paymentMethods.bankAccountLast4 ? `<p><span class="label">Account:</span> ****${data.paymentMethods.bankAccountLast4}</p>` : ''}
+                ${!data.paymentMethods.bankName && !data.paymentMethods.bankRoutingNumber ? `<p>Contact for details</p>` : ''}
+              </div>
+              ` : ''}
+            </div>
+          </div>
+          ` : ''}
+
           <div class="footer">
             <div class="footer-thanks">Thank You for Your Business!</div>
             <div class="footer-contact">${data.companyEmail} | ${data.companyWebsite}</div>
@@ -319,6 +419,39 @@ export default function InvoiceForm() {
       .map(item => `  - ${item.description}: ${item.quantity} x ${formatCurrency(item.rate)} = ${formatCurrency(item.quantity * item.rate)}`)
       .join('\n')
 
+    // Build payment methods section
+    const paymentMethodsList: string[] = []
+    if (data.paymentMethods.paypalEnabled) {
+      paymentMethodsList.push(`  PayPal: Send to ${data.paymentMethods.paypalEmail}`)
+    }
+    if (data.paymentMethods.venmoEnabled) {
+      paymentMethodsList.push(`  Venmo: ${data.paymentMethods.venmoUsername || 'Contact for username'}`)
+    }
+    if (data.paymentMethods.cashappEnabled) {
+      paymentMethodsList.push(`  Cash App: ${data.paymentMethods.cashappUsername || 'Contact for $cashtag'}`)
+    }
+    if (data.paymentMethods.checkEnabled) {
+      let checkDetails = `  Check: Make payable to ${data.paymentMethods.checkPayableTo}`
+      if (data.paymentMethods.checkMailingAddress) {
+        checkDetails += `\n    Mail to: ${data.paymentMethods.checkMailingAddress}`
+      }
+      paymentMethodsList.push(checkDetails)
+    }
+    if (data.paymentMethods.achEnabled) {
+      let achDetails = `  Bank Transfer:`
+      if (data.paymentMethods.bankName) achDetails += `\n    Bank: ${data.paymentMethods.bankName}`
+      if (data.paymentMethods.bankAccountName) achDetails += `\n    Name: ${data.paymentMethods.bankAccountName}`
+      if (data.paymentMethods.bankRoutingNumber) achDetails += `\n    Routing: ${data.paymentMethods.bankRoutingNumber}`
+      if (data.paymentMethods.bankAccountLast4) achDetails += `\n    Account: ****${data.paymentMethods.bankAccountLast4}`
+      if (!data.paymentMethods.bankName && !data.paymentMethods.bankRoutingNumber) {
+        achDetails += `\n    Contact for bank details`
+      }
+      paymentMethodsList.push(achDetails)
+    }
+    const paymentSection = paymentMethodsList.length > 0
+      ? `\nPAYMENT METHODS:\n${paymentMethodsList.join('\n\n')}\n`
+      : ''
+
     const subject = encodeURIComponent(`Invoice ${data.invoiceNumber} from ${data.companyName}`)
     const body = encodeURIComponent(
 `Dear ${data.clientName || 'Client'},
@@ -334,7 +467,7 @@ ${itemsList}
 
 Subtotal: ${formatCurrency(subtotal)}
 ${data.taxRate > 0 ? `Tax (${data.taxRate}%): ${formatCurrency(tax)}\n` : ''}TOTAL DUE: ${formatCurrency(total)}
-
+${paymentSection}
 ${data.notes}
 
 ${data.terms}
@@ -429,6 +562,7 @@ ${data.companyWebsite}
           notes: invoice.notes || '',
           terms: invoice.terms || '',
           taxRate: Number(invoice.taxRate) || 0,
+          paymentMethods: invoice.paymentMethods || defaultPaymentMethods,
         })
         setInvoiceId(id)
       }
@@ -789,6 +923,165 @@ ${data.companyWebsite}
                 ) : (
                   <p className="text-gray-600 text-sm">{data.terms}</p>
                 )}
+              </div>
+            </div>
+
+            {/* Payment Methods */}
+            <div className="section mt-8">
+              <h3 className="section-title text-xl font-semibold text-gray-900 mb-4 pb-2 border-b-2 border-cyan-400">Payment Methods</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {/* PayPal */}
+                <div className={`p-4 rounded-lg border-2 transition-all ${data.paymentMethods.paypalEnabled ? 'border-blue-500 bg-blue-50' : 'border-gray-200 bg-gray-50'}`}>
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-2">
+                      <span className="text-2xl">💳</span>
+                      <span className="font-semibold text-gray-900">PayPal</span>
+                    </div>
+                    {isEditing && (
+                      <label className="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" checked={data.paymentMethods.paypalEnabled} onChange={(e) => updatePaymentMethod('paypalEnabled', e.target.checked)} className="sr-only peer" />
+                        <div className="w-11 h-6 bg-gray-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500"></div>
+                      </label>
+                    )}
+                  </div>
+                  {data.paymentMethods.paypalEnabled && (
+                    <div>
+                      {isEditing ? (
+                        <input type="email" value={data.paymentMethods.paypalEmail} onChange={(e) => updatePaymentMethod('paypalEmail', e.target.value)}
+                          className="w-full p-2 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="paypal@email.com" />
+                      ) : (
+                        <p className="text-gray-600 text-sm">Send to: <span className="font-medium">{data.paymentMethods.paypalEmail}</span></p>
+                      )}
+                    </div>
+                  )}
+                </div>
+
+                {/* Venmo */}
+                <div className={`p-4 rounded-lg border-2 transition-all ${data.paymentMethods.venmoEnabled ? 'border-sky-500 bg-sky-50' : 'border-gray-200 bg-gray-50'}`}>
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-2">
+                      <span className="text-2xl">📱</span>
+                      <span className="font-semibold text-gray-900">Venmo</span>
+                    </div>
+                    {isEditing && (
+                      <label className="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" checked={data.paymentMethods.venmoEnabled} onChange={(e) => updatePaymentMethod('venmoEnabled', e.target.checked)} className="sr-only peer" />
+                        <div className="w-11 h-6 bg-gray-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-sky-500"></div>
+                      </label>
+                    )}
+                  </div>
+                  {data.paymentMethods.venmoEnabled && (
+                    <div>
+                      {isEditing ? (
+                        <input type="text" value={data.paymentMethods.venmoUsername} onChange={(e) => updatePaymentMethod('venmoUsername', e.target.value)}
+                          className="w-full p-2 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-sky-400" placeholder="@username" />
+                      ) : (
+                        <p className="text-gray-600 text-sm">Send to: <span className="font-medium">{data.paymentMethods.venmoUsername || 'Contact for username'}</span></p>
+                      )}
+                    </div>
+                  )}
+                </div>
+
+                {/* Cash App */}
+                <div className={`p-4 rounded-lg border-2 transition-all ${data.paymentMethods.cashappEnabled ? 'border-emerald-500 bg-emerald-50' : 'border-gray-200 bg-gray-50'}`}>
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-2">
+                      <span className="text-2xl">💵</span>
+                      <span className="font-semibold text-gray-900">Cash App</span>
+                    </div>
+                    {isEditing && (
+                      <label className="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" checked={data.paymentMethods.cashappEnabled} onChange={(e) => updatePaymentMethod('cashappEnabled', e.target.checked)} className="sr-only peer" />
+                        <div className="w-11 h-6 bg-gray-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
+                      </label>
+                    )}
+                  </div>
+                  {data.paymentMethods.cashappEnabled && (
+                    <div>
+                      {isEditing ? (
+                        <input type="text" value={data.paymentMethods.cashappUsername} onChange={(e) => updatePaymentMethod('cashappUsername', e.target.value)}
+                          className="w-full p-2 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400" placeholder="$cashtag" />
+                      ) : (
+                        <p className="text-gray-600 text-sm">Send to: <span className="font-medium">{data.paymentMethods.cashappUsername || 'Contact for $cashtag'}</span></p>
+                      )}
+                    </div>
+                  )}
+                </div>
+
+                {/* Check */}
+                <div className={`p-4 rounded-lg border-2 transition-all ${data.paymentMethods.checkEnabled ? 'border-gray-500 bg-gray-100' : 'border-gray-200 bg-gray-50'}`}>
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-2">
+                      <span className="text-2xl">📝</span>
+                      <span className="font-semibold text-gray-900">Check</span>
+                    </div>
+                    {isEditing && (
+                      <label className="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" checked={data.paymentMethods.checkEnabled} onChange={(e) => updatePaymentMethod('checkEnabled', e.target.checked)} className="sr-only peer" />
+                        <div className="w-11 h-6 bg-gray-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-gray-500"></div>
+                      </label>
+                    )}
+                  </div>
+                  {data.paymentMethods.checkEnabled && (
+                    <div className="space-y-2">
+                      {isEditing ? (
+                        <>
+                          <input type="text" value={data.paymentMethods.checkPayableTo} onChange={(e) => updatePaymentMethod('checkPayableTo', e.target.value)}
+                            className="w-full p-2 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-gray-400" placeholder="Make payable to..." />
+                          <input type="text" value={data.paymentMethods.checkMailingAddress} onChange={(e) => updatePaymentMethod('checkMailingAddress', e.target.value)}
+                            className="w-full p-2 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-gray-400" placeholder="Mailing address (optional)" />
+                        </>
+                      ) : (
+                        <div className="text-sm text-gray-600 space-y-1">
+                          <p>Make payable to: <span className="font-medium">{data.paymentMethods.checkPayableTo}</span></p>
+                          {data.paymentMethods.checkMailingAddress && <p className="text-xs">{data.paymentMethods.checkMailingAddress}</p>}
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+
+                {/* ACH/Bank Transfer */}
+                <div className={`p-4 rounded-lg border-2 transition-all ${data.paymentMethods.achEnabled ? 'border-green-500 bg-green-50' : 'border-gray-200 bg-gray-50'}`}>
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-2">
+                      <span className="text-2xl">🏦</span>
+                      <span className="font-semibold text-gray-900">Bank Transfer</span>
+                    </div>
+                    {isEditing && (
+                      <label className="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" checked={data.paymentMethods.achEnabled} onChange={(e) => updatePaymentMethod('achEnabled', e.target.checked)} className="sr-only peer" />
+                        <div className="w-11 h-6 bg-gray-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-500"></div>
+                      </label>
+                    )}
+                  </div>
+                  {data.paymentMethods.achEnabled && (
+                    <div className="space-y-2">
+                      {isEditing ? (
+                        <>
+                          <input type="text" value={data.paymentMethods.bankName} onChange={(e) => updatePaymentMethod('bankName', e.target.value)}
+                            className="w-full p-2 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-green-400" placeholder="Bank Name" />
+                          <input type="text" value={data.paymentMethods.bankAccountName} onChange={(e) => updatePaymentMethod('bankAccountName', e.target.value)}
+                            className="w-full p-2 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-green-400" placeholder="Account Name" />
+                          <div className="grid grid-cols-2 gap-2">
+                            <input type="text" value={data.paymentMethods.bankRoutingNumber} onChange={(e) => updatePaymentMethod('bankRoutingNumber', e.target.value)}
+                              className="w-full p-2 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-green-400" placeholder="Routing #" />
+                            <input type="text" value={data.paymentMethods.bankAccountLast4} onChange={(e) => updatePaymentMethod('bankAccountLast4', e.target.value)}
+                              className="w-full p-2 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-green-400" placeholder="Account # (last 4)" />
+                          </div>
+                        </>
+                      ) : (
+                        <div className="text-sm text-gray-600 space-y-1">
+                          {data.paymentMethods.bankName && <p><span className="font-medium">Bank:</span> {data.paymentMethods.bankName}</p>}
+                          {data.paymentMethods.bankAccountName && <p><span className="font-medium">Name:</span> {data.paymentMethods.bankAccountName}</p>}
+                          {data.paymentMethods.bankRoutingNumber && <p><span className="font-medium">Routing:</span> {data.paymentMethods.bankRoutingNumber}</p>}
+                          {data.paymentMethods.bankAccountLast4 && <p><span className="font-medium">Account:</span> ****{data.paymentMethods.bankAccountLast4}</p>}
+                          {!data.paymentMethods.bankName && !data.paymentMethods.bankRoutingNumber && <p className="italic text-gray-500">Contact for bank details</p>}
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>
