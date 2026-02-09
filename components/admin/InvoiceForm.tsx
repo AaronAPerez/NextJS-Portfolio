@@ -2,7 +2,8 @@
 
 import { useState, useCallback, useEffect } from 'react'
 import { Button } from '@/components/ui/Button'
-import { PayPalIcon, VenmoIcon
+import {
+  PayPalIcon, VenmoIcon
 
 } from '@/components/admin/PaymentIcons'
 import ClientSelector from '@/components/admin/ClientSelector'
@@ -395,12 +396,12 @@ export default function InvoiceForm() {
               ` : ''}
               ${data.paymentMethods.venmoEnabled ? `
               <div class="payment-icon venmo">
-               <img src="https://www.paypalobjects.com/webstatic/mktg/logo/AM_mc_vs_dc_ae.jpg" border="0" alt="PayPal Acceptance Mark">
-              </div>
-              ` : ''}
-              ${data.paymentMethods.cashappEnabled ? `
-              <div class="payment-icon cashapp">
-                <svg viewBox="0 0 512 512" width="24" height="24"><path fill="#00D632" d="M256 0C114.6 0 0 114.6 0 256s114.6 256 256 256 256-114.6 256-256S397.4 0 256 0zm79.9 178.3l-23.4 24.9c-5.9 6.3-15.6 6.6-21.9.7-13.2-12.4-29.9-19.3-47.4-19.3-21.2 0-34.6 9.4-34.6 22.5 0 11.5 9.4 18 30.7 23.9l14.5 3.8c43 11 69.9 28.3 69.9 65.8 0 44.3-36.2 73.9-87.3 76.6v25c0 6.7-5.4 12.2-12.2 12.2h-22.8c-6.7 0-12.2-5.4-12.2-12.2v-25.5c-29.3-3-55.1-14.8-72.1-33.1-5.8-6.3-5.6-16.1.5-22.2l25.5-23.9c6.1-5.7 15.8-5.4 21.7.6 14 14.8 31.4 22.6 52.9 22.6 24.1 0 38.9-10.8 38.9-25.6 0-12.9-9.4-19.6-33.5-26.1l-14.8-4c-38.7-10.2-65.8-27.4-65.8-64 0-39.8 32.2-69.4 81.9-73.4v-23.6c0-6.7 5.4-12.2 12.2-12.2h22.8c6.7 0 12.2 5.4 12.2 12.2v24.2c24.4 3.3 45.1 13.5 59.6 28.5 6 6.2 5.8 16.1-.4 22.1z"/></svg>
+          <img
+            src="/icons/payment/Venmo_Logo_Blue.png"
+          alt="venmo icon"
+          width="auto"
+          height="11"
+          />
               </div>
               ` : ''}
             </div>
@@ -626,11 +627,10 @@ export default function InvoiceForm() {
               <button
                 key={inv.id}
                 onClick={() => loadInvoice(inv.id)}
-                className={`text-sm px-3 py-1 rounded-md transition-colors ${
-                  invoiceId === inv.id
+                className={`text-sm px-3 py-1 rounded-md transition-colors ${invoiceId === inv.id
                     ? 'bg-cyan-500 text-white'
                     : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-                }`}
+                  }`}
               >
                 {inv.invoiceNumber} - {inv.clientName || 'No client'}
               </button>
@@ -661,8 +661,8 @@ export default function InvoiceForm() {
             className={emailStatus === 'sent' ? 'bg-green-100 border-green-500 text-green-700' : emailStatus === 'error' ? 'bg-red-100 border-red-500 text-red-700' : ''}
           >
             {emailStatus === 'sending' ? '📧 Sending...' :
-             emailStatus === 'sent' ? '✓ Email Sent!' :
-             emailStatus === 'error' ? '✗ Failed' : '📧 Send Email'}
+              emailStatus === 'sent' ? '✓ Email Sent!' :
+                emailStatus === 'error' ? '✗ Failed' : '📧 Send Email'}
           </Button>
           {emailError && emailStatus === 'error' && (
             <span className="text-red-500 text-sm">{emailError}</span>
