@@ -41,6 +41,10 @@ interface HostingData {
   domainDescription: string
   domainProviders: Provider[]
   domainPricing: string
+  updatesTitle: string
+  updatesDescription: string
+  updatesRate: string
+  updatesNote: string
   contactFormTitle: string
   contactFormDescription: string
   autoReplySubject: string
@@ -61,28 +65,28 @@ const defaultHostingData: HostingData = {
   overviewNote: 'Below are the two hosting options available through AP Designs, along with recommended providers if you prefer to manage hosting yourself.',
   options: [
     {
-      id: '1', letter: 'A', title: 'Client-Owned Hosting',
-      description: 'You purchase and own your hosting plan directly. This gives you full control and long-term ownership.',
-      isRecommended: true,
-      whatYouDo: ['Purchase a hosting plan from a provider of your choice', 'Share access credentials so AP Designs can complete the setup'],
+      id: '1', letter: 'A', title: 'Client-Owned Hosting (Self-Managed)',
+      description: 'You purchase and own your hosting plan directly. Lower upfront cost with promotional pricing, but requires ongoing technical management on your end.',
+      isRecommended: false,
+      whatYouDo: ['Purchase hosting from a provider (requires 1-4 year upfront commitment for promo pricing)', 'Share access credentials for initial AP Designs setup', 'Manage your own renewals, billing, and account security', 'Handle technical issues: server errors, downtime, SSL renewals, PHP updates, database issues', 'Contact hosting support for troubleshooting (often overseas call centers)', 'Monitor for security vulnerabilities and malware'],
       providers: [
-        { id: '1', name: 'SiteGround', description: 'Fast, secure, excellent support' },
-        { id: '2', name: 'Hostinger', description: 'Affordable and beginner-friendly' },
-        { id: '3', name: 'Bluehost', description: 'Simple setup, widely used' }
+        { id: '1', name: 'SiteGround', description: 'Fast, secure, excellent support — from $1.99/mo (promo)' },
+        { id: '2', name: 'Hostinger', description: 'Most affordable option — from $1.79/mo (promo)' },
+        { id: '3', name: 'Bluehost', description: 'Simple setup, widely used — from $1.99/mo (promo)' }
       ],
-      pricing: [{ id: '1', label: 'Hosting', value: '$5–$12/month' }, { id: '2', label: 'Domain', value: '$10–$20/year' }],
-      whatWeHandle: ['Full hosting setup and configuration', 'Domain connection and DNS management', 'SSL security certificate (https)', 'Website installation and deployment', 'Contact form configuration', 'Launch preparation and testing'],
-      idealFor: 'Clients who want full ownership and direct access to their hosting account.'
+      pricing: [{ id: '1', label: 'Hosting (promo)', value: '$2–$4/month' }, { id: '2', label: 'Hosting (renewal)', value: '$9–$18/month' }, { id: '3', label: 'Domain', value: '$10–$20/year' }],
+      whatWeHandle: ['Initial hosting setup and configuration', 'Domain connection and DNS management', 'SSL security certificate (https)', 'Website installation and deployment', 'Contact form configuration', 'Launch preparation and testing'],
+      idealFor: 'Tech-savvy clients comfortable with hosting dashboards, DNS settings, and troubleshooting technical issues independently.'
     },
     {
-      id: '2', letter: 'B', title: 'Hosting Provided by AP Designs',
-      description: 'A hands-off, fully managed hosting solution. AP Designs handles everything on the technical side.',
-      isRecommended: false,
-      whatYouDo: ['Nothing — AP Designs manages the entire hosting environment'],
+      id: '2', letter: 'B', title: 'Fully Managed by AP Designs',
+      description: 'Zero technical hassle. Your website is hosted on premium infrastructure and professionally managed by the same person who built it. Predictable pricing with no surprise renewal increases.',
+      isRecommended: true,
+      whatYouDo: ['Nothing technical — just run your business', 'One simple annual payment, no surprise price hikes', 'Direct support from your developer (not a call center)'],
       providers: [],
-      pricing: [{ id: '1', label: 'Monthly', value: '$20/month' }, { id: '2', label: 'Yearly (Save 17%)', value: '$200/year' }],
-      whatWeHandle: ['Website hosting on premium infrastructure', 'SSL security certificate', 'Daily or weekly automated backups', 'Server maintenance and updates', 'Uptime monitoring (99.9% guarantee)', 'Basic technical support'],
-      idealFor: 'Clients who prefer convenience and don\'t want to manage hosting accounts or technical settings.'
+      pricing: [{ id: '1', label: 'Monthly', value: '$25/month' }, { id: '2', label: 'Yearly (Save 20%)', value: '$240/year' }, { id: '3', label: 'Compare', value: 'Self-managed renewals: $108–216/yr + your time' }],
+      whatWeHandle: ['Website hosting on premium cloud infrastructure', 'SSL security certificate (auto-renewed)', 'Daily automated backups with 30-day retention', 'Server maintenance, security patches & updates', 'Uptime monitoring (99.9% guarantee)', 'Priority technical support from your developer', 'Performance optimization & speed tuning', 'Security monitoring & malware protection', 'PHP, database, and server updates'],
+      idealFor: 'Business owners who value their time and want a worry-free experience with direct access to professional support.'
     }
   ],
   domainTitle: 'Domain Name (Required for Both Options)',
@@ -92,6 +96,10 @@ const defaultHostingData: HostingData = {
     { id: '2', name: 'GoDaddy', description: 'Very common and beginner-friendly' }
   ],
   domainPricing: '$10–$20/year',
+  updatesTitle: 'Website Updates & Changes',
+  updatesDescription: 'Need changes to your website after launch? AP Designs offers ongoing website updates and maintenance at an hourly rate. This service is separate from your hosting plan and available on-demand.',
+  updatesRate: '$75/hour',
+  updatesNote: 'Common updates include: text/image changes, adding new pages, feature additions, design tweaks, and bug fixes. Most small updates take less than 1 hour.',
   contactFormTitle: 'Contact Form Auto-Reply Example',
   contactFormDescription: 'If you choose the contact form add-on, here is a sample auto-reply message that will be sent to visitors who submit your contact form:',
   autoReplySubject: 'Thank you for contacting us',
@@ -200,7 +208,7 @@ export default function HostingOptionsForm() {
 
     const generateOptionHtml = (opt: HostingOption) => `
       <div class="option-card ${opt.isRecommended ? 'recommended' : ''}">
-        ${opt.isRecommended ? '<span class="badge">Recommended</span>' : ''}
+        ${opt.isRecommended ? '<span class="badge">Best Value</span>' : ''}
         <div class="option-letter">${opt.letter}</div>
         <h3 class="option-title">${opt.title}</h3>
         <p class="option-desc">${opt.description}</p>
@@ -304,7 +312,7 @@ export default function HostingOptionsForm() {
             }
             .option-letter { font-size: 20px; font-weight: 700; color: #00a0c0; }
             .option-title { font-size: 11px; font-weight: 600; color: #1a1a2e; margin: 4px 0; }
-            .option-desc { color: #666; font-size: 8px; margin-bottom: 8px; }
+            .option-desc { color: #4b5563; font-size: 8px; margin-bottom: 8px; }
 
             .section { margin: 8px 0; }
             .section h4 { font-size: 9px; font-weight: 600; color: #1a1a2e; margin-bottom: 4px; padding-bottom: 2px; border-bottom: 1px solid #00a0c0; }
@@ -314,14 +322,14 @@ export default function HostingOptionsForm() {
 
             .provider { background: #f5f5f5; border-left: 2px solid #00a0c0; padding: 4px 6px; margin: 3px 0; border-radius: 2px; }
             .provider strong { display: block; font-size: 8px; color: #333; }
-            .provider span { font-size: 7px; color: #666; }
+            .provider span { font-size: 7px; color: #4b5563; }
 
             .pricing { background: #f8f9fa; padding: 6px; border-radius: 4px; }
             .price-row { display: flex; justify-content: space-between; padding: 2px 0; border-bottom: 1px solid #e0e0e0; }
             .price-row:last-child { border-bottom: none; }
             .price-value { color: #00a0c0; font-weight: 600; }
 
-            .ideal-for { margin-top: 8px; padding-top: 6px; border-top: 1px solid #eee; font-size: 8px; color: #555; }
+            .ideal-for { margin-top: 8px; padding-top: 6px; border-top: 1px solid #e5e7eb; font-size: 8px; color: #374151; }
 
             /* Domain Section */
             .standalone-section {
@@ -331,7 +339,7 @@ export default function HostingOptionsForm() {
               margin-bottom: 10px;
             }
             .standalone-section h2 { font-size: 11px; font-weight: 600; color: #1a1a2e; margin-bottom: 6px; }
-            .standalone-section > p { font-size: 8px; color: #555; margin-bottom: 6px; }
+            .standalone-section > p { font-size: 8px; color: #374151; margin-bottom: 6px; }
             .standalone-section h3 { font-size: 9px; font-weight: 600; color: #1a1a2e; margin: 6px 0 4px; }
 
             /* Code Block */
@@ -345,7 +353,7 @@ export default function HostingOptionsForm() {
               margin: 6px 0;
             }
             .code-block strong { color: white; }
-            .code-note { font-size: 7px; color: #888; font-style: italic; margin-top: 4px; }
+            .code-note { font-size: 7px; color: #4b5563; font-style: italic; margin-top: 4px; }
 
             /* Footer */
             .footer {
@@ -355,7 +363,7 @@ export default function HostingOptionsForm() {
               text-align: center;
             }
             .footer h2 { color: #00D4FF; font-size: 12px; font-weight: 600; margin-bottom: 4px; }
-            .footer p { font-size: 8px; color: #aaa; max-width: 500px; margin: 0 auto; }
+            .footer p { font-size: 8px; color: #d1d5db; max-width: 500px; margin: 0 auto; }
           </style>
         </head>
         <body>
@@ -389,6 +397,16 @@ export default function HostingOptionsForm() {
                 <div class="pricing" style="margin-top: 8px;">
                   <div class="price-row"><span>Typical Domain Cost</span><span class="price-value">${data.domainPricing}</span></div>
                 </div>
+              </div>
+
+              <div class="standalone-section" style="border-color: #f59e0b; background: #fffbeb;">
+                <h2 style="color: #b45309;">⚡ ${data.updatesTitle}</h2>
+                <p>${data.updatesDescription}</p>
+                <div class="pricing" style="margin-top: 8px; background: #fef3c7;">
+                  <div class="price-row"><span>Hourly Rate</span><span class="price-value" style="color: #d97706; font-size: 10px;">${data.updatesRate}</span></div>
+                </div>
+                <p class="code-note" style="margin-top: 6px;">${data.updatesNote}</p>
+                <p style="color: #b45309; font-size: 7px; margin-top: 4px; font-weight: 600;">⚠️ This fee is separate from hosting and billed only when you request changes.</p>
               </div>
 
               <div class="standalone-section">
@@ -504,6 +522,10 @@ ${data.companyName}
           domainDescription: doc.domainDescription || '',
           domainProviders: doc.domainProviders || [],
           domainPricing: doc.domainPricing || '',
+          updatesTitle: doc.updatesTitle || 'Website Updates & Changes',
+          updatesDescription: doc.updatesDescription || '',
+          updatesRate: doc.updatesRate || '$75/hour',
+          updatesNote: doc.updatesNote || '',
           contactFormTitle: doc.contactFormTitle || '',
           contactFormDescription: doc.contactFormDescription || '',
           autoReplySubject: doc.autoReplySubject || '',
@@ -623,11 +645,14 @@ ${data.companyName}
             {saveStatus === 'saving' ? '💾 Saving...' : saveStatus === 'saved' ? '✓ Saved!' : '💾 Save'}
           </Button>
           <div className="flex items-center gap-2">
+            <label htmlFor="client-email" className="sr-only">Client email address</label>
             <input
+              id="client-email"
               type="email"
               placeholder="Client email..."
               value={clientEmail}
               onChange={(e) => setClientEmail(e.target.value)}
+              aria-label="Client email address"
               className="px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400 w-48"
             />
           </div>
@@ -639,22 +664,23 @@ ${data.companyName}
           <Button variant="outline" onClick={handleCopyLink}>
             {linkCopied ? '✓ Link Copied!' : '🔗 Copy Link'}
           </Button>
-          <Button variant="outline" onClick={handlePrint}>🖨️ Print</Button>
           <Button onClick={handlePrint}>📥 Download PDF</Button>
         </div>
       </div>
 
       {/* Document Preview/Edit */}
-      <div className="bg-white rounded-lg shadow-xl overflow-hidden">
+      <main role="main" aria-label="Hosting Options Document" className="bg-white rounded-lg shadow-xl overflow-hidden">
         {/* Header */}
         <div className="bg-gradient-to-br from-gray-900 to-gray-800 text-white p-8 text-center">
           <img src="/AP-Designs-Logo-Indigo-ElectricBlue.webp" alt="AP Designs Logo" className="w-28 h-28 rounded-full mx-auto mb-4" style={{ filter: 'drop-shadow(0 0 20px rgba(0, 212, 255, 0.3))' }} />
           {isEditing ? (
             <>
               <input type="text" value={data.headerTitle} onChange={(e) => updateField('headerTitle', e.target.value)}
-                className="bg-transparent border-b border-cyan-400/50 text-3xl font-bold text-white text-center w-full focus:outline-none" />
+                aria-label="Document title"
+                className="bg-transparent border-b border-cyan-400/50 text-3xl font-bold text-white text-center w-full focus:outline-none focus:ring-2 focus:ring-cyan-400" />
               <input type="text" value={data.headerSubtitle} onChange={(e) => updateField('headerSubtitle', e.target.value)}
-                className="bg-transparent border-b border-gray-600 text-lg text-cyan-400 text-center w-full mt-2 focus:outline-none" />
+                aria-label="Document subtitle"
+                className="bg-transparent border-b border-gray-600 text-lg text-cyan-400 text-center w-full mt-2 focus:outline-none focus:ring-2 focus:ring-cyan-400" />
             </>
           ) : (
             <><h1 className="text-3xl font-bold mb-2">{data.headerTitle}</h1><p className="text-cyan-400 text-lg">{data.headerSubtitle}</p></>
@@ -685,7 +711,7 @@ ${data.companyName}
             {data.options.map((option) => (
               <div key={option.id} className={`border-2 rounded-lg p-6 relative ${option.isRecommended ? 'border-cyan-400' : 'border-gray-200'}`}>
                 {option.isRecommended && (
-                  <span className="absolute top-4 right-4 bg-gradient-to-r from-cyan-400 to-indigo-500 text-white px-3 py-1 rounded text-xs font-bold uppercase">Recommended</span>
+                  <span className="absolute top-4 right-4 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white px-3 py-1 rounded text-xs font-bold uppercase">Best Value</span>
                 )}
                 <span className="text-4xl font-bold text-cyan-400">{option.letter}</span>
                 {isEditing ? (
@@ -836,6 +862,33 @@ ${data.companyName}
             </div>
           </div>
 
+          {/* Website Updates Section */}
+          <div className="border-2 border-amber-400 rounded-lg p-6 mb-6 bg-amber-50/30">
+            {isEditing ? (
+              <input type="text" value={data.updatesTitle} onChange={(e) => updateField('updatesTitle', e.target.value)}
+                className="w-full p-2 border border-gray-300 rounded text-xl font-semibold text-gray-900 mb-4 focus:outline-none focus:ring-2 focus:ring-amber-400" />
+            ) : (
+              <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center"><span className="text-amber-500 mr-2">⚡</span> {data.updatesTitle}</h2>
+            )}
+            <EditableText value={data.updatesDescription} onChange={(v) => updateField('updatesDescription', v)} multiline className="text-gray-700 mb-4" />
+            <div className="bg-gradient-to-br from-amber-100 to-orange-100 p-4 rounded-lg border border-amber-300">
+              <div className="flex justify-between items-center py-2">
+                <span className="text-gray-700 font-medium">Hourly Rate for Updates</span>
+                {isEditing ? (
+                  <input type="text" value={data.updatesRate} onChange={(e) => updateField('updatesRate', e.target.value)}
+                    className="w-32 p-1 border border-gray-300 rounded text-right text-amber-600 font-bold text-lg focus:outline-none focus:ring-2 focus:ring-amber-400" />
+                ) : <span className="text-amber-600 font-bold text-lg">{data.updatesRate}</span>}
+              </div>
+            </div>
+            <p className="text-gray-600 text-sm mt-4 bg-white p-3 rounded border border-gray-200">
+              {isEditing ? (
+                <textarea value={data.updatesNote} onChange={(e) => updateField('updatesNote', e.target.value)}
+                  className="w-full p-2 border border-gray-300 rounded text-gray-600 focus:outline-none focus:ring-2 focus:ring-amber-400" rows={2} />
+              ) : <><span className="font-semibold">Note:</span> {data.updatesNote}</>}
+            </p>
+            <p className="text-amber-700 text-sm mt-3 font-medium">⚠️ This fee is separate from your hosting plan and billed only when you request changes.</p>
+          </div>
+
           {/* Contact Form Section */}
           <div className="border-2 border-cyan-400 rounded-lg p-6 mb-6">
             {isEditing ? (
@@ -866,10 +919,10 @@ ${data.companyName}
                 ) : <p>{data.autoReplySignature}</p>}
               </div>
             </div>
-            <p className="text-gray-500 text-sm italic mt-4">
+            <p className="text-gray-600 text-sm italic mt-4">
               {isEditing ? (
                 <input type="text" value={data.contactFormNote} onChange={(e) => updateField('contactFormNote', e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded italic text-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-400" />
+                  className="w-full p-2 border border-gray-300 rounded italic text-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-400" />
               ) : data.contactFormNote}
             </p>
           </div>
@@ -888,7 +941,7 @@ ${data.companyName}
             <><h2 className="text-2xl font-bold text-cyan-400 mb-4">{data.footerTitle}</h2><p className="text-gray-300 max-w-2xl mx-auto">{data.footerText}</p></>
           )}
         </div>
-      </div>
+      </main>
     </div>
   )
 }
