@@ -17,53 +17,53 @@
 <div align="center">
 
 ### 🏠 Homepage Hero Section
-![Portfolio Homepage](public/screenshots/hero-section.png)
+![Portfolio Homepage](public/screenshots/hero-section.webp)
 *Modern, responsive hero section with dynamic tech stack display and glassmorphism effects*
 
 ### 💼 Featured Projects
 <table>
   <tr>
     <td width="50%">
-      <img src="public/images/projects/amp-vending/amp-vending-1.png" alt="AMP Vending Website"/>
+      <img src="public/images/projects/amp-vending/amp-vending-1.webp" alt="AMP Vending Website"/>
       <p align="center"><strong>AMP Vending Machines</strong><br/>Production Next.js Site</p>
     </td>
     <td width="50%">
-      <img src="public/images/projects/goldmine/Goldmine-Hero-Screenshot.png" alt="Goldmine Communications & Construction Website Image"/>
+      <img src="public/images/projects/goldmine/Goldmine-Hero-Screenshot.webp" alt="Goldmine Communications & Construction Website Image"/>
       <p align="center"><strong>Goldmine Communications & Construction Website</strong><br/>Full Stack Business Website</p>
     </td>
   </tr>
   <tr>
     <td width="50%">
-      <img src="public/images/projects/cloudgov-dashboard/CloudGov-Screenshot.png" alt="CloudGov Dashboard"/>
+      <img src="public/images/projects/cloudgov-dashboard/CloudGov-Screenshot.webp" alt="CloudGov Dashboard"/>
       <p align="center"><strong>CloudGov Dashboard</strong><br/>NextJS React + AWS</p>
     </td>
     <td width="50%">
-      <img src="public/images/projects/the-glamping-spot/Glamping-Spot-Hero-Screenshot.png" alt="The Glamping Spot"/>
+      <img src="public/images/projects/the-glamping-spot/Glamping-Spot-Hero-Screenshot.webp" alt="The Glamping Spot"/>
       <p align="center"><strong>The Glamping Spot</strong><br/>Tourism & Booking Website</p>
     </td>
   </tr>
 </table>
 
 ### 🎨 Skills & Experience Timeline
-![Skills Section](public/screenshots/skills-section.png)
+![Skills Section](public/screenshots/skills-section.webp)
 *Interactive skills showcase with 40+ technologies and filterable categories*
 
-![Timeline Section](public/screenshots/timeline-section.png)
+![Timeline Section](public/screenshots/timeline-section.webp)
 *Professional experience and education timeline with detailed achievements*
 
 ### 📱 Responsive Design
 <table>
   <tr>
     <td width="33%" align="center">
-      <img src="public/screenshots/mobile-hero.png" alt="Mobile Hero" width="250"/>
+      <img src="public/screenshots/mobile-hero.webp" alt="Mobile Hero" width="250"/>
       <p><strong>Mobile View</strong></p>
     </td>
     <td width="33%" align="center">
-      <img src="public/screenshots/tablet-view.png" alt="Tablet View" width="350"/>
+      <img src="public/screenshots/tablet-view.webp" alt="Tablet View" width="350"/>
       <p><strong>Tablet View</strong></p>
     </td>
     <td width="33%" align="center">
-      <img src="public/screenshots/desktop-view.png" alt="Desktop View" width="500"/>
+      <img src="public/screenshots/desktop-view.webp" alt="Desktop View" width="500"/>
       <p><strong>Desktop View</strong></p>
     </td>
   </tr>
@@ -73,11 +73,11 @@
 <table>
   <tr>
     <td width="50%">
-      <img src="public/screenshots/light-mode.png" alt="Light Mode"/>
+      <img src="public/screenshots/light-mode.webp" alt="Light Mode"/>
       <p align="center"><strong>Light Mode</strong></p>
     </td>
     <td width="50%">
-      <img src="public/screenshots/dark-mode.png" alt="Dark Mode"/>
+      <img src="public/screenshots/dark-mode.webp" alt="Dark Mode"/>
       <p align="center"><strong>Dark Mode</strong></p>
     </td>
   </tr>
