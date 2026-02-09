@@ -17,7 +17,7 @@ const protectedRoutes = [
 // Routes that should redirect to dashboard if already logged in
 const authRoutes = ['/admin/login']
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
   const isAuthenticated = request.cookies.get('admin-auth')?.value === 'true'
 
