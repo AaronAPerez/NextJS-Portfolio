@@ -2,6 +2,8 @@
 
 import { useState, useCallback, useEffect } from 'react'
 import { Button } from '@/components/ui/Button'
+import { PayPalIcon, VenmoIcon, CashAppIcon, CheckIcon, BankIcon } from '@/components/admin/PaymentIcons'
+import ClientSelector from '@/components/admin/ClientSelector'
 
 interface InvoiceItem {
   id: string
@@ -68,7 +70,7 @@ const defaultPaymentMethods: PaymentMethods = {
 }
 
 const defaultInvoiceData: InvoiceData = {
-  companyName: 'AP Designs - Web Development',
+  companyName: 'AP Designs',
   companyAddress: '',
   companyCity: 'Stockton, CA',
   companyPhone: '(209) 470-2061',
@@ -98,6 +100,9 @@ export default function InvoiceForm() {
   const [isSaving, setIsSaving] = useState(false)
   const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle')
   const [savedInvoices, setSavedInvoices] = useState<Array<{ id: string; invoiceNumber: string; clientName: string; total: number; createdAt: string }>>([])
+  const [emailStatus, setEmailStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
+  const [emailError, setEmailError] = useState<string | null>(null)
+  const [selectedClientId, setSelectedClientId] = useState<string | null>(null)
 
   // Load saved invoices on mount
   useEffect(() => {
@@ -139,6 +144,24 @@ export default function InvoiceForm() {
 
   const updatePaymentMethod = useCallback(<K extends keyof PaymentMethods>(field: K, value: PaymentMethods[K]) => {
     setData(prev => ({ ...prev, paymentMethods: { ...prev.paymentMethods, [field]: value } }))
+  }, [])
+
+  // Handle client selection - auto-fill client info
+  const handleClientSelect = useCallback((client: { id: string; name: string; company: string; email: string; phone: string; address: string; city: string; state: string; zipCode: string } | null) => {
+    if (client) {
+      setSelectedClientId(client.id)
+      setData(prev => ({
+        ...prev,
+        clientName: client.name,
+        clientCompany: client.company || '',
+        clientEmail: client.email || '',
+        clientPhone: client.phone || '',
+        clientAddress: client.address || '',
+        clientCity: [client.city, client.state, client.zipCode].filter(Boolean).join(', '),
+      }))
+    } else {
+      setSelectedClientId(null)
+    }
   }, [])
 
   const subtotal = data.items.reduce((sum, item) => sum + item.quantity * item.rate, 0)
@@ -196,7 +219,6 @@ export default function InvoiceForm() {
                 width: 8.5in !important;
                 min-height: 11in !important;
                 margin: 0 !important;
-                padding: 0.5in 0.6in !important;
               }
             }
             @media print {
@@ -220,20 +242,20 @@ export default function InvoiceForm() {
             .header {
               display: flex;
               justify-content: space-between;
-              align-items: center;
+              align-items: flex-center;
               padding-bottom: 24px;
               border-bottom: 3px solid #0ea5e9;
               margin-bottom: 24px;
             }
-            .company-block { display: flex; align-items: center; gap: 20px; }
-            .logo { width: 90px; height: 90px; border-radius: 12px; object-fit: contain; }
-            .company-name { font-size: 24pt; font-weight: 700; color: #1e293b; margin-bottom: 6px; letter-spacing: -0.5px; }
+            .company-block { display: flex; align-items: flex-start; gap: 20px; }
+            .logo { width: 100px; height: 100px; border-radius: 50%; object-fit: contain; background: rgba(30, 58, 138, 0.9); padding: 2px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); backdrop-filter: blur(8px); }
+            .company-name { font-size: 24pt; font-weight: 700; color: #1e293b; margin-bottom: 6px; letter-spacing: -0.5px; margin-top: 8px; }
             .company-info { color: #475569; font-size: 11pt; line-height: 1.7; font-weight: 500; }
             .invoice-block { text-align: right; }
-            .invoice-title { font-size: 36pt; font-weight: 800; color: #0ea5e9; letter-spacing: -1px; }
+            .invoice-title { font-size: 36pt; font-weight: 800; color: #0ea5e9; letter-spacing: -1px; margin-top: 0; }
             .invoice-meta { margin-top: 12px; }
             .invoice-meta .row { display: flex; justify-content: flex-end; gap: 12px; margin: 4px 0; font-size: 10pt; }
-            .invoice-meta .label { color: #94a3b8; }
+            .invoice-meta .label { color: #64748b; font-weight: 500; }
             .invoice-meta .value { font-weight: 600; color: #1e293b; min-width: 100px; text-align: right; }
 
             /* Bill To Section */
@@ -261,10 +283,10 @@ export default function InvoiceForm() {
             /* Totals */
             .totals-wrapper { display: flex; justify-content: flex-end; margin-bottom: 24px; }
             .totals-box { width: 250px; }
-            .total-row { display: flex; justify-content: space-between; padding: 8px 0; font-size: 11pt; border-bottom: 1px solid #e2e8f0; }
+            .total-row { display: flex; justify-content: space-between; padding: 8px 16px; font-size: 11pt; border-bottom: 1px solid #e2e8f0; }
             .total-row:last-child { border-bottom: none; }
-            .total-label { color: #64748b; }
-            .total-value { font-weight: 600; color: #334155; font-family: 'SF Mono', 'Consolas', monospace; }
+            .total-label { color: #64748b; text-align: left; }
+            .total-value { font-weight: 600; color: #334155; font-family: 'SF Mono', 'Consolas', monospace; text-align: right; min-width: 80px; }
             .total-row.grand { background: #0ea5e9; color: white; padding: 12px 16px; margin-top: 10px; border-radius: 6px; font-size: 14pt; }
             .total-row.grand .total-label { color: white; font-weight: 600; }
             .total-row.grand .total-value { color: white; font-weight: 700; }
@@ -277,15 +299,16 @@ export default function InvoiceForm() {
 
             /* Payment Methods */
             .payment-section { margin-bottom: 20px; }
-            .payment-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; }
-            .payment-box { padding: 12px; border-radius: 6px; border: 2px solid #e2e8f0; }
-            .payment-box.paypal { border-color: #0070ba; background: #f0f7ff; }
-            .payment-box.venmo { border-color: #008CFF; background: #f0f9ff; }
-            .payment-box.cashapp { border-color: #00D632; background: #f0fff4; }
-            .payment-box.check { border-color: #6b7280; background: #f9fafb; }
-            .payment-box.ach { border-color: #22c55e; background: #f0fdf4; }
-            .payment-box h5 { font-size: 10pt; font-weight: 600; color: #1e293b; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
-            .payment-box p { font-size: 8pt; color: #64748b; line-height: 1.4; margin: 2px 0; }
+            .payment-send-to { background: #f8fafc; padding: 14px 18px; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 16px; }
+            .payment-send-to p { font-size: 11pt; color: #334155; margin: 0; }
+            .payment-send-to .email { font-weight: 700; color: #0f172a; font-size: 13pt; }
+            .payment-icons { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; margin-top: 8px; }
+            .payment-icon { display: flex; align-items: center; }
+            .payment-icon svg { height: auto; }
+            .payment-box { padding: 12px; border-radius: 6px; border: 1px solid #e2e8f0; margin-top: 12px; background: #f8fafc; }
+            .payment-box.check { border-color: #d1d5db; }
+            .payment-box h5 { font-size: 10pt; font-weight: 600; color: #1e293b; margin-bottom: 6px; }
+            .payment-box p { font-size: 9pt; color: #64748b; line-height: 1.4; margin: 2px 0; }
             .payment-box .label { font-weight: 600; color: #475569; }
 
             /* Footer */
@@ -297,7 +320,7 @@ export default function InvoiceForm() {
         <body>
           <div class="header">
             <div class="company-block">
-              <img src="${window.location.origin}/AP-Designs-Logo-Indigo-Teal.webp" alt="Logo" class="logo">
+              <img src="${window.location.origin}/AP-Designs-Logo-Indigo-ElectricBlue.webp" alt="Logo" class="logo">
               <div>
                 <div class="company-name">${data.companyName}</div>
                 <div class="company-info">${data.companyCity}<br>${data.companyPhone}<br>${data.companyEmail}</div>
@@ -354,50 +377,40 @@ export default function InvoiceForm() {
             <div class="notes-box"><h4>Terms & Conditions</h4><p>${data.terms}</p></div>
           </div>
 
-          ${(data.paymentMethods.paypalEnabled || data.paymentMethods.venmoEnabled || data.paymentMethods.cashappEnabled || data.paymentMethods.checkEnabled || data.paymentMethods.achEnabled) ? `
+          ${(data.paymentMethods.paypalEnabled || data.paymentMethods.venmoEnabled || data.paymentMethods.cashappEnabled || data.paymentMethods.checkEnabled) ? `
           <div class="payment-section">
             <div class="section-header">Payment Methods</div>
-            <div class="payment-grid">
+
+            ${(data.paymentMethods.paypalEnabled || data.paymentMethods.venmoEnabled || data.paymentMethods.cashappEnabled) ? `
+            <div class="payment-send-to">
+              <p>Send payment to: <span class="email">${data.paymentMethods.paypalEmail || data.paymentMethods.venmoUsername || data.paymentMethods.cashappUsername}</span></p>
+            </div>
+            <div class="payment-icons">
               ${data.paymentMethods.paypalEnabled ? `
-              <div class="payment-box paypal">
-                <h5>💳 PayPal</h5>
-                <p>Send to:</p>
-                <p class="label">${data.paymentMethods.paypalEmail}</p>
+              <div class="payment-icon paypal">
+                <svg viewBox="0 0 124 33" width="80" height="22"><path fill="#253B80" d="M46.211 6.749h-6.839a.95.95 0 0 0-.939.802l-2.766 17.537a.57.57 0 0 0 .564.658h3.265a.95.95 0 0 0 .939-.803l.746-4.73a.95.95 0 0 1 .938-.803h2.165c4.505 0 7.105-2.18 7.784-6.5.306-1.89.013-3.375-.872-4.415-.972-1.142-2.696-1.746-4.985-1.746zM47 13.154c-.374 2.454-2.249 2.454-4.062 2.454h-1.032l.724-4.583a.57.57 0 0 1 .563-.481h.473c1.235 0 2.4 0 3.002.704.359.42.469 1.044.332 1.906zM66.654 13.075h-3.275a.57.57 0 0 0-.563.481l-.145.916-.229-.332c-.709-1.029-2.29-1.373-3.868-1.373-3.619 0-6.71 2.741-7.312 6.586-.313 1.918.132 3.752 1.22 5.031.998 1.176 2.426 1.666 4.125 1.666 2.916 0 4.533-1.875 4.533-1.875l-.146.91a.57.57 0 0 0 .562.66h2.95a.95.95 0 0 0 .939-.803l1.77-11.209a.568.568 0 0 0-.561-.658zm-4.565 6.374c-.316 1.871-1.801 3.127-3.695 3.127-.951 0-1.711-.305-2.199-.883-.484-.574-.668-1.391-.514-2.301.295-1.855 1.805-3.152 3.67-3.152.93 0 1.686.309 2.184.892.499.589.697 1.411.554 2.317zM84.096 13.075h-3.291a.954.954 0 0 0-.787.417l-4.539 6.686-1.924-6.425a.953.953 0 0 0-.912-.678h-3.234a.57.57 0 0 0-.541.754l3.625 10.638-3.408 4.811a.57.57 0 0 0 .465.9h3.287a.949.949 0 0 0 .781-.408l10.946-15.8a.57.57 0 0 0-.468-.895z"/><path fill="#179BD7" d="M94.992 6.749h-6.84a.95.95 0 0 0-.938.802l-2.766 17.537a.569.569 0 0 0 .562.658h3.51a.665.665 0 0 0 .656-.562l.785-4.971a.95.95 0 0 1 .938-.803h2.164c4.506 0 7.105-2.18 7.785-6.5.307-1.89.012-3.375-.873-4.415-.971-1.142-2.694-1.746-4.983-1.746zm.789 6.405c-.373 2.454-2.248 2.454-4.062 2.454h-1.031l.725-4.583a.568.568 0 0 1 .562-.481h.473c1.234 0 2.4 0 3.002.704.359.42.468 1.044.331 1.906zM115.434 13.075h-3.273a.567.567 0 0 0-.562.481l-.145.916-.23-.332c-.709-1.029-2.289-1.373-3.867-1.373-3.619 0-6.709 2.741-7.311 6.586-.312 1.918.131 3.752 1.219 5.031 1 1.176 2.426 1.666 4.125 1.666 2.916 0 4.533-1.875 4.533-1.875l-.146.91a.57.57 0 0 0 .564.66h2.949a.95.95 0 0 0 .938-.803l1.771-11.209a.571.571 0 0 0-.565-.658zm-4.565 6.374c-.314 1.871-1.801 3.127-3.695 3.127-.949 0-1.711-.305-2.199-.883-.484-.574-.666-1.391-.514-2.301.297-1.855 1.805-3.152 3.67-3.152.93 0 1.686.309 2.184.892.501.589.699 1.411.554 2.317zM119.295 7.23l-2.807 17.858a.569.569 0 0 0 .562.658h2.822c.469 0 .867-.34.939-.803l2.768-17.536a.57.57 0 0 0-.562-.659h-3.16a.571.571 0 0 0-.562.482z"/></svg>
               </div>
               ` : ''}
               ${data.paymentMethods.venmoEnabled ? `
-              <div class="payment-box venmo">
-                <h5>📱 Venmo</h5>
-                <p>Send to:</p>
-                <p class="label">${data.paymentMethods.venmoUsername || 'Contact for username'}</p>
+              <div class="payment-icon venmo">
+                <svg viewBox="0 0 2139 569" width="60" height="16"><path fill="#3D95CE" d="M410.7 0c27.8 51.2 40.3 103.9 40.3 170.7 0 212.5-181.6 488.6-329.1 682.9H0L-86.6 42.6l162.1-15.5 65 522.1c48-78 107.3-200.8 107.3-284.7 0-40.7-6.4-68.2-16.4-91.4L410.7 0z"/><path fill="#3D95CE" d="M636.4 284.5c32.6 0 117.2-13.9 117.2-57.2 0-22.1-15.5-33.5-34.4-33.5-39.4 0-77.8 39.4-82.8 90.7zm-2.5 58.8c0 63.8 35.2 88.2 80.3 88.2 45.9 0 86.1-11.4 135.4-39.4l-20.5 139.6c-35.2 18-90.7 32.7-150.4 32.7-144.6 0-198.4-85.3-198.4-192.6 0-155.2 92.4-294.8 259.8-294.8 101.3 0 161.9 55.5 161.9 135.4 0 105.5-126.5 131.5-267.9 130.7l-.2.2z"/><path fill="#3D95CE" d="M1186.9 186.6c0-12.3-3.3-23.8-11.4-23.8-29.4 0-60.5 70.5-60.5 138.8 0 18.9 4.9 35.2 16.4 35.2 34.4 0 55.5-93.2 55.5-150.2zm-226.3 184.3c0-140.4 92.4-294 265.5-294 88.2 0 139.6 47.5 139.6 122.3 0 111.3-83.6 212.5-197.6 212.5-23.8 0-41.8-4.9-52.3-14.7-7.4 55.5-23 114.7-48.4 176.8l-158.6 14.7c37.7-91.5 51.6-170.7 51.6-217.4l.2-.2z"/><path fill="#3D95CE" d="M1657.5 200.5c-34.4 0-65.5 70.5-65.5 129.1 0 26.2 9 41.8 27 41.8 32.7 0 65.5-63.8 65.5-129.1 0-24.6-9-41.8-27-41.8zm-190.1 170.7c0-134.6 97.3-294.8 274.6-294.8 106.4 0 152.7 60.5 152.7 143.8 0 138.8-100.5 294.8-277.1 294.8-107.2.2-150.2-60.5-150.2-143.8z"/><path fill="#3D95CE" d="M1900.5 556.6l60.5-346.5c11.4-63.8 18.9-131.5 23.8-185.9h150.4l-9 75.4h2.5c39.4-57.2 92.4-86.1 156.9-86.1l-34.4 175.2c-88.2 0-130.7 22.1-150.4 102.2l-41.8 265.5h-158.5z"/></svg>
               </div>
               ` : ''}
               ${data.paymentMethods.cashappEnabled ? `
-              <div class="payment-box cashapp">
-                <h5>💵 Cash App</h5>
-                <p>Send to:</p>
-                <p class="label">${data.paymentMethods.cashappUsername || 'Contact for $cashtag'}</p>
-              </div>
-              ` : ''}
-              ${data.paymentMethods.checkEnabled ? `
-              <div class="payment-box check">
-                <h5>📝 Check</h5>
-                <p>Make payable to:</p>
-                <p class="label">${data.paymentMethods.checkPayableTo}</p>
-                ${data.paymentMethods.checkMailingAddress ? `<p style="font-size: 7pt; margin-top: 4px;">${data.paymentMethods.checkMailingAddress}</p>` : ''}
-              </div>
-              ` : ''}
-              ${data.paymentMethods.achEnabled ? `
-              <div class="payment-box ach">
-                <h5>🏦 Bank Transfer</h5>
-                ${data.paymentMethods.bankName ? `<p><span class="label">Bank:</span> ${data.paymentMethods.bankName}</p>` : ''}
-                ${data.paymentMethods.bankAccountName ? `<p><span class="label">Name:</span> ${data.paymentMethods.bankAccountName}</p>` : ''}
-                ${data.paymentMethods.bankRoutingNumber ? `<p><span class="label">Routing:</span> ${data.paymentMethods.bankRoutingNumber}</p>` : ''}
-                ${data.paymentMethods.bankAccountLast4 ? `<p><span class="label">Account:</span> ****${data.paymentMethods.bankAccountLast4}</p>` : ''}
-                ${!data.paymentMethods.bankName && !data.paymentMethods.bankRoutingNumber ? `<p>Contact for details</p>` : ''}
+              <div class="payment-icon cashapp">
+                <svg viewBox="0 0 512 512" width="24" height="24"><path fill="#00D632" d="M256 0C114.6 0 0 114.6 0 256s114.6 256 256 256 256-114.6 256-256S397.4 0 256 0zm79.9 178.3l-23.4 24.9c-5.9 6.3-15.6 6.6-21.9.7-13.2-12.4-29.9-19.3-47.4-19.3-21.2 0-34.6 9.4-34.6 22.5 0 11.5 9.4 18 30.7 23.9l14.5 3.8c43 11 69.9 28.3 69.9 65.8 0 44.3-36.2 73.9-87.3 76.6v25c0 6.7-5.4 12.2-12.2 12.2h-22.8c-6.7 0-12.2-5.4-12.2-12.2v-25.5c-29.3-3-55.1-14.8-72.1-33.1-5.8-6.3-5.6-16.1.5-22.2l25.5-23.9c6.1-5.7 15.8-5.4 21.7.6 14 14.8 31.4 22.6 52.9 22.6 24.1 0 38.9-10.8 38.9-25.6 0-12.9-9.4-19.6-33.5-26.1l-14.8-4c-38.7-10.2-65.8-27.4-65.8-64 0-39.8 32.2-69.4 81.9-73.4v-23.6c0-6.7 5.4-12.2 12.2-12.2h22.8c6.7 0 12.2 5.4 12.2 12.2v24.2c24.4 3.3 45.1 13.5 59.6 28.5 6 6.2 5.8 16.1-.4 22.1z"/></svg>
               </div>
               ` : ''}
             </div>
+            ` : ''}
+
+            ${data.paymentMethods.checkEnabled ? `
+            <div class="payment-box check">
+              <h5>Check</h5>
+              <p>Make payable to: <span class="label">${data.paymentMethods.checkPayableTo}</span></p>
+              ${data.paymentMethods.checkMailingAddress ? `<p style="font-size: 8pt; margin-top: 4px;">Mail to: ${data.paymentMethods.checkMailingAddress}</p>` : ''}
+            </div>
+            ` : ''}
           </div>
           ` : ''}
 
@@ -413,77 +426,40 @@ export default function InvoiceForm() {
     printWindow.document.close()
   }, [data, subtotal, tax, total, formatCurrency, formatDate])
 
-  // Send invoice via email
-  const handleSendEmail = useCallback(() => {
-    const itemsList = data.items
-      .map(item => `  - ${item.description}: ${item.quantity} x ${formatCurrency(item.rate)} = ${formatCurrency(item.quantity * item.rate)}`)
-      .join('\n')
+  // Send invoice via email (with clickable payment links)
+  const handleSendEmail = useCallback(async () => {
+    if (!data.clientEmail) {
+      setEmailError('Client email is required')
+      return
+    }
 
-    // Build payment methods section
-    const paymentMethodsList: string[] = []
-    if (data.paymentMethods.paypalEnabled) {
-      paymentMethodsList.push(`  PayPal: Send to ${data.paymentMethods.paypalEmail}`)
-    }
-    if (data.paymentMethods.venmoEnabled) {
-      paymentMethodsList.push(`  Venmo: ${data.paymentMethods.venmoUsername || 'Contact for username'}`)
-    }
-    if (data.paymentMethods.cashappEnabled) {
-      paymentMethodsList.push(`  Cash App: ${data.paymentMethods.cashappUsername || 'Contact for $cashtag'}`)
-    }
-    if (data.paymentMethods.checkEnabled) {
-      let checkDetails = `  Check: Make payable to ${data.paymentMethods.checkPayableTo}`
-      if (data.paymentMethods.checkMailingAddress) {
-        checkDetails += `\n    Mail to: ${data.paymentMethods.checkMailingAddress}`
+    setEmailStatus('sending')
+    setEmailError(null)
+
+    try {
+      const response = await fetch('/api/invoices/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      })
+
+      const result = await response.json()
+
+      if (response.ok && result.success) {
+        setEmailStatus('sent')
+        setTimeout(() => setEmailStatus('idle'), 3000)
+      } else {
+        setEmailStatus('error')
+        setEmailError(result.message || 'Failed to send email')
+        setTimeout(() => setEmailStatus('idle'), 5000)
       }
-      paymentMethodsList.push(checkDetails)
+    } catch (error) {
+      console.error('Failed to send invoice email:', error)
+      setEmailStatus('error')
+      setEmailError('Network error. Please try again.')
+      setTimeout(() => setEmailStatus('idle'), 5000)
     }
-    if (data.paymentMethods.achEnabled) {
-      let achDetails = `  Bank Transfer:`
-      if (data.paymentMethods.bankName) achDetails += `\n    Bank: ${data.paymentMethods.bankName}`
-      if (data.paymentMethods.bankAccountName) achDetails += `\n    Name: ${data.paymentMethods.bankAccountName}`
-      if (data.paymentMethods.bankRoutingNumber) achDetails += `\n    Routing: ${data.paymentMethods.bankRoutingNumber}`
-      if (data.paymentMethods.bankAccountLast4) achDetails += `\n    Account: ****${data.paymentMethods.bankAccountLast4}`
-      if (!data.paymentMethods.bankName && !data.paymentMethods.bankRoutingNumber) {
-        achDetails += `\n    Contact for bank details`
-      }
-      paymentMethodsList.push(achDetails)
-    }
-    const paymentSection = paymentMethodsList.length > 0
-      ? `\nPAYMENT METHODS:\n${paymentMethodsList.join('\n\n')}\n`
-      : ''
-
-    const subject = encodeURIComponent(`Invoice ${data.invoiceNumber} from ${data.companyName}`)
-    const body = encodeURIComponent(
-`Dear ${data.clientName || 'Client'},
-
-Please find your invoice details below:
-
-INVOICE: ${data.invoiceNumber}
-Date: ${formatDate(data.invoiceDate)}
-Due Date: ${formatDate(data.dueDate)}
-
-ITEMS:
-${itemsList}
-
-Subtotal: ${formatCurrency(subtotal)}
-${data.taxRate > 0 ? `Tax (${data.taxRate}%): ${formatCurrency(tax)}\n` : ''}TOTAL DUE: ${formatCurrency(total)}
-${paymentSection}
-${data.notes}
-
-${data.terms}
-
----
-${data.companyName}
-${data.companyCity}
-${data.companyPhone}
-${data.companyEmail}
-${data.companyWebsite}
-`
-    )
-
-    const mailtoLink = `mailto:${data.clientEmail}?subject=${subject}&body=${body}`
-    window.open(mailtoLink, '_blank')
-  }, [data, subtotal, tax, total, formatCurrency, formatDate])
+  }, [data])
 
   // Save invoice to database
   const handleSave = useCallback(async () => {
@@ -676,33 +652,43 @@ ${data.companyWebsite}
           </Button>
         </div>
         <div className="flex items-center gap-3">
-          <Button variant="outline" onClick={handleSendEmail} disabled={!data.clientEmail}>
-            📧 Send Email
+          <Button
+            variant="outline"
+            onClick={handleSendEmail}
+            disabled={!data.clientEmail || emailStatus === 'sending'}
+            className={emailStatus === 'sent' ? 'bg-green-100 border-green-500 text-green-700' : emailStatus === 'error' ? 'bg-red-100 border-red-500 text-red-700' : ''}
+          >
+            {emailStatus === 'sending' ? '📧 Sending...' :
+             emailStatus === 'sent' ? '✓ Email Sent!' :
+             emailStatus === 'error' ? '✗ Failed' : '📧 Send Email'}
           </Button>
+          {emailError && emailStatus === 'error' && (
+            <span className="text-red-500 text-sm">{emailError}</span>
+          )}
           <Button variant="outline" onClick={handleCopyLink}>
             {linkCopied ? '✓ Link Copied!' : '🔗 Copy Link'}
           </Button>
-          <Button variant="outline" onClick={handlePrint}>🖨️ Print</Button>
           <Button onClick={handlePrint}>📥 Download PDF</Button>
         </div>
       </div>
 
       {/* Invoice Preview/Edit */}
-      <div className="bg-white rounded-lg shadow-xl overflow-hidden">
+      <div className="bg-white outline shadow-xl overflow-hidden">
         <div className="document-container">
           {/* Header */}
-          <div className="document-header bg-gradient-to-r from-gray-900 to-gray-800 text-white p-8">
+          <div className="document-header
+         p-8">
             <div className="flex justify-between items-center">
-              <div className="flex items-center gap-5">
-                <img src="/AP-Designs-Logo-Indigo-ElectricBlue.webp" alt="AP Designs Logo" className="logo w-[90px] h-[90px] rounded-xl object-contain" />
+              <div className="flex gap-5">
+                <img src="/AP-Designs-Logo-Indigo-ElectricBlue.webp" alt="AP Designs Logo" className="logo w-[90px] h-[90px] rounded-full object-contain" />
                 <div className="text-left">
                   {isEditing ? (
                     <input type="text" value={data.companyName} onChange={(e) => updateField('companyName', e.target.value)}
-                      className="bg-transparent border-b border-cyan-400/50 text-3xl font-bold text-white w-full focus:outline-none focus:border-cyan-400" />
+                      className="bg-transparent border-b border-cyan-400/50 text-3xl font-bold w-full focus:outline-none focus:border-cyan-400" />
                   ) : (
                     <h1 className="text-3xl font-bold">{data.companyName}</h1>
                   )}
-                  <div className="text-gray-200 text-base mt-2 space-y-1 font-medium">
+                  <div className="text-gray-500 text-base mt-2 space-y-1 font-medium">
                     {isEditing ? (
                       <>
                         <input type="text" value={data.companyCity} onChange={(e) => updateField('companyCity', e.target.value)}
@@ -722,7 +708,7 @@ ${data.companyWebsite}
                 <h2 className="text-4xl font-bold text-cyan-400 mb-4">INVOICE</h2>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-end gap-4">
-                    <span className="text-gray-400">Invoice #:</span>
+                    <span className="text-gray-500">Invoice #:</span>
                     {isEditing ? (
                       <input type="text" value={data.invoiceNumber} onChange={(e) => updateField('invoiceNumber', e.target.value)}
                         className="bg-transparent border-b border-gray-600 text-right w-40 focus:outline-none focus:border-cyan-400" />
@@ -731,7 +717,7 @@ ${data.companyWebsite}
                     )}
                   </div>
                   <div className="flex justify-end gap-4">
-                    <span className="text-gray-400">Date:</span>
+                    <span className="text-gray-500">Date:</span>
                     {isEditing ? (
                       <input type="date" value={data.invoiceDate} onChange={(e) => updateField('invoiceDate', e.target.value)}
                         className="bg-transparent border-b border-gray-600 text-right w-40 focus:outline-none focus:border-cyan-400" />
@@ -740,7 +726,7 @@ ${data.companyWebsite}
                     )}
                   </div>
                   <div className="flex justify-end gap-4">
-                    <span className="text-gray-400">Due Date:</span>
+                    <span className="text-gray-500">Due Date:</span>
                     {isEditing ? (
                       <input type="date" value={data.dueDate} onChange={(e) => updateField('dueDate', e.target.value)}
                         className="bg-transparent border-b border-gray-600 text-right w-40 focus:outline-none focus:border-cyan-400" />
@@ -758,6 +744,18 @@ ${data.companyWebsite}
             {/* Bill To */}
             <div className="section mb-8">
               <h3 className="section-title text-xl font-semibold text-gray-900 mb-4 pb-2 border-b-2 border-cyan-400">Bill To</h3>
+
+              {/* Client Selector - only show when editing */}
+              {isEditing && (
+                <div className="mb-4">
+                  <ClientSelector
+                    onSelect={handleClientSelect}
+                    selectedClientId={selectedClientId}
+                  />
+                  <p className="text-xs text-gray-500 mt-1">Select an existing client or enter details manually below</p>
+                </div>
+              )}
+
               <div className="grid grid-cols-2 gap-6">
                 <div className="space-y-3">
                   <div className="form-group">
@@ -934,7 +932,7 @@ ${data.companyWebsite}
                 <div className={`p-4 rounded-lg border-2 transition-all ${data.paymentMethods.paypalEnabled ? 'border-blue-500 bg-blue-50' : 'border-gray-200 bg-gray-50'}`}>
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-2">
-                      <span className="text-2xl">💳</span>
+                      <PayPalIcon size={28} />
                       <span className="font-semibold text-gray-900">PayPal</span>
                     </div>
                     {isEditing && (
@@ -960,7 +958,7 @@ ${data.companyWebsite}
                 <div className={`p-4 rounded-lg border-2 transition-all ${data.paymentMethods.venmoEnabled ? 'border-sky-500 bg-sky-50' : 'border-gray-200 bg-gray-50'}`}>
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-2">
-                      <span className="text-2xl">📱</span>
+                      <VenmoIcon size={28} />
                       <span className="font-semibold text-gray-900">Venmo</span>
                     </div>
                     {isEditing && (
@@ -986,7 +984,7 @@ ${data.companyWebsite}
                 <div className={`p-4 rounded-lg border-2 transition-all ${data.paymentMethods.cashappEnabled ? 'border-emerald-500 bg-emerald-50' : 'border-gray-200 bg-gray-50'}`}>
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-2">
-                      <span className="text-2xl">💵</span>
+                      <CashAppIcon size={28} />
                       <span className="font-semibold text-gray-900">Cash App</span>
                     </div>
                     {isEditing && (
@@ -1009,10 +1007,10 @@ ${data.companyWebsite}
                 </div>
 
                 {/* Check */}
-                <div className={`p-4 rounded-lg border-2 transition-all ${data.paymentMethods.checkEnabled ? 'border-gray-500 bg-gray-100' : 'border-gray-200 bg-gray-50'}`}>
+                {/* <div className={`p-4 rounded-lg border-2 transition-all ${data.paymentMethods.checkEnabled ? 'border-gray-500 bg-gray-100' : 'border-gray-200 bg-gray-50'}`}>
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-2">
-                      <span className="text-2xl">📝</span>
+                      <CheckIcon size={28} />
                       <span className="font-semibold text-gray-900">Check</span>
                     </div>
                     {isEditing && (
@@ -1039,13 +1037,13 @@ ${data.companyWebsite}
                       )}
                     </div>
                   )}
-                </div>
+                </div> */}
 
                 {/* ACH/Bank Transfer */}
-                <div className={`p-4 rounded-lg border-2 transition-all ${data.paymentMethods.achEnabled ? 'border-green-500 bg-green-50' : 'border-gray-200 bg-gray-50'}`}>
+                {/* <div className={`p-4 rounded-lg border-2 transition-all ${data.paymentMethods.achEnabled ? 'border-green-500 bg-green-50' : 'border-gray-200 bg-gray-50'}`}>
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-2">
-                      <span className="text-2xl">🏦</span>
+                      <BankIcon size={28} />
                       <span className="font-semibold text-gray-900">Bank Transfer</span>
                     </div>
                     {isEditing && (
@@ -1081,7 +1079,7 @@ ${data.companyWebsite}
                       )}
                     </div>
                   )}
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
