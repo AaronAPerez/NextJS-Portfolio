@@ -4,14 +4,9 @@ const nextConfig: NextConfig = {
   /* config options here */
   devIndicators: false,
   typescript: {
-    ignoreBuildErrors: true
+    ignoreBuildErrors: true,
   },
-    // ESLint configuration
-  eslint: {
-    // Warning: This allows production builds to successfully complete even if
-    // your project has ESLint errors.
-    ignoreDuringBuilds: true,
-  },
+
 
   // Performance optimizations
   reactStrictMode: true,

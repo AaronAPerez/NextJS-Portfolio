@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import dynamic from 'next/dynamic';
 import { EditorWrapper } from "@/components/EditorWrapper";
 import HeroSection from "@/components/sections/HeroSection";

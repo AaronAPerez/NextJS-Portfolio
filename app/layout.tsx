@@ -5,11 +5,10 @@ import { ThemeProvider } from "@/context/ThemeContext";
 import './globals.css';
 import { Analytics } from '@vercel/analytics/react';
 import { generatePersonSchema, generateWebsiteSchema } from "@/lib/utils";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
 import { ToastProvider } from "@/components/providers/ToastProvider";
-import { QueryProvider } from "@/lib/providers/query-provider";
+import { QueryProvider } from "@/lib/providers/QueryProvider";
 import { WebVitals } from "./web-vitals";
+import LayoutProvider from "@/lib/providers/LayoutProvider";
 
 
 const inter = Inter({
@@ -85,14 +84,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <ToastProvider />
             <header role="banner">
               {/* nav */}
-              <Header />
             </header>
-            <main id="main" role="main">
+            <LayoutProvider>
+          
               {children}
               <WebVitals />
               <Analytics />
-            </main>
-            <Footer />
+
+            
+            </LayoutProvider>
           </ThemeProvider>
         </QueryProvider>
       </body>
