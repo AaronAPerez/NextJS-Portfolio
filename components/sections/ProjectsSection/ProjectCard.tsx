@@ -1,5 +1,6 @@
 'use client';
 
+import { memo, useCallback, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { skills } from '@/components/config/skills';
@@ -14,20 +15,28 @@ interface ProjectCardProps {
   onHover: (index: number | null) => void;
 }
 
+// Static lookup - computed once outside component for performance
 const techIcons = Object.fromEntries(
   skills.map(skill => [skill.name, { icon: skill.icon, color: skill.color }])
 );
 
-export const ProjectCard = ({ project, index, isHovered, onHover }: ProjectCardProps) => {
+// Memoized ProjectCard - prevents re-render when other cards are hovered
+const ProjectCard = memo(function ProjectCard({ project, index, isHovered, onHover }: ProjectCardProps) {
   const cardId = `project-${project.id}`;
-  const gradient = project.gradient ?? {
+
+  // Memoize gradient to prevent object recreation
+  const gradient = useMemo(() => project.gradient ?? {
     from: '#3B82F6',
     to: '#8B5CF6'
-  };
+  }, [project.gradient]);
 
   // Get links from project data
   const codeLink = project.codeLink || undefined;
   const demoLink = project.websiteLink || project.demoLink || undefined;
+
+  // Memoize event handlers to prevent child re-renders
+  const handleMouseEnter = useCallback(() => onHover(index), [onHover, index]);
+  const handleMouseLeave = useCallback(() => onHover(null), [onHover]);
 
   return (
     <>
@@ -35,10 +44,10 @@ export const ProjectCard = ({ project, index, isHovered, onHover }: ProjectCardP
         className="w-full lg:pb-16 lg:pt-12 py-4"
         role="article"
         aria-labelledby={`${cardId}-title`}
-        onMouseEnter={() => onHover(index)}
-        onMouseLeave={() => onHover(null)}
-        onFocus={() => onHover(index)}
-        onBlur={() => onHover(null)}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onFocus={handleMouseEnter}
+        onBlur={handleMouseLeave}
       >
         {/* PinContainer with direct demoLink and codeLink props */}
         <PinContainer
@@ -165,6 +174,7 @@ export const ProjectCard = ({ project, index, isHovered, onHover }: ProjectCardP
       </div>
     </>
   );
-};
+});
 
+export { ProjectCard };
 export default ProjectCard;

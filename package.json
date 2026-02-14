@@ -24,7 +24,6 @@
     "jest-axe": "^9.0.0",
     "lucide-react": "^0.469.0",
     "mini-svg-data-uri": "^1.4.4",
-    "motion": "^12.7.4",
     "next": "^16.2.0-canary.1",
     "nodemailer": "^7.0.10",
     "plaiceholder": "^3.0.0",

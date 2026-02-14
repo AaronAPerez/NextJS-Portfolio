@@ -260,15 +260,14 @@ export default function HeroSection() {
             >
               {/* Profile Image Container */}
               <div className="relative w-full max-w-md flex justify-center">
-                <motion.div
-                  animate={{ y: [0, -20, 0] }}
-                  transition={{
-                    duration: 6,
-                    repeat: Infinity,
-                    repeatType: 'reverse',
-                    ease: 'easeInOut'
+                {/* Floating animation - CSS-based for better performance, respects reduced motion */}
+                <div
+                  className={`relative w-56 h-56 sm:w-72 sm:h-72 md:w-80 md:h-80 ${
+                    prefersReducedMotion ? '' : 'animate-float'
+                  }`}
+                  style={prefersReducedMotion ? {} : {
+                    animation: 'float 6s ease-in-out infinite'
                   }}
-                  className="relative w-56 h-56 sm:w-72 sm:h-72 md:w-80 md:h-80"
                 >
                   {/* Enhanced Profile Image Container */}
                   <div className="relative w-full h-full">
@@ -290,11 +289,12 @@ export default function HeroSection() {
                     </div>
                   </div>
 
-                  {/* Enhanced Floating Tech Icons */}
-                  <motion.div
-                    animate={{ rotate: 360 }}
-                    transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+                  {/* Floating Tech Icons - CSS animations for better performance */}
+                  <div
                     className="absolute -top-6 -right-6 backdrop-blur-sm bg-white/10 dark:bg-gray-800/30 w-16 h-16 rounded-full flex items-center justify-center shadow-lg"
+                    style={prefersReducedMotion ? {} : {
+                      animation: 'spin 20s linear infinite'
+                    }}
                   >
                     <Image
                       src='/icons/frontend/react.svg'
@@ -303,12 +303,13 @@ export default function HeroSection() {
                       height={32}
                       className="react-blue"
                     />
-                  </motion.div>
+                  </div>
 
-                  <motion.div
-                    animate={{ rotate: -360 }}
-                    transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
+                  <div
                     className="absolute -bottom-2 -left-6 backdrop-blur-sm bg-white/10 dark:bg-gray-800/30 w-14 h-14 rounded-full flex items-center justify-center shadow-lg"
+                    style={prefersReducedMotion ? {} : {
+                      animation: 'spin 25s linear infinite reverse'
+                    }}
                   >
                     <Image
                       src='/icons/backend/nodejs.svg'
@@ -317,12 +318,13 @@ export default function HeroSection() {
                       height={28}
                       className="node-green"
                     />
-                  </motion.div>
+                  </div>
 
-                  <motion.div
-                    animate={{ rotate: 360, scale: [1, 1.1, 1] }}
-                    transition={{ duration: 15, repeat: Infinity, ease: 'linear' }}
+                  <div
                     className="absolute top-1/4 -left-8 backdrop-blur-sm bg-white/10 dark:bg-gray-800/30 w-12 h-12 rounded-full flex items-center justify-center shadow-lg"
+                    style={prefersReducedMotion ? {} : {
+                      animation: 'pulse-scale 3s ease-in-out infinite'
+                    }}
                   >
                     <Image
                       src='/icons/frontend/typescript.svg'
@@ -331,12 +333,13 @@ export default function HeroSection() {
                       height={32}
                       className="typescript-blue"
                     />
-                  </motion.div>
+                  </div>
 
-                  <motion.div
-                    animate={{ rotate: 360, scale: [1, 1.1, 1] }}
-                      transition={{ duration: 15, repeat: Infinity, ease: 'linear' }}
+                  <div
                     className="absolute top-1/3 -right-8 backdrop-blur-sm bg-white/10 dark:bg-gray-800/30 w-10 h-10 rounded-full flex items-center justify-center shadow-lg"
+                    style={prefersReducedMotion ? {} : {
+                      animation: 'pulse-scale 4s ease-in-out infinite'
+                    }}
                   >
                     <Image
                       src='/icons/frontend/javascript.svg'
@@ -344,13 +347,13 @@ export default function HeroSection() {
                       width={28}
                       height={28}
                     />
-                  </motion.div>
+                  </div>
 
-                  {/* Enhanced Glow Effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-indigo-600 rounded-full blur-3xl opacity-20 animate-pulse"></div>
-                </motion.div>
+                  {/* Glow Effect - static, no animation for better performance */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-indigo-600 rounded-full blur-3xl opacity-15"></div>
+                </div>
 
-                {/* Enhanced Achievement Badges */}
+                {/* Achievement Badges */}
                 <motion.div
                   initial={{ opacity: 0, scale: 0 }}
                   animate={{ opacity: 1, scale: 1 }}
@@ -359,7 +362,8 @@ export default function HeroSection() {
                 >
                   <div className="backdrop-blur-sm bg-white/90 dark:bg-gray-800/90 px-4 py-2 rounded-full shadow-lg border border-green-200 dark:border-green-800 whitespace-nowrap">
                     <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                      {/* Static green dot instead of animated pulse */}
+                      <div className="w-2 h-2 bg-green-500 rounded-full shadow-[0_0_8px_2px_rgba(34,197,94,0.6)]"></div>
                       <span className="text-xs sm:text-sm font-semibold text-green-800 dark:text-green-300">
                         Available for Hire
                       </span>
@@ -369,8 +373,8 @@ export default function HeroSection() {
                   <motion.button
                     onClick={scrollToContact}
                     className="backdrop-blur-sm bg-white/90 dark:bg-gray-800/90 px-4 py-2 rounded-full shadow-lg border border-blue-200 dark:border-blue-800 hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors cursor-pointer whitespace-nowrap"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
+                    whileHover={prefersReducedMotion ? {} : { scale: 1.05 }}
+                    whileTap={prefersReducedMotion ? {} : { scale: 0.95 }}
                     aria-label="Scroll to contact section"
                   >
                     <span className="text-xs sm:text-sm font-semibold text-blue-800 dark:text-blue-300">
