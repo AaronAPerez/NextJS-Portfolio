@@ -3,33 +3,38 @@
 import dynamic from 'next/dynamic';
 import { EditorWrapper } from "@/components/EditorWrapper";
 import HeroSection from "@/components/sections/HeroSection";
-import SectionLoader from "@/components/ui/SectionLoader";
+import {
+  AboutSkeleton,
+  SkillsSkeleton,
+  ProjectsSkeleton,
+  TimelineSkeleton,
+  ContactSkeleton
+} from "@/components/sections/skeletons";
 
 
-// Optimized lazy loading with ssr disabled for heavy components
+// Optimized lazy loading with section-specific skeletons for better UX
 const AboutSection = dynamic(() => import("@/components/sections/AboutSection/AboutSection"), {
-  loading: () => <SectionLoader />,
+  loading: () => <AboutSkeleton />,
   ssr: false
 });
 
 const Skills = dynamic(() => import("@/components/sections/Skills"), {
-  loading: () => <SectionLoader />,
+  loading: () => <SkillsSkeleton />,
   ssr: false
 });
 
-
 const ProjectsSection = dynamic(() => import("@/components/sections/ProjectsSection/ProjectsSection"), {
-  loading: () => <SectionLoader />,
+  loading: () => <ProjectsSkeleton />,
   ssr: false
 });
 
 const Timeline = dynamic(() => import("@/components/sections/Timeline"), {
-  loading: () => <SectionLoader />,
+  loading: () => <TimelineSkeleton />,
   ssr: false
 });
 
 const ContactSection = dynamic(() => import("@/components/sections/ContactSection/ContactSection"), {
-  loading: () => <SectionLoader />,
+  loading: () => <ContactSkeleton />,
   ssr: false
 });
 

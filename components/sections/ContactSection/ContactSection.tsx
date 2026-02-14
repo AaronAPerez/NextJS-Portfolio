@@ -1,7 +1,7 @@
 'use client'
 
-import React, { useState } from 'react'
-import { motion } from 'framer-motion'
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import {
   Mail,
   Copy,
@@ -12,18 +12,13 @@ import {
   Phone,
   Send,
   CheckCircle,
-  ExternalLink,
-  ArrowRight,
-  Star
+  ExternalLink
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import Image from 'next/image'
 import { Card } from '@/components/ui/Card'
 import ContactForm from './ContactForm'
 
-
-
-// Contact information and social links data
+// Contact information
 const contactInfo = {
   email: 'aaronperezdev@gmail.com',
   phone: '+1 (209) 470-2061',
@@ -31,72 +26,67 @@ const contactInfo = {
   resume: '/A.Perez - Fullstack Resume.pdf'
 }
 
+// Quick actions data
+const quickActions = [
+  {
+    id: 'email',
+    label: 'Email',
+    icon: Send,
+    action: 'mailto',
+    value: contactInfo.email,
+    color: 'bg-blue-500 hover:bg-blue-600'
+  },
+  {
+    id: 'copy',
+    label: 'Copy',
+    icon: Copy,
+    action: 'copy',
+    value: contactInfo.email,
+    color: 'bg-purple-500 hover:bg-purple-600'
+  },
+  {
+    id: 'resume',
+    label: 'Resume',
+    icon: Download,
+    action: 'download',
+    value: contactInfo.resume,
+    color: 'bg-green-500 hover:bg-green-600'
+  }
+]
+
+// Social links
 const socialLinks = [
   {
     id: 'github',
     name: 'GitHub',
     icon: Github,
     href: 'https://github.com/AaronAPerez',
-    description: 'View my code repositories and open source contributions',
-    color: 'from-gray-700 to-gray-900',
-    hoverColor: 'hover:from-gray-600 hover:to-gray-800'
+    color: 'hover:bg-gray-800 hover:text-white'
   },
   {
     id: 'linkedin',
     name: 'LinkedIn',
     icon: Linkedin,
     href: 'https://www.linkedin.com/in/aaronaperezdev/',
-    description: 'Connect with me professionally',
-    color: 'from-blue-600 to-blue-800',
-    hoverColor: 'hover:from-blue-500 hover:to-blue-700'
-  }
-]
-
-// Quick contact actions data
-const contactActions = [
-  {
-    id: 'email',
-    title: 'Send Email',
-    description: 'Reach out directly via email',
-    icon: Send,
-    action: 'mailto',
-    value: contactInfo.email,
-    gradient: 'from-blue-500 to-cyan-500'
-  },
-  {
-    id: 'copy',
-    title: 'Copy Email',
-    description: 'Copy email to clipboard',
-    icon: Copy,
-    action: 'copy',
-    value: contactInfo.email,
-    gradient: 'from-purple-500 to-pink-500'
-  },
-  {
-    id: 'resume',
-    title: 'Download Resume',
-    description: 'Get my latest resume',
-    icon: Download,
-    action: 'download',
-    value: contactInfo.resume,
-    gradient: 'from-green-500 to-emerald-500'
+    color: 'hover:bg-blue-600 hover:text-white'
   }
 ]
 
 /**
- * Contact Action Card Component
+ * Compact Quick Action Button
  */
-const ContactActionCard = ({
+const QuickActionButton = ({
   action,
-  index,
-  onCopy
+  onCopy,
+  copied
 }: {
-  action: typeof contactActions[0]
-  index: number
+  action: typeof quickActions[0]
   onCopy: (value: string) => void
+  copied: boolean
 }) => {
-  const [isPressed, setIsPressed] = useState(false)
   const IconComponent = action.icon
+  const isCopyAction = action.action === 'copy'
+  const showCopied = isCopyAction && copied
 
   const handleClick = () => {
     switch (action.action) {
@@ -107,204 +97,150 @@ const ContactActionCard = ({
         onCopy(action.value)
         break
       case 'download':
-        try {
-          const link = document.createElement('a')
-          link.href = action.value
-          link.download = 'A.Perez_Resume.pdf'
-          document.body.appendChild(link)
-          link.click()
-          document.body.removeChild(link)
-        } catch (error) {
-          console.error('Failed to download resume:', error)
-        }
+        const link = document.createElement('a')
+        link.href = action.value
+        link.download = 'A.Perez_Resume.pdf'
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
         break
     }
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: index * 0.1, duration: 0.5 }}
-      className="group relative w-full"
+    <motion.button
+      onClick={handleClick}
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      className={cn(
+        "flex flex-col items-center gap-2 p-4 rounded-xl transition-all duration-300",
+        showCopied ? "bg-green-500 text-white" : action.color,
+        "text-white shadow-lg"
+      )}
+      aria-label={action.label}
     >
-      <Card
-        variant="elevated"
-        hoverable
-        padding="lg"
-        onClick={handleClick}
-        onMouseDown={() => setIsPressed(true)}
-        onMouseUp={() => setIsPressed(false)}
-        onMouseLeave={() => setIsPressed(false)}
-        className="cursor-pointer overflow-hidden"
-        role="button"
-        aria-label={action.description}
-      >
-        {/* Gradient background */}
-        <div className={cn(
-          "absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-500",
-          `bg-gradient-to-br ${action.gradient}`
-        )} />
-
-        <div className="relative z-10">
-          <div className="flex items-center gap-4 mb-3">
-            <div className={cn(
-              "p-3 rounded-xl transition-all duration-300",
-              `bg-gradient-to-br ${action.gradient}`,
-              isPressed ? "scale-95" : "group-hover:scale-110"
-            )}>
-              <IconComponent className="w-6 h-6 text-white" />
-            </div>
-            <div className="text-left">
-              <h4 className="font-semibold text-gray-900 dark:text-white transition-colors">
-                {action.title}
-              </h4>
-              <p className="text-sm text-gray-600 dark:text-gray-400 transition-colors">
-                {action.description}
-              </p>
-            </div>
-          </div>
-
-          <div className="flex items-center justify-between">
-            <span className="text-xs text-gray-500 dark:text-gray-400 transition-colors font-mono">
-              {action.action === 'copy' ? 'Click to copy' :
-                action.action === 'mailto' ? 'Opens email client' :
-                  'Downloads PDF file'}
-            </span>
-            <ArrowRight className="w-4 h-4 text-gray-500 dark:text-gray-400 group-hover:translate-x-1 transition-all" />
-          </div>
-        </div>
-      </Card>
-    </motion.div>
+      {showCopied ? (
+        <CheckCircle className="w-6 h-6" />
+      ) : (
+        <IconComponent className="w-6 h-6" />
+      )}
+      <span className="text-xs font-medium">
+        {showCopied ? 'Copied!' : action.label}
+      </span>
+    </motion.button>
   )
 }
 
 /**
- * Social Link Card Component
+ * Compact Contact Info Sidebar
  */
-const SocialLinkCard = ({
-  link,
-  index
+const ContactSidebar = ({
+  copied,
+  onCopy
 }: {
-  link: typeof socialLinks[0]
-  index: number
-}) => {
-  const IconComponent = link.icon
-
-  return (
-
-    <motion.div
-      initial={{ opacity: 0, scale: 0.8 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      viewport={{ once: true }}
-      transition={{ delay: index * 0.1, duration: 0.5 }}
-      className="group relative"
-    >
-      <a
-        href={link.href}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label={`Visit my ${link.name} profile`}
-      >
-        <Card variant="elevated" hoverable padding="lg" className="text-center overflow-hidden">
-          {/* Gradient background on hover */}
-          <div className={cn(
-            "absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-500",
-            `bg-gradient-to-br ${link.color}`
-          )} />
-
-          {/* Content */}
-          <div className="relative z-10">
-            <div className="mb-4">
-              <div className={cn(
-                "inline-flex p-4 rounded-2xl transition-all duration-300 group-hover:scale-110",
-                `bg-gradient-to-br ${link.color}`
-              )}>
-                <IconComponent className="w-8 h-8 text-white" />
-              </div>
-            </div>
-
-            <h3 className="font-bold text-lg text-gray-900 dark:text-white transition-colors mb-2">
-              {link.name}
-            </h3>
-
-            <p className="text-sm text-gray-600 dark:text-gray-400 transition-colors leading-normal">
-              {link.description}
-            </p>
-
-            <div className="mt-4 flex items-center justify-center gap-2 text-xs text-gray-500 dark:text-gray-400 transition-colors">
-              <ExternalLink className="w-3 h-3" />
-              Visit Profile
-            </div>
-          </div>
-        </Card>
-      </a>
-    </motion.div>
-  )
-}
-
-/**
- * Contact Information Card Component
- */
-const ContactInfoCard = () => (
+  copied: boolean
+  onCopy: (value: string) => void
+}) => (
   <motion.div
-    initial={{ opacity: 0, y: 30 }}
-    whileInView={{ opacity: 1, y: 0 }}
+    initial={{ opacity: 0, x: 30 }}
+    whileInView={{ opacity: 1, x: 0 }}
     viewport={{ once: true }}
-    transition={{ duration: 0.6 }}
-    className="relative p-8 backdrop-blur-lg dark:bg-gray-800 border border-black/10 rounded-2xl overflow-hidden hover:border-slate-500/50 transition-all duration-500"
+    transition={{ duration: 0.6, delay: 0.2 }}
+    className="space-y-6"
   >
+    {/* Contact Info Card */}
+    <Card variant="elevated" padding="lg" className="backdrop-blur-sm">
+      <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">
+        Contact Info
+      </h3>
 
-    {/* Gradient background */}
-    <div className="absolute inset-0" />
+      <div className="space-y-3">
+        <a
+          href={`mailto:${contactInfo.email}`}
+          className="flex items-center gap-3 text-gray-700 dark:text-gray-300 hover:text-blue-500 transition-colors"
+        >
+          <Mail className="w-4 h-4 text-blue-500 flex-shrink-0" />
+          <span className="text-sm truncate">{contactInfo.email}</span>
+        </a>
 
-    {/* Content */}
-    <div className="relative z-10">
-      <div className="flex items-center gap-3 mb-6">
-        <div className="px-2 pt-1 bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl">
-          <Image
-            src="/images/profile/headshot.webp"
-            alt="Aaron A. Perez - Full Stack Developer"
-            width={60}
-            height={60} 
-            loading='lazy'
-            />
-        </div>
-        <h3 className="text-xl font-bold text-gray-900 dark:text-white">
-          Contact Information
-        </h3>
-      </div>
-
-      <div className="space-y-4">
-        <div className="flex items-center gap-3 text-gray-700 dark:text-gray-300">
-          <Mail className="w-5 h-5 text-blue-500" />
-          <span className="font-mono text-sm">{contactInfo.email}</span>
-        </div>
+        <a
+          href={`tel:${contactInfo.phone}`}
+          className="flex items-center gap-3 text-gray-700 dark:text-gray-300 hover:text-green-500 transition-colors"
+        >
+          <Phone className="w-4 h-4 text-green-500 flex-shrink-0" />
+          <span className="text-sm">{contactInfo.phone}</span>
+        </a>
 
         <div className="flex items-center gap-3 text-gray-700 dark:text-gray-300">
-          <Phone className="w-5 h-5 text-green-500" />
-          <span className="font-mono text-sm">{contactInfo.phone}</span>
-        </div>
-
-        <div className="flex items-center gap-3 text-gray-700 dark:text-gray-300">
-          <MapPin className="w-5 h-5 text-red-500" />
+          <MapPin className="w-4 h-4 text-red-500 flex-shrink-0" />
           <span className="text-sm">{contactInfo.location}</span>
         </div>
       </div>
 
-      <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
-        <p className="text-sm text-gray-600 dark:text-gray-400 leading-normal">
-          I&apos;m always open to discussing new opportunities, interesting projects,
-          or just having a conversation about technology and development.
+      <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+        <p className="text-xs text-gray-500 dark:text-gray-400">
+          Open to remote opportunities worldwide
         </p>
       </div>
-    </div>
+    </Card>
+
+    {/* Quick Actions */}
+    <Card variant="elevated" padding="lg" className="backdrop-blur-sm">
+      <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">
+        Quick Actions
+      </h3>
+
+      <div className="grid grid-cols-3 gap-3">
+        {quickActions.map((action) => (
+          <QuickActionButton
+            key={action.id}
+            action={action}
+            onCopy={onCopy}
+            copied={copied}
+          />
+        ))}
+      </div>
+    </Card>
+
+    {/* Social Links */}
+    <Card variant="elevated" padding="lg" className="backdrop-blur-sm">
+      <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">
+        Connect
+      </h3>
+
+      <div className="flex gap-3">
+        {socialLinks.map((link) => {
+          const IconComponent = link.icon
+          return (
+            <motion.a
+              key={link.id}
+              href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              className={cn(
+                "flex items-center gap-2 px-4 py-2 rounded-lg",
+                "bg-gray-100 dark:bg-gray-800",
+                "text-gray-700 dark:text-gray-300",
+                "transition-all duration-300",
+                link.color
+              )}
+              aria-label={`Visit my ${link.name} profile`}
+            >
+              <IconComponent className="w-5 h-5" />
+              <span className="text-sm font-medium">{link.name}</span>
+              <ExternalLink className="w-3 h-3 opacity-50" />
+            </motion.a>
+          )
+        })}
+      </div>
+    </Card>
   </motion.div>
 )
 
 /**
- * Main Contact Section Component
+ * Main Contact Section Component - Redesigned with form-first layout
  */
 export const ContactSection = () => {
   const [copied, setCopied] = useState(false)
@@ -321,142 +257,80 @@ export const ContactSection = () => {
 
   return (
     <div className="relative w-full overflow-hidden py-20">
-
+      {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-blue-500/5 via-transparent to-violet-500/5" />
       <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:50px]" />
 
-      <div className="relative z-10 container mx-auto px-4">
-        {/* Section Header matching TimelineSection style */}
+      <div className="relative z-10 container mx-auto px-4 max-w-6xl">
+        {/* Section Header */}
         <motion.header
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-12"
         >
           {/* Decorative line with icon */}
           <div className="flex items-center justify-center gap-4 mb-6" aria-hidden="true">
-            <div className="h-px flex-1 bg-gradient-to-r from-transparent to-blue-500" />
+            <div className="h-px flex-1 max-w-24 bg-gradient-to-r from-transparent to-blue-500" />
             <div className="p-3 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full">
               <Mail className="w-6 h-6 text-white" />
             </div>
-            <div className="h-px flex-1 bg-gradient-to-l from-transparent to-purple-500" />
+            <div className="h-px flex-1 max-w-24 bg-gradient-to-l from-transparent to-purple-500" />
           </div>
 
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-gray-900 to-gray-600 dark:from-gray-100 dark:to-gray-400 bg-clip-text text-transparent">
-            Let's Connect
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-gray-900 to-gray-600 dark:from-gray-100 dark:to-gray-400 bg-clip-text text-transparent">
+            Let&apos;s Connect
           </h2>
 
-          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            Ready to bring your next project to life? I'd love to hear about your ideas
+          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+            Have a project in mind? Send me a message and I&apos;ll get back to you within 24-48 hours.
           </p>
         </motion.header>
 
-        {/* Success message for copy action */}
-        {copied && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            className="flex justify-center mb-8"
-          >
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-900/30 text-green-300 rounded-full">
-              <CheckCircle className="w-4 h-4" />
-              Email copied to clipboard!
-            </div>
-          </motion.div>
-        )}
-
-        {/* Contact Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
-          {/* Contact Actions */}
-          <div className="lg:col-span-2">
+        {/* Copy success notification */}
+        <AnimatePresence>
+          {copied && (
             <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="mb-8"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="flex justify-center mb-6"
             >
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-3">
-                <Star className="w-6 h-6 text-yellow-500" />
-                Quick Actions
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400">
-                Choose the best way to get in touch
-              </p>
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-500/20 text-green-600 dark:text-green-400 rounded-full border border-green-500/30">
+                <CheckCircle className="w-4 h-4" />
+                Email copied to clipboard!
+              </div>
             </motion.div>
+          )}
+        </AnimatePresence>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-4">
-              {contactActions.map((action, index) => (
-                <ContactActionCard
-                  key={action.id}
-                  action={action}
-                  index={index}
-                  onCopy={handleCopy}
-                />
-              ))}
-            </div>
-          </div>
-
-          {/* Contact Information */}
-          <div className='lg:mt-24 text-gray-900 dark:text-white'>
-            <ContactInfoCard />
-          </div>
-        </div>
-
-        {/* Contact Form Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="mb-16"
-        >
-          <div className="text-center mb-8">
-            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2 flex items-center justify-center gap-3">
-              <Send className="w-6 h-6 text-blue-500" />
-              Send Me a Message
-            </h3>
-            <p className="text-gray-600 dark:text-gray-400">
-              Fill out the form below and I'll get back to you within 24-48 hours
-            </p>
-          </div>
-
-          <div className="max-w-3xl mx-auto">
+        {/* Main Grid: Form + Sidebar */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Contact Form - Primary focus */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="lg:col-span-2"
+          >
             <Card variant="elevated" padding="lg" className="backdrop-blur-sm">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="p-2 bg-gradient-to-br from-blue-500 to-purple-500 rounded-lg">
+                  <Send className="w-5 h-5 text-white" />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+                  Send a Message
+                </h3>
+              </div>
               <ContactForm />
             </Card>
-          </div>
-        </motion.div>
+          </motion.div>
 
-        {/* Social Links */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          className="mb-16"
-        >
-          <div className="text-center mb-8">
-            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-              Connect on Social
-            </h3>
-            <p className="text-gray-600 dark:text-gray-400">
-              Follow my work and connect professionally
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
-            {socialLinks.map((link, index) => (
-              <SocialLinkCard
-                key={link.id}
-                link={link}
-                index={index}
-              />
-            ))}
-          </div>
-        </motion.div>
+          {/* Sidebar - Contact info, quick actions, social */}
+          <ContactSidebar copied={copied} onCopy={handleCopy} />
+        </div>
       </div>
     </div>
   )
