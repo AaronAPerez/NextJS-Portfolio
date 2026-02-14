@@ -292,8 +292,8 @@ export default function HeroSection() {
 
                   {/* Enhanced Floating Tech Icons */}
                   <motion.div
-                    // animate={{ rotate: 360 }}
-                    // transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
                     className="absolute -top-6 -right-6 backdrop-blur-sm bg-white/10 dark:bg-gray-800/30 w-16 h-16 rounded-full flex items-center justify-center shadow-lg"
                   >
                     <Image
@@ -306,8 +306,8 @@ export default function HeroSection() {
                   </motion.div>
 
                   <motion.div
-                    // animate={{ rotate: -360 }}
-                    // transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
+                    animate={{ rotate: -360 }}
+                    transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
                     className="absolute -bottom-2 -left-6 backdrop-blur-sm bg-white/10 dark:bg-gray-800/30 w-14 h-14 rounded-full flex items-center justify-center shadow-lg"
                   >
                     <Image
@@ -320,8 +320,8 @@ export default function HeroSection() {
                   </motion.div>
 
                   <motion.div
-                    // animate={{ rotate: 360, scale: [1, 1.1, 1] }}
-                    // transition={{ duration: 15, repeat: Infinity, ease: 'linear' }}
+                    animate={{ rotate: 360, scale: [1, 1.1, 1] }}
+                    transition={{ duration: 15, repeat: Infinity, ease: 'linear' }}
                     className="absolute top-1/4 -left-8 backdrop-blur-sm bg-white/10 dark:bg-gray-800/30 w-12 h-12 rounded-full flex items-center justify-center shadow-lg"
                   >
                     <Image
@@ -334,8 +334,8 @@ export default function HeroSection() {
                   </motion.div>
 
                   <motion.div
-                    // animate={{ rotate: 360, scale: [1, 1.1, 1] }}
-                    //   transition={{ duration: 15, repeat: Infinity, ease: 'linear' }}
+                    animate={{ rotate: 360, scale: [1, 1.1, 1] }}
+                      transition={{ duration: 15, repeat: Infinity, ease: 'linear' }}
                     className="absolute top-1/3 -right-8 backdrop-blur-sm bg-white/10 dark:bg-gray-800/30 w-10 h-10 rounded-full flex items-center justify-center shadow-lg"
                   >
                     <Image
@@ -383,7 +383,7 @@ export default function HeroSection() {
           </div>
 
           {/* Enhanced Scroll Indicator */}
-          <motion.div
+          {/* <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 2, duration: 0.6 }}
@@ -400,7 +400,7 @@ export default function HeroSection() {
                 <ArrowDown className="w-5 h-5" />
               </div>
             </motion.div>
-          </motion.div>
+          </motion.div> */}
         </div>
       </div>
     </div>

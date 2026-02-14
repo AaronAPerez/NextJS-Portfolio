@@ -87,7 +87,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </header>
             <LayoutProvider>
           
-              {children}
+              <main>{children}</main>
               <WebVitals />
               <Analytics />
 
