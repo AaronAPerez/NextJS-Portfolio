@@ -1,7 +1,6 @@
-'use client'; 
+'use client';
 
-
-import { useState } from 'react';
+import { useState, useCallback, memo } from 'react';
 import ProjectCard from './ProjectCard';
 import { Project } from '@/components/config/projects';
 
@@ -9,8 +8,14 @@ interface ProjectsGridProps {
   projects: Project[];
 }
 
-const ProjectsGrid = ({ projects }: ProjectsGridProps) => {
+// Memoized grid component for better performance
+const ProjectsGrid = memo(function ProjectsGrid({ projects }: ProjectsGridProps) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
+  // Memoize hover handler to maintain stable reference
+  const handleHover = useCallback((index: number | null) => {
+    setHoveredIndex(index);
+  }, []);
 
   return (
     <div className="
@@ -25,11 +30,11 @@ const ProjectsGrid = ({ projects }: ProjectsGridProps) => {
           project={project}
           index={index}
           isHovered={hoveredIndex === index}
-          onHover={setHoveredIndex}
+          onHover={handleHover}
         />
       ))}
     </div>
   );
-};
+});
 
 export default ProjectsGrid;

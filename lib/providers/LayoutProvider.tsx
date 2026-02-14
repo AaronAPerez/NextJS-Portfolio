@@ -1,8 +1,27 @@
 'use client';
 
+import { useMemo } from 'react';
 import { Footer, Header } from '@/components/layout';
 import { usePathname } from 'next/navigation';
+import { NAV_LINKS } from '@/lib/constants';
+import {
+  Home,
+  User,
+  FolderKanban,
+  Code2,
+  Briefcase,
+  Mail
+} from 'lucide-react';
 
+// Map icons to nav items
+const NAV_ICONS: Record<string, React.ReactNode> = {
+  '/': <Home className="w-4 h-4" />,
+  '#about': <User className="w-4 h-4" />,
+  '#projects': <FolderKanban className="w-4 h-4" />,
+  '#skills': <Code2 className="w-4 h-4" />,
+  '#experience': <Briefcase className="w-4 h-4" />,
+  '#contact': <Mail className="w-4 h-4" />,
+};
 
 interface LayoutProviderProps {
   children: React.ReactNode;
@@ -10,6 +29,16 @@ interface LayoutProviderProps {
 
 export default function LayoutProvider({ children }: LayoutProviderProps) {
   const pathname = usePathname();
+
+  // Transform NAV_LINKS to FloatingNavbar format
+  const floatingNavItems = useMemo(() =>
+    NAV_LINKS.filter(link => link.href.startsWith('#')).map(link => ({
+      name: link.label,
+      link: link.href,
+      icon: NAV_ICONS[link.href]
+    })),
+    []
+  );
 
   // Check if we're in the admin area or on a login page
   const isAdminRoute = pathname?.startsWith('/admin') || false;
@@ -33,11 +62,10 @@ export default function LayoutProvider({ children }: LayoutProviderProps) {
         Skip to main content
       </a>
 
-      {/* Top contact bar - fixed width */}
+      {/* Fixed Header - always visible at top */}
+      <Header />
 
 
-      {/* Floating navigation - fixed width */}
-<Header/>
 
       {/* Main content with proper constraints */}
       <main
@@ -50,10 +78,7 @@ export default function LayoutProvider({ children }: LayoutProviderProps) {
       </main>
 
       {/* Footer with width constraints */}
-<Footer/>
-
-      {/* Scroll to top button */}
-    
+      <Footer />
     </div>
   );
 }
