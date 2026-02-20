@@ -27,7 +27,7 @@ export const SITE_CONFIG = {
   name: 'Aaron A. Perez Portfolio',
   description: 'Full Stack Developer specializing in React, TypeScript, Next.js, and modern web technologies',
   locale: 'en_US',
-  ogImage: '/images/og-image.jpg',
+  ogImage: '/images/og-image.webp',
 } as const;
 
 // Navigation Links
@@ -121,12 +121,18 @@ export const SEO_KEYWORDS = [
   'Next.js Developer',
   'Full Stack Developer',
   'Web Developer',
+  'Web Designer',
+  'Software Developer',
   'Frontend Developer',
   'Backend Developer',
   'JavaScript Developer',
   'Stockton Web Developer',
+  'Modesto Web Developer',
+  'Sacramento Web Developer',
   'California Web Developer',
   'Central California Developer',
+  'Central Valley Developer',
+  'Northern California Developer',
   'SEO Optimization Specialist',
   'Web Accessibility Expert',
   'WCAG Compliance',
@@ -213,5 +219,5 @@ export const FEATURE_FLAGS = {
 export const EXTERNAL_LINKS = {
   RESUME: '/resume/Aaron-Perez-Resume.pdf',
   GITHUB_REPO: 'https://github.com/AaronAPerez/portfolio',
-  CODESTACK: 'https://codestackacademy.com',
+  // CODESTACK: 'https://codestackacademy.com',
 } as const;

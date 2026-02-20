@@ -22,7 +22,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Aaron A Perez Portfolio",
   description: "Portfolio showcasing SaaS tools, projects, and design work.",
-  metadataBase: new URL("https://www.aaronaperez.dev"), // <-- FIX
+  metadataBase: new URL("https://www.aaronaperez.dev"), 
   openGraph: {
     title: "Aaron A Perez Portfolio",
     description: "Explore projects and tools.",
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     siteName: "Aaron A Perez",
     images: [
       {
-        url: "/og-image.png", // relative path resolves against metadataBase
+        url: "images/og-image.webp", // relative path resolves against metadataBase
         width: 1200,
         height: 630,
         alt: "Portfolio preview",
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Aaron A Perez Portfolio",
     description: "Explore projects and tools.",
-    images: ["/og-image.png"],
+    images: ["images/og-image.webp"],
   },
 };
 
