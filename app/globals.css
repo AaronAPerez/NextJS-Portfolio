@@ -159,3 +159,54 @@ body * {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
 }
+
+
+
+/* AP Designs Footer Branding */
+.ap-credit {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.ap-credit a {
+  color: #667eea;
+  text-decoration: none;
+}
+
+.ap-credit a:hover {
+  text-decoration: underline;
+}
+
+.ap-logo {
+  height: 18px;
+  margin-right: 6px;
+  vertical-align: middle;
+  opacity: 0.85;
+}
+
+.ap-header {
+  display: flex;
+  align-items: center;
+  padding: 1rem 1.5rem;
+}
+
+.ap-header-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+}
+
+.ap-header-logo {
+  height: 34px;
+  width: auto;
+}
+
+.ap-header-text {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+}

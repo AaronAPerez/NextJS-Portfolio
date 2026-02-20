@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
-import { PERSONAL_INFO } from '@/lib/constants';
 import { Navigation } from './Navigation';
 import { ThemeToggle } from '@/components/ui/ThemeToggle';
 
@@ -35,30 +34,33 @@ export function Header() {
             {/* Logo */}
             <Link
               href="/"
-              className="flex items-center gap-2 group"
-              aria-label={`${PERSONAL_INFO.name} - Portfolio Home`}
-            >
-              <div
+              className="flex items-center gap-2 group font-medium text-primary-600 dark:text-primary-400 hover:text-primary-500 dark:hover:text-primary-300 transition-colors"
+              aria-label="AP Designs - Portfolio Home">
+              {/* <Image
+                src="/favicon-48x48.svg"
+                alt="AP Designs Logo"
+                width={48}
+                height={48}
                 className={cn(
-                  'w-10 h-10 sm:w-12 sm:h-12 rounded-lg',
-                  'bg-gradient-to-br from-primary-600 to-accent-600',
-                  'flex items-center justify-center',
-                  'font-bold text-lg sm:text-xl',
+                  'w-10 h-10 sm:w-12 sm:h-12 rounded-2xl',
                   'transition-transform duration-200',
                   'group-hover:scale-110 group-focus:scale-110'
                 )}
-                aria-hidden="true"
-              >
-                {PERSONAL_INFO.firstName.charAt(0)}
-                {PERSONAL_INFO.lastName.charAt(0)}
-              </div>
+                priority
+              /> */}
+              <header className="ap-header">
+                <a href="https://www.aaronaperez.dev" className="ap-header-brand backdrop-blur-lg shadow-xl">
+                  <img src="/favicon-48x48.svg" alt="AP Designs Logo" className="ap-header-logo" />
+                  {/* <span className="ap-header-text">AP Designs</span> */}
+                </a>
+              </header>
 
               <div className="hidden sm:block">
                 <div className="text-lg font-bold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
-                  {PERSONAL_INFO.name}
+                  AP Designs
                 </div>
                 <div className="text-xs text-gray-600 dark:text-gray-400">
-                  {PERSONAL_INFO.title}
+                  Web Development
                 </div>
               </div>
             </Link>

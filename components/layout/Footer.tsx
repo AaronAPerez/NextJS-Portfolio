@@ -5,7 +5,6 @@ import {
   Linkedin, 
   Mail, 
   Globe, 
-  Heart,
   ExternalLink 
 } from 'lucide-react';
 import { PERSONAL_INFO, SOCIAL_LINKS, NAV_LINKS } from '@/lib/constants';
@@ -151,7 +150,7 @@ export function Footer() {
         </div>
 
         {/* Additional Links - Privacy, Terms, etc. */}
-        <div className="mt-6 flex flex-wrap justify-center gap-6 text-sm">
+        <div className="mt-10 flex flex-wrap justify-center gap-6 text-sm">
           <Link
             href="/privacy"
             className="text-gray-800 dark:text-gray-200 hover:text-primary-400 transition-colors"
@@ -168,13 +167,33 @@ export function Footer() {
             href="https://github.com/AaronAPerez/portfolio"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-gray-800 dark:text-gray-200 hover:text-primary-400 transition-colors 
+            className="text-gray-800 dark:text-gray-200 hover:text-primary-400 transition-colors
                      flex items-center gap-1"
           >
             View Source
             <ExternalLink size={12} aria-hidden="true" />
           </a>
         </div>
+
+        {/* AP Designs Credit */}
+        <div className="mt-6 flex items-center justify-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+          <span>Website by</span>
+          <a
+            href="https://www.aaronaperez.dev/?utm_source=footer"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 font-medium text-primary-600 dark:text-primary-400 hover:text-primary-500 dark:hover:text-primary-300 transition-colors"
+          >
+            <img
+              src="/favicon-48x48.svg"
+              alt="AP Designs Logo"
+              className="w-5 h-5"
+            />
+            AP Designs
+          </a>
+        </div>
+
+
       </div>
     </footer>
   );

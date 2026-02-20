@@ -104,7 +104,7 @@ export const personData: PersonSchema = {
   givenName: 'Aaron',
   familyName: 'Perez',
   jobTitle: 'Full Stack Developer',
-  description: 'Senior Full Stack Developer with 7+ years experience',
+  description: 'Full Stack Developer with 8+ years of IT experience and specialized training in modern web technologies. Recent CodeStack Academy graduate with expertise in React, TypeScript, Next.js, and .NET development.',
   url: 'https://aaronaperez.dev',
   image: '/images/profile/headshot.png',
   email: 'aaperez06@gmail.com',
