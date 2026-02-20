@@ -34,8 +34,9 @@ export function Header() {
             {/* Logo */}
             <Link
               href="/"
-              className="flex items-center gap-2 group font-medium text-primary-600 dark:text-primary-400 hover:text-primary-500 dark:hover:text-primary-300 transition-colors"
-              aria-label="AP Designs - Portfolio Home">
+              className="flex items-center gap-2 group"
+              aria-label="AP Designs - Portfolio Home"
+            >
               {/* <Image
                 src="/favicon-48x48.svg"
                 alt="AP Designs Logo"
@@ -48,12 +49,12 @@ export function Header() {
                 )}
                 priority
               /> */}
-              <header className="ap-header">
-                <a href="https://www.aaronaperez.dev" className="ap-header-brand backdrop-blur-lg shadow-xl">
-                  <img src="/favicon-48x48.svg" alt="AP Designs Logo" className="ap-header-logo" />
+             
+                <a href="https://www.aaronaperez.dev" className="ap-header-brand shadow-xl">
+                  <img src="/favicon-48x48.svg" alt="AP Designs Logo" className="w-12 h-12 rounded-2xl" />
                   {/* <span className="ap-header-text">AP Designs</span> */}
                 </a>
-              </header>
+             
 
               <div className="hidden sm:block">
                 <div className="text-lg font-bold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
