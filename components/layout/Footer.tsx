@@ -8,6 +8,7 @@ import {
   ExternalLink 
 } from 'lucide-react';
 import { PERSONAL_INFO, SOCIAL_LINKS, NAV_LINKS } from '@/lib/constants';
+import { APFooterCredit } from './APFooterCredit';
 
 /**
  * Footer Component
@@ -176,22 +177,9 @@ export function Footer() {
         </div>
 
         {/* AP Designs Credit */}
-        <div className="mt-6 flex items-center justify-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-          <span>Website by</span>
-          <a
-            href="https://www.aaronaperez.dev/?utm_source=footer"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 font-medium text-primary-600 dark:text-primary-400 hover:text-primary-500 dark:hover:text-primary-300 transition-colors"
-          >
-            <img
-              src="/favicon-48x48.svg"
-              alt="AP Designs Logo"
-              className="w-5 h-5"
-            />
-            AP Designs
-          </a>
-        </div>
+        {/* <div className="mt-6 flex items-center justify-center gap-2 text-sm text-gray-600 dark:text-gray-400"> */}
+         <APFooterCredit/>
+        {/* </div> */}
 
 
       </div>
