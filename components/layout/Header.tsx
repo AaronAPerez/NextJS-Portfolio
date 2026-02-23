@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { Navigation } from './Navigation';
 import { ThemeToggle } from '@/components/ui/ThemeToggle';
+import { APHeader } from './APHeader';
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -37,33 +38,7 @@ export function Header() {
               className="flex items-center gap-2 group"
               aria-label="AP Designs - Portfolio Home"
             >
-              {/* <Image
-                src="/favicon-48x48.svg"
-                alt="AP Designs Logo"
-                width={48}
-                height={48}
-                className={cn(
-                  'w-10 h-10 sm:w-12 sm:h-12 rounded-2xl',
-                  'transition-transform duration-200',
-                  'group-hover:scale-110 group-focus:scale-110'
-                )}
-                priority
-              /> */}
-             
-                <a href="https://www.aaronaperez.dev" className="ap-header-brand shadow-xl">
-                  <img src="/favicon-48x48.svg" alt="AP Designs Logo" className="w-12 h-12 rounded-2xl" />
-                  {/* <span className="ap-header-text">AP Designs</span> */}
-                </a>
-             
-
-              <div className="hidden sm:block">
-                <div className="text-lg font-bold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
-                  AP Designs
-                </div>
-                <div className="text-xs text-gray-600 dark:text-gray-400">
-                  Web Development
-                </div>
-              </div>
+            <APHeader/>
             </Link>
 
             {/* Navigation */}
