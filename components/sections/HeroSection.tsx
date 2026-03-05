@@ -164,9 +164,9 @@ export default function HeroSection() {
               {/* Value proposition - what makes me different */}
               <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 max-w-xl mx-auto lg:mx-0">
                 I build <span className="font-semibold text-gray-900 dark:text-white">production websites</span> that drive real business results.{' '}
-                <span className="text-primary-600 dark:text-primary-400">97+ Lighthouse scores</span>,{' '}
+                {/* <span className="text-primary-600 dark:text-primary-400">97+ Lighthouse scores</span>,{' '}
                 <span className="text-primary-600 dark:text-primary-400">sub-2s load times</span>, and{' '}
-                <span className="text-primary-600 dark:text-primary-400">clients reporting increased leads</span>.
+                <span className="text-primary-600 dark:text-primary-400">clients reporting increased leads</span>. */}
               </p>
 
               {/* Tech stack rotation */}
