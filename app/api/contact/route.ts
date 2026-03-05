@@ -19,7 +19,15 @@ const contactFormSchema = z.object({
   ),
   subject: z.string().min(5).max(100),
   message: z.string().min(10).max(1000),
+  // Honeypot fields - should be empty for legitimate submissions
+  website: z.string().max(0).optional(),
+  _gotcha: z.string().max(0).optional(),
+  // Form load timestamp for timing validation
+  formLoadTime: z.number().optional(),
 });
+
+// Minimum time (ms) a human needs to fill out the form (3 seconds)
+const MIN_FORM_FILL_TIME = 3000;
 
 // Professional HTML email template for admin notification
 const getAdminEmailTemplate = (name: string, email: string, subject: string, message: string) => `
@@ -219,7 +227,30 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { name, email, subject, message } = validationResult.data;
+    const { name, email, subject, message, website, _gotcha, formLoadTime } = validationResult.data;
+
+    // Honeypot check - if these fields have values, it's a bot
+    if (website || _gotcha) {
+      console.log('Spam detected: honeypot field filled');
+      // Return success to not alert the bot, but don't send email
+      return NextResponse.json(
+        { message: 'Message sent successfully!', success: true },
+        { status: 200 }
+      );
+    }
+
+    // Timing check - if form was submitted too quickly, likely a bot
+    if (formLoadTime) {
+      const timeToFill = Date.now() - formLoadTime;
+      if (timeToFill < MIN_FORM_FILL_TIME) {
+        console.log(`Spam detected: form filled too quickly (${timeToFill}ms)`);
+        // Return success to not alert the bot, but don't send email
+        return NextResponse.json(
+          { message: 'Message sent successfully!', success: true },
+          { status: 200 }
+        );
+      }
+    }
 
     // Rate limiting headers (optional - implement rate limiting if needed)
     const ip = request.headers.get('x-forwarded-for') || 'unknown';

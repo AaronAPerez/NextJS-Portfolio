@@ -16,7 +16,7 @@ import { PersonSchema } from "@/types/seo"
 //   description: 'Senior Full Stack Developer with 7+ years experience specializing in React, TypeScript, Next.js, and .NET development. Expert in accessible, high-performance web applications.',
 //   url: 'https://aaronaperez.dev',
 //   image: 'https://aaronaperez.dev/images/profile/headshot.png',
-//   email: 'aaperez06@gmail.com',
+//   email: 'aaronperezdev@gmail.com',
 //   telephone: '+1-209-470-2061',
 //   address: {
 //     city: 'Stockton',
@@ -104,10 +104,10 @@ export const personData: PersonSchema = {
   givenName: 'Aaron',
   familyName: 'Perez',
   jobTitle: 'Full Stack Developer',
-  description: 'Full Stack Developer with 8+ years of IT experience and specialized training in modern web technologies. Recent CodeStack Academy graduate with expertise in React, TypeScript, Next.js, and .NET development.',
+  description: 'Full Stack Developer with 7+ years of IT experience and specialized training in modern web technologies. Recent CodeStack Academy graduate with expertise in React, TypeScript, Next.js, and .NET development.',
   url: 'https://aaronaperez.dev',
-  image: '/images/profile/headshot.png',
-  email: 'aaperez06@gmail.com',
+  image: '/images/profile/headshot.webp',
+  email: 'aaronperezdev@gmail.com',
   telephone: '+1-209-470-2061',
   address: {
     city: 'Stockton',

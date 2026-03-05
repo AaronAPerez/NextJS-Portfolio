@@ -8,6 +8,7 @@ import Image from 'next/image'
 
 const navigation = [
   { name: 'Dashboard', href: '/admin/dashboard', icon: '📊' },
+  { name: 'Projects', href: '/admin/projects', icon: '📁' },
   { name: 'Messages', href: '/admin/messages', icon: '💬' },
   // { name: 'Blog', href: '/admin/blog', icon: '📝' },
   { name: 'Images', href: '/admin/images', icon: '🖼️' },

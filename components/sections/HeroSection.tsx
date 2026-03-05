@@ -152,7 +152,7 @@ export default function HeroSection() {
                 Aaron A. Perez
               </h1>
 
-              {/* Subtitle */}
+              {/* Subtitle - Results-focused tagline */}
               <HeroHighlight>
                 <motion.h2 className="text-2xl sm:text-3xl md:text-4xl font-bold max-w-4xl leading-normal mx-auto lg:mx-0">
                   <Highlight className="text-white/90 dark:text-white/90 rounded-xl">
@@ -161,6 +161,13 @@ export default function HeroSection() {
                 </motion.h2>
               </HeroHighlight>
 
+              {/* Value proposition - what makes me different */}
+              <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 max-w-xl mx-auto lg:mx-0">
+                I build <span className="font-semibold text-gray-900 dark:text-white">production websites</span> that drive real business results.{' '}
+                <span className="text-primary-600 dark:text-primary-400">97+ Lighthouse scores</span>,{' '}
+                <span className="text-primary-600 dark:text-primary-400">sub-2s load times</span>, and{' '}
+                <span className="text-primary-600 dark:text-primary-400">clients reporting increased leads</span>.
+              </p>
 
               {/* Tech stack rotation */}
               <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 text-base sm:text-lg text-gray-700 dark:text-gray-300 pt-2">

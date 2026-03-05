@@ -3,7 +3,7 @@
 import { memo, useCallback, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
-import { skills } from '@/components/config/skills';
+import { skills } from '@/data/skills';
 import PinContainer from './3d-pin';
 import { Project } from '@/components/config/projects';
 
@@ -58,7 +58,7 @@ const ProjectCard = memo(function ProjectCard({ project, index, isHovered, onHov
           className="w-full"
         >
           <div className="group relative flex flex-col
-               min-w-[340px] w-400 sm:w-[440px] md:w[480px] lg:min-w-[440px] xl:w-[560px]
+               min-w-[300px] w-300 sm:w-[440px] md:w[480px] lg:min-w-[440px] xl:w-[560px]
                h-[460px] sm:h-[560px] lg:h-[570px]
                bg-gradient-to-br from-gray-50 via-white to-gray-100
                dark:from-gray-900/95 dark:via-gray-800/95 dark:to-black/95
@@ -84,6 +84,19 @@ const ProjectCard = memo(function ProjectCard({ project, index, isHovered, onHov
                   loading="lazy"
                 />
               ))}
+
+              {/* Status Badge - In Development */}
+              {project.status === 'in_development' && (
+                <div className="absolute top-3 left-3 z-10">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-yellow-500/90 text-white shadow-lg backdrop-blur-sm">
+                    <span className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
+                    </span>
+                    In Development
+                  </span>
+                </div>
+              )}
 
               {/* Simple overlay effect on hover */}
               <AnimatePresence mode="sync">

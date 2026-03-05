@@ -18,7 +18,7 @@ export default function AdminLayoutWrapper({ children }: AdminLayoutWrapperProps
 
   // All other admin pages get the sidebar layout
   return (
-    <div className="min-h-screen bg-earth-50">
+    <div className="min-h-screen bg-gray-200">
       <AdminSidebar />
       <div className="lg:pl-64">
         <main className="py-8 px-4 sm:px-6 lg:px-8">

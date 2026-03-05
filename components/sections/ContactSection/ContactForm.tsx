@@ -206,6 +206,11 @@ export const ContactForm = () => {
   const [touched, setTouched] = useState<{ [key: string]: boolean }>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // Honeypot field state - bots will fill this, humans won't see it
+  const [honeypot, setHoneypot] = useState('');
+  // Track when form was loaded to detect instant bot submissions
+  const [formLoadTime] = useState(() => Date.now());
+
   // Live validation as user types
   const validateField = (name: keyof FormData, value: string) => {
     try {
@@ -289,7 +294,13 @@ export const ContactForm = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          // Honeypot fields for spam detection (bots fill these, humans don't)
+          website: honeypot,
+          _gotcha: honeypot,
+          formLoadTime,
+        }),
       });
 
       const data = await response.json();
@@ -336,6 +347,31 @@ export const ContactForm = () => {
       className="w-full max-w-2xl mx-auto"
     >
       <form onSubmit={handleSubmit} className="space-y-6">
+        {/* Honeypot field - hidden from humans, bots will fill it */}
+        <div
+          aria-hidden="true"
+          style={{
+            position: 'absolute',
+            left: '-9999px',
+            top: '-9999px',
+            opacity: 0,
+            height: 0,
+            overflow: 'hidden',
+            pointerEvents: 'none',
+          }}
+        >
+          <label htmlFor="website">Website (leave blank)</label>
+          <input
+            type="text"
+            id="website"
+            name="website"
+            value={honeypot}
+            onChange={(e) => setHoneypot(e.target.value)}
+            tabIndex={-1}
+            autoComplete="off"
+          />
+        </div>
+
         {/* Name and Email - Side by side on larger screens */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <InputField
