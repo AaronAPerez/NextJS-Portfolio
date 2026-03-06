@@ -29,6 +29,108 @@ const contactFormSchema = z.object({
 // Minimum time (ms) a human needs to fill out the form (3 seconds)
 const MIN_FORM_FILL_TIME = 3000;
 
+/**
+ * Spam detection utilities - detects gibberish/random strings
+ */
+
+// Calculate consonant to vowel ratio (gibberish has high consonant ratio)
+function getConsonantVowelRatio(text: string): number {
+  const vowels = text.match(/[aeiouAEIOU]/g)?.length || 0;
+  const consonants = text.match(/[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]/g)?.length || 0;
+  if (vowels === 0) return consonants > 0 ? 10 : 0;
+  return consonants / vowels;
+}
+
+// Detect random case mixing patterns like "xWpqXWL" (unusual in normal text)
+function hasRandomCaseMixing(text: string): boolean {
+  // Count case transitions (lower->upper or upper->lower)
+  let transitions = 0;
+  for (let i = 1; i < text.length; i++) {
+    const prevIsUpper = /[A-Z]/.test(text[i - 1]);
+    const currIsUpper = /[A-Z]/.test(text[i]);
+    const prevIsLetter = /[a-zA-Z]/.test(text[i - 1]);
+    const currIsLetter = /[a-zA-Z]/.test(text[i]);
+    if (prevIsLetter && currIsLetter && prevIsUpper !== currIsUpper) {
+      transitions++;
+    }
+  }
+  // High transition rate indicates random casing
+  const letterCount = (text.match(/[a-zA-Z]/g)?.length || 0);
+  if (letterCount < 5) return false;
+  return transitions / letterCount > 0.3;
+}
+
+// Check if text looks like gibberish
+function isGibberish(text: string): boolean {
+  // Remove spaces and check the raw character patterns
+  const cleaned = text.replace(/\s+/g, '');
+
+  if (cleaned.length < 5) return false;
+
+  // Check consonant-vowel ratio (normal English is ~1.5-2, gibberish is often 3+)
+  const cvRatio = getConsonantVowelRatio(cleaned);
+  if (cvRatio > 3.5) return true;
+
+  // Check for random case mixing
+  if (hasRandomCaseMixing(cleaned)) return true;
+
+  // Check for unusual character sequences (3+ consonants in a row is rare in English)
+  const hasLongConsonantRun = /[bcdfghjklmnpqrstvwxyz]{5,}/i.test(cleaned);
+  if (hasLongConsonantRun) return true;
+
+  // Check for repeated unusual patterns
+  const hasRepeatedPattern = /(.{2,3})\1{2,}/i.test(cleaned);
+  if (hasRepeatedPattern && cvRatio > 2.5) return true;
+
+  return false;
+}
+
+// Validate that a name looks legitimate
+function isValidName(name: string): boolean {
+  // Real names typically have a space (first + last name)
+  // Single names are allowed but scrutinized more
+  const trimmed = name.trim();
+
+  // Must have at least one space for first/last name OR be a reasonable single name
+  const hasSpace = /\s/.test(trimmed);
+
+  if (!hasSpace) {
+    // Single word name - be more strict
+    // Check if it looks like gibberish
+    if (isGibberish(trimmed)) return false;
+    // Single names should be reasonable length (3-15 chars)
+    if (trimmed.length > 15) return false;
+  } else {
+    // Has space - check each part
+    const parts = trimmed.split(/\s+/);
+    for (const part of parts) {
+      if (isGibberish(part)) return false;
+    }
+  }
+
+  return true;
+}
+
+// Main spam check function
+function isSpamSubmission(name: string, subject: string, message: string): { isSpam: boolean; reason: string } {
+  // Check name
+  if (!isValidName(name)) {
+    return { isSpam: true, reason: 'Invalid name pattern detected' };
+  }
+
+  // Check subject for gibberish
+  if (isGibberish(subject)) {
+    return { isSpam: true, reason: 'Gibberish subject detected' };
+  }
+
+  // Check message for gibberish (be a bit more lenient since messages can be short)
+  if (message.length < 50 && isGibberish(message)) {
+    return { isSpam: true, reason: 'Gibberish message detected' };
+  }
+
+  return { isSpam: false, reason: '' };
+}
+
 // Professional HTML email template for admin notification
 const getAdminEmailTemplate = (name: string, email: string, subject: string, message: string) => `
 <!DOCTYPE html>
@@ -250,6 +352,17 @@ export async function POST(request: NextRequest) {
           { status: 200 }
         );
       }
+    }
+
+    // Gibberish/spam content detection
+    const spamCheck = isSpamSubmission(name, subject, message);
+    if (spamCheck.isSpam) {
+      console.log(`Spam detected: ${spamCheck.reason} - Name: "${name}", Subject: "${subject}"`);
+      // Return success to not alert the bot, but don't send email
+      return NextResponse.json(
+        { message: 'Message sent successfully!', success: true },
+        { status: 200 }
+      );
     }
 
     // Rate limiting headers (optional - implement rate limiting if needed)
