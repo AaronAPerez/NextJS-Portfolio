@@ -20,9 +20,10 @@ const ProjectsGrid = memo(function ProjectsGrid({ projects }: ProjectsGridProps)
   return (
     <div className="
       grid grid-cols-1
-      lg:grid-cols-2
-      xl:grid-cols-2
-      gap-8 min-w-2x1 mx-auto"
+      sm:grid-cols-1
+      md:grid-cols-1
+      lg:grid-cols-3
+      gap-8 min-w-xl mx-auto"
       >
       {projects.map((project, index) => (
         <ProjectCard

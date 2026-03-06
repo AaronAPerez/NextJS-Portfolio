@@ -1,7 +1,6 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import { EditorWrapper } from "@/components/EditorWrapper";
 import HeroSection from "@/components/sections/HeroSection";
 import {
   AboutSkeleton,
@@ -10,7 +9,16 @@ import {
   TimelineSkeleton,
   ContactSkeleton
 } from "@/components/sections/skeletons";
+// import { AIChat } from '@/components/AIAssistant/AIChat';
 
+// New sections for recruiter appeal
+// const ImpactMetricsStrip = dynamic(() => import("@/components/sections/ImpactMetricsStrip"), {
+//   ssr: false
+// });
+
+const WhyHireMe = dynamic(() => import("@/components/sections/WhyHireMe"), {
+  ssr: false
+});
 
 // Optimized lazy loading with section-specific skeletons for better UX
 const AboutSection = dynamic(() => import("@/components/sections/AboutSection/AboutSection"), {
@@ -18,7 +26,7 @@ const AboutSection = dynamic(() => import("@/components/sections/AboutSection/Ab
   ssr: false
 });
 
-const Skills = dynamic(() => import("@/components/sections/Skills"), {
+const SkillsSection = dynamic(() => import("@/components/sections/SkillsSection"), {
   loading: () => <SkillsSkeleton />,
   ssr: false
 });
@@ -47,45 +55,49 @@ export default function Home() {
           id="home"
           aria-labelledby="hero-heading"
         >
-          <EditorWrapper id="Hero" order={0}>
-            <HeroSection />
-          </EditorWrapper>
+
+          <HeroSection />
+
         </section>
+
+        {/* Impact Metrics Strip - Immediately show provable results to recruiters */}
+        {/* <ImpactMetricsStrip /> */}
 
         {/* About Section */}
         <section id="about"
           aria-label="about-section">
-          <EditorWrapper id="Projects" order={1}>
-            <AboutSection />
-          </EditorWrapper>
+
+          <AboutSection />
+
         </section>
 
         {/* Skills Section - Show capabilities immediately */}
         <section
           id="skills"
+          className="relative bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900"
           aria-labelledby="skills-heading"
         >
-          <EditorWrapper id="Contact" order={2}>
-            <Skills />
-          </EditorWrapper>
+
+          <SkillsSection />
+
         </section>
 
         {/* Projects Section */}
         <section id="projects"
           aria-label="projects-section">
-          <EditorWrapper id="Projects" order={3}>
-            <ProjectsSection />
-          </EditorWrapper>
+          <ProjectsSection />
         </section>
 
 
         {/* Experience Section */}
         <section id="experience"
           aria-label="experience-section">
-          <EditorWrapper id="Timeline" order={4}>
-            <Timeline />
-          </EditorWrapper>
+          <Timeline />
         </section>
+
+        {/* Why Hire Me - Direct appeal to recruiters before contact */}
+        
+        <WhyHireMe />
 
         {/* Contact Section CTA */}
         <section
@@ -95,6 +107,9 @@ export default function Home() {
           <ContactSection />
         </section>
       </div>
+
+      {/* AI Chat Assistant - Floating widget for visitor questions */}
+      {/* <AIChat /> */}
     </>
   );
 }

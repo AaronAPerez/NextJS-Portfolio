@@ -14,7 +14,7 @@ export const skills: Skill[] = [
   {
     id: 'css3',
     name: 'CSS3',
-    icon: '/icons/frontend/css3-original.svg',
+    icon: '/icons/frontend/css3.svg',
     color: '#1572B6',
     category: 'frontend',
     description: 'Advanced CSS styling, animations, and responsive design techniques'
@@ -214,8 +214,42 @@ export const skills: Skill[] = [
     name: 'Vercel',
     icon: '/icons/frontend/vercel.svg',
     color: '#000000',
-    category: 'cloud',
+    category: 'frontend',
     description: 'Frontend cloud platform for static sites and serverless functions'
+  },
+
+  // Additional Tools & Frameworks
+  {
+    id: 'prisma',
+    name: 'Prisma',
+    icon: '/icons/tools/prisma.svg',
+    color: '#2D3748',
+    category: 'tools',
+    description: 'Next-generation ORM for Node.js and TypeScript'
+  },
+  {
+    id: 'socketio',
+    name: 'Socket.IO',
+    icon: '/icons/tools/socketio.svg',
+    color: '#010101',
+    category: 'tools',
+    description: 'Real-time bidirectional event-based communication'
+  },
+  {
+    id: 'docker',
+    name: 'Docker',
+    icon: '/icons/tools/docker.svg',
+    color: '#2496ED',
+    category: 'tools',
+    description: 'Container platform for building and deploying applications'
+  },
+  {
+    id: 'googlecloud',
+    name: 'Google Cloud',
+    icon: '/icons/tools/google-cloud.svg',
+    color: '#4285F4',
+    category: 'cloud',
+    description: 'Cloud computing services for hosting and infrastructure'
   },
 
   // Game Development

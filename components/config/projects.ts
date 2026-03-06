@@ -1,3 +1,6 @@
+// Project status for display purposes
+export type ProjectDisplayStatus = 'draft' | 'in_development' | 'published' | 'archived';
+
 export interface Project {
   id: string;
   title: string;
@@ -13,6 +16,7 @@ export interface Project {
   codeLink: string;
   websiteLink?: string;
   gradient?: { from: string; to: string };
+  status?: ProjectDisplayStatus;  // Optional status for badges like "In Development"
 }
 
 export const projects: Project[] = [

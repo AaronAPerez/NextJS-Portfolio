@@ -1,12 +1,56 @@
 'use client';
 
-import { projects } from '@/components/config/projects';
+import { useMemo } from 'react';
+import { projects as staticProjects, Project, ProjectDisplayStatus } from '@/components/config/projects';
 import ProjectsGrid from './ProjectGrid';
 import { motion } from 'framer-motion';
+import { useProjects } from '@/hooks/useProjects';
+import type { ProjectDB } from '@/types/project';
 
+/**
+ * Convert ProjectDB format from API to Project format for frontend display
+ * Maps the database structure to what ProjectCard expects
+ */
+function mapProjectDBToProject(dbProject: ProjectDB): Project {
+  return {
+    id: dbProject.id,
+    title: dbProject.title,
+    description: dbProject.description,
+    tech: dbProject.tech || [],
+    category: dbProject.category,
+    isLive: dbProject.isLive,
+    clientType: dbProject.clientType,
+    featured: dbProject.featured,
+    // Convert images array of objects to array of URLs
+    images: dbProject.images?.map((img) => img.url) || [],
+    imagesAlt: dbProject.images?.map((img) => img.alt) || [],
+    demoLink: dbProject.demoLink,
+    codeLink: dbProject.codeLink || '',
+    websiteLink: dbProject.websiteLink,
+    gradient: dbProject.gradient,
+    // Include status for displaying badges (In Development, etc.)
+    status: dbProject.status as ProjectDisplayStatus,
+  };
+}
 
 const ProjectsSection = () => {
+  // Fetch projects from API with fallback to static data
+  const { projects: apiProjects, isLoading } = useProjects({
+    status: 'published',
+    fallbackToStatic: true,
+  });
 
+  // Convert API projects to display format, or use static projects as fallback
+  const displayProjects = useMemo(() => {
+    // If we have API projects, map them to display format
+    if (apiProjects && apiProjects.length > 0) {
+      return apiProjects
+        .filter((p) => p.status === 'published' || p.status === 'in_development')
+        .map(mapProjectDBToProject);
+    }
+    // Fallback to static projects
+    return staticProjects;
+  }, [apiProjects]);
 
   return (
     <div className="relative w-full overflow-hidden py-20">
@@ -45,7 +89,19 @@ const ProjectsSection = () => {
 
         {/* Projects Grid */}
         <div>
-          <ProjectsGrid projects={projects} />
+          {isLoading ? (
+            // Loading skeleton
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8">
+              {[1, 2, 3].map((i) => (
+                <div
+                  key={i}
+                  className="h-[500px] bg-gray-200 dark:bg-gray-800 rounded-xl animate-pulse"
+                />
+              ))}
+            </div>
+          ) : (
+            <ProjectsGrid projects={displayProjects} />
+          )}
         </div>
       </div>
     </div>

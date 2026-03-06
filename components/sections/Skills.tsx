@@ -7,7 +7,7 @@ import {
   SectionDescription,
 } from '@/components/ui';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/Card';
-import { TECH_STACK } from '@/lib/constants';
+
 import {
   Code2,
   Database,
@@ -16,6 +16,7 @@ import {
   CheckCircle2
 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { TECH_STACK } from '@/lib/constants';
 
 /**
  * Skills Section Component
