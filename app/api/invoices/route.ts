@@ -25,17 +25,20 @@ export async function POST(request: NextRequest) {
       INSERT INTO "Invoice" (
         "id", "invoiceNumber", "invoiceDate", "dueDate",
         "companyName", "companyAddress", "companyCity", "companyPhone", "companyEmail", "companyWebsite",
-        "clientName", "clientCompany", "clientAddress", "clientCity", "clientEmail", "clientPhone",
-        "items", "notes", "terms", "taxRate", "subtotal", "tax", "total", "status"
+        "clientId", "clientName", "clientCompany", "clientAddress", "clientCity", "clientEmail", "clientPhone",
+        "items", "notes", "terms", "taxRate", "subtotal", "tax", "total", "status",
+        "sentAt", "paidAt", "paidAmount", "paymentMethod", "paymentMethods"
       ) VALUES (
         ${id}, ${data.invoiceNumber}, ${data.invoiceDate}, ${data.dueDate},
         ${data.companyName}, ${data.companyAddress || ''}, ${data.companyCity || ''},
         ${data.companyPhone || ''}, ${data.companyEmail || ''}, ${data.companyWebsite || ''},
-        ${data.clientName || ''}, ${data.clientCompany || ''}, ${data.clientAddress || ''},
+        ${data.clientId || null}, ${data.clientName || ''}, ${data.clientCompany || ''}, ${data.clientAddress || ''},
         ${data.clientCity || ''}, ${data.clientEmail || ''}, ${data.clientPhone || ''},
         ${JSON.stringify(data.items || [])}, ${data.notes || ''}, ${data.terms || ''},
         ${data.taxRate || 0}, ${data.subtotal || 0}, ${data.tax || 0}, ${data.total || 0},
-        ${data.status || 'draft'}
+        ${data.status || 'draft'},
+        ${data.sentAt || null}, ${data.paidAt || null}, ${data.paidAmount || null},
+        ${data.paymentMethod || null}, ${data.paymentMethods ? JSON.stringify(data.paymentMethods) : null}
       )
       RETURNING *
     `

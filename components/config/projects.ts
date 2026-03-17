@@ -77,4 +77,23 @@ export const projects: Project[] = [
       to: "#15803D"
     }
   },
+  {
+    id: 'balderas-concrete',
+    title: "Balderas Concrete",
+    description: "Production website for Houston-based concrete contractor with 30+ years experience. Features contact forms, service showcases, and SEO optimization.",
+    tech: ["Next.js", "React", "TypeScript", "Tailwind", "PostgreSQL", "Prisma"],
+    category: 'production',
+    isLive: true,
+    clientType: 'business',
+    featured: true,
+    images: ["/images/projects/balderas-concrete/balderas-concrete-hero.webp"],
+    imagesAlt: ["Balderas Concrete professional website homepage"],
+    demoLink: "https://balderasconcrete.com",
+    codeLink: "https://github.com/AaronAPerez/balderas-concrete",
+    websiteLink: "https://balderasconcrete.com",
+    gradient: {
+      from: "#1E3A8A",  // Brand blue
+      to: "#475569"     // Slate gray
+    }
+  },
 ];

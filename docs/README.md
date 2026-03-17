@@ -6,6 +6,7 @@ This folder contains technical documentation for the AP Designs Portfolio projec
 
 | Document | Description |
 |----------|-------------|
+| [AI Chat Assistant](./ai-chat-assistant.md) | Implementation guide for the floating AI chat widget |
 | [Invoice & Hosting System](./invoice-hosting-system.md) | Complete guide for the invoice and hosting options system with Neon database |
 | [Database Schema](./database-schema.md) | Database tables and relationships |
 

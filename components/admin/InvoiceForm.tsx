@@ -42,6 +42,7 @@ interface InvoiceData {
   invoiceNumber: string
   invoiceDate: string
   dueDate: string
+  clientId: string | null
   clientName: string
   clientCompany: string
   clientAddress: string
@@ -82,6 +83,7 @@ const defaultInvoiceData: InvoiceData = {
   invoiceNumber: `INV-${new Date().getFullYear()}-${String(Date.now()).slice(-4)}`,
   invoiceDate: new Date().toISOString().split('T')[0],
   dueDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+  clientId: null,
   clientName: '',
   clientCompany: '',
   clientAddress: '',
@@ -95,17 +97,22 @@ const defaultInvoiceData: InvoiceData = {
   paymentMethods: defaultPaymentMethods,
 }
 
-export default function InvoiceForm() {
+interface InvoiceFormProps {
+  initialInvoiceId?: string | null
+}
+
+export default function InvoiceForm({ initialInvoiceId }: InvoiceFormProps) {
   const [data, setData] = useState<InvoiceData>(defaultInvoiceData)
   const [isEditing, setIsEditing] = useState(true)
   const [linkCopied, setLinkCopied] = useState(false)
-  const [invoiceId, setInvoiceId] = useState<string | null>(null)
+  const [invoiceId, setInvoiceId] = useState<string | null>(initialInvoiceId || null)
   const [isSaving, setIsSaving] = useState(false)
   const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle')
   const [savedInvoices, setSavedInvoices] = useState<Array<{ id: string; invoiceNumber: string; clientName: string; total: number; createdAt: string }>>([])
   const [emailStatus, setEmailStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
   const [emailError, setEmailError] = useState<string | null>(null)
   const [selectedClientId, setSelectedClientId] = useState<string | null>(null)
+  const [isLoadingInvoice, setIsLoadingInvoice] = useState(!!initialInvoiceId)
 
   // Load saved invoices on mount
   useEffect(() => {
@@ -122,6 +129,67 @@ export default function InvoiceForm() {
     }
     loadInvoices()
   }, [])
+
+  // Load initial invoice if ID is provided via URL
+  useEffect(() => {
+    if (initialInvoiceId) {
+      setIsLoadingInvoice(true)
+      fetch(`/api/invoices/${initialInvoiceId}`)
+        .then(res => res.json())
+        .then(invoice => {
+          // Parse items if it's a string (from JSON column)
+          let parsedItems = invoice.items
+          if (typeof invoice.items === 'string') {
+            try {
+              parsedItems = JSON.parse(invoice.items)
+            } catch {
+              parsedItems = [{ id: '1', description: '', quantity: 1, rate: 0 }]
+            }
+          }
+
+          // Parse paymentMethods if it's a string
+          let parsedPaymentMethods = invoice.paymentMethods
+          if (typeof invoice.paymentMethods === 'string') {
+            try {
+              parsedPaymentMethods = JSON.parse(invoice.paymentMethods)
+            } catch {
+              parsedPaymentMethods = defaultPaymentMethods
+            }
+          }
+
+          setData({
+            companyName: invoice.companyName || 'AP Designs',
+            companyAddress: invoice.companyAddress || '',
+            companyCity: invoice.companyCity || '',
+            companyPhone: invoice.companyPhone || '',
+            companyEmail: invoice.companyEmail || '',
+            companyWebsite: invoice.companyWebsite || '',
+            invoiceNumber: invoice.invoiceNumber || '',
+            invoiceDate: invoice.invoiceDate?.split('T')[0] || '',
+            dueDate: invoice.dueDate?.split('T')[0] || '',
+            clientId: invoice.clientId || null,
+            clientName: invoice.clientName || '',
+            clientCompany: invoice.clientCompany || '',
+            clientAddress: invoice.clientAddress || '',
+            clientCity: invoice.clientCity || '',
+            clientEmail: invoice.clientEmail || '',
+            clientPhone: invoice.clientPhone || '',
+            items: parsedItems || [{ id: '1', description: '', quantity: 1, rate: 0 }],
+            notes: invoice.notes || '',
+            terms: invoice.terms || '',
+            taxRate: Number(invoice.taxRate) || 0,
+            paymentMethods: parsedPaymentMethods || defaultPaymentMethods,
+          })
+          setInvoiceId(initialInvoiceId)
+          // Set the selected client ID for the dropdown
+          if (invoice.clientId) {
+            setSelectedClientId(invoice.clientId)
+          }
+        })
+        .catch(err => console.error('Failed to load invoice:', err))
+        .finally(() => setIsLoadingInvoice(false))
+    }
+  }, [initialInvoiceId])
 
   const updateField = useCallback(<K extends keyof InvoiceData>(field: K, value: InvoiceData[K]) => {
     setData(prev => ({ ...prev, [field]: value }))
@@ -155,6 +223,7 @@ export default function InvoiceForm() {
       setSelectedClientId(client.id)
       setData(prev => ({
         ...prev,
+        clientId: client.id,
         clientName: client.name,
         clientCompany: client.company || '',
         clientEmail: client.email || '',
@@ -164,6 +233,10 @@ export default function InvoiceForm() {
       }))
     } else {
       setSelectedClientId(null)
+      setData(prev => ({
+        ...prev,
+        clientId: null,
+      }))
     }
   }, [])
 
@@ -207,34 +280,28 @@ export default function InvoiceForm() {
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
           <title>Invoice ${data.invoiceNumber}</title>
           <style>
-            /* Force Letter paper size (8.5" x 11") */
+            /* Force Letter paper size (8.5" x 11") with NO browser headers/footers */
             @page {
               size: 8.5in 11in !important;
-              margin: 0.5in 0.6in;
-            }
-            /* Fallback for browsers that don't support @page size */
-            @media print {
-              html {
-                width: 8.5in !important;
-                height: 11in !important;
-              }
-              body {
-                width: 8.5in !important;
-                min-height: 11in !important;
-                margin: 0 !important;
-              }
+              margin: 0 !important;
             }
             @media print {
               html, body {
-                width: 8.5in;
-                height: 11in;
+                width: 8.5in !important;
+                height: 11in !important;
+                max-height: 11in !important;
+                overflow: hidden !important;
+              }
+              body {
+                margin: 0 !important;
+                padding: 0.4in 0.5in !important;
               }
             }
             * { margin: 0; padding: 0; box-sizing: border-box; }
             body {
               font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Arial, sans-serif;
-              font-size: 11pt;
-              line-height: 1.5;
+              font-size: 10pt;
+              line-height: 1.4;
               color: #2d3748;
               background: white;
               -webkit-print-color-adjust: exact !important;
@@ -245,79 +312,89 @@ export default function InvoiceForm() {
             .header {
               display: flex;
               justify-content: space-between;
-              align-items: flex-center;
-              padding-bottom: 24px;
+              align-items: flex-start;
+              padding-bottom: 16px;
               border-bottom: 3px solid #0ea5e9;
-              margin-bottom: 24px;
+              margin-bottom: 16px;
             }
-            .company-block { display: flex; align-items: flex-start; gap: 20px; }
-            .logo { width: 100px; height: 100px; border-radius: 50%; object-fit: contain; background: rgba(30, 58, 138, 0.9); padding: 2px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); backdrop-filter: blur(8px); margin-top: 8px; }
-            .company-name { font-size: 24pt; font-weight: 700; color: #1e293b; margin-bottom: 6px; letter-spacing: -0.5px; margin-top: 8px; }
-            .company-info { color: #374151; font-size: 11pt; line-height: 1.7; font-weight: 500; }
+            .company-block { display: flex; align-items: flex-start; gap: 16px; }
+            .logo {
+              width: 80px;
+              height: 80px;
+              min-width: 80px;
+              min-height: 80px;
+              border-radius: 50%;
+              object-fit: cover;
+              object-position: center;
+              background: rgba(30, 58, 138, 0.9);
+              box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            }
+            .company-name { font-size: 20pt; font-weight: 700; color: #1e293b; margin-bottom: 4px; letter-spacing: -0.5px; }
+            .company-info { color: #374151; font-size: 10pt; line-height: 1.5; font-weight: 500; }
             .invoice-block { text-align: right; }
-            .invoice-title { font-size: 36pt; font-weight: 800; color: #0ea5e9; letter-spacing: -1px; margin-top: 0; }
-            .invoice-meta { margin-top: 12px; }
-            .invoice-meta .row { display: flex; justify-content: flex-end; gap: 12px; margin: 4px 0; font-size: 10pt; }
+            .invoice-title { font-size: 28pt; font-weight: 800; color: #0ea5e9; letter-spacing: -1px; margin-top: 0; }
+            .invoice-meta { margin-top: 8px; }
+            .invoice-meta .row { display: flex; justify-content: flex-end; gap: 10px; margin: 3px 0; font-size: 9pt; }
             .invoice-meta .label { color: #475569; font-weight: 500; }
-            .invoice-meta .value { font-weight: 600; color: #1e293b; min-width: 100px; text-align: right; }
+            .invoice-meta .value { font-weight: 600; color: #1e293b; min-width: 90px; text-align: right; }
 
             /* Bill To Section */
-            .bill-to-section { margin-bottom: 24px; }
-            .section-header { font-size: 12pt; font-weight: 700; color: #1e293b; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; padding-bottom: 6px; border-bottom: 1px solid #e2e8f0; }
-            .bill-to-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-            .client-info { background: #f8fafc; padding: 16px; border-radius: 6px; border-left: 3px solid #0ea5e9; }
-            .client-name { font-size: 13pt; font-weight: 600; color: #1e293b; margin-bottom: 6px; }
-            .client-detail { font-size: 10pt; color: #475569; line-height: 1.6; }
+            .bill-to-section { margin-bottom: 14px; }
+            .section-header { font-size: 10pt; font-weight: 700; color: #1e293b; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; padding-bottom: 4px; border-bottom: 1px solid #e2e8f0; }
+            .bill-to-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+            .client-info { background: #f8fafc; padding: 10px; border-radius: 4px; border-left: 3px solid #0ea5e9; }
+            .client-name { font-size: 11pt; font-weight: 600; color: #1e293b; margin-bottom: 4px; }
+            .client-detail { font-size: 9pt; color: #475569; line-height: 1.5; }
 
             /* Table */
-            .items-section { margin-bottom: 20px; }
+            .items-section { margin-bottom: 12px; }
             table { width: 100%; border-collapse: collapse; }
             thead tr { background: #1e293b; }
-            th { padding: 10px 12px; text-align: left; font-weight: 600; color: white; font-size: 10pt; text-transform: uppercase; letter-spacing: 0.3px; }
-            th:nth-child(2) { text-align: center; width: 60px; }
-            th:nth-child(3), th:nth-child(4) { text-align: right; width: 100px; }
+            th { padding: 6px 10px; text-align: left; font-weight: 600; color: white; font-size: 9pt; text-transform: uppercase; letter-spacing: 0.3px; }
+            th:nth-child(2) { text-align: center; width: 50px; }
+            th:nth-child(3), th:nth-child(4) { text-align: right; width: 80px; }
             tbody tr { border-bottom: 1px solid #e2e8f0; }
             tbody tr:nth-child(even) { background: #f8fafc; }
-            td { padding: 12px; font-size: 11pt; color: #334155; }
+            td { padding: 8px 10px; font-size: 10pt; color: #334155; }
             td:nth-child(2) { text-align: center; }
             td:nth-child(3), td:nth-child(4) { text-align: right; font-family: 'SF Mono', 'Consolas', monospace; }
             td:nth-child(4) { font-weight: 600; }
 
             /* Totals */
-            .totals-wrapper { display: flex; justify-content: flex-end; margin-bottom: 24px; }
-            .totals-box { width: 250px; }
-            .total-row { display: flex; justify-content: space-between; padding: 8px 16px; font-size: 11pt; border-bottom: 1px solid #e2e8f0; }
+            .totals-wrapper { display: flex; justify-content: flex-end; margin-bottom: 14px; }
+            .totals-box { width: 220px; }
+            .total-row { display: flex; justify-content: space-between; padding: 5px 12px; font-size: 10pt; border-bottom: 1px solid #e2e8f0; }
             .total-row:last-child { border-bottom: none; }
             .total-label { color: #475569; text-align: left; }
-            .total-value { font-weight: 600; color: #334155; font-family: 'SF Mono', 'Consolas', monospace; text-align: right; min-width: 80px; }
-            .total-row.grand { background: #0ea5e9; color: white; padding: 12px 16px; margin-top: 10px; border-radius: 6px; font-size: 14pt; }
+            .total-value { font-weight: 600; color: #334155; font-family: 'SF Mono', 'Consolas', monospace; text-align: right; min-width: 70px; }
+            .total-row.grand { background: #0ea5e9; color: white; padding: 8px 12px; margin-top: 6px; border-radius: 4px; font-size: 12pt; }
             .total-row.grand .total-label { color: white; font-weight: 600; }
             .total-row.grand .total-value { color: white; font-weight: 700; }
 
             /* Notes */
-            .notes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 20px; }
-            .notes-box { background: #f8fafc; padding: 16px; border-radius: 6px; }
-            .notes-box h4 { font-size: 11pt; font-weight: 600; color: #1e293b; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.3px; }
-            .notes-box p { font-size: 10pt; color: #475569; line-height: 1.6; }
+            .notes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 12px; }
+            .notes-box { background: #f8fafc; padding: 10px; border-radius: 4px; }
+            .notes-box h4 { font-size: 9pt; font-weight: 600; color: #1e293b; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.3px; }
+            .notes-box p { font-size: 8pt; color: #475569; line-height: 1.5; }
 
             /* Payment Methods */
-            .payment-section { margin-bottom: 20px; }
-            .payment-send-to { background: #f8fafc; padding: 14px 18px; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 16px; }
-            .payment-send-to p { font-size: 11pt; color: #334155; margin: 0; }
-            .payment-send-to .email { font-weight: 700; color: #0f172a; font-size: 13pt; }
-            .payment-icons { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; margin-top: 8px; }
+            .payment-section { margin-bottom: 12px; }
+            .payment-send-to { background: #f8fafc; padding: 10px 14px; border-radius: 6px; border: 1px solid #e2e8f0; margin-bottom: 10px; }
+            .payment-send-to p { font-size: 10pt; color: #334155; margin: 0; }
+            .payment-send-to .email { font-weight: 700; color: #0f172a; font-size: 11pt; }
+            .payment-icons { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; margin-top: 6px; }
             .payment-icon { display: flex; align-items: center; }
             .payment-icon svg { height: auto; }
-            .payment-box { padding: 12px; border-radius: 6px; border: 1px solid #e2e8f0; margin-top: 12px; background: #f8fafc; }
+            .payment-box { padding: 10px; border-radius: 4px; border: 1px solid #e2e8f0; margin-top: 8px; background: #f8fafc; }
             .payment-box.check { border-color: #d1d5db; }
-            .payment-box h5 { font-size: 10pt; font-weight: 600; color: #1e293b; margin-bottom: 6px; }
-            .payment-box p { font-size: 9pt; color: #475569; line-height: 1.4; margin: 2px 0; }
+            .payment-box h5 { font-size: 9pt; font-weight: 600; color: #1e293b; margin-bottom: 4px; }
+            .payment-box p { font-size: 8pt; color: #475569; line-height: 1.3; margin: 2px 0; }
             .payment-box .label { font-weight: 600; color: #475569; }
 
             /* Footer */
-            .footer { text-align: center; padding-top: 20px; border-top: 2px solid #e2e8f0; }
-            .footer-thanks { font-size: 14pt; font-weight: 600; color: #0ea5e9; margin-bottom: 6px; }
-            .footer-contact { font-size: 10pt; color: #64748b; }
+            .footer { text-align: center; padding-top: 12px; border-top: 2px solid #e2e8f0; }
+            .footer-thanks { font-size: 12pt; font-weight: 600; color: #0ea5e9; margin-bottom: 4px; }
+            .footer-contact { font-size: 9pt; color: #64748b; }
           </style>
         </head>
         <body>
@@ -422,7 +499,21 @@ export default function InvoiceForm() {
             <div class="footer-contact">${data.companyEmail} | ${data.companyWebsite}</div>
           </div>
 
-          <script>window.onload = function() { window.print(); window.onafterprint = function() { window.close(); }; };</script>
+          <script>
+            // Wait for logo image to fully load before printing
+            window.onload = function() {
+              var logo = document.querySelector('.logo');
+              if (logo && logo.complete) {
+                window.print();
+              } else if (logo) {
+                logo.onload = function() { window.print(); };
+                logo.onerror = function() { window.print(); }; // Print anyway if logo fails
+              } else {
+                window.print();
+              }
+              window.onafterprint = function() { window.close(); };
+            };
+          </script>
         </body>
       </html>
     `)
@@ -521,29 +612,55 @@ export default function InvoiceForm() {
       const response = await fetch(`/api/invoices/${id}`)
       if (response.ok) {
         const invoice = await response.json()
+
+        // Parse items if it's a string (from JSON column)
+        let parsedItems = invoice.items
+        if (typeof invoice.items === 'string') {
+          try {
+            parsedItems = JSON.parse(invoice.items)
+          } catch {
+            parsedItems = [{ id: '1', description: '', quantity: 1, rate: 0 }]
+          }
+        }
+
+        // Parse paymentMethods if it's a string
+        let parsedPaymentMethods = invoice.paymentMethods
+        if (typeof invoice.paymentMethods === 'string') {
+          try {
+            parsedPaymentMethods = JSON.parse(invoice.paymentMethods)
+          } catch {
+            parsedPaymentMethods = defaultPaymentMethods
+          }
+        }
+
         setData({
-          companyName: invoice.companyName,
+          companyName: invoice.companyName || 'AP Designs',
           companyAddress: invoice.companyAddress || '',
           companyCity: invoice.companyCity || '',
           companyPhone: invoice.companyPhone || '',
           companyEmail: invoice.companyEmail || '',
           companyWebsite: invoice.companyWebsite || '',
-          invoiceNumber: invoice.invoiceNumber,
+          invoiceNumber: invoice.invoiceNumber || '',
           invoiceDate: invoice.invoiceDate?.split('T')[0] || '',
           dueDate: invoice.dueDate?.split('T')[0] || '',
+          clientId: invoice.clientId || null,
           clientName: invoice.clientName || '',
           clientCompany: invoice.clientCompany || '',
           clientAddress: invoice.clientAddress || '',
           clientCity: invoice.clientCity || '',
           clientEmail: invoice.clientEmail || '',
           clientPhone: invoice.clientPhone || '',
-          items: invoice.items || [],
+          items: parsedItems || [{ id: '1', description: '', quantity: 1, rate: 0 }],
           notes: invoice.notes || '',
           terms: invoice.terms || '',
           taxRate: Number(invoice.taxRate) || 0,
-          paymentMethods: invoice.paymentMethods || defaultPaymentMethods,
+          paymentMethods: parsedPaymentMethods || defaultPaymentMethods,
         })
         setInvoiceId(id)
+        // Set the selected client ID for the dropdown
+        if (invoice.clientId) {
+          setSelectedClientId(invoice.clientId)
+        }
       }
     } catch (error) {
       console.error('Failed to load invoice:', error)
@@ -612,6 +729,18 @@ export default function InvoiceForm() {
       setIsSaving(false)
     }
   }, [data, subtotal, tax, total, invoiceId])
+
+  // Show loading state while fetching invoice
+  if (isLoadingInvoice) {
+    return (
+      <div className="flex items-center justify-center p-12">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-500 mx-auto mb-4"></div>
+          <p className="text-gray-500">Loading invoice...</p>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="space-y-6">
