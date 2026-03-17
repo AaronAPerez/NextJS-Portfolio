@@ -75,7 +75,7 @@ export default function AdminLogin() {
       });
 
       if (res.ok) {
-        toast.success('Successfully signed in!', { id: toastId });
+        toast.success('Successfully signed in!', { id: toastId, duration: 4000 });
         router.push("/admin/dashboard");
         router.refresh();
       } else {

@@ -446,6 +446,102 @@ export const Projects: Projects[] = [
       metaDescription: 'Full-stack luxury camping booking platform with interactive maps, real-time reservations, and user reviews. Built with Next.js, MongoDB, and Mapbox integration.',
       keywords: ['booking platform', 'mapbox integration', 'full-stack application', 'mongodb', 'express', 'next.js', 'typescript']
     }
+  },
+
+  {
+    id: 'balderas-concrete',
+    title: 'Balderas Concrete - Professional Contractor Website',
+    description: 'Built a professional web presence for a Houston-based concrete contractor with 30+ years experience. Features service showcases, contact forms with database storage, and comprehensive SEO optimization for local search visibility.',
+    category: 'web',
+    status: 'completed',
+    featured: true,
+    timeline: '6 weeks',
+    teamSize: '1 developer',
+    role: 'Full Stack Developer',
+
+    thumbnail: '/images/projects/balderas-concrete/balderas-concrete-hero.webp',
+    imageAlt: 'Balderas Concrete professional website showcasing concrete and earthwork services',
+
+    technologies: [
+      'Next.js 16', 'React 19', 'TypeScript 5', 'Tailwind CSS 4', 'PostgreSQL',
+      'Prisma 6', 'Neon', 'Resend', 'Zustand', 'React Query', 'React Hook Form',
+      'Zod', 'Framer Motion', 'Vercel', 'SEO Optimization'
+    ],
+
+    liveUrl: 'https://balderasconcrete.com',
+    githubUrl: 'https://github.com/AaronAPerez/balderas-concrete',
+
+    // Business Impact - professional contractor establishing online presence
+    businessImpact: {
+      primaryMetric: {
+        label: 'Local Visibility',
+        value: 'Established',
+        improvement: 'First professional website',
+        timeframe: 'Since launch'
+      },
+      keyMetrics: [
+        {
+          label: 'Lighthouse Score',
+          value: '100/100',
+          improvement: 'All categories',
+          icon: Target,
+          color: 'text-green-600'
+        },
+        {
+          label: 'Load Speed',
+          value: '<1.5s',
+          improvement: 'vs 4.5s avg',
+          icon: Zap,
+          color: 'text-blue-600'
+        },
+        {
+          label: 'SEO Score',
+          value: '100/100',
+          improvement: 'Local SEO optimized',
+          icon: TrendingUp,
+          color: 'text-purple-600'
+        },
+        {
+          label: 'Accessibility',
+          value: '100/100',
+          improvement: 'WCAG compliant',
+          icon: Users,
+          color: 'text-orange-600'
+        }
+      ],
+      roiStatement: 'Provided a 30+ year business with their first professional online presence, enabling customers to easily request quotes and learn about services',
+      clientTestimonial: {
+        quote: "The website represents our professionalism and 30+ years of experience perfectly. Customers can now find us online and request quotes easily.",
+        author: "Balderas Team",
+        role: "Owner",
+        company: "Balderas Concrete"
+      }
+    },
+
+    technicalHighlights: {
+      performanceScore: 100,
+      accessibilityScore: 100,
+      seoScore: 100,
+      coreWebVitals: {
+        lcp: 1.2,
+        fid: 30,
+        cls: 0.01
+      },
+      innovations: [
+        'Contact form with PostgreSQL storage via Neon',
+        'Email notifications with Resend',
+        'Dynamic sitemap and JSON-LD structured data',
+        'Mobile-first responsive design',
+        'Service area coverage map',
+        'Project gallery with image optimization'
+      ]
+    },
+
+    seo: {
+      metaTitle: 'Balderas Concrete - Professional Contractor Website | Aaron A. Perez',
+      metaDescription: 'Production website for Houston concrete contractor with 30+ years experience. Built with Next.js 16, PostgreSQL, and comprehensive SEO for local search visibility.',
+      keywords: ['contractor website', 'local business seo', 'next.js 16', 'postgresql', 'prisma', 'houston web development']
+    }
   }
 ]
 

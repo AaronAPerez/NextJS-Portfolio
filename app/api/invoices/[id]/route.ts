@@ -43,6 +43,7 @@ export async function PUT(
         "companyPhone" = ${data.companyPhone || ''},
         "companyEmail" = ${data.companyEmail || ''},
         "companyWebsite" = ${data.companyWebsite || ''},
+        "clientId" = ${data.clientId || null},
         "clientName" = ${data.clientName || ''},
         "clientCompany" = ${data.clientCompany || ''},
         "clientAddress" = ${data.clientAddress || ''},
@@ -57,6 +58,11 @@ export async function PUT(
         "tax" = ${data.tax || 0},
         "total" = ${data.total || 0},
         "status" = ${data.status || 'draft'},
+        "sentAt" = ${data.sentAt || null},
+        "paidAt" = ${data.paidAt || null},
+        "paidAmount" = ${data.paidAmount || null},
+        "paymentMethod" = ${data.paymentMethod || null},
+        "paymentMethods" = ${data.paymentMethods ? JSON.stringify(data.paymentMethods) : null},
         "updatedAt" = NOW()
       WHERE "id" = ${id}
       RETURNING *

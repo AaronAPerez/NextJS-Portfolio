@@ -66,6 +66,7 @@ export default function InvoicesPage() {
       const invoice = invoices.find(inv => inv.id === id)
       if (!invoice) return
 
+      // Build updates object with status and relevant timestamps
       const updates: Record<string, unknown> = { status: newStatus }
       if (newStatus === 'sent' && !invoice.sentAt) {
         updates.sentAt = new Date().toISOString()
@@ -75,6 +76,11 @@ export default function InvoicesPage() {
         updates.paidAmount = invoice.total
       }
 
+      // Optimistically update the UI
+      setInvoices(prev => prev.map(inv =>
+        inv.id === id ? { ...inv, ...updates } as Invoice : inv
+      ))
+
       const response = await fetch(`/api/invoices/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
@@ -82,10 +88,17 @@ export default function InvoicesPage() {
       })
 
       if (response.ok) {
+        // Refresh to get server data
+        fetchInvoices()
+      } else {
+        // Revert on error
+        console.error('Failed to update invoice status')
         fetchInvoices()
       }
     } catch (error) {
       console.error('Error updating invoice:', error)
+      // Revert on error
+      fetchInvoices()
     } finally {
       setUpdatingId(null)
     }
