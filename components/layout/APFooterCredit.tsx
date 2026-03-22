@@ -13,7 +13,7 @@ export const APFooterCredit: React.FC<APFooterCreditProps> = ({
   utmSource = "footer",
 }) => {
   return (
-    <footer className={`py-8 text-center ${className}`}>
+    <footer className={`py-6 text-center ${className}`}>
       <div className="inline-flex items-center gap-3 opacity-80 hover:opacity-100 transition-opacity">
 
         {/* LEFT: Logo Icon */}
@@ -24,7 +24,7 @@ export const APFooterCredit: React.FC<APFooterCreditProps> = ({
         />
 
         {/* RIGHT: Text */}
-        <div className="flex flex-col items-start leading-tight text-sm">
+        <div className="flex flex-col items-start leading-tight text-xs">
           <span className="text-[var(--text-secondary,theme(colors.gray.500))]">
             Designed & Built by
           </span>

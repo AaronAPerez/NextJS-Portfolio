@@ -11,7 +11,7 @@ import { useState, useEffect, useCallback } from 'react';
 import type { ProjectDB, ProjectStatus, ProjectCategory } from '@/types/project';
 
 // Import static projects as fallback
-import { projects as staticProjects } from '@/components/config/projects';
+import { PROJECTS as staticProjects } from '@/components/config/projects';
 
 interface UseProjectsOptions {
   status?: ProjectStatus | 'all';

@@ -72,6 +72,7 @@ function transformProject(row: any): ProjectDB {
     tech,
     images,
     gradient,
+    companyLogo: row.companyLogo || null,
     demoLink: row.demoLink,
     codeLink: row.codeLink,
     websiteLink: row.websiteLink,

@@ -21,8 +21,8 @@ export default function DashboardTour() {
   if (!showWelcome) return null
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-      <div className="bg-white rounded-2xl shadow-2xl max-w-2xl mx-4 p-8 relative">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 text-black backdrop-blur-sm">
+      <div className=" rounded-2xl shadow-2xl max-w-2xl mx-4 p-8 relative">
         <button
           onClick={handleClose}
           className="absolute top-4 right-4 text-earth-400 hover:text-earth-900"

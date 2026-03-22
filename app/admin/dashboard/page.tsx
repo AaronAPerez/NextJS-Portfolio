@@ -88,12 +88,12 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="space-y-8">
-      <DashboardTour />
+    <div className="space-y-8 text-gray-900">
+      {/* <DashboardTour /> */}
 
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-earth-900">Dashboard</h1>
+          <h1 className="text-3xl font-bold text-black">Dashboard</h1>
           <p className="mt-1 text-sm text-earth-500">
             Welcome back! Here's what's happening with your website.
           </p>
@@ -121,7 +121,7 @@ export default function DashboardPage() {
                   <div className="flex-1">
                     <p className="text-sm font-medium text-earth-500">{stat.name}</p>
                     <div className="mt-2 flex items-baseline">
-                      <p className="text-3xl font-bold text-earth-900">{stat.value}</p>
+                      <p className="text-3xl font-bold text-black">{stat.value}</p>
                       {stat.new > 0 && (
                         <span className="ml-2 text-sm font-medium text-green-600">
                           +{stat.new} new
@@ -144,7 +144,7 @@ export default function DashboardPage() {
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <Card>
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-earth-900">Quick Actions</h2>
+            <h2 className="text-lg font-semibold text-black">Quick Actions</h2>
             <Tooltip content="Common tasks you can perform">
               <span className="text-sm text-earth-400">ℹ️</span>
             </Tooltip>
@@ -179,7 +179,7 @@ export default function DashboardPage() {
 
         <Card>
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-earth-900">Recent Activity</h2>
+            <h2 className="text-lg font-semibold text-black">Recent Activity</h2>
             <Tooltip content="Latest form submissions">
               <span className="text-sm text-earth-400">ℹ️</span>
             </Tooltip>
@@ -190,7 +190,7 @@ export default function DashboardPage() {
                 <div className="w-2 h-2 bg-primary-600 rounded-full mr-3" />
                 <span className="text-sm text-earth-700">Messages (30 days)</span>
               </div>
-              <span className="text-sm font-semibold text-earth-900">
+              <span className="text-sm font-semibold text-black">
                 {analytics?.recent.messages || 0}
               </span>
             </div>
@@ -199,7 +199,7 @@ export default function DashboardPage() {
                 <div className="w-2 h-2 bg-warrior-gold rounded-full mr-3" />
                 <span className="text-sm text-earth-700">Waitlist (30 days)</span>
               </div>
-              <span className="text-sm font-semibold text-earth-900">
+              <span className="text-sm font-semibold text-black">
                 {analytics?.recent.waitlist || 0}
               </span>
             </div>
@@ -208,7 +208,7 @@ export default function DashboardPage() {
                 <div className="w-2 h-2 bg-earth-600 rounded-full mr-3" />
                 <span className="text-sm text-earth-700">Page Views (30 days)</span>
               </div>
-              <span className="text-sm font-semibold text-earth-900">
+              <span className="text-sm font-semibold text-black">
                 {analytics?.recent.pageViews || 0}
               </span>
             </div>
@@ -222,7 +222,7 @@ export default function DashboardPage() {
             <span className="text-3xl">💡</span>
           </div>
           <div className="ml-4">
-            <h3 className="text-lg font-semibold text-earth-900">Pro Tips</h3>
+            <h3 className="text-lg font-semibold text-black">Pro Tips</h3>
             <ul className="mt-2 space-y-1 text-sm text-earth-700">
               <li>• Use bulk actions to update multiple messages at once</li>
               <li>• Export data to Google Sheets for easy CRM integration</li>

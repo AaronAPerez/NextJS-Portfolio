@@ -1,110 +1,183 @@
+/**
+ * ProjectsSection Component
+ *
+ * Main projects showcase section displaying featured and grid project cards.
+ * Fetches from database with fallback to static data.
+ *
+ * Features:
+ * - Database integration with fallback to static projects
+ * - Category filtering with animated transitions
+ * - Featured project highlighting
+ * - Loading skeleton states
+ * - Responsive grid layout
+ */
+
 'use client';
 
-import { useMemo } from 'react';
-import { projects as staticProjects, Project, ProjectDisplayStatus } from '@/components/config/projects';
-import ProjectsGrid from './ProjectGrid';
-import { motion } from 'framer-motion';
-import { useProjects } from '@/hooks/useProjects';
-import type { ProjectDB } from '@/types/project';
+import { useState, useMemo } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
-/**
- * Convert ProjectDB format from API to Project format for frontend display
- * Maps the database structure to what ProjectCard expects
- */
-function mapProjectDBToProject(dbProject: ProjectDB): Project {
-  return {
-    id: dbProject.id,
-    title: dbProject.title,
-    description: dbProject.description,
-    tech: dbProject.tech || [],
-    category: dbProject.category,
-    isLive: dbProject.isLive,
-    clientType: dbProject.clientType,
-    featured: dbProject.featured,
-    // Convert images array of objects to array of URLs
-    images: dbProject.images?.map((img) => img.url) || [],
-    imagesAlt: dbProject.images?.map((img) => img.alt) || [],
-    demoLink: dbProject.demoLink,
-    codeLink: dbProject.codeLink || '',
-    websiteLink: dbProject.websiteLink,
-    gradient: dbProject.gradient,
-    // Include status for displaying badges (In Development, etc.)
-    status: dbProject.status as ProjectDisplayStatus,
-  };
+// Hooks
+import { useProjects } from '@/hooks/useProjects';
+
+// Data
+import { PROJECTS } from '@/components/config/projects';
+
+// Types
+import type { FilterTab } from '@/types/display-project';
+
+// Components
+import FeaturedProjectCard from './FeaturedProjectCard';
+import ProjectCard from './ProjectCard';
+import FilterTabs from './FilterTabs';
+import ProjectsSkeleton from './ProjectsSkeleton';
+
+// Utilities
+import {
+  mapDBToDisplay,
+  mapStaticToDisplay,
+  calculateFilterCounts,
+  filterProjectsByCategory,
+  separateFeaturedProject,
+} from './utils/project-mappers';
+
+// Animations
+import { containerVariants, itemVariants } from './animations';
+
+// ─── Section Header ───────────────────────────────────────────────────────────
+
+function SectionHeader() {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      className="mb-8 flex flex-col text-center items-center"
+    >
+      <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-blue-600 dark:text-blue-400">
+        Selected work
+      </p>
+      <h2 className="text-3xl font-semibold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
+        Production projects
+      </h2>
+      <p className="mt-3 max-w-xl text-base text-gray-500 dark:text-gray-400">
+        Real sites for real businesses — not demos. Each one is live, maintained, and
+        driving results for clients.
+      </p>
+    </motion.div>
+  );
 }
 
+// ─── Empty State ──────────────────────────────────────────────────────────────
+
+function EmptyState() {
+  return (
+    <motion.div variants={itemVariants} className="py-12 text-center">
+      <p className="text-gray-500 dark:text-gray-400">
+        No projects found in this category.
+      </p>
+    </motion.div>
+  );
+}
+
+// ─── Main Component ───────────────────────────────────────────────────────────
+
 const ProjectsSection = () => {
-  // Fetch projects from API with fallback to static data
-  const { projects: apiProjects, isLoading } = useProjects({
-    status: 'published',
+  // Filter state
+  const [activeFilter, setActiveFilter] = useState<FilterTab>('all');
+
+  // Fetch projects from database with fallback to static
+  const { projects: dbProjects, isLoading } = useProjects({
     fallbackToStatic: true,
   });
 
-  // Convert API projects to display format, or use static projects as fallback
+  // Convert projects to display format
   const displayProjects = useMemo(() => {
-    // If we have API projects, map them to display format
-    if (apiProjects && apiProjects.length > 0) {
-      return apiProjects
-        .filter((p) => p.status === 'published' || p.status === 'in_development')
-        .map(mapProjectDBToProject);
+    if (dbProjects && dbProjects.length > 0) {
+      return dbProjects.map(mapDBToDisplay);
     }
-    // Fallback to static projects
-    return staticProjects;
-  }, [apiProjects]);
+    return PROJECTS.map(mapStaticToDisplay);
+  }, [dbProjects]);
+
+  // Filter projects by category
+  const filteredProjects = useMemo(
+    () => filterProjectsByCategory(displayProjects, activeFilter),
+    [displayProjects, activeFilter]
+  );
+
+  // Separate featured and other projects
+  const { featured: featuredProject, others: otherProjects } = useMemo(
+    () => separateFeaturedProject(filteredProjects),
+    [filteredProjects]
+  );
+
+  // Calculate counts for filter tabs
+  const filterCounts = useMemo(
+    () => calculateFilterCounts(displayProjects),
+    [displayProjects]
+  );
+
+  // Whether to show featured card (only on 'all' filter)
+  const showFeatured = featuredProject && activeFilter === 'all';
 
   return (
-    <div className="relative w-full overflow-hidden py-20">
-      <div className="absolute inset-0 bg-gradient-to-b from-blue-500/5 via-transparent to-violet-500/5" />
-      <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:50px]" />
+    <section
+      id="projects"
+      className="bg-gray-50 py-20 dark:bg-gray-900/50 sm:py-28"
+      aria-label="Projects"
+    >
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col text-center items-center">
+        {/* Section header */}
+        <SectionHeader />
 
-      {/* Content Container */}
-      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header matching TimelineSection style */}
-        <motion.header
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          {/* Decorative line with icon */}
-          <div className="flex items-center justify-center gap-4 mb-6" aria-hidden="true">
-            <div className="h-px flex-1 bg-gradient-to-r from-transparent to-blue-500" />
-            <div className="p-3 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full">
-              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-              </svg>
-            </div>
-            <div className="h-px flex-1 bg-gradient-to-l from-transparent to-purple-500" />
-          </div>
+        {/* Filter tabs */}
+        <FilterTabs
+          activeTab={activeFilter}
+          onTabChange={setActiveFilter}
+          counts={filterCounts}
+        />
 
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-gray-900 to-gray-600 dark:from-gray-100 dark:to-gray-400 bg-clip-text text-transparent">
-            Featured Projects
-          </h2>
+        {/* Content area */}
+        {isLoading ? (
+          <ProjectsSkeleton count={3} showFeatured />
+        ) : (
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeFilter}
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              role="tabpanel"
+              id={`projects-panel-${activeFilter}`}
+            >
+              {/* Featured project card */}
+              {showFeatured && (
+                <motion.div variants={itemVariants} className="mb-6">
+                  <FeaturedProjectCard project={featuredProject} />
+                </motion.div>
+              )}
 
-          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            A showcase of my technical expertise and creative problem-solving
-          </p>
-        </motion.header>
+              {/* Projects grid */}
+              <motion.div
+                variants={containerVariants}
+                className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
+              >
+                {otherProjects.map((project) => (
+                  <motion.div key={project.id} variants={itemVariants}>
+                    <ProjectCard project={project} />
+                  </motion.div>
+                ))}
+              </motion.div>
 
-        {/* Projects Grid */}
-        <div>
-          {isLoading ? (
-            // Loading skeleton
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8">
-              {[1, 2, 3].map((i) => (
-                <div
-                  key={i}
-                  className="h-[500px] bg-gray-200 dark:bg-gray-800 rounded-xl animate-pulse"
-                />
-              ))}
-            </div>
-          ) : (
-            <ProjectsGrid projects={displayProjects} />
-          )}
-        </div>
+              {/* Empty state */}
+              {filteredProjects.length === 0 && <EmptyState />}
+            </motion.div>
+          </AnimatePresence>
+        )}
       </div>
-    </div>
+    </section>
   );
 };
 
