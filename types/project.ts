@@ -90,6 +90,7 @@ export interface ProjectDB {
   tech: string[];
   images: ProjectImage[];
   gradient?: ProjectGradient;
+  companyLogo?: string;  // URL to company/client logo image
   demoLink?: string;
   codeLink?: string;
   websiteLink?: string;
@@ -120,6 +121,7 @@ export interface CreateProjectInput {
   tech?: string[];
   images?: ProjectImage[];
   gradient?: ProjectGradient;
+  companyLogo?: string;  // URL to company/client logo image
   demoLink?: string;
   codeLink?: string;
   websiteLink?: string;
