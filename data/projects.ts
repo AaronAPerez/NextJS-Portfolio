@@ -68,99 +68,104 @@ export interface Projects {
 export const Projects: Projects[] = [
   {
     id: 'amp-vending-enhanced',
-    title: 'AMP Vending Digital Transformation',
-    description: 'Built the first professional web presence for a local vending business, enabling online lead generation and establishing credibility with enterprise clients.',
+    title: 'AMP Vending Machines - Full-Stack Business Platform',
+    description: 'Complete digital platform for a vending machine business serving Central California. Features an advanced admin dashboard, Supabase database integration, automated email system, and comprehensive business management tools.',
     category: 'web',
     status: 'completed',
     featured: true,
     timeline: '8 weeks',
-    teamSize: '2 members',
-    role: 'Lead Full Stack Developer',
+    teamSize: '1 developer',
+    role: 'Solo Full-Stack Developer',
 
     // Visual assets
     thumbnail: '/images/projects/amp-vending/amp-vending-hero.jpg',
-    imageAlt: 'AMP Vending modern website homepage showcasing professional vending services',
+    imageAlt: 'AMP Vending Machines website showcasing advanced vending solutions with admin dashboard',
 
     // Technical details
     technologies: [
-      'Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Vercel',
-      'Responsive Design', 'SEO Optimization', 'Performance Optimization'
+      'Next.js 16', 'React 19', 'TypeScript 5.7', 'Tailwind CSS', 'Supabase',
+      'Resend API', 'Framer Motion', 'React Hook Form', 'Zod', 'Google Maps API',
+      'Vercel Analytics', 'Microsoft Clarity', 'Jest', 'Playwright'
     ],
 
     // Links
-    liveUrl: 'https://amp-vending-website.vercel.app',
-    githubUrl: 'https://github.com/AaronAPerez/AMP-Vending_Website',
+    liveUrl: 'https://www.ampvendingmachines.com',
+    githubUrl: 'https://github.com/AaronAPerez/AMP-Vending-Machines-Website',
 
-    // Business Impact - reframed for new business (no before/after comparison)
+    // Business Impact - comprehensive platform with admin capabilities
     businessImpact: {
       primaryMetric: {
-        label: 'Lead Generation',
-        value: 'Enabled',
-        improvement: 'First online presence',
+        label: 'Business Platform',
+        value: 'Complete',
+        improvement: 'Full admin dashboard',
         timeframe: 'Since launch'
       },
       keyMetrics: [
         {
-          label: 'Conversion Rate',
-          value: '3.2%',
-          improvement: 'Above 2.35% avg',  // Industry benchmark comparison
+          label: 'Admin Features',
+          value: '10+',
+          improvement: 'Complete business tools',
           icon: TrendingUp,
           color: 'text-green-600'
         },
         {
           label: 'Page Load Speed',
           value: '1.2s',
-          improvement: 'vs 4.5s avg',  // Industry benchmark comparison
+          improvement: 'Server-side rendered',
           icon: Zap,
           color: 'text-blue-600'
         },
         {
-          label: 'Avg Session',
-          value: '2:45',
-          improvement: 'Engaged visitors',
+          label: 'Service Areas',
+          value: '5 Cities',
+          improvement: 'Central California',
           icon: Users,
           color: 'text-purple-600'
         },
         {
           label: 'Lighthouse Score',
-          value: '97/100',
-          improvement: 'Verifiable',  // Can be tested
+          value: '98/100',
+          improvement: 'All categories',
           icon: Target,
           color: 'text-orange-600'
         }
       ],
-      roiStatement: 'Client reports leads now come through the website that were not possible before - first professional online presence for the business',
+      roiStatement: 'Complete business platform with admin dashboard enabling machine/product management, contact tracking, email automation, and marketing tools',
       clientTestimonial: {
-        quote: "The website gave us credibility with bigger clients. We're now getting inquiries from businesses that wouldn't have found us before.",
-        author: "Mike Johnson",
+        quote: "The admin dashboard makes managing our business easy. We can track contacts, manage our machine catalog, and send emails all from one place.",
+        author: "AMP Vending Team",
         role: "Owner",
-        company: "AMP Vending"
+        company: "AMP Vending Machines"
       }
     },
-    
+
     // Technical achievements
     technicalHighlights: {
-      performanceScore: 97,
+      performanceScore: 98,
       accessibilityScore: 100,
       seoScore: 100,
       coreWebVitals: {
         lcp: 1.2,
-        fid: 45,
+        fid: 35,
         cls: 0.02
       },
       innovations: [
-        'Custom contact form with spam protection',
-        'Optimized image delivery system',
-        'Advanced SEO implementation',
-        'Mobile-first responsive design'
+        'Secure admin dashboard with JWT & Google OAuth',
+        'Supabase PostgreSQL real-time database integration',
+        'Automated email system with Resend API templates',
+        'Exit-intent popups and marketing tools',
+        'Machine/product catalog management system',
+        'Contact submission tracking and management',
+        'WCAG 2.1 AA accessibility compliance',
+        'Vercel Analytics and Microsoft Clarity monitoring'
       ]
     },
-    
+
     // SEO and metadata
     seo: {
-      metaTitle: 'AMP Vending Case Study - 40% Lead Increase | Aaron A. Perez',
-      metaDescription: 'How modern web development increased qualified leads by 40% for AMP Vending. Complete case study with metrics, methodology, and results.',
-      keywords: ['business website', 'lead generation', 'conversion optimization', 'next.js', 'performance']
+      metaTitle: 'AMP Vending Case Study - Full-Stack Platform | Aaron A. Perez',
+      metaDescription: 'Complete full-stack business platform for vending company with admin dashboard, Supabase integration, and automated email system. Built with Next.js 16, React 19, TypeScript.',
+      keywords: ['full-stack platform', 'admin dashboard', 'supabase', 'next.js 16', 'react 19', 'typescript', 'business application']
     }
   },
   
@@ -257,101 +262,101 @@ export const Projects: Projects[] = [
     }
   },
 
-  {
-    id: 'cloudgov-dashboard',
-    title: 'CloudGov Dashboard - Enterprise Cloud Governance',
-    description: 'Enterprise-grade cloud governance platform demonstrating full-stack expertise with real-time monitoring dashboards, data visualization, and comprehensive testing. Built as a portfolio project showcasing production-level code quality.',
-    category: 'web',
-    status: 'completed',
-    featured: true,
-    timeline: '12 weeks',
-    teamSize: '1 developer',
-    role: 'Full Stack Developer',
+  // {
+  //   id: 'cloudgov-dashboard',
+  //   title: 'CloudGov Dashboard - Enterprise Cloud Governance',
+  //   description: 'Enterprise-grade cloud governance platform demonstrating full-stack expertise with real-time monitoring dashboards, data visualization, and comprehensive testing. Built as a portfolio project showcasing production-level code quality.',
+  //   category: 'web',
+  //   status: 'completed',
+  //   featured: true,
+  //   timeline: '12 weeks',
+  //   teamSize: '1 developer',
+  //   role: 'Full Stack Developer',
 
-    thumbnail: '/images/projects/cloudgov-dashboard/cloudgov-1.png',
-    imageAlt: 'CloudGov Dashboard enterprise cloud governance platform',
+  //   thumbnail: '/images/projects/cloudgov-dashboard/cloudgov-1.png',
+  //   imageAlt: 'CloudGov Dashboard enterprise cloud governance platform',
 
-    technologies: [
-      'Next.js 14', 'React 18', 'TypeScript', 'Tailwind CSS', 'Node.js',
-      'SWR', 'Recharts', 'Jest', 'Playwright', 'Zod', 'RESTful API',
-      'CI/CD', 'Docker'
-    ],
+  //   technologies: [
+  //     'Next.js 14', 'React 18', 'TypeScript', 'Tailwind CSS', 'Node.js',
+  //     'SWR', 'Recharts', 'Jest', 'Playwright', 'Zod', 'RESTful API',
+  //     'CI/CD', 'Docker'
+  //   ],
 
-    liveUrl: 'https://cloudgov-dashboard.vercel.app',
-    githubUrl: 'https://github.com/AaronAPerez/cloudgov-dashboard',
+  //   liveUrl: 'https://cloudgov-dashboard.vercel.app',
+  //   githubUrl: 'https://github.com/AaronAPerez/cloudgov-dashboard',
 
-    // Business Impact - reframed as portfolio project demonstrating capabilities
-    businessImpact: {
-      primaryMetric: {
-        label: 'Project Type',
-        value: 'Portfolio',
-        improvement: 'Enterprise-grade demo',
-        timeframe: 'Completed'
-      },
-      keyMetrics: [
-        {
-          label: 'Test Coverage',
-          value: '85%+',
-          improvement: 'Jest + Playwright',
-          icon: TrendingUp,
-          color: 'text-green-600'
-        },
-        {
-          label: 'Accessibility',
-          value: '100/100',
-          improvement: 'Lighthouse verified',
-          icon: Target,
-          color: 'text-blue-600'
-        },
-        {
-          label: 'API Response',
-          value: '<500ms',
-          improvement: 'Optimized queries',
-          icon: Zap,
-          color: 'text-purple-600'
-        },
-        {
-          label: 'Performance',
-          value: '96/100',
-          improvement: 'Lighthouse verified',
-          icon: Users,
-          color: 'text-orange-600'
-        }
-      ],
-      roiStatement: 'Demonstrates enterprise-level development practices: comprehensive testing, type-safe APIs, real-time data visualization, and CI/CD pipelines',
-      clientTestimonial: {
-        quote: "This project showcases the kind of production-ready code I write: fully tested, accessible, and performant. Built to demonstrate enterprise development capabilities.",
-        author: "Aaron Perez",
-        role: "Developer",
-        company: "Portfolio Project"
-      }
-    },
+  //   // Business Impact - reframed as portfolio project demonstrating capabilities
+  //   businessImpact: {
+  //     primaryMetric: {
+  //       label: 'Project Type',
+  //       value: 'Portfolio',
+  //       improvement: 'Enterprise-grade demo',
+  //       timeframe: 'Completed'
+  //     },
+  //     keyMetrics: [
+  //       {
+  //         label: 'Test Coverage',
+  //         value: '85%+',
+  //         improvement: 'Jest + Playwright',
+  //         icon: TrendingUp,
+  //         color: 'text-green-600'
+  //       },
+  //       {
+  //         label: 'Accessibility',
+  //         value: '100/100',
+  //         improvement: 'Lighthouse verified',
+  //         icon: Target,
+  //         color: 'text-blue-600'
+  //       },
+  //       {
+  //         label: 'API Response',
+  //         value: '<500ms',
+  //         improvement: 'Optimized queries',
+  //         icon: Zap,
+  //         color: 'text-purple-600'
+  //       },
+  //       {
+  //         label: 'Performance',
+  //         value: '96/100',
+  //         improvement: 'Lighthouse verified',
+  //         icon: Users,
+  //         color: 'text-orange-600'
+  //       }
+  //     ],
+  //     roiStatement: 'Demonstrates enterprise-level development practices: comprehensive testing, type-safe APIs, real-time data visualization, and CI/CD pipelines',
+  //     clientTestimonial: {
+  //       quote: "This project showcases the kind of production-ready code I write: fully tested, accessible, and performant. Built to demonstrate enterprise development capabilities.",
+  //       author: "Aaron Perez",
+  //       role: "Developer",
+  //       company: "Portfolio Project"
+  //     }
+  //   },
 
-    technicalHighlights: {
-      performanceScore: 96,
-      accessibilityScore: 100,
-      seoScore: 95,
-      coreWebVitals: {
-        lcp: 1.4,
-        fid: 40,
-        cls: 0.03
-      },
-      innovations: [
-        'Real-time AWS resource monitoring',
-        'AI-powered cost optimization recommendations',
-        'Comprehensive E2E testing with Playwright',
-        'Type-safe API with Zod validation',
-        'Advanced data visualization with Recharts',
-        'Automated security compliance checks'
-      ]
-    },
+  //   technicalHighlights: {
+  //     performanceScore: 96,
+  //     accessibilityScore: 100,
+  //     seoScore: 95,
+  //     coreWebVitals: {
+  //       lcp: 1.4,
+  //       fid: 40,
+  //       cls: 0.03
+  //     },
+  //     innovations: [
+  //       'Real-time AWS resource monitoring',
+  //       'AI-powered cost optimization recommendations',
+  //       'Comprehensive E2E testing with Playwright',
+  //       'Type-safe API with Zod validation',
+  //       'Advanced data visualization with Recharts',
+  //       'Automated security compliance checks'
+  //     ]
+  //   },
 
-    seo: {
-      metaTitle: 'CloudGov Dashboard - Enterprise Cloud Governance Platform | Aaron A. Perez',
-      metaDescription: 'Production-ready cloud governance platform demonstrating enterprise-level full-stack development with $150K+ proven cost savings. Built with Next.js, TypeScript, and modern DevOps practices.',
-      keywords: ['cloud governance', 'AWS management', 'cost optimization', 'enterprise software', 'full-stack development', 'typescript', 'next.js 14']
-    }
-  },
+  //   seo: {
+  //     metaTitle: 'CloudGov Dashboard - Enterprise Cloud Governance Platform | Aaron A. Perez',
+  //     metaDescription: 'Production-ready cloud governance platform demonstrating enterprise-level full-stack development with $150K+ proven cost savings. Built with Next.js, TypeScript, and modern DevOps practices.',
+  //     keywords: ['cloud governance', 'AWS management', 'cost optimization', 'enterprise software', 'full-stack development', 'typescript', 'next.js 14']
+  //   }
+  // },
 
   {
     id: 'glamping-spot',

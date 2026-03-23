@@ -1,193 +1,171 @@
 'use client';
 
-import { memo, useCallback, useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
-import { skills } from '@/data/skills';
-import PinContainer from './3d-pin';
-import { Project } from '@/components/config/projects';
+import { useMemo } from 'react';
+import { ExternalLink, Github } from 'lucide-react';
+import type { DisplayProject } from '@/types/display-project';
+import { StatusBadge, TechChip } from './shared';
+import { matchTechArrayToSkills } from './utils/project-mappers';
 
+// ─── Main Component ───────────────────────────────────────────────────────────
 
 interface ProjectCardProps {
-  project: Project;
-  index: number;
-  isHovered: boolean;
-  onHover: (index: number | null) => void;
+  project: DisplayProject;
 }
 
-// Static lookup - computed once outside component for performance
-const techIcons = Object.fromEntries(
-  skills.map(skill => [skill.name, { icon: skill.icon, color: skill.color }])
-);
+const ProjectCard = ({ project }: ProjectCardProps) => {
+  // Create gradient background style
+  const gradientBg = `linear-gradient(135deg, ${project.gradient.from}15, ${project.gradient.to}10)`;
 
-// Memoized ProjectCard - prevents re-render when other cards are hovered
-const ProjectCard = memo(function ProjectCard({ project, index, isHovered, onHover }: ProjectCardProps) {
-  const cardId = `project-${project.id}`;
-
-  // Memoize gradient to prevent object recreation
-  const gradient = useMemo(() => project.gradient ?? {
-    from: '#3B82F6',
-    to: '#8B5CF6'
-  }, [project.gradient]);
-
-  // Get links from project data
-  const codeLink = project.codeLink || undefined;
-  const demoLink = project.websiteLink || project.demoLink || undefined;
-
-  // Memoize event handlers to prevent child re-renders
-  const handleMouseEnter = useCallback(() => onHover(index), [onHover, index]);
-  const handleMouseLeave = useCallback(() => onHover(null), [onHover]);
+  // Match tech strings to skills for icons
+  const techWithIcons = useMemo(
+    () => matchTechArrayToSkills(project.tech.slice(0, 5)),
+    [project.tech]
+  );
 
   return (
-    <>
+    <article className="group flex flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white transition-all duration-300 hover:shadow-lg hover:shadow-gray-200/50 dark:border-gray-800 dark:bg-gray-900 dark:hover:shadow-gray-900/50">
+      {/* Visual header with project image or gradient background */}
       <div
-        className="w-full lg:pb-16 lg:pt-12 py-4"
-        role="article"
-        aria-labelledby={`${cardId}-title`}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        onFocus={handleMouseEnter}
-        onBlur={handleMouseLeave}
+        className="relative aspect-[410/220]"
+               role="img"
+               aria-label="Project screenshot"
+        style={{ background: !project.image ? gradientBg : undefined }}
       >
-        {/* PinContainer with direct demoLink and codeLink props */}
-        <PinContainer
-          title={project.title}
-          demoLink={demoLink}
-          codeLink={codeLink}
-          gradient={gradient}
-          className="w-full"
-        >
-          <div className="group relative flex flex-col
-               min-w-[300px] w-300 sm:w-[440px] md:w[480px] lg:min-w-[440px] xl:w-[560px]
-               h-[460px] sm:h-[560px] lg:h-[570px]
-               bg-gradient-to-br from-gray-50 via-white to-gray-100
-               dark:from-gray-900/95 dark:via-gray-800/95 dark:to-black/95
-               hover:shadow-2xl hover:shadow-indigo-500/20
-               dark:hover:shadow-2xl dark:hover:shadow-indigo-500/30
-               border border-gray-200/80 dark:border-gray-700/60
-               backdrop-blur-sm rounded-xl shadow-lg overflow-hidden transition-transform duration-500 group-hover:scale-105
-                ">
-
-            {/* Project Image with Accessibility */}
-            <div className="relative aspect-[410/220]"
-              role="img"
-              aria-label={`Project screenshot for ${project.title}`}
-            >
-              {project.images.map((image, idx) => (
-                <Image
-                  key={idx}
-                  src={image}
-                  alt={`Screenshot ${idx + 1} of ${project.title} project`}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  loading="lazy"
-                />
-              ))}
-
-              {/* Status Badge - In Development */}
-              {project.status === 'in_development' && (
-                <div className="absolute top-3 left-3 z-10">
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-yellow-500/90 text-white shadow-lg backdrop-blur-sm">
-                    <span className="relative flex h-2 w-2">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
-                    </span>
-                    In Development
-                  </span>
-                </div>
-              )}
-
-              {/* Simple overlay effect on hover */}
-              <AnimatePresence mode="sync">
-                {isHovered && (
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    className="absolute inset-0"
-                    aria-hidden="true"
-                  />
-                )}
-              </AnimatePresence>
+        {/* Project screenshot image */}
+        {project.image ? (
+          <Image
+            src={project.image}
+            alt={`${project.title} screenshot`}
+            fill
+            className="object-cover transition-transform duration-300 group-hover:scale-105"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          />
+        ) : project.companyLogo ? (
+          // Company logo fallback
+          <div className="flex h-full items-center justify-center" style={{ background: gradientBg }}>
+            <div className="relative h-16 w-32">
+              <Image
+                src={project.companyLogo}
+                alt={`${project.title} logo`}
+                fill
+                className="object-contain"
+              />
             </div>
-
-            {/* Project Details with Semantic Structure */}
-            <div className="flex flex-col flex-1 px-4 py-3 sm:px-6 sm:py-4 bg-gradient-to-br from-gray-100 via-white/90 to-gray-200
-               dark:from-gray-900/95 dark:via-gray-800/95 dark:to-black/95
-               rounded-b-2xl shadow-xl overflow-hidden
-               transition-all duration-500
-               hover:shadow-2xl hover:shadow-indigo-500/20
-               dark:hover:shadow-2xl dark:hover:shadow-indigo-500/30
-               border border-gray-200/80 dark:border-gray-700/60
-               backdrop-blur-sm">
-              <h3
-                id={`${cardId}-title`}
-                className="text-2xl sm:text-3xl lg:text-3xl font-bold mb-2 sm:mb-3 bg-clip-text text-transparent leading-tight"
-                style={{
-                  backgroundImage: `linear-gradient(to right, ${gradient.from}, ${gradient.to})`
-                }}
-              >
-                {project.title}
-              </h3>
-
-              <p className="text-gray-700 dark:text-gray-300 text-base sm:text-base lg:text-lg mb-3 sm:mb-4 flex-1 line-clamp-3 sm:line-clamp-4 leading-relaxed">
-                {project.description}
-              </p>
-
-              {/* Tech Stack with List Semantics */}
-              <div
-                role="list"
-                aria-label={`Technologies used in ${project.title}`}
-                className="flex flex-wrap gap-2 sm:gap-3 justify-start items-center"
-              >
-                {project.tech.map((tech, techIndex) => {
-                  const techData = techIcons[tech];
-                  return (
-                    <motion.div
-                      key={`${project.id}-${tech}-${techIndex}`}
-                      role="listitem"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="flex items-center gap-1.5 px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-full border-2 transition-all duration-200 hover:border-opacity-70 hover:shadow-md"
-                      style={{ borderColor: `${techData?.color}40` }}
-                    >
-                      {techData?.icon && (
-                        <Image
-                          src={techData.icon}
-                          alt={`${tech} icon`}
-                          width={18}
-                          height={18}
-                          className="w-[18px] h-[18px] sm:w-[20px] sm:h-[20px] object-contain"
-                        />
-                      )}
-                      <span
-                        className="text-xs sm:text-sm font-semibold whitespace-nowrap"
-                        style={{ color: techData?.color || '#9CA3AF' }}
-                      >
-                        {tech}
-                      </span>
-                    </motion.div>
-                  );
-                })}
+          </div>
+        ) : (
+          // Browser mockup fallback
+          <div className="flex h-full items-center justify-center p-6" style={{ background: gradientBg }}>
+            <div className="w-full max-w-[180px] overflow-hidden rounded-md border border-gray-100 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800">
+              <div className="flex items-center gap-1 border-b border-gray-100 bg-gray-50 px-2 py-1.5 dark:border-gray-700 dark:bg-gray-800">
+                <span
+                  className="h-2 w-2 rounded-full"
+                  style={{ backgroundColor: project.gradient.from }}
+                />
+                <span
+                  className="h-2 w-2 rounded-full opacity-60"
+                  style={{ backgroundColor: project.gradient.from }}
+                />
+                <span
+                  className="h-2 w-2 rounded-full opacity-30"
+                  style={{ backgroundColor: project.gradient.from }}
+                />
+              </div>
+              <div className="space-y-1.5 p-3">
+                <div
+                  className="h-2 w-3/4 rounded"
+                  style={{ backgroundColor: `${project.gradient.from}20` }}
+                />
+                <div
+                  className="h-2 w-1/2 rounded"
+                  style={{ backgroundColor: `${project.gradient.from}15` }}
+                />
+                <div
+                  className="h-2 w-2/3 rounded"
+                  style={{ backgroundColor: `${project.gradient.from}10` }}
+                />
               </div>
             </div>
-
-            {/* Decorative Border - Hidden from Screen Readers */}
-            <div
-              className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"
-              style={{
-                background: `linear-gradient(135deg, ${gradient.from}40, ${gradient.to}40)`,
-                filter: 'blur(1px)'
-              }}
-              aria-hidden="true"
-            />
           </div>
-        </PinContainer>
-      </div>
-    </>
-  );
-});
+        )}
 
-export { ProjectCard };
+        {/* Gradient accent line at bottom */}
+        <div
+          className="absolute bottom-0 left-0 h-1 w-full opacity-80"
+          style={{
+            background: `linear-gradient(90deg, ${project.gradient.from}, ${project.gradient.to})`,
+          }}
+        />
+
+        {/* Overlay gradient for better text contrast */}
+        {project.image && (
+          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+        )}
+      </div>
+
+      {/* Info section */}
+      <div className="flex flex-1 flex-col p-5">
+        <div className="mb-2">
+          <StatusBadge status={project.status} />
+        </div>
+
+        <h3 className="mb-1.5 text-base font-semibold text-gray-900 dark:text-white">
+          {project.title}
+        </h3>
+
+        <p className="mb-4 line-clamp-2 text-xs leading-relaxed text-gray-500 dark:text-gray-400">
+          {project.description}
+        </p>
+
+        {/* Tech chips with skill icons */}
+        <div className="mb-4 flex flex-wrap gap-1">
+          {techWithIcons.map((tech) => (
+            <TechChip
+              key={tech.label}
+              label={tech.label}
+              icon={tech.icon}
+              color={tech.color}
+            />
+          ))}
+          {project.tech.length > 5 && (
+            <span className="rounded border border-gray-100 bg-gray-50 px-2 py-0.5 text-[11px] text-gray-400 dark:border-gray-700 dark:bg-gray-800">
+              +{project.tech.length - 5}
+            </span>
+          )}
+        </div>
+
+        {/* Links */}
+        <div className="mt-auto flex items-center gap-3">
+          {project.status === 'production' && project.liveUrl !== '#' && (
+            <a
+              href={project.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-medium transition-colors"
+              style={{
+                backgroundColor: `${project.gradient.from}15`,
+                color: project.gradient.from,
+              }}
+            >
+              <ExternalLink className="h-3 w-3" aria-hidden="true" />
+              Live site
+            </a>
+          )}
+          {project.githubUrl !== '#' && (
+            <a
+              href={project.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-xs text-gray-400 transition-colors hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300"
+            >
+              <Github className="h-3.5 w-3.5" aria-hidden="true" />
+              GitHub
+            </a>
+          )}
+        </div>
+      </div>
+    </article>
+  );
+};
+
 export default ProjectCard;

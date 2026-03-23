@@ -40,7 +40,7 @@ export function Footer() {
 
   return (
    <footer className="bg-white/95 border-t dark:bg-gray-950 text-gray-700 dark:text-gray-300">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-12 sm:py-16">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl pt-10 sm:pt-14 pb-6 sm:pb-10">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           {/* About Section */}
@@ -177,9 +177,9 @@ export function Footer() {
         </div>
 
         {/* AP Designs Credit */}
-        {/* <div className="mt-6 flex items-center justify-center gap-2 text-sm text-gray-600 dark:text-gray-400"> */}
+        <div className="mt-6 flex items-center justify-center gap-2 text-sm text-gray-600 dark:text-gray-400">
          <APFooterCredit/>
-        {/* </div> */}
+        </div>
 
 
       </div>

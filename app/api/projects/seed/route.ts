@@ -1,29 +1,45 @@
 /**
  * Projects Seed API Route
  *
- * One-time migration endpoint to seed the database with existing static project data.
- * Merges data from both /components/config/projects.ts and /data/projects.ts.
+ * Seeds the database with project data from the static config.
+ * Converts static project format to database format with gradients and company logos.
  */
 
 import { NextRequest, NextResponse } from 'next/server';
 import { sql, generateId } from '@/lib/db';
 import { slugify } from '@/lib/utils';
+import { PROJECTS } from '@/components/config/projects';
 
-// Import static project data
-import { projects as configProjects } from '@/components/config/projects';
-import { Projects as dataProjects } from '@/data/projects';
+/**
+ * Adjust hex color brightness for generating gradient "to" color
+ */
+function adjustColor(hex: string, amount: number): string {
+  const cleanHex = hex.replace('#', '');
+  const num = parseInt(cleanHex, 16);
+  const r = Math.min(255, Math.max(0, (num >> 16) + amount));
+  const g = Math.min(255, Math.max(0, ((num >> 8) & 0x00ff) + amount));
+  const b = Math.min(255, Math.max(0, (num & 0x0000ff) + amount));
+  return `#${((r << 16) | (g << 8) | b).toString(16).padStart(6, '0')}`;
+}
 
 /**
  * POST /api/projects/seed
  *
- * Seeds the database with existing static project data.
- * This is a one-time migration operation.
+ * Seeds the database with static project data.
  *
  * Query Parameters:
- * - force: Set to 'true' to force re-seed even if projects exist
+ * - force: Set to 'true' to clear existing projects and re-seed
  */
 export async function POST(request: NextRequest) {
   try {
+    // Check if DATABASE_URL is set
+    if (!process.env.DATABASE_URL) {
+      return NextResponse.json(
+        { error: 'DATABASE_URL is not configured' },
+        { status: 500 }
+      );
+    }
+
     const { searchParams } = new URL(request.url);
     const force = searchParams.get('force') === 'true';
 
@@ -33,11 +49,12 @@ export async function POST(request: NextRequest) {
         SELECT COUNT(*) as count FROM "Project"
       `;
 
-      if (existingProjects[0]?.count > 0) {
+      const count = Number(existingProjects[0]?.count || 0);
+      if (count > 0) {
         return NextResponse.json(
           {
             error: 'Projects already exist in the database. Use ?force=true to re-seed.',
-            existingCount: existingProjects[0].count,
+            existingCount: count,
           },
           { status: 409 }
         );
@@ -49,191 +66,121 @@ export async function POST(request: NextRequest) {
       await sql`DELETE FROM "Project"`;
     }
 
-    // Create a merged map of projects
-    // Use data from configProjects as base, enhance with dataProjects metadata
-    const mergedProjects = new Map();
-
-    // First, add all config projects (these have the display-focused data)
-    for (const project of configProjects) {
-      mergedProjects.set(project.id, {
-        id: generateId('proj'),
-        title: project.title,
-        description: project.description,
-        slug: slugify(project.title),
-        category: project.category,
-        clientType: project.clientType || null,
-        status: 'published', // Existing projects are assumed published
-        featured: project.featured,
-        isLive: project.isLive,
-        displayOrder: configProjects.indexOf(project),
-        tech: project.tech,
-        images: project.images.map((url, idx) => ({
-          id: `img-${idx}`,
-          url,
-          alt: project.imagesAlt?.[idx] || project.title,
-          isPrimary: idx === 0,
-        })),
-        gradient: project.gradient || null,
-        demoLink: project.demoLink || null,
-        codeLink: project.codeLink,
-        websiteLink: project.websiteLink || null,
-        businessImpact: null,
-        technicalHighlights: null,
-        timeline: null,
-        teamSize: null,
-        role: null,
-        seo: null,
-        originalId: project.id, // Keep track for matching
-      });
-    }
-
-    // Now enhance with data from dataProjects (which has business impact, tech highlights, etc.)
-    for (const project of dataProjects) {
-      // Try to find matching project by ID or title similarity
-      let matchingKey = null;
-
-      for (const [key, value] of mergedProjects.entries()) {
-        // Match by similar ID (e.g., 'amp-vending' matches 'amp-vending-enhanced')
-        if (
-          value.originalId?.includes(project.id.split('-')[0]) ||
-          project.id.includes(value.originalId?.split('-')[0] || '')
-        ) {
-          matchingKey = key;
-          break;
-        }
-      }
-
-      if (matchingKey) {
-        // Enhance existing project with additional data
-        const existing = mergedProjects.get(matchingKey);
-        mergedProjects.set(matchingKey, {
-          ...existing,
-          businessImpact: project.businessImpact
-            ? {
-                primaryMetric: project.businessImpact.primaryMetric,
-                keyMetrics: project.businessImpact.keyMetrics.map((m) => ({
-                  label: m.label,
-                  value: m.value,
-                  improvement: m.improvement,
-                  icon: m.icon?.displayName || m.icon?.name || 'TrendingUp',
-                  color: m.color,
-                })),
-                roiStatement: project.businessImpact.roiStatement,
-                clientTestimonial: project.businessImpact.clientTestimonial,
-              }
-            : null,
-          technicalHighlights: project.technicalHighlights || null,
-          timeline: project.timeline || null,
-          teamSize: project.teamSize || null,
-          role: project.role || null,
-          seo: project.seo || null,
-        });
-      } else {
-        // Add as new project (not in configProjects but in dataProjects)
-        mergedProjects.set(project.id, {
-          id: generateId('proj'),
-          title: project.title,
-          description: project.description,
-          slug: slugify(project.title),
-          category: project.category === 'web' ? 'portfolio' : project.category,
-          clientType: null,
-          status: project.status === 'completed' ? 'published' : 'draft',
-          featured: project.featured,
-          isLive: true,
-          displayOrder: mergedProjects.size,
-          tech: project.technologies || [],
-          images: project.thumbnail
-            ? [
-                {
-                  id: 'img-0',
-                  url: project.thumbnail,
-                  alt: project.imageAlt || project.title,
-                  isPrimary: true,
-                },
-              ]
-            : [],
-          gradient: null,
-          demoLink: project.liveUrl || null,
-          codeLink: project.githubUrl || null,
-          websiteLink: project.liveUrl || null,
-          businessImpact: project.businessImpact
-            ? {
-                primaryMetric: project.businessImpact.primaryMetric,
-                keyMetrics: project.businessImpact.keyMetrics.map((m) => ({
-                  label: m.label,
-                  value: m.value,
-                  improvement: m.improvement,
-                  icon: m.icon?.displayName || m.icon?.name || 'TrendingUp',
-                  color: m.color,
-                })),
-                roiStatement: project.businessImpact.roiStatement,
-                clientTestimonial: project.businessImpact.clientTestimonial,
-              }
-            : null,
-          technicalHighlights: project.technicalHighlights || null,
-          timeline: project.timeline || null,
-          teamSize: project.teamSize || null,
-          role: project.role || null,
-          seo: project.seo || null,
-          originalId: project.id,
-        });
-      }
-    }
-
-    // Insert all merged projects into the database
+    // Convert static projects to database format and insert
     const insertedProjects = [];
 
-    for (const [, project] of mergedProjects) {
+    for (let i = 0; i < PROJECTS.length; i++) {
+      const project = PROJECTS[i];
+
       try {
+        const id = generateId('proj');
+        const slug = slugify(project.title);
+
+        // Create gradient from accentColor
+        const gradient = {
+          from: project.accentColor,
+          to: adjustColor(project.accentColor, -30),
+        };
+
+        // Map status for database
+        const statusMap: Record<string, string> = {
+          'production': 'published',
+          'in-progress': 'in_development',
+          'archived': 'archived',
+        };
+        const dbStatus = statusMap[project.status] || 'published';
+
+        // Map category for database
+        const categoryMap: Record<string, string> = {
+          'client': 'production',
+          'saas': 'portfolio',
+          'tool': 'coursework',
+        };
+        const dbCategory = categoryMap[project.category] || 'portfolio';
+
+        // Insert project
         const result = await sql`
           INSERT INTO "Project" (
             "id", "title", "description", "slug", "category", "clientType",
-            "status", "featured", "isLive", "displayOrder", "tech", "images",
-            "gradient", "demoLink", "codeLink", "websiteLink", "businessImpact",
-            "technicalHighlights", "timeline", "teamSize", "role", "seo"
+            "status", "featured", "isLive", "displayOrder", "order", "published",
+            "tech", "images", "imagesAlt", "gradient", "gradientFrom", "gradientTo",
+            "demoLink", "codeLink", "websiteLink", "companyLogo",
+            "createdAt", "updatedAt"
           ) VALUES (
-            ${project.id},
+            ${id},
             ${project.title},
             ${project.description},
-            ${project.slug},
-            ${project.category},
-            ${project.clientType},
-            ${project.status},
+            ${slug},
+            ${dbCategory},
+            ${'business'},
+            ${dbStatus},
             ${project.featured},
-            ${project.isLive},
-            ${project.displayOrder},
-            ${JSON.stringify(project.tech)},
-            ${JSON.stringify(project.images)},
-            ${project.gradient ? JSON.stringify(project.gradient) : null},
-            ${project.demoLink},
-            ${project.codeLink},
-            ${project.websiteLink},
-            ${project.businessImpact ? JSON.stringify(project.businessImpact) : null},
-            ${project.technicalHighlights ? JSON.stringify(project.technicalHighlights) : null},
-            ${project.timeline},
-            ${project.teamSize},
-            ${project.role},
-            ${project.seo ? JSON.stringify(project.seo) : null}
+            ${project.status === 'production'},
+            ${i},
+            ${i},
+            ${project.status === 'production'},
+            ${project.tech},
+            ${[]},
+            ${[]},
+            ${JSON.stringify(gradient)},
+            ${gradient.from},
+            ${gradient.to},
+            ${project.liveUrl !== '#' ? project.liveUrl : null},
+            ${project.githubUrl},
+            ${project.liveUrl !== '#' ? project.liveUrl : null},
+            ${project.companyLogo || null},
+            NOW(),
+            NOW()
           )
-          RETURNING "id", "title"
+          RETURNING "id", "title", "slug", "featured"
         `;
 
         insertedProjects.push(result[0]);
-      } catch (error) {
-        console.error(`Error inserting project ${project.title}:`, error);
+        console.log(`✓ Inserted project: ${project.title}`);
+      } catch (insertError) {
+        console.error(`✗ Error inserting project ${project.title}:`, insertError);
       }
     }
 
     return NextResponse.json({
+      success: true,
       message: 'Projects seeded successfully',
       insertedCount: insertedProjects.length,
+      totalProjects: PROJECTS.length,
       projects: insertedProjects,
     });
   } catch (error) {
     console.error('Error seeding projects:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     return NextResponse.json(
-      { error: 'Failed to seed projects' },
+      {
+        error: 'Failed to seed projects',
+        details: errorMessage,
+      },
       { status: 500 }
     );
   }
+}
+
+/**
+ * GET /api/projects/seed
+ *
+ * Returns info about the seed endpoint.
+ */
+export async function GET() {
+  return NextResponse.json({
+    endpoint: '/api/projects/seed',
+    method: 'POST',
+    description: 'Seeds the database with static project data',
+    parameters: {
+      force: 'Set to "true" to clear existing projects and re-seed',
+    },
+    projectsToSeed: PROJECTS.length,
+    projects: PROJECTS.map((p) => ({
+      id: p.id,
+      title: p.title,
+      status: p.status,
+      featured: p.featured,
+    })),
+  });
 }

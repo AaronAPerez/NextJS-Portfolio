@@ -252,3 +252,53 @@ export interface AnalyticsEvent {
   label?: string;
   value?: number;
 }
+
+
+// ─── Data ─────────────────────────────────────────────────────────────────────
+
+export const CORE_SKILLS = [
+  'React',
+  'Next.js',
+  'TypeScript',
+  'Tailwind CSS',
+] as const;
+
+export const OTHER_SKILLS = [
+  'Node.js',
+  'PostgreSQL',
+  'Supabase',
+  'Prisma',
+  'Neon DB',
+  'Vercel',
+  'Resend',
+  'Zod',
+  'React Hook Form',
+  'Framer Motion',
+  'Git / GitHub',
+  'WCAG 2.1 AA',
+] as const;
+
+export const TIMELINE = [
+  {
+    role: 'Full Stack Developer',
+    company: 'AMP Vending · AP Designs',
+    period: '2024 – Present',
+    detail: 'Building and maintaining 4 production client sites. Running AP Designs as a freelance web development business.',
+    current: true,
+  },
+  {
+    role: 'CodeStack Academy',
+    company: 'Full Stack Web Development',
+    period: '2023 – 2024',
+    detail:
+     'Intensive full-stack program covering React, TypeScript, Next.js, Tailwind CSS, Node.js, PostgreSQL, and modern deployment practices.',
+    current: false,
+  },
+  {
+    role: 'IT Support Specialist',
+    company: 'SJCOE · User Systems',
+    period: '2017 – 2024',
+    detail: '7 years supporting enterprise IT infrastructure. Built a deep understanding of how real users break things — and how to build software that doesn\'t.',
+    current: false,
+  },
+] as const;

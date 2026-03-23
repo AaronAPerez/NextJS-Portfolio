@@ -1,111 +1,138 @@
 'use client';
 
-import React from 'react';
+/**
+ * AboutSection Component
+ *
+ * Main about section that combines the narrative with timeline and stats.
+ * Implements separation of concerns by composing smaller, reusable components.
+ *
+ * Component Structure:
+ * - AboutSection (this file) - Main layout and composition
+ *   - SectionHeader - Decorative header with title
+ *   - AboutNarrative - Personal story/background
+ *   - SimpleTimeline - Career progression overview
+ *   - AboutStats - Key metrics (optional)
+ *
+ * @see AboutNarrative for narrative content logic
+ * @see SimpleTimeline for timeline display
+ * @see data/about.ts for all data constants
+ */
+
 import { motion } from 'framer-motion';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/Card';
+import { User } from 'lucide-react';
+import { AboutNarrative } from './AboutNarrative';
+import { SimpleTimeline } from './SimpleTimeline';
+import { EducationCredentials } from './EducationCredentials';
+// import { AboutStats } from './AboutStats'; // Uncomment to enable stats section
+import { fadeInUp } from './animations';
 
+// =============================================================================
+// Sub-Components
+// =============================================================================
 
-const aboutContent = {
-  background: {
-    title: "Background",
-    content: `I am a Full Stack Developer with a solid foundation in IT, expanding my development skills through CodeStack Academy. My journey in technology began with an Applied Science Degree in Network Systems Administration & BS in Information Systems and Cyber Security from ITT Technical Institute, where I graduated with a 3.5 GPA.`
-  },
-  approach: {
-    title: "Approach",
-    content: `I am passionate about creating intuitive user experiences and robust applications. My combined background in IT support and full-stack development training gives me a unique perspective on building user-friendly applications that solve real-world problems. I've applied these skills in various projects at CodeStack Academy, including expense tracking applications, business websites, and web-based games.`
-  }
-};
+/**
+ * Decorative section header with icon between gradient lines
+ */
+const SectionDecorator = () => (
+  <div
+    className="flex items-center justify-center gap-4 mb-6"
+    aria-hidden="true"
+  >
+    <div className="h-px flex-1 max-w-24 bg-gradient-to-r from-transparent to-blue-500" />
+    <div className="p-3 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full">
+      <User className="w-6 h-6 text-white" />
+    </div>
+    <div className="h-px flex-1 max-w-24 bg-gradient-to-l from-transparent to-purple-500" />
+  </div>
+);
 
-// Modern card component with dark mode support
-const InfoCard = ({ title, content, delay, gradient }: {
-  title: string;
-  content: string;
-  delay: number;
-  gradient: string;
-}) => {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay, duration: 0.6 }}
-      className="w-full h-full"
-    >
-      <Card variant="elevated" hoverable padding="lg" className="h-full min-h-[280px] group relative overflow-hidden">
-        {/* Gradient border effect */}
-        <div className={`absolute inset-0 opacity-0 group-hover:opacity-50 transition-opacity duration-500 bg-gradient-to-br ${gradient} blur-xl -z-10`} />
+/**
+ * Section header with title and description
+ */
+const SectionHeader = () => (
+  <motion.header
+    variants={fadeInUp}
+    initial="hidden"
+    whileInView="visible"
+    viewport={{ once: true }}
+    className="text-center mb-16"
+  >
+    <SectionDecorator />
 
-        <CardHeader>
-          <CardTitle className="text-2xl bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-accent-600 dark:from-primary-400 dark:to-accent-400">
-            {title}
-          </CardTitle>
-        </CardHeader>
+    <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-gray-900 to-gray-600 dark:from-gray-100 dark:to-gray-400 bg-clip-text text-transparent">
+      About Me
+    </h2>
 
-        <CardContent>
-          <p className="text-gray-700 dark:text-gray-300 text-base leading-relaxed">
-            {content}
-          </p>
-        </CardContent>
-      </Card>
-    </motion.div>
-  );
-};
+    <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
+      Full stack developer with a passion for building intuitive and robust applications
+    </p>
+  </motion.header>
+);
+
+/**
+ * Background gradient and decorative elements
+ */
+const SectionBackground = () => (
+  <>
+    {/* Gradient orbs */}
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      <div
+        className="absolute top-0 left-1/4 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl"
+        aria-hidden="true"
+      />
+      <div
+        className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"
+        aria-hidden="true"
+      />
+    </div>
+
+    {/* Subtle gradient overlay */}
+    <div
+      className="absolute inset-0 bg-gradient-to-b from-blue-50/50 via-transparent to-violet-50/50 dark:from-blue-950/20 dark:via-transparent dark:to-violet-950/20"
+      aria-hidden="true"
+    />
+  </>
+);
+
+// =============================================================================
+// Main Component
+// =============================================================================
 
 export const AboutSection = () => {
   return (
-    <div className="relative w-full overflow-hidden py-20">
-      {/* Background decoration */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
-      </div>
+    <section
+      id="about"
+      className="relative bg-white dark:bg-gray-950 py-20 sm:py-28 overflow-hidden"
+      aria-labelledby="about-heading"
+    >
+      {/* Background decorations */}
+      <SectionBackground />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header matching TimelineSection style */}
-        <motion.header
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          {/* Decorative line with icon */}
-          <div className="flex items-center justify-center gap-4 mb-6" aria-hidden="true">
-            <div className="h-px flex-1 bg-gradient-to-r from-transparent to-blue-500" />
-            <div className="p-3 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full">
-              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-              </svg>
-            </div>
-            <div className="h-px flex-1 bg-gradient-to-l from-transparent to-purple-500" />
-          </div>
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        {/* Visually hidden heading for accessibility */}
+        <h2 id="about-heading" className="sr-only">
+          About Section
+        </h2>
 
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-gray-900 to-gray-600 dark:from-gray-100 dark:to-gray-400 bg-clip-text text-transparent">
-            About Me
-          </h2>
+        {/* Section Header */}
+        <SectionHeader />
 
-          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            Full stack developer with a passion for building intuitive and robust applications
-          </p>
-        </motion.header>
+        {/* Stats Row (optional - uncomment to enable) */}
+        {/* <AboutStats className="mb-16" /> */}
 
-        {/* Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
-          <InfoCard
-            title={aboutContent.background.title}
-            content={aboutContent.background.content}
-            delay={0.2}
-            gradient="from-indigo-500 via-purple-500 to-pink-500"
-          />
-          <InfoCard
-            title={aboutContent.approach.title}
-            content={aboutContent.approach.content}
-            delay={0.4}
-            gradient="from-teal-500 via-cyan-500 to-blue-500"
-          />
+        {/* Main Content Grid: Narrative + Timeline */}
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16">
+          {/* Left Column: Narrative Story */}
+          <AboutNarrative />
+
+          {/* Right Column: Career Timeline */}
+          <SimpleTimeline />
         </div>
+
+        {/* Education Credentials - Prominently displayed */}
+        <EducationCredentials className="mt-16" />
       </div>
-    </div>
+    </section>
   );
 };
 
