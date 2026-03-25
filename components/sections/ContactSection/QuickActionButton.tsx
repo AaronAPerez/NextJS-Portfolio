@@ -11,7 +11,6 @@ import { motion } from 'framer-motion';
 import { CheckCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { QuickAction } from '@/data/contact';
-import { buttonHoverTap } from './animations';
 
 // =============================================================================
 // Types
@@ -84,21 +83,23 @@ export const QuickActionButton = ({
     }
   };
 
+  // Determine background color based on state
+  const backgroundColor = showCopied ? '#22C55E' : action.bgColor;
+
   return (
     <motion.button
       onClick={handleClick}
-      whileHover={buttonHoverTap.hover}
-      whileTap={buttonHoverTap.tap}
+      whileHover={{ scale: 1.05, backgroundColor: showCopied ? '#22C55E' : action.hoverBgColor }}
+      whileTap={{ scale: 0.95 }}
       className={cn(
         // Base styles
         'flex flex-col items-center gap-2 p-4 rounded-xl',
-        'transition-all duration-300',
+        'transition-colors duration-300',
         'text-white shadow-lg',
         'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white/50',
-        // Conditional color based on copied state
-        showCopied ? 'bg-green-500 text-white' : action.color,
         className
       )}
+      style={{ backgroundColor }}
       aria-label={showCopied ? 'Email copied!' : action.ariaLabel}
       aria-live={isCopyAction ? 'polite' : undefined}
     >

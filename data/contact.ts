@@ -5,7 +5,7 @@
  * This ensures consistency and makes updates easier to manage.
  */
 
-import { Github, Linkedin, Send, Copy, Download, LucideIcon } from 'lucide-react';
+import { Github, Linkedin, Copy, Download, LucideIcon } from 'lucide-react';
 
 // =============================================================================
 // Contact Information
@@ -39,27 +39,22 @@ export interface QuickAction {
   icon: LucideIcon;
   action: QuickActionType;
   value: string;
-  color: string;
+  /** Background color as hex value for reliable styling */
+  bgColor: string;
+  /** Hover background color as hex value */
+  hoverBgColor: string;
   ariaLabel: string;
 }
 
 export const quickActions: QuickAction[] = [
   {
-    id: 'email',
-    label: 'Email',
-    icon: Send,
-    action: 'mailto',
-    value: contactInfo.email,
-    color: 'bg-blue-500 hover:bg-blue-600',
-    ariaLabel: 'Send email to Aaron Perez'
-  },
-  {
     id: 'copy',
-    label: 'Copy',
+    label: 'Copy Email',
     icon: Copy,
     action: 'copy',
     value: contactInfo.email,
-    color: 'bg-indigo-500 hover:bg-indigo-600',
+    bgColor: '#6366F1',      // indigo-500
+    hoverBgColor: '#4F46E5', // indigo-600
     ariaLabel: 'Copy email address to clipboard'
   },
   {
@@ -68,7 +63,8 @@ export const quickActions: QuickAction[] = [
     icon: Download,
     action: 'download',
     value: contactInfo.resume,
-    color: 'bg-green-500 hover:bg-green-600',
+    bgColor: '#22C55E',      // green-500
+    hoverBgColor: '#16A34A', // green-600
     ariaLabel: 'Download resume PDF'
   }
 ];
@@ -84,6 +80,11 @@ export interface SocialLink {
   href: string;
   color: string;
   ariaLabel: string;
+  // Extended styling for hero section
+  baseColor?: string;
+  hoverColor?: string;
+  baseBg?: string;
+  hoverBg?: string;
 }
 
 export const socialLinks: SocialLink[] = [
@@ -93,7 +94,11 @@ export const socialLinks: SocialLink[] = [
     icon: Github,
     href: 'https://github.com/AaronAPerez',
     color: 'hover:bg-gray-800 hover:text-white',
-    ariaLabel: 'Visit my GitHub profile'
+    ariaLabel: 'Visit my GitHub profile',
+    baseColor: 'text-[#181717] dark:text-white',
+    hoverColor: 'hover:text-white dark:hover:text-[#181717]',
+    baseBg: 'bg-white/80 dark:bg-gray-800/80',
+    hoverBg: 'hover:bg-[#181717] dark:hover:bg-white'
   },
   {
     id: 'linkedin',
@@ -101,6 +106,10 @@ export const socialLinks: SocialLink[] = [
     icon: Linkedin,
     href: 'https://www.linkedin.com/in/aaronaperezdev/',
     color: 'hover:bg-blue-600 hover:text-white',
-    ariaLabel: 'Visit my LinkedIn profile'
+    ariaLabel: 'Visit my LinkedIn profile',
+    baseColor: 'text-[#0A66C2]',
+    hoverColor: 'hover:text-white',
+    baseBg: 'bg-white/80 dark:bg-gray-800/80',
+    hoverBg: 'hover:bg-[#0A66C2]'
   }
 ];
