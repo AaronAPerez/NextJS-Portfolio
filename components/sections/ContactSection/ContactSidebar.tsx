@@ -57,7 +57,7 @@ export const ContactSidebar = ({
           </h3>
 
           {/* Action buttons grid */}
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-2 gap-3">
             {quickActions.map((action) => (
               <QuickActionButton
                 key={action.id}
@@ -75,7 +75,8 @@ export const ContactSidebar = ({
             Connect
           </h3>
 
-          <SocialLinks direction="horizontal" size="md" />
+          <SocialLinks direction="horizontal" size="md"
+          className='flex flex-wrap' />
         </Card>
       </div>
     </motion.aside>

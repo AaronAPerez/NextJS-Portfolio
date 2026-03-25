@@ -9,6 +9,7 @@
  * to avoid nested <a> tags which cause hydration errors.
  */
 
+import Image from "next/image";
 import React from "react";
 
 interface APHeaderProps {
@@ -25,19 +26,21 @@ export const APHeader: React.FC<APHeaderProps> = ({
   return (
     <div className={`flex items-center gap-3 sm:gap-4 ${className}`}>
       {/* Logo Icon */}
-      <img
+      <Image
         src={iconSrc}
         alt=""
+        width={20}
+        height={20}
         aria-hidden="true"
-        className="h-10 w-auto sm:h-12"
+        className="h-8 w-auto sm:h-10"
       />
 
       {/* Brand Text */}
       <div className="flex flex-col leading-tight">
         <span
           className="
-            text-xl sm:text-2xl font-bold
-            bg-gradient-to-r from-sky-400 to-purple-500
+            text-lg sm:text-xl font-bold
+            bg-gradient-to-r from-sky-400 to-indigo-500
             bg-clip-text text-transparent
             transition-opacity group-hover:opacity-80
           "
@@ -47,7 +50,7 @@ export const APHeader: React.FC<APHeaderProps> = ({
 
         <span
           className="
-            text-[10px] sm:text-xs uppercase tracking-widest
+            text-[8px] sm:text-xs uppercase tracking-widest
             text-gray-500 dark:text-gray-400
           "
         >
