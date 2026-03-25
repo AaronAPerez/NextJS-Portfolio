@@ -35,11 +35,16 @@ import HeroVisual from './HeroVisual';
 
 /**
  * Background decoration with gradient orbs
+ * Includes dark mode variants for consistent theming
  */
 const BackgroundDecoration = () => (
   <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-    <div className="absolute top-0 left-1/4 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl" />
-    <div className="absolute top-0 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
+    {/* Gradient orbs - adjusted opacity for dark mode visibility */}
+    <div className="absolute top-0 left-1/4 w-96 h-96 bg-indigo-500/10 dark:bg-indigo-500/20 rounded-full blur-3xl" />
+    <div className="absolute top-0 right-1/4 w-96 h-96 bg-purple-500/10 dark:bg-purple-500/20 rounded-full blur-3xl" />
+
+    {/* Subtle gradient overlay for depth - matches AboutSection pattern */}
+    <div className="absolute inset-0 bg-gradient-to-b from-blue-50/30 via-transparent to-violet-50/30 dark:from-blue-950/20 dark:via-transparent dark:to-violet-950/20" />
   </div>
 );
 
@@ -65,7 +70,7 @@ export const HeroSection = () => {
   return (
     <section
       aria-labelledby="hero-heading"
-      className="relative w-full overflow-hidden min-h-screen bg-gray-50"
+      className="relative w-full overflow-hidden min-h-screen bg-gray-50 dark:bg-gray-950"
     >
       {/* Background decorations */}
       <BackgroundDecoration />
