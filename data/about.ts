@@ -56,11 +56,11 @@ export interface StatItem {
 export const narrative: NarrativeSection[] = [
   {
     id: 'background',
-    title: 'Built Different',
+    title: '',
     content: [
       `I came up through 7+ years of IT support before writing a single line of production code. That means I understand how real users break things, what causes downtime, and why accessibility isn't optional — it's engineering.`,
       `I graduated CodeStack Academy's Full Stack Web Development program and immediately shipped production sites for real clients. Not portfolio demos — actual businesses depending on my work every day.`,
-      `I run AP Designs as a freelance web development business while actively looking for a full-time role where I can build serious products with a serious team.`
+      `I run AP Designs as a freelance web development business while actively looking for a full-time role.`
     ],
     highlights: [
       'how real users break things',
@@ -190,7 +190,7 @@ export const education: TimelineItem[] = [
       'Collaborative development using Agile methodologies'
     ],
     skills: ['React', 'TypeScript', 'Next.js', 'C#', '.NET Core', 'SQL Server', 'Azure'],
-    gradient: 'from-blue-500 to-cyan-500'
+    gradient: 'from-blue-500 to-yellow-500'
   },
   {
     id: 'itt-tech-bs',
@@ -292,6 +292,22 @@ export interface EducationCredential {
 }
 
 export const educationCredentials: EducationCredential[] = [
+    {
+    id: 'codestack-cert',
+    degree: 'Professional Certification',
+    degreeType: 'Certification',
+    field: 'Full Stack Web Development',
+    institution: 'CodeStack Academy',
+    year: '2024',
+    icon: 'certification',
+    gradient: 'from-blue-600 to-yellow-600',
+    highlights: [
+      'React, TypeScript, Next.js',
+      'C#, .NET Core, SQL Server',
+      'Azure Cloud Services & CI/CD',
+      'Agile Development Practices'
+    ]
+  },
   {
     id: 'bs-degree',
     degree: 'Bachelor of Science',
@@ -324,20 +340,4 @@ export const educationCredentials: EducationCredential[] = [
       'Cisco Networking Equipment'
     ]
   },
-  {
-    id: 'codestack-cert',
-    degree: 'Professional Certification',
-    degreeType: 'Certification',
-    field: 'Full Stack Web Development',
-    institution: 'CodeStack Academy',
-    year: '2024',
-    icon: 'certification',
-    gradient: 'from-green-600 to-yellow-600',
-    highlights: [
-      'React, TypeScript, Next.js',
-      'C#, .NET Core, SQL Server',
-      'Azure Cloud Services & CI/CD',
-      'Agile Development Practices'
-    ]
-  }
 ];

@@ -31,7 +31,7 @@ export function Header() {
         role="banner"
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-          <div className="flex items-center justify-between h-16 sm:h-20">
+          <div className="flex items-center justify-between h-16 sm:h-18">
             {/* Logo */}
             <Link
               href="/"

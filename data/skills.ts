@@ -56,7 +56,7 @@ export const skills: Skill[] = [
   {
     id: 'vite',
     name: 'Vite',
-    icon: '/icons/frontend/vite.svg',
+    icon: '/icons/frontend/vite.js.svg',
     color: '#646CFF',
     category: 'frontend',
     description: 'Lightning-fast build tool and development server'
@@ -212,7 +212,7 @@ export const skills: Skill[] = [
   {
     id: 'vercel',
     name: 'Vercel',
-    icon: '/icons/frontend/vercel.svg',
+    icon: '/icons/tools/vercel.svg',
     color: '#000000',
     category: 'frontend',
     description: 'Frontend cloud platform for static sites and serverless functions'
