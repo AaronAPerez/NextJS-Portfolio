@@ -1,9 +1,7 @@
 import type { Metadata } from 'next';
 import dynamic from 'next/dynamic';
 import HeroSection from '@/components/sections/HeroSection';
-
-import { AboutSkeleton, ContactSkeleton, ProjectsSkeleton, SkillsSkeleton, TimelineSkeleton } from '@/components/sections/skeletons';
-import CtaSection from '@/components/sections/CTASection';
+import { AboutSkeleton, ContactSkeleton, ProjectsSkeleton, SkillsSkeleton } from '@/components/sections/skeletons';
 
 // ─── Metadata ─────────────────────────────────────────────────────────────────
 
@@ -34,9 +32,6 @@ const ProjectsSection = dynamic(() => import("@/components/sections/ProjectsSect
   loading: () => <ProjectsSkeleton />
 });
 
-const Timeline = dynamic(() => import("@/components/sections/Timeline"), {
-  loading: () => <TimelineSkeleton />
-});
 
 const ContactSection = dynamic(() => import("@/components/sections/ContactSection/ContactSection"), {
   loading: () => <ContactSkeleton />
@@ -51,29 +46,21 @@ export default function Home() {
           id="home"
           aria-labelledby="hero-heading"
         >
-
           <HeroSection />
-
         </section>
 
-
-
-
-
-
-
        {/* Projects Section */}
-        <section id="projects"
+        <section 
+          id="projects"
           aria-label="projects-section">
           <ProjectsSection />
         </section>
 
                 {/* About Section */}
-        <section id="about"
+        <section 
+          id="about"
           aria-label="about-section">
-
           <AboutSection />
-
         </section>
 
         {/* Skills Section - Show capabilities immediately */}
@@ -82,20 +69,8 @@ export default function Home() {
           className="relative bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900"
           aria-labelledby="skills-heading"
         >
-
           <SkillsSection />
-
         </section>
-
- 
-
-
-        {/* Experience Section */}
-        {/* <section id="experience"
-          aria-label="experience-section">
-          <Timeline />
-        </section> */}
-
 
         {/* Contact Section CTA */}
         <section
@@ -104,19 +79,6 @@ export default function Home() {
         >
           <ContactSection />
         </section>
-
-
-        {/* Contact Section CTA */}
-        <section
-          id="cta"
-          aria-labelledby="cta-section"
-        >
-              {/* 5. CTA */}
-      <CtaSection />
-        </section>
-
-
-
 
       </div>
 

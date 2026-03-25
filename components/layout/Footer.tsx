@@ -150,7 +150,7 @@ export function Footer() {
           </p>
         </div>
 
-        {/* Additional Links - Privacy, Terms, etc. */}
+        {/* Additional Links - Privacy, Terms, Accessibility, etc. */}
         <div className="mt-10 flex flex-wrap justify-center gap-6 text-sm">
           <Link
             href="/privacy"
@@ -163,6 +163,12 @@ export function Footer() {
             className="text-gray-800 dark:text-gray-200 hover:text-primary-400 transition-colors"
           >
             Terms of Service
+          </Link>
+          <Link
+            href="/accessibility"
+            className="text-gray-800 dark:text-gray-200 hover:text-primary-400 transition-colors"
+          >
+            Accessibility
           </Link>
           <a
             href="https://github.com/AaronAPerez/portfolio"
