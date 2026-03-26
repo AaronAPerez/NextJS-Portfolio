@@ -111,7 +111,7 @@ export default function AdminLogin() {
             </p>
          
 
-          <form onSubmit={handleLogin} className="mt-8 space-y-6">
+          <form onSubmit={handleLogin} className="mt-8 space-y-6 text-black">
             <div>
               <label htmlFor="password" className="sr-only">
                 Password

@@ -21,6 +21,13 @@ const navigation = [
   { name: 'Settings', href: '/admin/settings', icon: '⚙️' },
 ]
 
+// GBP Optimization tools section
+const gbpNavigation = [
+  { name: 'GBP Dashboard', href: '/admin/gbp', icon: '📍' },
+  { name: 'Client Intake', href: '/admin/gbp/intake', icon: '📝' },
+  { name: 'Reports', href: '/admin/gbp/reports', icon: '📈' },
+]
+
 export default function AdminSidebar() {
   const pathname = usePathname()
   const router = useRouter()
@@ -76,6 +83,35 @@ export default function AdminSidebar() {
                             'group flex gap-x-3 rounded-md p-3 text-sm leading-6 font-semibold transition-all',
                             isActive
                               ? 'bg-gradient-to-r from-blue-600/20 to-[#d4af37]/20 text-white border border-blue-600/30'
+                              : 'text-gray-300 hover:text-white hover:bg-white/5'
+                          )}
+                        >
+                          <span className="text-xl">{item.icon}</span>
+                          {item.name}
+                        </Link>
+                      </li>
+                    )
+                  })}
+                </ul>
+              </li>
+              {/* GBP Optimization Section */}
+              <li>
+                <div className="text-xs font-semibold leading-6 text-gray-400 uppercase tracking-wider mb-2">
+                  GBP Optimization
+                </div>
+                <ul role="list" className="-mx-2 space-y-1">
+                  {gbpNavigation.map((item) => {
+                    const isActive = pathname === item.href ||
+                      (item.href !== '/admin/gbp' && pathname.startsWith(item.href))
+
+                    return (
+                      <li key={item.name}>
+                        <Link
+                          href={item.href}
+                          className={clsx(
+                            'group flex gap-x-3 rounded-md p-3 text-sm leading-6 font-semibold transition-all',
+                            isActive
+                              ? 'bg-gradient-to-r from-green-600/20 to-blue-600/20 text-white border border-green-600/30'
                               : 'text-gray-300 hover:text-white hover:bg-white/5'
                           )}
                         >

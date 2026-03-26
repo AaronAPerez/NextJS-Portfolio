@@ -3,7 +3,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { useState, useEffect, useMemo } from 'react'
 import Link from 'next/link'
-import DashboardTour from '@/components/admin/DashboardTour'
 import Tooltip from '@/components/admin/Tooltip'
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'

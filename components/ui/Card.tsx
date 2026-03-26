@@ -48,10 +48,10 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
 
     // Variant styles
     const variantStyles = {
-      default: 'bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700',
-      bordered: 'bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-600',
-      elevated: 'bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl',
-      glass: 'bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50',
+      default: 'bg-white dark:bg-gray-800 dark:text-gray-300 border border-gray-100 dark:border-gray-700',
+      bordered: 'bg-white dark:bg-gray-800 dark:text-gray-300 border-2 border-gray-200 dark:border-gray-600',
+      elevated: 'bg-white dark:bg-gray-800 dark:text-gray-300 shadow-lg hover:shadow-xl',
+      glass: 'bg-white/80 dark:bg-gray-800/80 dark:text-gray-300 backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50',
     };
 
     // Hover styles - adds interactive effects
