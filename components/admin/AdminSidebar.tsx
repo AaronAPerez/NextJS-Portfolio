@@ -24,7 +24,9 @@ const navigation = [
 // GBP Optimization tools section
 const gbpNavigation = [
   { name: 'GBP Dashboard', href: '/admin/gbp', icon: '📍' },
+  { name: 'Leads', href: '/admin/gbp/leads', icon: '🎯' },
   { name: 'Client Intake', href: '/admin/gbp/intake', icon: '📝' },
+  { name: 'Packages', href: '/admin/gbp/packages', icon: '📦' },
   { name: 'Reports', href: '/admin/gbp/reports', icon: '📈' },
 ]
 
