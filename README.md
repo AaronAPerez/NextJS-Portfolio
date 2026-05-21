@@ -17,7 +17,7 @@
 
 ## 📸 Preview
 
-> _Screenshot of portfolio homepage_
+![Portfolio Homepage](public/screenshots/hero-section.webp)
 
 ---
 
