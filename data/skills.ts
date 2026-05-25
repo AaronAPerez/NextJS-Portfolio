@@ -54,6 +54,30 @@ export const skills: Skill[] = [
     description: 'Full-stack React framework with SSR, SSG, and API routes'
   },
   {
+    id: 'neon',
+    name: 'Neon',
+    icon: '/icons/backend/neon.svg',
+    color: '#000000',
+    category: 'backend',
+    description: 'Serverless, fully managed PostgreSQL database platform with branching, autoscaling, and bottomless storage'
+  },
+  {
+    id: 'supabase',
+    name: 'Supabase',
+    icon: '/icons/backend/supabase.svg',
+    color: '#3ECF8E',
+    category: 'backend',
+    description: 'Open-source Firebase alternative with PostgreSQL database, Edge Functions, Auth, real-time subscriptions, and storage — used in production client sites'
+  },
+  {
+    id: 'postgresql',
+    name: 'PostgreSQL',
+    icon: '/icons/backend/postgresql.svg',
+    color: '#4169E1',
+    category: 'database',
+    description: 'Relational database management — schema design, SQL query writing, used via Supabase and Neon in production deployments'
+  },
+  {
     id: 'vite',
     name: 'Vite',
     icon: '/icons/frontend/vite.js.svg',
@@ -147,6 +171,22 @@ export const skills: Skill[] = [
     category: 'database',
     description: 'Cloud-based relational database service from Microsoft Azure'
   },
+  {
+    id: 'ga4',
+    name: 'Google Analytics 4',
+    icon: '/icons/tools/google-analytics.svg',
+    color: '#F9AB00',
+    category: 'tools',
+    description: 'GA4 configuration, event tracking, and conversion measurement for production client sites'
+  },
+  {
+    id: 'google-ads',
+    name: 'Google Ads',
+    icon: '/icons/tools/google-ads.svg',
+    color: '#4285F4',
+    category: 'tools',
+    description: 'Implemented Google Ads campaigns and conversion tracking for AMP Vending Machines — search ads, conversion tags, and performance measurement'
+  },
 
   // Development Tools
   {
@@ -214,8 +254,8 @@ export const skills: Skill[] = [
     name: 'Vercel',
     icon: '/icons/tools/vercel.svg',
     color: '#000000',
-    category: 'frontend',
-    description: 'Frontend cloud platform for static sites and serverless functions'
+    category: 'cloud',
+    description: 'Production deployment platform — all live client sites deployed and managed on Vercel with CI/CD, Analytics, and environment configuration'
   },
 
   // Additional Tools & Frameworks

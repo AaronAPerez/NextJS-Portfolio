@@ -59,12 +59,14 @@ export const narrative: NarrativeSection[] = [
     title: '',
     content: [
       `I came up through 7+ years of IT support before writing a single line of production code. That means I understand how real users break things, what causes downtime, and why accessibility isn't optional — it's engineering.`,
-      `I graduated CodeStack Academy's Full Stack Web Development program and immediately shipped production sites for real clients. Not portfolio demos — actual businesses depending on my work every day.`,
-      `I run AP Designs as a freelance web development business while actively looking for a full-time role.`
+      `I graduated CodeStack Academy's Full Stack Web Development program and immediately shipped production sites for real clients — built on Next.js, TypeScript, Tailwind CSS, deployed to Vercel. Not portfolio demos — actual businesses depending on my work every day.`,
+      `My stack matches what modern client-site work demands: Supabase for databases and backend logic, PostgreSQL for relational data, GA4 for real performance insight, and AI-assisted tools to ship faster without cutting corners.`,
+      `I run AP Designs as a freelance web development practice while actively looking for a full-time role where I can build and maintain client websites at scale.`
     ],
     highlights: [
-      'how real users break things',
-      'actual businesses depending on my work'
+      'actual businesses depending on my work',
+      'Supabase for databases and backend logic',
+      'AI-assisted tools to ship faster'
     ]
   }
 ];
@@ -247,7 +249,7 @@ export const simpleTimeline: SimpleTimelineItem[] = [
     role: 'Full Stack Developer',
     company: 'AMP Vending · AP Designs',
     period: '2024 – Present',
-    detail: 'Building and maintaining 4 production client sites. Running AP Designs as a freelance web development business.',
+    detail: 'Building and maintaining 4 production client sites on Next.js + Supabase + Vercel. Integrating third-party APIs, GA4 tracking, and PostgreSQL schemas. Running AP Designs as a freelance web development business.',
     current: true
   },
   {

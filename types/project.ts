@@ -75,11 +75,19 @@ export interface ProjectSEO {
   keywords: string[];
 }
 
+// Project stats for display (commits, lighthouse scores, etc.)
+export interface ProjectStats {
+  commits?: number;
+  lighthouse?: number;
+  label?: string;
+}
+
 // Core Project interface matching database schema
 export interface ProjectDB {
   id: string;
   title: string;
   description: string;
+  longDescription?: string;  // Extended description for detailed views
   slug: string;
   category: ProjectCategory;
   clientType?: ClientType;
@@ -88,6 +96,8 @@ export interface ProjectDB {
   isLive: boolean;
   displayOrder: number;
   tech: string[];
+  highlights?: string[];  // Key project highlights/features
+  stats?: ProjectStats;   // Project statistics (commits, lighthouse, etc.)
   images: ProjectImage[];
   gradient?: ProjectGradient;
   companyLogo?: string;  // URL to company/client logo image
@@ -111,6 +121,7 @@ export type ProjectFormData = Omit<ProjectDB, 'id' | 'createdAt' | 'updatedAt'>;
 export interface CreateProjectInput {
   title: string;
   description: string;
+  longDescription?: string;  // Extended description
   slug?: string;  // Auto-generated from title if not provided
   category?: ProjectCategory;
   clientType?: ClientType;
@@ -119,6 +130,8 @@ export interface CreateProjectInput {
   isLive?: boolean;
   displayOrder?: number;
   tech?: string[];
+  highlights?: string[];  // Key project highlights
+  stats?: ProjectStats;   // Project statistics
   images?: ProjectImage[];
   gradient?: ProjectGradient;
   companyLogo?: string;  // URL to company/client logo image
