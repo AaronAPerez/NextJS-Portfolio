@@ -23,7 +23,7 @@ export const contactInfo: ContactInfo = {
   email: 'aaronperezdev@gmail.com',
   phone: '+1 (209) 470-2061',
   location: 'Stockton, CA',
-  resume: '/A.Perez - Fullstack Resume.pdf',
+  resume: '/resume/Aaron-Perez-Resume.pdf',
   availability: 'Open to remote opportunities worldwide'
 };
 

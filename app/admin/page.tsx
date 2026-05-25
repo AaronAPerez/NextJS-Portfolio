@@ -60,7 +60,7 @@ export default function AdminDashboard() {
 
   return (
     <div className="space-y-8">
-      <DashboardTour />
+      {/* <DashboardTour /> */}
 
       <div className="flex items-center justify-between">
         <div>
@@ -115,7 +115,7 @@ export default function AdminDashboard() {
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <Card>
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-earth-900">Quick Actions</h2>
+            <h2 className="text-lg font-semibold text-earth-900 dark:text-gray-300">Quick Actions</h2>
             <Tooltip content="Common tasks you can perform">
               <span className="text-sm text-earth-400">ℹ️</span>
             </Tooltip>

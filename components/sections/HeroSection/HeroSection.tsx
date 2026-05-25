@@ -25,7 +25,6 @@
  * @see constants.ts for all data constants
  */
 
-import { useState, useEffect } from 'react';
 import HeroContent from './HeroContent';
 import HeroVisual from './HeroVisual';
 
@@ -57,16 +56,6 @@ const BackgroundDecoration = () => (
  * Composes sub-components into a two-column hero layout
  */
 export const HeroSection = () => {
-  // Hydration guard - prevents flash of unstyled content
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  // Don't render until client-side hydration is complete
-  if (!mounted) return null;
-
   return (
     <section
       aria-labelledby="hero-heading"

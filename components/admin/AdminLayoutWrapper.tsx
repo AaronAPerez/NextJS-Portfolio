@@ -21,7 +21,7 @@ export default function AdminLayoutWrapper({ children }: AdminLayoutWrapperProps
     <div className="min-h-screen bg-gray-200">
       <AdminSidebar />
       <div className="lg:pl-64">
-        <main className="py-8 px-4 sm:px-6 lg:px-8">
+        <main className="py-8 px-4 sm:px-6 lg:px-8 bg-gray-400">
           {children}
         </main>
       </div>

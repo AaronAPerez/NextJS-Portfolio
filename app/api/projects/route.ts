@@ -58,10 +58,17 @@ function transformProject(row: any): ProjectDB {
   // Handle displayOrder - use displayOrder or order column
   const displayOrder = row.displayOrder ?? row.order ?? 0;
 
+  // Handle highlights - can be ARRAY or undefined
+  const highlights = Array.isArray(row.highlights) ? row.highlights : [];
+
+  // Handle stats - can be JSONB object or undefined
+  const stats = row.stats || undefined;
+
   return {
     id: row.id,
     title: row.title,
     description: row.description,
+    longDescription: row.longDescription || undefined,
     slug: row.slug || row.id, // Fallback to id if no slug
     category: row.category || 'portfolio',
     clientType: row.clientType,
@@ -70,6 +77,8 @@ function transformProject(row: any): ProjectDB {
     isLive: row.isLive ?? false,
     displayOrder,
     tech,
+    highlights,
+    stats,
     images,
     gradient,
     companyLogo: row.companyLogo || null,
@@ -222,15 +231,16 @@ export async function POST(request: NextRequest) {
     // Insert the new project (populates both legacy and new columns)
     const result = await sql`
       INSERT INTO "Project" (
-        "id", "title", "description", "slug", "category", "clientType",
+        "id", "title", "description", "longDescription", "slug", "category", "clientType",
         "status", "featured", "isLive", "displayOrder", "order", "published",
-        "tech", "images", "imagesAlt", "gradient", "gradientFrom", "gradientTo",
-        "demoLink", "codeLink", "websiteLink", "businessImpact",
+        "tech", "highlights", "stats", "images", "imagesAlt", "gradient", "gradientFrom", "gradientTo",
+        "demoLink", "codeLink", "websiteLink", "companyLogo", "businessImpact",
         "technicalHighlights", "timeline", "teamSize", "role", "seo"
       ) VALUES (
         ${id},
         ${data.title},
         ${data.description},
+        ${data.longDescription || null},
         ${slug},
         ${data.category || 'portfolio'},
         ${data.clientType || null},
@@ -241,6 +251,8 @@ export async function POST(request: NextRequest) {
         ${displayOrder},
         ${data.status === 'published' || !data.status},
         ${data.tech || []},
+        ${data.highlights || []},
+        ${data.stats ? JSON.stringify(data.stats) : null}::jsonb,
         ${imageUrls},
         ${imageAlts},
         ${data.gradient ? JSON.stringify(data.gradient) : null},
@@ -249,6 +261,7 @@ export async function POST(request: NextRequest) {
         ${data.demoLink || null},
         ${data.codeLink || ''},
         ${data.websiteLink || null},
+        ${data.companyLogo || null},
         ${data.businessImpact ? JSON.stringify(data.businessImpact) : null},
         ${data.technicalHighlights ? JSON.stringify(data.technicalHighlights) : null},
         ${data.timeline || null},

@@ -27,12 +27,12 @@ export const heroContent = {
 
 // IDs of skills to feature in the hero rotation
 const FEATURED_SKILL_IDS = [
-  'react',
-  'typescript',
   'nextjs',
-  'nodejs',
-  'azure',
-  'csharp'
+  'typescript',
+  'react',
+  'tailwind',
+  'supabase',
+  'vercel'
 ] as const;
 
 // Get featured technologies from skills data
