@@ -4,7 +4,7 @@ import Script from 'next/script'
 
 type StructuredDataProps = {
   type?: string
-  data: Record<string, any>
+  data: Record<string, unknown>
 }
 
 export function StructuredData({ type, data }: StructuredDataProps) {

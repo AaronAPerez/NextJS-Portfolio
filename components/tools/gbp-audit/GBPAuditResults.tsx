@@ -17,7 +17,6 @@ import {
   ArrowRight,
   Download,
   Phone,
-  Mail,
   TrendingUp,
   Star,
   ChevronDown,
@@ -236,6 +235,9 @@ export function GBPAuditResults({ auditId }: GBPAuditResultsProps) {
   const [loading, setLoading] = useState(true);
   const [expandedCategories, setExpandedCategories] = useState<string[]>(['profile']);
 
+  // Reads synchronously from sessionStorage (no network request), so there's
+  // no data-fetch to migrate to React Query. The `else` branch's setState
+  // covers the "no stored input" case, which resolves with no async delay.
   useEffect(() => {
     // Load audit input from sessionStorage
     const stored = sessionStorage.getItem(auditId);
@@ -248,6 +250,7 @@ export function GBPAuditResults({ auditId }: GBPAuditResultsProps) {
         setLoading(false);
       }, 2000);
     } else {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setLoading(false);
     }
   }, [auditId]);

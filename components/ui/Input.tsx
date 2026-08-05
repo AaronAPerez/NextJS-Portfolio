@@ -49,8 +49,11 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     },
     ref
   ) => {
-    // Generate unique ID if not provided for proper label association
-    const inputId = id || `input-${React.useId()}`;
+    // Generate unique ID if not provided for proper label association.
+    // useId() must be called unconditionally (Rules of Hooks) — only the
+    // fallback to its value is conditional.
+    const generatedId = React.useId();
+    const inputId = id || `input-${generatedId}`;
 
     // Base input styles
     const baseStyles = 

@@ -20,7 +20,7 @@ interface RouteParams {
  * Retrieves a single review
  */
 export async function GET(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: RouteParams
 ) {
   try {
@@ -111,7 +111,7 @@ export async function PUT(
  * Removes a review
  */
 export async function DELETE(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: RouteParams
 ) {
   try {

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useCallback, useEffect } from 'react'
+import Image from 'next/image'
 import { Button } from '@/components/ui/Button'
 
 interface Provider {
@@ -108,6 +109,20 @@ const defaultHostingData: HostingData = {
   contactFormNote: 'This message can be customized to match your brand\'s tone and communication style.',
   footerTitle: 'Questions?',
   footerText: 'AP Designs is here to guide you through the entire setup process and ensure your website launches smoothly and professionally. Contact us to discuss which hosting option is the best fit for your business needs.'
+}
+
+function EditableText({
+  value, onChange, isEditing, multiline = false, className = '',
+}: {
+  value: string; onChange: (value: string) => void; isEditing: boolean; multiline?: boolean; className?: string
+}) {
+  if (!isEditing) return <span className={className}>{value}</span>
+  if (multiline) {
+    return <textarea value={value} onChange={(e) => onChange(e.target.value)}
+      className={`w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-cyan-400 bg-white text-gray-900 ${className}`} rows={3} />
+  }
+  return <input type="text" value={value} onChange={(e) => onChange(e.target.value)}
+    className={`w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-cyan-400 bg-white text-gray-900 ${className}`} />
 }
 
 export default function HostingOptionsForm() {
@@ -592,18 +607,6 @@ ${data.companyName}
     }
   }, [data, clientEmail, docId])
 
-  const EditableText = ({ value, onChange, multiline = false, className = '' }: {
-    value: string; onChange: (value: string) => void; multiline?: boolean; className?: string
-  }) => {
-    if (!isEditing) return <span className={className}>{value}</span>
-    if (multiline) {
-      return <textarea value={value} onChange={(e) => onChange(e.target.value)}
-        className={`w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-cyan-400 bg-white text-gray-900 ${className}`} rows={3} />
-    }
-    return <input type="text" value={value} onChange={(e) => onChange(e.target.value)}
-      className={`w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-cyan-400 bg-white text-gray-900 ${className}`} />
-  }
-
   return (
     <div className="space-y-6">
       {/* Saved Documents Bar */}
@@ -672,7 +675,7 @@ ${data.companyName}
       <main role="main" aria-label="Hosting Options Document" className="bg-white rounded-lg shadow-xl overflow-hidden">
         {/* Header */}
         <div className="bg-gradient-to-br from-gray-900 to-gray-800 text-white p-8 text-center">
-          <img src="/AP-Designs-Logo-Indigo-ElectricBlue.webp" alt="AP Designs Logo" className="w-28 h-28 rounded-full mx-auto mb-4" style={{ filter: 'drop-shadow(0 0 20px rgba(0, 212, 255, 0.3))' }} />
+          <Image src="/AP-Designs-Logo-Indigo-ElectricBlue.webp" alt="AP Designs Logo" width={112} height={112} priority className="w-28 h-28 rounded-full mx-auto mb-4" style={{ filter: 'drop-shadow(0 0 20px rgba(0, 212, 255, 0.3))' }} />
           {isEditing ? (
             <>
               <input type="text" value={data.headerTitle} onChange={(e) => updateField('headerTitle', e.target.value)}
@@ -692,18 +695,18 @@ ${data.companyName}
           {/* Overview */}
           <div className="bg-gradient-to-r from-cyan-500 to-indigo-500 p-6 rounded-lg text-white mb-8">
             <h2 className="text-xl font-bold mb-3">Overview</h2>
-            <EditableText value={data.overviewText} onChange={(v) => updateField('overviewText', v)} className="mb-4 text-white" />
+            <EditableText isEditing={isEditing} value={data.overviewText} onChange={(v) => updateField('overviewText', v)} className="mb-4 text-white" />
             <ul className="space-y-2 mt-4">
               <li className="flex items-start gap-3">
                 <span className="bg-white/20 rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">1</span>
-                <EditableText value={data.requirement1} onChange={(v) => updateField('requirement1', v)} className="text-white" />
+                <EditableText isEditing={isEditing} value={data.requirement1} onChange={(v) => updateField('requirement1', v)} className="text-white" />
               </li>
               <li className="flex items-start gap-3">
                 <span className="bg-white/20 rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">2</span>
-                <EditableText value={data.requirement2} onChange={(v) => updateField('requirement2', v)} className="text-white" />
+                <EditableText isEditing={isEditing} value={data.requirement2} onChange={(v) => updateField('requirement2', v)} className="text-white" />
               </li>
             </ul>
-            <EditableText value={data.overviewNote} onChange={(v) => updateField('overviewNote', v)} multiline className="mt-4 text-white/90" />
+            <EditableText isEditing={isEditing} value={data.overviewNote} onChange={(v) => updateField('overviewNote', v)} multiline className="mt-4 text-white/90" />
           </div>
 
           {/* Options Grid */}
@@ -835,7 +838,7 @@ ${data.companyName}
             ) : (
               <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center"><span className="text-cyan-400 mr-2">⬢</span> {data.domainTitle}</h2>
             )}
-            <EditableText value={data.domainDescription} onChange={(v) => updateField('domainDescription', v)} multiline className="text-gray-700 mb-4" />
+            <EditableText isEditing={isEditing} value={data.domainDescription} onChange={(v) => updateField('domainDescription', v)} multiline className="text-gray-700 mb-4" />
             <h3 className="text-lg font-semibold text-gray-900 mb-3 flex items-center"><span className="text-cyan-400 mr-2">▸</span> Recommended Domain Registrars</h3>
             {data.domainProviders.map((provider) => (
               <div key={provider.id} className="bg-gray-100 border-l-4 border-cyan-400 p-3 mb-2 rounded">
@@ -870,7 +873,7 @@ ${data.companyName}
             ) : (
               <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center"><span className="text-amber-500 mr-2">⚡</span> {data.updatesTitle}</h2>
             )}
-            <EditableText value={data.updatesDescription} onChange={(v) => updateField('updatesDescription', v)} multiline className="text-gray-700 mb-4" />
+            <EditableText isEditing={isEditing} value={data.updatesDescription} onChange={(v) => updateField('updatesDescription', v)} multiline className="text-gray-700 mb-4" />
             <div className="bg-gradient-to-br from-amber-100 to-orange-100 p-4 rounded-lg border border-amber-300">
               <div className="flex justify-between items-center py-2">
                 <span className="text-gray-700 font-medium">Hourly Rate for Updates</span>
@@ -897,7 +900,7 @@ ${data.companyName}
             ) : (
               <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center"><span className="text-cyan-400 mr-2">⬢</span> {data.contactFormTitle}</h2>
             )}
-            <EditableText value={data.contactFormDescription} onChange={(v) => updateField('contactFormDescription', v)} multiline className="text-gray-700 mb-4" />
+            <EditableText isEditing={isEditing} value={data.contactFormDescription} onChange={(v) => updateField('contactFormDescription', v)} multiline className="text-gray-700 mb-4" />
             <div className="bg-gray-900 text-cyan-400 p-4 rounded font-mono text-sm mt-4 border border-cyan-400">
               <div className="mb-2">
                 <span className="text-white font-bold">Subject: </span>

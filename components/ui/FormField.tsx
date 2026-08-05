@@ -8,6 +8,7 @@
 
 import {
   forwardRef,
+  useId,
   type InputHTMLAttributes,
   type TextareaHTMLAttributes,
   type SelectHTMLAttributes,
@@ -168,7 +169,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     },
     ref
   ) => {
-    const inputId = id || `input-${Math.random().toString(36).substr(2, 9)}`
+    const generatedId = useId()
+    const inputId = id || `input-${generatedId}`
     const sizeConfig = SIZE_CONFIG[size]
     const hasIcon = !!icon
     const hasRightIcon = !!rightIcon
@@ -260,7 +262,8 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
     },
     ref
   ) => {
-    const inputId = id || `textarea-${Math.random().toString(36).substr(2, 9)}`
+    const generatedId = useId()
+    const inputId = id || `textarea-${generatedId}`
     const sizeConfig = SIZE_CONFIG[size]
 
     return (
@@ -327,7 +330,8 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
     },
     ref
   ) => {
-    const inputId = id || `select-${Math.random().toString(36).substr(2, 9)}`
+    const generatedId = useId()
+    const inputId = id || `select-${generatedId}`
     const sizeConfig = SIZE_CONFIG[size]
     const hasIcon = !!icon
 
@@ -414,7 +418,8 @@ type CheckboxProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'size'
 
 export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
   ({ label, description, size = 'md', wrapperClassName = '', className = '', id, ...props }, ref) => {
-    const inputId = id || `checkbox-${Math.random().toString(36).substr(2, 9)}`
+    const generatedId = useId()
+    const inputId = id || `checkbox-${generatedId}`
     const sizeConfig = SIZE_CONFIG[size]
 
     return (

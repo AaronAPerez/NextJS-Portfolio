@@ -1,6 +1,7 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState } from 'react'
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 
@@ -34,65 +35,77 @@ const emptyClient: Omit<Client, 'id' | 'createdAt' | 'updatedAt'> = {
 }
 
 export default function ClientsPage() {
-  const [clients, setClients] = useState<Client[]>([])
-  const [isLoading, setIsLoading] = useState(true)
+  const queryClient = useQueryClient()
   const [selectedStatus, setSelectedStatus] = useState<'all' | 'active' | 'inactive'>('all')
   const [searchQuery, setSearchQuery] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [editingClient, setEditingClient] = useState<Client | null>(null)
   const [formData, setFormData] = useState(emptyClient)
-  const [isSaving, setIsSaving] = useState(false)
 
   // Fetch clients
-  const fetchClients = useCallback(async () => {
-    try {
-      setIsLoading(true)
+  const { data: clients = [], isLoading } = useQuery({
+    queryKey: ['clients', selectedStatus, searchQuery],
+    queryFn: async () => {
       const params = new URLSearchParams()
       if (selectedStatus !== 'all') params.set('status', selectedStatus)
       if (searchQuery) params.set('search', searchQuery)
 
       const response = await fetch(`/api/clients?${params}`)
-      if (response.ok) {
-        const data = await response.json()
-        setClients(data)
+      if (!response.ok) {
+        throw new Error('Failed to fetch clients')
       }
-    } catch (error) {
-      console.error('Error fetching clients:', error)
-    } finally {
-      setIsLoading(false)
-    }
-  }, [selectedStatus, searchQuery])
+      return response.json() as Promise<Client[]>
+    },
+  })
 
-  useEffect(() => {
-    fetchClients()
-  }, [fetchClients])
-
-  // Handle form submission
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSaving(true)
-
-    try {
+  // Create/update client
+  const saveMutation = useMutation({
+    mutationFn: async (payload: typeof emptyClient) => {
       const url = editingClient ? `/api/clients/${editingClient.id}` : '/api/clients'
       const method = editingClient ? 'PUT' : 'POST'
 
       const response = await fetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       })
 
-      if (response.ok) {
-        setIsModalOpen(false)
-        setEditingClient(null)
-        setFormData(emptyClient)
-        fetchClients()
+      if (!response.ok) {
+        throw new Error('Failed to save client')
       }
-    } catch (error) {
+      return response.json()
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['clients'] })
+      setIsModalOpen(false)
+      setEditingClient(null)
+      setFormData(emptyClient)
+    },
+    onError: (error) => {
       console.error('Error saving client:', error)
-    } finally {
-      setIsSaving(false)
-    }
+    },
+  })
+
+  // Delete client
+  const deleteMutation = useMutation({
+    mutationFn: async (id: string) => {
+      const response = await fetch(`/api/clients/${id}`, { method: 'DELETE' })
+      if (!response.ok) {
+        throw new Error('Failed to delete client')
+      }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['clients'] })
+    },
+    onError: (error) => {
+      console.error('Error deleting client:', error)
+    },
+  })
+
+  // Handle form submission
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    saveMutation.mutate(formData)
   }
 
   // Handle edit
@@ -114,17 +127,9 @@ export default function ClientsPage() {
   }
 
   // Handle delete
-  const handleDelete = async (id: string) => {
+  const handleDelete = (id: string) => {
     if (!confirm('Are you sure you want to delete this client?')) return
-
-    try {
-      const response = await fetch(`/api/clients/${id}`, { method: 'DELETE' })
-      if (response.ok) {
-        fetchClients()
-      }
-    } catch (error) {
-      console.error('Error deleting client:', error)
-    }
+    deleteMutation.mutate(id)
   }
 
   // Open new client modal
@@ -419,8 +424,8 @@ export default function ClientsPage() {
                 >
                   Cancel
                 </Button>
-                <Button type="submit" disabled={isSaving}>
-                  {isSaving ? 'Saving...' : editingClient ? 'Update Client' : 'Create Client'}
+                <Button type="submit" disabled={saveMutation.isPending}>
+                  {saveMutation.isPending ? 'Saving...' : editingClient ? 'Update Client' : 'Create Client'}
                 </Button>
               </div>
             </form>

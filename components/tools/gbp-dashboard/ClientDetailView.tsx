@@ -6,16 +6,15 @@
  * Comprehensive view of a single GBP client with tabs for different data types
  */
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState } from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import Link from 'next/link';
 import {
   ArrowLeft,
   Building2,
   Globe,
-  Phone,
   Mail,
   MapPin,
-  Clock,
   Star,
   TrendingUp,
   TrendingDown,
@@ -32,6 +31,14 @@ import {
 } from 'lucide-react';
 import type { GBPClient, Citation, Keyword, GBPPost, Review, ActionItem } from '@/types/gbp-database';
 
+// GET /api/gbp/keywords joins each keyword with its latest ranking row, so
+// the response is a Keyword plus these ranking fields (not a plain Keyword).
+interface KeywordWithRanking extends Keyword {
+  current_rank: number | null;
+  previous_rank: number | null;
+  in_local_pack: boolean;
+}
+
 interface ClientDetailViewProps {
   clientId: string;
 }
@@ -39,67 +46,87 @@ interface ClientDetailViewProps {
 type TabId = 'overview' | 'citations' | 'keywords' | 'posts' | 'reviews' | 'actions';
 
 export default function ClientDetailView({ clientId }: ClientDetailViewProps) {
-  // State
-  const [client, setClient] = useState<GBPClient | null>(null);
-  const [citations, setCitations] = useState<Citation[]>([]);
-  const [keywords, setKeywords] = useState<Keyword[]>([]);
-  const [posts, setPosts] = useState<GBPPost[]>([]);
-  const [reviews, setReviews] = useState<Review[]>([]);
-  const [actions, setActions] = useState<ActionItem[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const queryClient = useQueryClient();
   const [activeTab, setActiveTab] = useState<TabId>('overview');
 
-  // Fetch client data
-  const fetchClientData = useCallback(async () => {
-    setLoading(true);
-    setError(null);
+  // Fetch client data — each resource is cached and fetched independently
+  // (still concurrently, same as the previous Promise.all) so refreshes and
+  // future per-resource mutations can invalidate just what changed.
+  const detailKey = (resource: string) => ['gbp-client-detail', clientId, resource] as const;
 
-    try {
-      // Fetch all data in parallel
-      const [clientRes, citationsRes, keywordsRes, postsRes, reviewsRes, actionsRes] =
-        await Promise.all([
-          fetch(`/api/gbp/clients/${clientId}`),
-          fetch(`/api/gbp/citations?client_id=${clientId}`),
-          fetch(`/api/gbp/keywords?client_id=${clientId}`),
-          fetch(`/api/gbp/posts?client_id=${clientId}`),
-          fetch(`/api/gbp/reviews?client_id=${clientId}`),
-          fetch(`/api/gbp/actions?client_id=${clientId}`),
-        ]);
+  const clientQuery = useQuery({
+    queryKey: detailKey('client'),
+    queryFn: async () => {
+      const res = await fetch(`/api/gbp/clients/${clientId}`);
+      const data = await res.json();
+      if (!data.success) throw new Error(data.error || 'Failed to fetch client');
+      return data.data as GBPClient;
+    },
+  });
+  const citationsQuery = useQuery({
+    queryKey: detailKey('citations'),
+    queryFn: async () => {
+      const res = await fetch(`/api/gbp/citations?client_id=${clientId}`);
+      const data = await res.json();
+      return (data.success ? data.data : []) as Citation[];
+    },
+  });
+  const keywordsQuery = useQuery({
+    queryKey: detailKey('keywords'),
+    queryFn: async () => {
+      const res = await fetch(`/api/gbp/keywords?client_id=${clientId}`);
+      const data = await res.json();
+      return (data.success ? data.data : []) as KeywordWithRanking[];
+    },
+  });
+  const postsQuery = useQuery({
+    queryKey: detailKey('posts'),
+    queryFn: async () => {
+      const res = await fetch(`/api/gbp/posts?client_id=${clientId}`);
+      const data = await res.json();
+      return (data.success ? data.data : []) as GBPPost[];
+    },
+  });
+  const reviewsQuery = useQuery({
+    queryKey: detailKey('reviews'),
+    queryFn: async () => {
+      const res = await fetch(`/api/gbp/reviews?client_id=${clientId}`);
+      const data = await res.json();
+      return (data.success ? data.data : []) as Review[];
+    },
+  });
+  const actionsQuery = useQuery({
+    queryKey: detailKey('actions'),
+    queryFn: async () => {
+      const res = await fetch(`/api/gbp/actions?client_id=${clientId}`);
+      const data = await res.json();
+      return (data.success ? data.data : []) as ActionItem[];
+    },
+  });
 
-      const [clientData, citationsData, keywordsData, postsData, reviewsData, actionsData] =
-        await Promise.all([
-          clientRes.json(),
-          citationsRes.json(),
-          keywordsRes.json(),
-          postsRes.json(),
-          reviewsRes.json(),
-          actionsRes.json(),
-        ]);
+  const client = clientQuery.data ?? null;
+  const citations = citationsQuery.data ?? [];
+  const keywords = keywordsQuery.data ?? [];
+  const posts = postsQuery.data ?? [];
+  const reviews = reviewsQuery.data ?? [];
+  const actions = actionsQuery.data ?? [];
 
-      if (clientData.success) {
-        setClient(clientData.data);
-      } else {
-        setError(clientData.error || 'Failed to fetch client');
-        return;
-      }
+  const loading =
+    clientQuery.isLoading ||
+    citationsQuery.isLoading ||
+    keywordsQuery.isLoading ||
+    postsQuery.isLoading ||
+    reviewsQuery.isLoading ||
+    actionsQuery.isLoading;
+  const error = clientQuery.error
+    ? clientQuery.error instanceof Error
+      ? clientQuery.error.message
+      : 'Failed to connect to the server'
+    : null;
 
-      if (citationsData.success) setCitations(citationsData.data);
-      if (keywordsData.success) setKeywords(keywordsData.data);
-      if (postsData.success) setPosts(postsData.data);
-      if (reviewsData.success) setReviews(reviewsData.data);
-      if (actionsData.success) setActions(actionsData.data);
-    } catch (err) {
-      console.error('Error fetching client data:', err);
-      setError('Failed to connect to the server');
-    } finally {
-      setLoading(false);
-    }
-  }, [clientId]);
-
-  useEffect(() => {
-    fetchClientData();
-  }, [fetchClientData]);
+  const fetchClientData = () => {
+    queryClient.invalidateQueries({ queryKey: ['gbp-client-detail', clientId] });
+  };
 
   // Loading state
   if (loading) {
@@ -197,7 +224,7 @@ export default function ClientDetailView({ clientId }: ClientDetailViewProps) {
         />
         <QuickStat
           label="Keywords"
-          value={keywords.filter((k: any) => k.in_local_pack).length}
+          value={keywords.filter((k) => k.in_local_pack).length}
           total={keywords.length}
           sublabel="in 3-Pack"
           icon={<BarChart3 className="w-5 h-5" />}
@@ -406,9 +433,8 @@ function InfoRow({ label, value, isLink }: { label: string; value: string | null
 
 // ── Citations Tab ────────────────────────────────────────────────────────────
 
-function CitationsTab({ citations, clientId, onRefresh }: { citations: Citation[]; clientId: string; onRefresh: () => void }) {
+function CitationsTab({ citations, clientId }: { citations: Citation[]; clientId: string; onRefresh: () => void }) {
   const liveCitations = citations.filter(c => c.status === 'live');
-  const pendingCitations = citations.filter(c => c.status !== 'live');
 
   return (
     <div className="space-y-6">
@@ -472,7 +498,7 @@ function CitationsTab({ citations, clientId, onRefresh }: { citations: Citation[
 
 // ── Keywords Tab ─────────────────────────────────────────────────────────────
 
-function KeywordsTab({ keywords, clientId, onRefresh }: { keywords: Keyword[]; clientId: string; onRefresh: () => void }) {
+function KeywordsTab({ keywords, clientId }: { keywords: KeywordWithRanking[]; clientId: string; onRefresh: () => void }) {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -505,7 +531,7 @@ function KeywordsTab({ keywords, clientId, onRefresh }: { keywords: Keyword[]; c
               </tr>
             </thead>
             <tbody>
-              {keywords.map((kw: any) => {
+              {keywords.map((kw) => {
                 const rankChange = kw.previous_rank && kw.current_rank
                   ? kw.previous_rank - kw.current_rank
                   : 0;
@@ -559,7 +585,7 @@ function KeywordsTab({ keywords, clientId, onRefresh }: { keywords: Keyword[]; c
 
 // ── Posts Tab ────────────────────────────────────────────────────────────────
 
-function PostsTab({ posts, clientId, onRefresh }: { posts: GBPPost[]; clientId: string; onRefresh: () => void }) {
+function PostsTab({ posts, clientId }: { posts: GBPPost[]; clientId: string; onRefresh: () => void }) {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -621,7 +647,7 @@ function PostsTab({ posts, clientId, onRefresh }: { posts: GBPPost[]; clientId: 
 
 // ── Reviews Tab ──────────────────────────────────────────────────────────────
 
-function ReviewsTab({ reviews, clientId, onRefresh }: { reviews: Review[]; clientId: string; onRefresh: () => void }) {
+function ReviewsTab({ reviews, clientId }: { reviews: Review[]; clientId: string; onRefresh: () => void }) {
   const avgRating = reviews.length > 0
     ? (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1)
     : '0';
@@ -707,7 +733,7 @@ function ReviewsTab({ reviews, clientId, onRefresh }: { reviews: Review[]; clien
 
 // ── Actions Tab ──────────────────────────────────────────────────────────────
 
-function ActionsTab({ actions, clientId, onRefresh }: { actions: ActionItem[]; clientId: string; onRefresh: () => void }) {
+function ActionsTab({ actions, clientId }: { actions: ActionItem[]; clientId: string; onRefresh: () => void }) {
   const pendingActions = actions.filter(a => a.status !== 'complete');
 
   return (

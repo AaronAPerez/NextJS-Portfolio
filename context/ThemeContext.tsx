@@ -76,8 +76,12 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   // Track if component is mounted
   const [mounted, setMounted] = useState(false);
 
-  // Initialize theme from localStorage on mount
+  // Initialize theme from localStorage on mount.
+  // localStorage isn't available during SSR, so this read (and the state it
+  // seeds) can only happen client-side in an effect — there's no data-fetch
+  // or restructure that avoids the synchronous setState here.
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
 
     // Get saved preference

@@ -10,7 +10,6 @@
 import {
   TextInput,
   TextArea,
-  SelectInput,
   CheckboxToggle,
   RadioGroup,
   SectionHeader,

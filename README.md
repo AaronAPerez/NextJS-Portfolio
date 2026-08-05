@@ -1,6 +1,6 @@
 # Aaron Perez — Developer Portfolio
 
-[![Next.js](https://img.shields.io/badge/Next.js-15.3-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
+[![Next.js](https://img.shields.io/badge/Next.js-16.2-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
 [![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-v3-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com/)
@@ -25,7 +25,7 @@
 
 This portfolio is itself a demonstration of my development standards: it targets Lighthouse 100 scores across all categories, follows WCAG 2.1 AA accessibility requirements, and uses a CSS custom property token system for consistent theming.
 
-Built with Next.js 15.3 App Router, React 19, TypeScript strict mode, and Tailwind v3 with a custom brand color scale.
+Built with Next.js 16.2 App Router, React 19, TypeScript strict mode, and Tailwind v3 with a custom brand color scale.
 
 ---
 
@@ -42,7 +42,7 @@ Built with Next.js 15.3 App Router, React 19, TypeScript strict mode, and Tailwi
 
 ## 🛠️ Stack
 
-- **Framework**: Next.js 15.3 App Router
+- **Framework**: Next.js 16.2 App Router
 - **Language**: TypeScript (strict mode)
 - **Styling**: Tailwind CSS v3 + CSS custom properties
 - **Deployment**: Vercel

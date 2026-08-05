@@ -7,8 +7,9 @@
 
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   DndContext,
   closestCenter,
@@ -33,11 +34,10 @@ import type { ProjectDB, ProjectStatus, ProjectCategory } from '@/types/project'
 type FilterStatus = 'all' | ProjectStatus;
 type FilterCategory = 'all' | ProjectCategory;
 
+const PROJECTS_QUERY_KEY = ['admin-projects'] as const;
+
 export default function AdminProjectsPage() {
-  // State for projects data
-  const [projects, setProjects] = useState<ProjectDB[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const queryClient = useQueryClient();
 
   // Filter states
   const [selectedStatus, setSelectedStatus] = useState<FilterStatus>('all');
@@ -46,7 +46,6 @@ export default function AdminProjectsPage() {
   const [showFeaturedOnly, setShowFeaturedOnly] = useState(false);
 
   // Action states
-  const [isSeeding, setIsSeeding] = useState(false);
   const [deletingId, setDeletingId] = useState<string | null>(null);
 
   // Drag-and-drop sensors
@@ -64,12 +63,13 @@ export default function AdminProjectsPage() {
   /**
    * Fetch projects from API
    */
-  const fetchProjects = useCallback(async () => {
-    try {
-      setIsLoading(true);
-      setError(null);
-
-      // Build query parameters
+  const {
+    data: projects = [],
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: [...PROJECTS_QUERY_KEY, searchQuery],
+    queryFn: async () => {
       const params = new URLSearchParams();
       if (searchQuery) params.set('search', searchQuery);
 
@@ -82,108 +82,131 @@ export default function AdminProjectsPage() {
         throw new Error(`${data.error || 'Failed to fetch projects'}${errorDetails}`);
       }
 
-      setProjects(data.projects || []);
-    } catch (err) {
-      console.error('Error fetching projects:', err);
-      setError(err instanceof Error ? err.message : 'Failed to load projects');
-    } finally {
-      setIsLoading(false);
-    }
-  }, [searchQuery]);
+      return (data.projects || []) as ProjectDB[];
+    },
+  });
 
-  // Fetch projects on mount and when search changes
-  useEffect(() => {
-    fetchProjects();
-  }, [fetchProjects]);
+  const errorMessage = error instanceof Error ? error.message : null;
+
+  const refetchProjects = () => {
+    queryClient.invalidateQueries({ queryKey: PROJECTS_QUERY_KEY });
+  };
 
   /**
    * Seed database with static project data
    */
-  const handleSeedProjects = async () => {
+  const seedMutation = useMutation({
+    mutationFn: async () => {
+      const response = await fetch('/api/projects/seed', { method: 'POST' });
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to seed projects');
+      }
+      return data;
+    },
+    onSuccess: (data) => {
+      alert(`Successfully seeded ${data.insertedCount} projects!`);
+      refetchProjects();
+    },
+    onError: (err) => {
+      console.error('Error seeding projects:', err);
+      alert(err instanceof Error ? err.message : 'Failed to seed projects');
+    },
+  });
+
+  const handleSeedProjects = () => {
     if (!confirm('This will seed the database with your existing static project data. Continue?')) {
       return;
     }
-
-    try {
-      setIsSeeding(true);
-      const response = await fetch('/api/projects/seed', {
-        method: 'POST',
-      });
-
-      if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.error || 'Failed to seed projects');
-      }
-
-      const data = await response.json();
-      alert(`Successfully seeded ${data.insertedCount} projects!`);
-      fetchProjects();
-    } catch (err) {
-      console.error('Error seeding projects:', err);
-      alert(err instanceof Error ? err.message : 'Failed to seed projects');
-    } finally {
-      setIsSeeding(false);
-    }
+    seedMutation.mutate();
   };
 
   /**
    * Handle project deletion
    */
-  const handleDelete = async (id: string) => {
+  const deleteMutation = useMutation({
+    mutationFn: async (id: string) => {
+      const response = await fetch(`/api/projects/${id}`, { method: 'DELETE' });
+      if (!response.ok) {
+        throw new Error('Failed to delete project');
+      }
+    },
+    onMutate: async (id) => {
+      setDeletingId(id);
+    },
+    onSuccess: (_data, id) => {
+      queryClient.setQueryData<ProjectDB[]>([...PROJECTS_QUERY_KEY, searchQuery], (prev) =>
+        prev?.filter((p) => p.id !== id)
+      );
+    },
+    onError: (err) => {
+      console.error('Error deleting project:', err);
+      alert('Failed to delete project');
+    },
+    onSettled: () => {
+      setDeletingId(null);
+    },
+  });
+
+  const handleDelete = (id: string) => {
     const project = projects.find((p) => p.id === id);
     if (!confirm(`Are you sure you want to delete "${project?.title}"? This cannot be undone.`)) {
       return;
     }
-
-    try {
-      setDeletingId(id);
-      const response = await fetch(`/api/projects/${id}`, {
-        method: 'DELETE',
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to delete project');
-      }
-
-      // Remove from local state
-      setProjects((prev) => prev.filter((p) => p.id !== id));
-    } catch (err) {
-      console.error('Error deleting project:', err);
-      alert('Failed to delete project');
-    } finally {
-      setDeletingId(null);
-    }
+    deleteMutation.mutate(id);
   };
 
   /**
    * Handle project status change
    */
-  const handleStatusChange = async (id: string, status: ProjectStatus) => {
-    try {
+  const statusMutation = useMutation({
+    mutationFn: async ({ id, status }: { id: string; status: ProjectStatus }) => {
       const response = await fetch(`/api/projects/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status }),
       });
-
       if (!response.ok) {
         throw new Error('Failed to update status');
       }
-
-      // Update local state
-      setProjects((prev) =>
-        prev.map((p) => (p.id === id ? { ...p, status } : p))
+    },
+    onSuccess: (_data, { id, status }) => {
+      queryClient.setQueryData<ProjectDB[]>([...PROJECTS_QUERY_KEY, searchQuery], (prev) =>
+        prev?.map((p) => (p.id === id ? { ...p, status } : p))
       );
-    } catch (err) {
+    },
+    onError: (err) => {
       console.error('Error updating status:', err);
       alert('Failed to update project status');
-    }
+    },
+  });
+
+  const handleStatusChange = (id: string, status: ProjectStatus) => {
+    statusMutation.mutate({ id, status });
   };
+
+  /**
+   * Persist reordered display order to the server
+   */
+  const reorderMutation = useMutation({
+    mutationFn: async (reorderedProjects: { id: string; displayOrder: number }[]) => {
+      await fetch('/api/projects/reorder', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ projects: reorderedProjects }),
+      });
+    },
+    onError: (err) => {
+      console.error('Error reordering projects:', err);
+      // Refetch to restore correct order on error
+      refetchProjects();
+    },
+  });
 
   /**
    * Handle drag-and-drop reordering
    */
-  const handleDragEnd = async (event: DragEndEvent) => {
+  const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
 
     if (!over || active.id === over.id) {
@@ -191,29 +214,18 @@ export default function AdminProjectsPage() {
     }
 
     // Reorder locally first for instant feedback
-    setProjects((prev) => {
-      const oldIndex = prev.findIndex((p) => p.id === active.id);
-      const newIndex = prev.findIndex((p) => p.id === over.id);
-      return arrayMove(prev, oldIndex, newIndex);
-    });
+    const queryKey = [...PROJECTS_QUERY_KEY, searchQuery];
+    const reordered = (() => {
+      const oldIndex = projects.findIndex((p) => p.id === active.id);
+      const newIndex = projects.findIndex((p) => p.id === over.id);
+      return arrayMove(projects, oldIndex, newIndex);
+    })();
+    queryClient.setQueryData<ProjectDB[]>(queryKey, reordered);
 
     // Then persist to server
-    try {
-      const reorderedProjects = projects.map((p, index) => ({
-        id: p.id,
-        displayOrder: index,
-      }));
-
-      await fetch('/api/projects/reorder', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ projects: reorderedProjects }),
-      });
-    } catch (err) {
-      console.error('Error reordering projects:', err);
-      // Refetch to restore correct order on error
-      fetchProjects();
-    }
+    reorderMutation.mutate(
+      reordered.map((p, index) => ({ id: p.id, displayOrder: index }))
+    );
   };
 
   // Filter projects based on current filters
@@ -261,9 +273,9 @@ export default function AdminProjectsPage() {
             <Button
               variant="outline"
               onClick={handleSeedProjects}
-              disabled={isSeeding}
+              disabled={seedMutation.isPending}
             >
-              {isSeeding ? 'Seeding...' : 'Seed from Static Data'}
+              {seedMutation.isPending ? 'Seeding...' : 'Seed from Static Data'}
             </Button>
           )}
           <Link href="/admin/projects/new">
@@ -377,13 +389,13 @@ export default function AdminProjectsPage() {
       </Card>
 
       {/* Error State */}
-      {error && (
+      {errorMessage && (
         <Card className="p-4 bg-red-50 border-red-200">
-          <p className="text-red-700">{error}</p>
+          <p className="text-red-700">{errorMessage}</p>
           <Button
             variant="outline"
             size="sm"
-            onClick={fetchProjects}
+            onClick={refetchProjects}
             className="mt-2"
           >
             Retry
@@ -406,8 +418,8 @@ export default function AdminProjectsPage() {
           </p>
           {projects.length === 0 && (
             <div className="flex gap-4 justify-center">
-              <Button variant="outline" onClick={handleSeedProjects} disabled={isSeeding}>
-                {isSeeding ? 'Seeding...' : 'Seed from Static Data'}
+              <Button variant="outline" onClick={handleSeedProjects} disabled={seedMutation.isPending}>
+                {seedMutation.isPending ? 'Seeding...' : 'Seed from Static Data'}
               </Button>
               <Link href="/admin/projects/new">
                 <Button>Create Project</Button>

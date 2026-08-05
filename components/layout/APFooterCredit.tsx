@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 interface APFooterCreditProps {
   iconSrc?: string;     // geometric blocks icon
@@ -17,9 +18,11 @@ export const APFooterCredit: React.FC<APFooterCreditProps> = ({
       <div className="inline-flex items-center gap-3 opacity-80 hover:opacity-100 transition-opacity">
 
         {/* LEFT: Logo Icon */}
-        <img
+        <Image
           src={iconSrc}
           alt="AP Designs Logo Icon"
+          width={32}
+          height={32}
           className="h-8 w-auto opacity-90"
         />
 

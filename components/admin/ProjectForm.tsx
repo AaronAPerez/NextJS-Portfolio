@@ -389,12 +389,14 @@ export default function ProjectForm({ project, isEditing = false }: ProjectFormP
                       className="flex gap-4 p-4 bg-gray-50 rounded-lg"
                     >
                       {/* Image preview */}
-                      <div className="w-24 h-24 bg-gray-200 rounded-lg overflow-hidden flex-shrink-0">
+                      <div className="relative w-24 h-24 bg-gray-200 rounded-lg overflow-hidden flex-shrink-0">
                         {image.url ? (
-                          <img
+                          <Image
                             src={image.url}
                             alt={image.alt || 'Preview'}
-                            className="w-full h-full object-cover"
+                            fill
+                            unoptimized
+                            className="object-cover"
                           />
                         ) : (
                           <div className="w-full h-full flex items-center justify-center text-gray-400">
@@ -518,7 +520,7 @@ export default function ProjectForm({ project, isEditing = false }: ProjectFormP
                       updateField('businessImpact', {
                         ...formData.businessImpact!,
                         primaryMetric: {
-                          ...formData.businessImpact?.primaryMetric!,
+                          ...(formData.businessImpact?.primaryMetric ?? { label: '', value: '', improvement: '', timeframe: '' }),
                           label: e.target.value,
                         },
                       })
@@ -536,7 +538,7 @@ export default function ProjectForm({ project, isEditing = false }: ProjectFormP
                       updateField('businessImpact', {
                         ...formData.businessImpact!,
                         primaryMetric: {
-                          ...formData.businessImpact?.primaryMetric!,
+                          ...(formData.businessImpact?.primaryMetric ?? { label: '', value: '', improvement: '', timeframe: '' }),
                           value: e.target.value,
                         },
                       })
@@ -554,7 +556,7 @@ export default function ProjectForm({ project, isEditing = false }: ProjectFormP
                       updateField('businessImpact', {
                         ...formData.businessImpact!,
                         primaryMetric: {
-                          ...formData.businessImpact?.primaryMetric!,
+                          ...(formData.businessImpact?.primaryMetric ?? { label: '', value: '', improvement: '', timeframe: '' }),
                           improvement: e.target.value,
                         },
                       })
@@ -572,7 +574,7 @@ export default function ProjectForm({ project, isEditing = false }: ProjectFormP
                       updateField('businessImpact', {
                         ...formData.businessImpact!,
                         primaryMetric: {
-                          ...formData.businessImpact?.primaryMetric!,
+                          ...(formData.businessImpact?.primaryMetric ?? { label: '', value: '', improvement: '', timeframe: '' }),
                           timeframe: e.target.value,
                         },
                       })
@@ -777,7 +779,7 @@ export default function ProjectForm({ project, isEditing = false }: ProjectFormP
                       updateField('technicalHighlights', {
                         ...formData.technicalHighlights!,
                         coreWebVitals: {
-                          ...formData.technicalHighlights?.coreWebVitals!,
+                          ...(formData.technicalHighlights?.coreWebVitals ?? { lcp: 0, fid: 0, cls: 0 }),
                           lcp: parseFloat(e.target.value) || 0,
                         },
                       })
@@ -796,7 +798,7 @@ export default function ProjectForm({ project, isEditing = false }: ProjectFormP
                       updateField('technicalHighlights', {
                         ...formData.technicalHighlights!,
                         coreWebVitals: {
-                          ...formData.technicalHighlights?.coreWebVitals!,
+                          ...(formData.technicalHighlights?.coreWebVitals ?? { lcp: 0, fid: 0, cls: 0 }),
                           fid: parseInt(e.target.value) || 0,
                         },
                       })
@@ -816,7 +818,7 @@ export default function ProjectForm({ project, isEditing = false }: ProjectFormP
                       updateField('technicalHighlights', {
                         ...formData.technicalHighlights!,
                         coreWebVitals: {
-                          ...formData.technicalHighlights?.coreWebVitals!,
+                          ...(formData.technicalHighlights?.coreWebVitals ?? { lcp: 0, fid: 0, cls: 0 }),
                           cls: parseFloat(e.target.value) || 0,
                         },
                       })

@@ -11,6 +11,7 @@ interface ContactMessage {
   priority: string
   createdAt: string
   replied: boolean
+  notes?: string
 }
 
 export function useMessages() {

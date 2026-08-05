@@ -86,7 +86,7 @@ function transformProject(row: any) {
  * Retrieves a single project by ID or slug.
  */
 export async function GET(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: RouteParams
 ) {
   try {
@@ -223,7 +223,7 @@ export async function PUT(
  * Deletes a project by ID.
  */
 export async function DELETE(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: RouteParams
 ) {
   try {

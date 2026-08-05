@@ -47,7 +47,7 @@ export default function HostingOptionsPage() {
               <li>• Customize the pricing to match your current rates</li>
               <li>• Add your preferred hosting providers to the recommendations</li>
               <li>• Update the auto-reply example with your actual business name</li>
-              <li>• Use "Save as PDF" in the print dialog for best results</li>
+              <li>• Use &quot;Save as PDF&quot; in the print dialog for best results</li>
             </ul>
           </div>
         </div>

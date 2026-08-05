@@ -11,11 +11,11 @@
 
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {
   Building2, FileText, Camera, Key, BarChart2,
   CalendarCheck, ChevronRight, ChevronLeft, Save,
-  CheckCircle2, Circle, Menu, X,
+  CheckCircle2, Menu, X,
 } from 'lucide-react';
 
 import { useGBPIntake } from '@/hooks/useGBPIntake';
@@ -197,7 +197,6 @@ export function GBPIntakeWizard() {
           {/* Step list */}
           <nav className="flex-1 overflow-y-auto px-3 pb-4">
             {WIZARD_STEPS.map((step, idx) => {
-              const Icon = ICON_MAP[step.icon];
               const isActive = idx === intake.currentStepIndex;
               const isDone = intake.data.completedSteps.includes(step.id);
 

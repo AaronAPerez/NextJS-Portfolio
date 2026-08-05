@@ -30,7 +30,6 @@ import {
   XCircle,
   MessageSquare,
   ArrowUpRight,
-  TrendingUp,
   Users,
   Target,
   AlertCircle,
@@ -42,7 +41,6 @@ import { useGBPStore, type LeadStatus, type LeadSource } from '@/lib/stores';
 
 // Import reusable UI components
 import { StatCard, StatsGrid } from '@/components/ui/StatCard';
-import { LeadStatusBadge } from '@/components/ui/StatusBadge';
 
 // ============================================================================
 // Types
@@ -476,8 +474,10 @@ export function LeadsTable() {
   // Mutation for updating lead status
   const updateLeadMutation = useUpdateLead();
 
-  // Extract leads and stats from response
-  const leads = leadsData?.leads || [];
+  // Extract leads and stats from response. `leads` is memoized so its
+  // reference is stable across renders when the underlying data hasn't
+  // changed (the `|| []` fallback would otherwise be a new array every render).
+  const leads = useMemo(() => leadsData?.leads || [], [leadsData?.leads]);
   const stats = leadsData?.stats;
 
   // Filter leads by search term (client-side filtering)
@@ -488,7 +488,7 @@ export function LeadsTable() {
     return leads.filter(
       (lead) =>
         lead.business_name.toLowerCase().includes(search) ||
-        lead.contact_email.toLowerCase().includes(search) ||
+        lead.email.toLowerCase().includes(search) ||
         lead.contact_name?.toLowerCase().includes(search)
     );
   }, [leads, searchTerm]);
@@ -657,7 +657,7 @@ export function LeadsTable() {
                 {filteredLeads.map((lead) => (
                   <LeadRow
                     key={lead.id}
-                    lead={lead as Lead}
+                    lead={lead as unknown as Lead}
                     isExpanded={expandedLeadId === lead.id}
                     onToggle={() => handleToggleExpand(lead.id)}
                     onUpdateStatus={(status) => handleUpdateStatus(lead.id, status)}

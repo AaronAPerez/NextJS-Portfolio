@@ -186,7 +186,7 @@ export async function GET() {
       'technicalHighlights', 'timeline', 'teamSize', 'role', 'seo',
       'createdAt', 'updatedAt'
     ]
-    const existingColumns = columns.map((c: { column_name: string }) => c.column_name)
+    const existingColumns = columns.map((c: Record<string, unknown>) => c.column_name as string)
     const missingColumns = requiredColumns.filter(col => !existingColumns.includes(col))
 
     return NextResponse.json({

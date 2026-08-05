@@ -20,7 +20,7 @@ interface RouteParams {
  * Retrieves a single citation
  */
 export async function GET(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: RouteParams
 ) {
   try {
@@ -108,7 +108,7 @@ export async function PUT(
  * Removes a citation
  */
 export async function DELETE(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: RouteParams
 ) {
   try {

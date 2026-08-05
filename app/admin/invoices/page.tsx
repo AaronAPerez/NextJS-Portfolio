@@ -1,6 +1,7 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState } from 'react'
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import Link from 'next/link'
@@ -25,48 +26,36 @@ interface Invoice {
 type InvoiceStatus = 'all' | 'draft' | 'sent' | 'paid' | 'overdue'
 
 export default function InvoicesPage() {
-  const [invoices, setInvoices] = useState<Invoice[]>([])
-  const [isLoading, setIsLoading] = useState(true)
+  const queryClient = useQueryClient()
   const [selectedStatus, setSelectedStatus] = useState<InvoiceStatus>('all')
   const [searchQuery, setSearchQuery] = useState('')
-  const [updatingId, setUpdatingId] = useState<string | null>(null)
 
   // Fetch invoices
-  const fetchInvoices = useCallback(async () => {
-    try {
-      setIsLoading(true)
+  const { data: invoices = [], isLoading } = useQuery({
+    queryKey: ['invoices'],
+    queryFn: async () => {
       const response = await fetch('/api/invoices')
-      if (response.ok) {
-        const data = await response.json()
-        // Calculate overdue status for invoices
-        const today = new Date()
-        const processedInvoices = data.map((inv: Invoice) => {
-          if (inv.status === 'sent' && new Date(inv.dueDate) < today) {
-            return { ...inv, status: 'overdue' as const }
-          }
-          return inv
-        })
-        setInvoices(processedInvoices)
+      if (!response.ok) {
+        throw new Error('Failed to fetch invoices')
       }
-    } catch (error) {
-      console.error('Error fetching invoices:', error)
-    } finally {
-      setIsLoading(false)
-    }
-  }, [])
+      const data = await response.json()
+      // Calculate overdue status for invoices
+      const today = new Date()
+      return data.map((inv: Invoice) => {
+        if (inv.status === 'sent' && new Date(inv.dueDate) < today) {
+          return { ...inv, status: 'overdue' as const }
+        }
+        return inv
+      }) as Invoice[]
+    },
+  })
 
-  useEffect(() => {
-    fetchInvoices()
-  }, [fetchInvoices])
-
-  // Update invoice status
-  const updateStatus = async (id: string, newStatus: string) => {
-    setUpdatingId(id)
-    try {
+  // Update invoice status, with optimistic UI update
+  const updateStatusMutation = useMutation({
+    mutationFn: async ({ id, newStatus }: { id: string; newStatus: string }) => {
       const invoice = invoices.find(inv => inv.id === id)
       if (!invoice) return
 
-      // Build updates object with status and relevant timestamps
       const updates: Record<string, unknown> = { status: newStatus }
       if (newStatus === 'sent' && !invoice.sentAt) {
         updates.sentAt = new Date().toISOString()
@@ -76,32 +65,48 @@ export default function InvoicesPage() {
         updates.paidAmount = invoice.total
       }
 
-      // Optimistically update the UI
-      setInvoices(prev => prev.map(inv =>
-        inv.id === id ? { ...inv, ...updates } as Invoice : inv
-      ))
-
       const response = await fetch(`/api/invoices/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...invoice, ...updates }),
       })
 
-      if (response.ok) {
-        // Refresh to get server data
-        fetchInvoices()
-      } else {
-        // Revert on error
-        console.error('Failed to update invoice status')
-        fetchInvoices()
+      if (!response.ok) {
+        throw new Error('Failed to update invoice status')
       }
-    } catch (error) {
+    },
+    onMutate: async ({ id, newStatus }) => {
+      await queryClient.cancelQueries({ queryKey: ['invoices'] })
+      const previousInvoices = queryClient.getQueryData<Invoice[]>(['invoices'])
+
+      queryClient.setQueryData<Invoice[]>(['invoices'], (prev) =>
+        prev?.map((inv) => {
+          if (inv.id !== id) return inv
+          const updates: Partial<Invoice> = { status: newStatus as Invoice['status'] }
+          if (newStatus === 'sent' && !inv.sentAt) updates.sentAt = new Date().toISOString()
+          if (newStatus === 'paid') {
+            updates.paidAt = new Date().toISOString()
+            updates.paidAmount = inv.total
+          }
+          return { ...inv, ...updates }
+        })
+      )
+
+      return { previousInvoices }
+    },
+    onError: (error, _variables, context) => {
       console.error('Error updating invoice:', error)
-      // Revert on error
-      fetchInvoices()
-    } finally {
-      setUpdatingId(null)
-    }
+      if (context?.previousInvoices) {
+        queryClient.setQueryData(['invoices'], context.previousInvoices)
+      }
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['invoices'] })
+    },
+  })
+
+  const updateStatus = (id: string, newStatus: string) => {
+    updateStatusMutation.mutate({ id, newStatus })
   }
 
   // Filter invoices
@@ -227,74 +232,77 @@ export default function InvoicesPage() {
         </Card>
       ) : (
         <div className="space-y-3">
-          {filteredInvoices.map((invoice) => (
-            <Card key={invoice.id} className="p-5 hover:shadow-lg transition-shadow">
-              <div className="flex items-center justify-between">
-                <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-2">
-                    <span className="font-mono font-bold text-gray-900">{invoice.invoiceNumber}</span>
-                    <span className={`px-2 py-1 text-xs rounded-full font-medium border ${statusColors[invoice.status]}`}>
-                      {invoice.status.toUpperCase()}
-                    </span>
+          {filteredInvoices.map((invoice) => {
+            const isUpdating = updateStatusMutation.isPending && updateStatusMutation.variables?.id === invoice.id
+            return (
+              <Card key={invoice.id} className="p-5 hover:shadow-lg transition-shadow">
+                <div className="flex items-center justify-between">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-2">
+                      <span className="font-mono font-bold text-gray-900">{invoice.invoiceNumber}</span>
+                      <span className={`px-2 py-1 text-xs rounded-full font-medium border ${statusColors[invoice.status]}`}>
+                        {invoice.status.toUpperCase()}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-4 text-sm text-gray-600">
+                      <span className="font-medium">{invoice.clientName || 'No client'}</span>
+                      {invoice.clientCompany && (
+                        <>
+                          <span className="text-gray-300">|</span>
+                          <span>{invoice.clientCompany}</span>
+                        </>
+                      )}
+                    </div>
+                    <div className="flex items-center gap-4 mt-2 text-xs text-gray-500">
+                      <span>Created: {formatDate(invoice.createdAt)}</span>
+                      <span>Due: {formatDate(invoice.dueDate)}</span>
+                      {invoice.paidAt && <span className="text-green-600">Paid: {formatDate(invoice.paidAt)}</span>}
+                    </div>
                   </div>
-                  <div className="flex items-center gap-4 text-sm text-gray-600">
-                    <span className="font-medium">{invoice.clientName || 'No client'}</span>
-                    {invoice.clientCompany && (
-                      <>
-                        <span className="text-gray-300">|</span>
-                        <span>{invoice.clientCompany}</span>
-                      </>
-                    )}
-                  </div>
-                  <div className="flex items-center gap-4 mt-2 text-xs text-gray-500">
-                    <span>Created: {formatDate(invoice.createdAt)}</span>
-                    <span>Due: {formatDate(invoice.dueDate)}</span>
-                    {invoice.paidAt && <span className="text-green-600">Paid: {formatDate(invoice.paidAt)}</span>}
+
+                  <div className="flex items-center gap-4">
+                    <div className="text-right">
+                      <p className="text-2xl font-bold text-gray-900">{formatCurrency(invoice.total)}</p>
+                      {invoice.status === 'paid' && invoice.paidAmount && invoice.paidAmount !== invoice.total && (
+                        <p className="text-sm text-green-600">Paid: {formatCurrency(invoice.paidAmount)}</p>
+                      )}
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      {/* Status Actions */}
+                      {invoice.status === 'draft' && (
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => updateStatus(invoice.id, 'sent')}
+                          disabled={isUpdating}
+                        >
+                          {isUpdating ? '...' : 'Mark Sent'}
+                        </Button>
+                      )}
+                      {(invoice.status === 'sent' || invoice.status === 'overdue') && (
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => updateStatus(invoice.id, 'paid')}
+                          disabled={isUpdating}
+                          className="text-green-600 hover:bg-green-50"
+                        >
+                          {isUpdating ? '...' : 'Mark Paid'}
+                        </Button>
+                      )}
+
+                      <Link href={`/admin/invoice?id=${invoice.id}`}>
+                        <Button variant="outline" size="sm">
+                          View
+                        </Button>
+                      </Link>
+                    </div>
                   </div>
                 </div>
-
-                <div className="flex items-center gap-4">
-                  <div className="text-right">
-                    <p className="text-2xl font-bold text-gray-900">{formatCurrency(invoice.total)}</p>
-                    {invoice.status === 'paid' && invoice.paidAmount && invoice.paidAmount !== invoice.total && (
-                      <p className="text-sm text-green-600">Paid: {formatCurrency(invoice.paidAmount)}</p>
-                    )}
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    {/* Status Actions */}
-                    {invoice.status === 'draft' && (
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => updateStatus(invoice.id, 'sent')}
-                        disabled={updatingId === invoice.id}
-                      >
-                        {updatingId === invoice.id ? '...' : 'Mark Sent'}
-                      </Button>
-                    )}
-                    {(invoice.status === 'sent' || invoice.status === 'overdue') && (
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => updateStatus(invoice.id, 'paid')}
-                        disabled={updatingId === invoice.id}
-                        className="text-green-600 hover:bg-green-50"
-                      >
-                        {updatingId === invoice.id ? '...' : 'Mark Paid'}
-                      </Button>
-                    )}
-
-                    <Link href={`/admin/invoice?id=${invoice.id}`}>
-                      <Button variant="outline" size="sm">
-                        View
-                      </Button>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </Card>
-          ))}
+              </Card>
+            )
+          })}
         </div>
       )}
     </div>

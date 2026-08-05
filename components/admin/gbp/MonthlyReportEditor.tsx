@@ -7,7 +7,7 @@
  * Shows value delivered to clients
  */
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import {
   Eye,
   TrendingUp,
@@ -18,12 +18,9 @@ import {
   Star,
   Image as ImageIcon,
   FileText,
-  MessageSquare,
   Target,
   CheckCircle,
-  Calendar,
   ArrowRight,
-  Download,
   Save,
   Loader2,
   Building2,
@@ -279,7 +276,6 @@ interface MonthlyReportEditorProps {
 }
 
 export function MonthlyReportEditor({
-  clientId,
   initialData,
   onSave,
 }: MonthlyReportEditorProps) {

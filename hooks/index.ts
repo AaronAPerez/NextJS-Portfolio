@@ -12,7 +12,7 @@
 // Storage Hooks
 // =============================================================================
 
-export { useLocalStorage, default as useLocalStorageDefault } from './useLocalStorage';
+export { useLocalStorage } from './useLocalStorage';
 
 // =============================================================================
 // Clipboard Hooks
@@ -24,13 +24,13 @@ export { useCopyToClipboard, default as useCopyToClipboardDefault } from './useC
 // Performance & Analytics Hooks
 // =============================================================================
 
-export { useWebVitals, default as useWebVitalsDefault } from './useWebVitals';
+export { useWebVitals, useWebVitalsSummary, getMetricRating } from './useWebVitals';
 
 // =============================================================================
 // UI/UX Hooks
 // =============================================================================
 
-export { useIntersectionObserver, default as useIntersectionObserverDefault } from './useIntersectionObserver';
+export { useIntersectionObserver } from './useIntersectionObserver';
 
 // =============================================================================
 // Data Hooks

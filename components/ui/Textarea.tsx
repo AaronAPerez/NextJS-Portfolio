@@ -54,8 +54,10 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
     },
     ref
   ) => {
-    // Generate unique ID if not provided
-    const textareaId = id || `textarea-${React.useId()}`;
+    // Generate unique ID if not provided. useId() must be called
+    // unconditionally (Rules of Hooks) — only the fallback is conditional.
+    const generatedId = React.useId();
+    const textareaId = id || `textarea-${generatedId}`;
 
     // Calculate current character count
     const currentLength = typeof value === 'string' ? value.length : 0;

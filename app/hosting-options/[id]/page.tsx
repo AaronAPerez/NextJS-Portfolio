@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useParams } from 'next/navigation'
+import Image from 'next/image'
 
 interface Provider {
   id: string
@@ -136,7 +137,7 @@ export default function PublicHostingOptionsPage() {
 
         {/* Header */}
         <div className="bg-gradient-to-br from-gray-900 to-gray-800 text-white p-8 text-center print:bg-gray-900">
-          <img src="/AP-Designs-Logo-Indigo-ElectricBlue.webp" alt="Logo" className="w-28 h-28 rounded-full mx-auto mb-4" />
+          <Image src="/AP-Designs-Logo-Indigo-ElectricBlue.webp" alt="Logo" width={112} height={112} priority className="w-28 h-28 rounded-full mx-auto mb-4" />
           <h1 className="text-3xl font-bold mb-2">{data.headerTitle}</h1>
           <p className="text-cyan-400 text-lg">{data.headerSubtitle}</p>
         </div>

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useParams } from 'next/navigation'
+import Image from 'next/image'
 
 interface InvoiceItem {
   id: string
@@ -146,9 +147,12 @@ export default function PublicInvoicePage() {
         <div className="bg-gradient-to-r from-gray-900 to-gray-800 text-white p-8 print:bg-gray-900">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-5">
-              <img
+              <Image
                 src="/AP-Designs-Logo-Indigo-ElectricBlue.webp"
                 alt="Logo"
+                width={90}
+                height={90}
+                priority
                 className="w-[90px] h-[90px] rounded-xl object-contain"
               />
               <div>

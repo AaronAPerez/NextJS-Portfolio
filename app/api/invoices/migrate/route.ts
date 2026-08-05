@@ -75,7 +75,7 @@ export async function GET() {
     `
 
     const requiredColumns = ['sentAt', 'paidAt', 'paidAmount', 'paymentMethod', 'paymentMethods', 'clientId']
-    const existingColumns = columns.map((c: { column_name: string }) => c.column_name)
+    const existingColumns = columns.map((c: Record<string, unknown>) => c.column_name as string)
     const missingColumns = requiredColumns.filter(col => !existingColumns.includes(col))
 
     return NextResponse.json({

@@ -44,7 +44,6 @@ interface ThemeProviderProps {
 
 export function ThemeProvider({
   children,
-  defaultTheme = 'system',
   forcedTheme,
   disableTransitionOnChange = false,
 }: ThemeProviderProps) {

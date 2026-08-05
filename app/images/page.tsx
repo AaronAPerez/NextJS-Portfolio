@@ -1,11 +1,23 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import Tooltip from '@/components/admin/Tooltip'
 
 type ImageType = 'HERO' | 'ABOUT' | 'HACIENDA' | 'BLOG' | 'LOGO' | 'FAVICON' | 'OG_IMAGE' | 'GENERAL'
+
+interface ImageItem {
+  id: string
+  url: string
+  name: string
+  alt?: string
+  type: ImageType
+  size: number
+  width: number
+  height: number
+}
 
 export default function ImagesPage() {
   const [selectedType, setSelectedType] = useState<ImageType | 'all'>('all')
@@ -13,7 +25,7 @@ export default function ImagesPage() {
   const [uploadProgress, setUploadProgress] = useState(0)
 
   // Mock data - replace with actual API call
-  const images: any[] = []
+  const images: ImageItem[] = []
 
   const typeCounts = {
     all: images.length,
@@ -145,7 +157,7 @@ export default function ImagesPage() {
               </div>
               <div className="bg-white p-3 rounded-lg">
                 <div className="text-2xl font-bold text-primary-700">
-                  {(images.reduce((sum: number, img: any) => sum + (img.size || 0), 0) / 1024 / 1024).toFixed(2)} MB
+                  {(images.reduce((sum, img) => sum + (img.size || 0), 0) / 1024 / 1024).toFixed(2)} MB
                 </div>
                 <div className="text-xs text-earth-600">Storage Used</div>
               </div>
@@ -184,13 +196,14 @@ export default function ImagesPage() {
         </Card>
       ) : (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {images.map((image: any) => (
+          {images.map((image) => (
             <Card key={image.id} className="overflow-hidden group hover:shadow-xl transition-shadow">
-              <div className="aspect-square bg-earth-100 overflow-hidden">
-                <img
+              <div className="relative aspect-square bg-earth-100 overflow-hidden">
+                <Image
                   src={image.url}
                   alt={image.alt || image.name}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform"
+                  fill
+                  className="object-cover group-hover:scale-110 transition-transform"
                 />
               </div>
               <div className="p-3">

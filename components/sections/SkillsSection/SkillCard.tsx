@@ -25,7 +25,7 @@ interface SkillCardProps {
 
 // ─── Main Component ───────────────────────────────────────────────────────────
 
-function SkillCard({ skill, index = 0 }: SkillCardProps) {
+function SkillCard({ skill }: SkillCardProps) {
   // Check for reduced motion preference
   const shouldReduceMotion = useReducedMotion();
 

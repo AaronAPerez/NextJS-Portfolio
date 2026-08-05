@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
+import Image from 'next/image'
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import toast, { Toaster } from 'react-hot-toast'
@@ -388,9 +389,12 @@ export default function SettingsPage() {
                       />
                       {settings.companyLogo && (
                         <div className="mt-2 p-4 bg-gray-800 rounded-lg inline-block">
-                          <img
+                          <Image
                             src={settings.companyLogo}
                             alt="Company Logo Preview"
+                            width={200}
+                            height={64}
+                            unoptimized
                             className="h-16 w-auto object-contain"
                           />
                         </div>

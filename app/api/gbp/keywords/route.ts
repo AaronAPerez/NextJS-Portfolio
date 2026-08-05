@@ -8,7 +8,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { sql } from '@/lib/db/neon';
-import type { Keyword, KeywordPerformance, ApiResponse } from '@/types/gbp-database';
+import type { Keyword, ApiResponse } from '@/types/gbp-database';
 
 /**
  * GET /api/gbp/keywords
