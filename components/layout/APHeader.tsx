@@ -10,7 +10,6 @@
  */
 
 import Image from "next/image";
-import React from "react";
 
 interface APHeaderProps {
   /** Path to the logo icon */
@@ -19,14 +18,14 @@ interface APHeaderProps {
   className?: string;
 }
 
-export const APHeader: React.FC<APHeaderProps> = ({
-  iconSrc = "/favicon-48x48.svg",
+export function APHeader({
+  iconSrc = "/images/logo/ap-designs-mark.svg",
   className = "",
-}) => {
+}: APHeaderProps) {
   return (
     <div className={`flex items-center gap-3 sm:gap-4 ${className}`}>
       {/* Logo Icon */}
-      <Image
+      <Image        
         src={iconSrc}
         alt=""
         width={20}
@@ -59,4 +58,4 @@ export const APHeader: React.FC<APHeaderProps> = ({
       </div>
     </div>
   );
-};
+}

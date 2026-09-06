@@ -118,9 +118,9 @@ export default function MessagesPage() {
                     <p>📅 {new Date(message.createdAt).toLocaleString()}</p>
                   </div>
                   <p className="text-earth-800 whitespace-pre-wrap">{message.message}</p>
-                  {(message as any).notes && (
+                  {message.notes && (
                     <div className="mt-3 p-3 bg-earth-50 rounded-lg">
-                      <p className="text-sm text-earth-700"><strong>Notes:</strong> {(message as any).notes}</p>
+                      <p className="text-sm text-earth-700"><strong>Notes:</strong> {message.notes}</p>
                     </div>
                   )}
                 </div>

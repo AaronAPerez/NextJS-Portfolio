@@ -108,7 +108,7 @@ const defaultUIState: GBPUIState = {
 
 export const useGBPStore = create<GBPStoreState>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       // Initial state
       clientFilters: defaultClientFilters,
       leadFilters: defaultLeadFilters,

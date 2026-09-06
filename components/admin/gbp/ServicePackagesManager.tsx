@@ -12,14 +12,11 @@ import {
   X,
   Edit2,
   Save,
-  Plus,
-  Trash2,
   Star,
   Sparkles,
   Zap,
   Crown,
   Package,
-  DollarSign,
   RefreshCw,
   AlertCircle,
 } from 'lucide-react';
@@ -48,29 +45,6 @@ interface ServicePackage {
 }
 
 // ── Default Packages Configuration ────────────────────────────────────────────
-
-const DEFAULT_FEATURES = [
-  { id: 'profile-optimization', name: 'Full GBP Profile Optimization', category: 'core' },
-  { id: 'posts-2', name: '2 GBP Posts/Month', category: 'content' },
-  { id: 'posts-4', name: '4 GBP Posts/Month', category: 'content' },
-  { id: 'posts-8', name: '8 GBP Posts/Month', category: 'content' },
-  { id: 'review-monitoring', name: 'Review Monitoring', category: 'reviews' },
-  { id: 'review-response', name: 'Review Response Templates', category: 'reviews' },
-  { id: 'review-generation', name: 'Review Generation System', category: 'reviews' },
-  { id: 'citations-20', name: '20 Citation Submissions', category: 'citations' },
-  { id: 'citations-40', name: '40 Citation Submissions', category: 'citations' },
-  { id: 'nap-audit', name: 'NAP Consistency Audit', category: 'citations' },
-  { id: 'keywords-10', name: 'Keyword Tracking (10 keywords)', category: 'tracking' },
-  { id: 'keywords-25', name: 'Keyword Tracking (25 keywords)', category: 'tracking' },
-  { id: 'monthly-report', name: 'Monthly Performance Report', category: 'reporting' },
-  { id: 'monthly-call', name: 'Monthly Strategy Call', category: 'support' },
-  { id: 'biweekly-call', name: 'Bi-Weekly Strategy Calls', category: 'support' },
-  { id: 'email-support', name: 'Email Support', category: 'support' },
-  { id: 'priority-support', name: 'Priority Support', category: 'support' },
-  { id: 'competitor-monitoring', name: 'Competitor Monitoring', category: 'tracking' },
-  { id: 'photo-optimization', name: 'Photo Optimization & Geotagging', category: 'content' },
-  { id: 'qa-management', name: 'Q&A Section Management', category: 'content' },
-];
 
 const DEFAULT_PACKAGES: ServicePackage[] = [
   {
@@ -206,7 +180,11 @@ function PackageCard({
   const Icon = PACKAGE_ICONS[pkg.icon] || Package;
   const colors = PACKAGE_COLORS[pkg.color] || PACKAGE_COLORS.blue;
 
+  // Reset the local edit buffer whenever the underlying package data changes
+  // (e.g. after a save elsewhere updates the parent's packages array). This is
+  // prop-to-state syncing, not a data fetch, so React Query doesn't apply here.
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setEditData(pkg);
   }, [pkg]);
 

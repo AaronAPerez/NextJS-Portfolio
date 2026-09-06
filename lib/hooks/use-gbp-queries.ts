@@ -135,7 +135,12 @@ export function useCreateClient(
  * Supports optimistic updates for better UX
  */
 export function useUpdateClient(
-  options?: UseMutationOptions<GBPClient, Error, { id: string; data: UpdateClientInput }>
+  options?: UseMutationOptions<
+    GBPClient,
+    Error,
+    { id: string; data: UpdateClientInput },
+    { previousClient: GBPClient | undefined }
+  >
 ) {
   const queryClient = useQueryClient()
 
@@ -256,7 +261,12 @@ export function useCreateLead(options?: UseMutationOptions<GBPLead, Error, Creat
  * Hook to update a lead with optimistic updates
  */
 export function useUpdateLead(
-  options?: UseMutationOptions<GBPLead, Error, { id: string; data: UpdateLeadInput }>
+  options?: UseMutationOptions<
+    GBPLead,
+    Error,
+    { id: string; data: UpdateLeadInput },
+    { previousLeadsQueries: [readonly unknown[], LeadsData | undefined][] }
+  >
 ) {
   const queryClient = useQueryClient()
 

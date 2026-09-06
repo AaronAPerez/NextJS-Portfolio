@@ -9,7 +9,6 @@
  * import {
  *   ProjectsSection,
  *   ProjectCard,
- *   FeaturedProjectCard,
  *   FilterTabs,
  *   ProjectsSkeleton,
  * } from '@/components/sections/ProjectsSection';
@@ -20,13 +19,12 @@
 export { default as ProjectsSection } from './ProjectsSection';
 export { default } from './ProjectsSection';
 
-// Card components
+// Card component — used uniformly, there is no separate featured card
 export { default as ProjectCard } from './ProjectCard';
-export { default as FeaturedProjectCard } from './FeaturedProjectCard';
 
 // UI components
 export { default as FilterTabs } from './FilterTabs';
-export { default as ProjectsSkeleton, SkeletonCard, FeaturedSkeletonCard } from './ProjectsSkeleton';
+export { default as ProjectsSkeleton, SkeletonCard } from './ProjectsSkeleton';
 
 // Shared components
 export { StatusBadge, TechChip } from './shared';

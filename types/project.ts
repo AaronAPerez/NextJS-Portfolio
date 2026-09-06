@@ -75,10 +75,13 @@ export interface ProjectSEO {
   keywords: string[];
 }
 
-// Project stats for display (commits, lighthouse scores, etc.)
+/**
+ * Contextual detail shown on a project card (e.g. "Houston, TX").
+ *
+ * Point-in-time metrics such as commit counts and Lighthouse scores are
+ * intentionally absent — stored as static values they go stale silently.
+ */
 export interface ProjectStats {
-  commits?: number;
-  lighthouse?: number;
   label?: string;
 }
 
@@ -97,10 +100,10 @@ export interface ProjectDB {
   displayOrder: number;
   tech: string[];
   highlights?: string[];  // Key project highlights/features
-  stats?: ProjectStats;   // Project statistics (commits, lighthouse, etc.)
+  stats?: ProjectStats;   // Contextual card label
   images: ProjectImage[];
   gradient?: ProjectGradient;
-  companyLogo?: string;  // URL to company/client logo image
+  companyLogo?: string | null;  // URL to company/client logo image — DB stores null, not omitted
   demoLink?: string;
   codeLink?: string;
   websiteLink?: string;
@@ -131,7 +134,7 @@ export interface CreateProjectInput {
   displayOrder?: number;
   tech?: string[];
   highlights?: string[];  // Key project highlights
-  stats?: ProjectStats;   // Project statistics
+  stats?: ProjectStats;   // Contextual card label
   images?: ProjectImage[];
   gradient?: ProjectGradient;
   companyLogo?: string;  // URL to company/client logo image
@@ -170,4 +173,45 @@ export interface ProjectFilters {
 // Reorder request type
 export interface ReorderProjectsInput {
   projects: Array<{ id: string; displayOrder: number }>;
+}
+
+// Raw row shape returned by `sql` for the "Project" table. The schema is
+// hybrid (see transformProject in the API routes): legacy columns (images as
+// string[], order, published) coexist with newer ones (images as JSONB
+// objects, displayOrder, status), so most fields here are nullable/loosely
+// typed rather than matching ProjectDB directly.
+export interface ProjectRow {
+  id: string;
+  title: string;
+  description: string;
+  longDescription?: string | null;
+  slug?: string | null;
+  category?: string | null;
+  clientType?: string | null;
+  status?: string | null;
+  published?: boolean | null;
+  featured?: boolean | null;
+  isLive?: boolean | null;
+  displayOrder?: number | null;
+  order?: number | null;
+  tech?: string[] | null;
+  highlights?: string[] | null;
+  stats?: ProjectStats | null;
+  images?: string[] | ProjectImage[] | null;
+  imagesAlt?: string[] | null;
+  gradient?: ProjectGradient | null;
+  gradientFrom?: string | null;
+  gradientTo?: string | null;
+  companyLogo?: string | null;
+  demoLink?: string | null;
+  codeLink?: string | null;
+  websiteLink?: string | null;
+  businessImpact?: BusinessImpact | null;
+  technicalHighlights?: TechnicalHighlights | null;
+  timeline?: string | null;
+  teamSize?: string | null;
+  role?: string | null;
+  seo?: ProjectSEO | null;
+  createdAt: string;
+  updatedAt: string;
 }

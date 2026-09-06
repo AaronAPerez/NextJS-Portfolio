@@ -7,7 +7,8 @@
  * Features: Client list, stats overview, quick actions, filtering
  */
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState } from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import Link from 'next/link';
 import {
   Building2,
@@ -15,7 +16,6 @@ import {
   TrendingUp,
   Star,
   MapPin,
-  Phone,
   Globe,
   FileText,
   Plus,
@@ -41,27 +41,14 @@ const STATUS_CONFIG: Record<ClientStatus, { bg: string; text: string; label: str
 };
 
 export default function GBPDashboard() {
-  // State for clients and filtering
-  const [clients, setClients] = useState<ClientDashboardStats[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const queryClient = useQueryClient();
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<ClientStatus | 'all'>('all');
 
-  // Aggregate stats
-  const [stats, setStats] = useState({
-    totalClients: 0,
-    activeClients: 0,
-    totalRevenue: 0,
-    pendingActions: 0,
-  });
-
   // Fetch clients from API
-  const fetchClients = useCallback(async () => {
-    setLoading(true);
-    setError(null);
-
-    try {
+  const clientsQuery = useQuery({
+    queryKey: ['gbp-dashboard-clients', statusFilter],
+    queryFn: async () => {
       const params = new URLSearchParams();
       if (statusFilter !== 'all') {
         params.set('status', statusFilter);
@@ -70,44 +57,33 @@ export default function GBPDashboard() {
       const response = await fetch(`/api/gbp/clients?${params.toString()}`);
       const data = await response.json();
 
-      if (data.success) {
-        setClients(data.data);
-
-        // Calculate aggregate stats
-        const activeCount = data.data.filter(
-          (c: ClientDashboardStats) => c.status === 'active'
-        ).length;
-        const totalFees = data.data.reduce(
-          (sum: number, c: ClientDashboardStats) =>
-            c.status === 'active' ? sum + (c.monthly_fee || 0) : sum,
-          0
-        );
-        const totalPending = data.data.reduce(
-          (sum: number, c: ClientDashboardStats) => sum + (c.pending_actions || 0),
-          0
-        );
-
-        setStats({
-          totalClients: data.data.length,
-          activeClients: activeCount,
-          totalRevenue: totalFees,
-          pendingActions: totalPending,
-        });
-      } else {
-        setError(data.error || 'Failed to fetch clients');
+      if (!data.success) {
+        throw new Error(data.error || 'Failed to fetch clients');
       }
-    } catch (err) {
-      console.error('Error fetching clients:', err);
-      setError('Failed to connect to the server');
-    } finally {
-      setLoading(false);
-    }
-  }, [statusFilter]);
+      return data.data as ClientDashboardStats[];
+    },
+  });
 
-  // Initial fetch
-  useEffect(() => {
-    fetchClients();
-  }, [fetchClients]);
+  const clients = clientsQuery.data ?? [];
+  const loading = clientsQuery.isLoading;
+  const error = clientsQuery.error instanceof Error
+    ? clientsQuery.error.message
+    : (clientsQuery.error ? 'Failed to connect to the server' : null);
+
+  const fetchClients = () => {
+    queryClient.invalidateQueries({ queryKey: ['gbp-dashboard-clients'] });
+  };
+
+  // Aggregate stats, derived directly from the fetched clients
+  const stats = {
+    totalClients: clients.length,
+    activeClients: clients.filter((c) => c.status === 'active').length,
+    totalRevenue: clients.reduce(
+      (sum, c) => (c.status === 'active' ? sum + (c.monthly_fee || 0) : sum),
+      0
+    ),
+    pendingActions: clients.reduce((sum, c) => sum + (c.pending_actions || 0), 0),
+  };
 
   // Filter clients by search query
   const filteredClients = clients.filter((client) =>
@@ -408,7 +384,7 @@ interface MetricPillProps {
   color?: 'default' | 'amber';
 }
 
-function MetricPill({ icon, label, value, subValue, color = 'default' }: MetricPillProps) {
+function MetricPill({ icon, value, subValue, color = 'default' }: MetricPillProps) {
   const colorClasses = color === 'amber'
     ? 'bg-amber-500/10 border-amber-500/20 text-amber-400'
     : 'bg-white/5 border-white/10 text-gray-300';

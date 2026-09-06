@@ -24,7 +24,7 @@ export default async function FilesPage({ params }: FilesPageParams) {
       <h1 className="text-2xl font-bold mb-6">{site.name} Files</h1>
 
       <ul className="space-y-2">
-        {files.map((file: any) => (
+        {files.map((file) => (
           <li key={file.path}>
             <a
               href={`/admin/${site.id}/edit/${encodeURIComponent(file.path)}`}

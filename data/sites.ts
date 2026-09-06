@@ -1,4 +1,4 @@
-export default [
+const sites = [
   {
     id: "goldmine",
     name: "Goldmine Communications",
@@ -18,3 +18,5 @@ export default [
     domain: "https://www.aaronaperez.dev",
   },
 ];
+
+export default sites;

@@ -126,7 +126,7 @@ export function GBPReportEditor({
           ].map(([label, key]) => (
             <Field key={key} label={label}>
               <NumberInput
-                value={(ins as Record<string, number>)[key]}
+                value={(ins as unknown as Record<string, number>)[key]}
                 onChange={(v) => onChange({ insights: { ...ins, [key]: v } })}
               />
             </Field>
@@ -146,7 +146,7 @@ export function GBPReportEditor({
           ].map(([label, key]) => (
             <Field key={key} label={label}>
               <NumberInput
-                value={(ins as Record<string, number>)[key]}
+                value={(ins as unknown as Record<string, number>)[key]}
                 onChange={(v) => onChange({ insights: { ...ins, [key]: v } })}
               />
             </Field>
@@ -167,7 +167,7 @@ export function GBPReportEditor({
           ].map(([label, key]) => (
             <Field key={key} label={label}>
               <NumberInput
-                value={(rev as Record<string, number>)[key]}
+                value={(rev as unknown as Record<string, number>)[key]}
                 onChange={(v) => onChange({ reviews: { ...rev, [key]: v } })}
               />
             </Field>

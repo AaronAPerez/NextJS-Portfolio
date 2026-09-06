@@ -1,13 +1,12 @@
 /**
  * ProjectsSection Component
  *
- * Main projects showcase section displaying featured and grid project cards.
+ * Main projects showcase section displaying every project as a uniform card.
  * Fetches from database with fallback to static data.
  *
  * Features:
  * - Database integration with fallback to static projects
  * - Category filtering with animated transitions
- * - Featured project highlighting
  * - Loading skeleton states
  * - Responsive grid layout
  */
@@ -16,6 +15,7 @@
 
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Layers } from 'lucide-react';
 
 // Hooks
 import { useProjects } from '@/hooks/useProjects';
@@ -27,7 +27,7 @@ import { PROJECTS } from '@/components/config/projects';
 import type { FilterTab } from '@/types/display-project';
 
 // Components
-import FeaturedProjectCard from './FeaturedProjectCard';
+import { SectionHeader } from '@/components/sections/shared';
 import ProjectCard from './ProjectCard';
 import FilterTabs from './FilterTabs';
 import ProjectsSkeleton from './ProjectsSkeleton';
@@ -38,36 +38,30 @@ import {
   mapStaticToDisplay,
   calculateFilterCounts,
   filterProjectsByCategory,
-  separateFeaturedProject,
 } from './utils/project-mappers';
 
 // Animations
-import { containerVariants, itemVariants } from './animations';
+const containerVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.45,
+      staggerChildren: 0.08,
+    },
+  },
+  exit: { opacity: 0, y: -10, transition: { duration: 0.2 } },
+};
 
-// ─── Section Header ───────────────────────────────────────────────────────────
-
-function SectionHeader() {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5 }}
-      className="mb-8 flex flex-col text-center items-center"
-    >
-      <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-blue-600 dark:text-blue-400">
-        Selected work
-      </p>
-      <h2 className="text-3xl font-semibold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
-        Production projects
-      </h2>
-      <p className="mt-3 max-w-xl text-base text-gray-500 dark:text-gray-400">
-        Real sites for real businesses — not demos. Each one is live, maintained, and
-        driving results for clients.
-      </p>
-    </motion.div>
-  );
-}
+const itemVariants = {
+  hidden: { opacity: 0, y: 16 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.35 },
+  },
+};
 
 // ─── Empty State ──────────────────────────────────────────────────────────────
 
@@ -106,41 +100,35 @@ const ProjectsSection = () => {
     [displayProjects, activeFilter]
   );
 
-  // Separate featured and other projects
-  const { featured: featuredProject, others: otherProjects } = useMemo(
-    () => separateFeaturedProject(filteredProjects),
-    [filteredProjects]
-  );
-
   // Calculate counts for filter tabs
   const filterCounts = useMemo(
     () => calculateFilterCounts(displayProjects),
     [displayProjects]
   );
 
-  // Whether to show featured card (only on 'all' filter)
-  const showFeatured = featuredProject && activeFilter === 'all';
-
   return (
-    <section
-      id="projects"
-      className="bg-gray-50 py-20 dark:bg-gray-900/50 sm:py-28"
-      aria-label="Projects"
-    >
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col text-center items-center">
+    <div className="bg-gray-50 py-20 dark:bg-gray-900/50 sm:py-28">
+      <div className="mx-auto flex max-w-7xl flex-col items-center px-4 sm:px-6 lg:px-8">
         {/* Section header */}
-        <SectionHeader />
+        <SectionHeader
+          icon={Layers}
+          titleId="projects-heading"
+          title="Production Projects"
+          description="Real sites for real businesses — not demos. Each one is live, maintained, and driving results for clients."
+          className="mb-12 w-full"
+        />
 
         {/* Filter tabs */}
         <FilterTabs
           activeTab={activeFilter}
           onTabChange={setActiveFilter}
           counts={filterCounts}
+          className="w-full"
         />
 
         {/* Content area */}
         {isLoading ? (
-          <ProjectsSkeleton count={3} showFeatured />
+          <ProjectsSkeleton count={5} />
         ) : (
           <AnimatePresence mode="wait">
             <motion.div
@@ -151,22 +139,16 @@ const ProjectsSection = () => {
               exit="exit"
               role="tabpanel"
               id={`projects-panel-${activeFilter}`}
+              className="w-full"
             >
-              {/* Featured project card */}
-              {showFeatured && (
-                <motion.div variants={itemVariants} className="mb-6">
-                  <FeaturedProjectCard project={featuredProject} />
-                </motion.div>
-              )}
-
-              {/* Projects grid */}
+              {/* Projects grid — every project renders as the same card */}
               <motion.div
                 variants={containerVariants}
-                className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
+                className="grid sm:grid-cols-1 gap-6 text-left md:grid-cols-2"
               >
-                {otherProjects.map((project) => (
+                {filteredProjects.map((project, index) => (
                   <motion.div key={project.id} variants={itemVariants}>
-                    <ProjectCard project={project} />
+                    <ProjectCard project={project} priority={index < 3} />
                   </motion.div>
                 ))}
               </motion.div>
@@ -177,7 +159,7 @@ const ProjectsSection = () => {
           </AnimatePresence>
         )}
       </div>
-    </section>
+    </div>
   );
 };
 

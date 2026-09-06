@@ -1,6 +1,8 @@
 'use client'
 
 import { useState, useCallback, useEffect } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import Image from 'next/image'
 import { Button } from '@/components/ui/Button'
 import {
   PayPalIcon, VenmoIcon
@@ -101,6 +103,18 @@ interface InvoiceFormProps {
   initialInvoiceId?: string | null
 }
 
+// Pure formatting helpers — hoisted out of the component so they have a
+// stable identity across renders (no need to list them as effect/callback deps).
+function formatCurrency(amount: number) {
+  return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(amount)
+}
+
+function formatDate(dateStr: string) {
+  if (!dateStr) return ''
+  const date = new Date(dateStr)
+  return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+}
+
 export default function InvoiceForm({ initialInvoiceId }: InvoiceFormProps) {
   const [data, setData] = useState<InvoiceData>(defaultInvoiceData)
   const [isEditing, setIsEditing] = useState(true)
@@ -112,7 +126,6 @@ export default function InvoiceForm({ initialInvoiceId }: InvoiceFormProps) {
   const [emailStatus, setEmailStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
   const [emailError, setEmailError] = useState<string | null>(null)
   const [selectedClientId, setSelectedClientId] = useState<string | null>(null)
-  const [isLoadingInvoice, setIsLoadingInvoice] = useState(!!initialInvoiceId)
 
   // Load saved invoices on mount
   useEffect(() => {
@@ -131,65 +144,76 @@ export default function InvoiceForm({ initialInvoiceId }: InvoiceFormProps) {
   }, [])
 
   // Load initial invoice if ID is provided via URL
+  const invoiceQuery = useQuery({
+    queryKey: ['invoice', initialInvoiceId],
+    queryFn: async () => {
+      const res = await fetch(`/api/invoices/${initialInvoiceId}`)
+      if (!res.ok) {
+        throw new Error('Failed to load invoice')
+      }
+      return res.json()
+    },
+    enabled: !!initialInvoiceId,
+  })
+  const isLoadingInvoice = invoiceQuery.isLoading && !!initialInvoiceId
+
+  // Seed the editable form state from the fetched invoice once it loads.
+  // This is a one-time derivation from query data into local editable state
+  // (the form is then the source of truth) rather than an ongoing sync.
   useEffect(() => {
-    if (initialInvoiceId) {
-      setIsLoadingInvoice(true)
-      fetch(`/api/invoices/${initialInvoiceId}`)
-        .then(res => res.json())
-        .then(invoice => {
-          // Parse items if it's a string (from JSON column)
-          let parsedItems = invoice.items
-          if (typeof invoice.items === 'string') {
-            try {
-              parsedItems = JSON.parse(invoice.items)
-            } catch {
-              parsedItems = [{ id: '1', description: '', quantity: 1, rate: 0 }]
-            }
-          }
+    const invoice = invoiceQuery.data
+    if (!invoice || !initialInvoiceId) return
 
-          // Parse paymentMethods if it's a string
-          let parsedPaymentMethods = invoice.paymentMethods
-          if (typeof invoice.paymentMethods === 'string') {
-            try {
-              parsedPaymentMethods = JSON.parse(invoice.paymentMethods)
-            } catch {
-              parsedPaymentMethods = defaultPaymentMethods
-            }
-          }
-
-          setData({
-            companyName: invoice.companyName || 'AP Designs',
-            companyAddress: invoice.companyAddress || '',
-            companyCity: invoice.companyCity || '',
-            companyPhone: invoice.companyPhone || '',
-            companyEmail: invoice.companyEmail || '',
-            companyWebsite: invoice.companyWebsite || '',
-            invoiceNumber: invoice.invoiceNumber || '',
-            invoiceDate: invoice.invoiceDate?.split('T')[0] || '',
-            dueDate: invoice.dueDate?.split('T')[0] || '',
-            clientId: invoice.clientId || null,
-            clientName: invoice.clientName || '',
-            clientCompany: invoice.clientCompany || '',
-            clientAddress: invoice.clientAddress || '',
-            clientCity: invoice.clientCity || '',
-            clientEmail: invoice.clientEmail || '',
-            clientPhone: invoice.clientPhone || '',
-            items: parsedItems || [{ id: '1', description: '', quantity: 1, rate: 0 }],
-            notes: invoice.notes || '',
-            terms: invoice.terms || '',
-            taxRate: Number(invoice.taxRate) || 0,
-            paymentMethods: parsedPaymentMethods || defaultPaymentMethods,
-          })
-          setInvoiceId(initialInvoiceId)
-          // Set the selected client ID for the dropdown
-          if (invoice.clientId) {
-            setSelectedClientId(invoice.clientId)
-          }
-        })
-        .catch(err => console.error('Failed to load invoice:', err))
-        .finally(() => setIsLoadingInvoice(false))
+    // Parse items if it's a string (from JSON column)
+    let parsedItems = invoice.items
+    if (typeof invoice.items === 'string') {
+      try {
+        parsedItems = JSON.parse(invoice.items)
+      } catch {
+        parsedItems = [{ id: '1', description: '', quantity: 1, rate: 0 }]
+      }
     }
-  }, [initialInvoiceId])
+
+    // Parse paymentMethods if it's a string
+    let parsedPaymentMethods = invoice.paymentMethods
+    if (typeof invoice.paymentMethods === 'string') {
+      try {
+        parsedPaymentMethods = JSON.parse(invoice.paymentMethods)
+      } catch {
+        parsedPaymentMethods = defaultPaymentMethods
+      }
+    }
+
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setData({
+      companyName: invoice.companyName || 'AP Designs',
+      companyAddress: invoice.companyAddress || '',
+      companyCity: invoice.companyCity || '',
+      companyPhone: invoice.companyPhone || '',
+      companyEmail: invoice.companyEmail || '',
+      companyWebsite: invoice.companyWebsite || '',
+      invoiceNumber: invoice.invoiceNumber || '',
+      invoiceDate: invoice.invoiceDate?.split('T')[0] || '',
+      dueDate: invoice.dueDate?.split('T')[0] || '',
+      clientId: invoice.clientId || null,
+      clientName: invoice.clientName || '',
+      clientCompany: invoice.clientCompany || '',
+      clientAddress: invoice.clientAddress || '',
+      clientCity: invoice.clientCity || '',
+      clientEmail: invoice.clientEmail || '',
+      clientPhone: invoice.clientPhone || '',
+      items: parsedItems || [{ id: '1', description: '', quantity: 1, rate: 0 }],
+      notes: invoice.notes || '',
+      terms: invoice.terms || '',
+      taxRate: Number(invoice.taxRate) || 0,
+      paymentMethods: parsedPaymentMethods || defaultPaymentMethods,
+    })
+    setInvoiceId(initialInvoiceId)
+    // Set the selected client ID for the dropdown
+    if (invoice.clientId) {
+      setSelectedClientId(invoice.clientId)
+    }
+  }, [invoiceQuery.data, initialInvoiceId])
 
   const updateField = useCallback(<K extends keyof InvoiceData>(field: K, value: InvoiceData[K]) => {
     setData(prev => ({ ...prev, [field]: value }))
@@ -243,16 +267,6 @@ export default function InvoiceForm({ initialInvoiceId }: InvoiceFormProps) {
   const subtotal = data.items.reduce((sum, item) => sum + item.quantity * item.rate, 0)
   const tax = subtotal * (data.taxRate / 100)
   const total = subtotal + tax
-
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(amount)
-  }
-
-  const formatDate = (dateStr: string) => {
-    if (!dateStr) return ''
-    const date = new Date(dateStr)
-    return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
-  }
 
   // Generate clean print HTML
   const handlePrint = useCallback(() => {
@@ -518,7 +532,7 @@ export default function InvoiceForm({ initialInvoiceId }: InvoiceFormProps) {
       </html>
     `)
     printWindow.document.close()
-  }, [data, subtotal, tax, total, formatCurrency, formatDate])
+  }, [data, subtotal, tax, total])
 
   // Send invoice via email (with clickable payment links)
   const handleSendEmail = useCallback(async () => {
@@ -811,7 +825,7 @@ export default function InvoiceForm({ initialInvoiceId }: InvoiceFormProps) {
          p-8">
             <div className="flex justify-between items-center">
               <div className="flex gap-5">
-                <img src="/AP-Designs-Logo-Indigo-ElectricBlue.webp" alt="AP Designs Logo" className="logo w-[90px] h-[90px] rounded-full object-contain" />
+                <Image src="/AP-Designs-Logo-Indigo-ElectricBlue.webp" alt="AP Designs Logo" width={90} height={90} priority className="logo w-[90px] h-[90px] rounded-full object-contain" />
                 <div className="text-left">
                   {isEditing ? (
                     <input type="text" value={data.companyName} onChange={(e) => updateField('companyName', e.target.value)}

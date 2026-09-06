@@ -20,7 +20,7 @@ interface RouteParams {
  * Retrieves a single action item
  */
 export async function GET(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: RouteParams
 ) {
   try {
@@ -110,7 +110,7 @@ export async function PUT(
  * Removes an action item
  */
 export async function DELETE(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: RouteParams
 ) {
   try {

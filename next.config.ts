@@ -3,10 +3,6 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   devIndicators: false,
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-
 
   // Performance optimizations
   reactStrictMode: true,
@@ -57,11 +53,6 @@ const nextConfig: NextConfig = {
           {
             key: 'Cross-Origin-Opener-Policy',
             value: 'same-origin',
-          },
-          // Cache static assets
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
           },
         ],
       },

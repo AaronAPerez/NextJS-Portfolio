@@ -74,7 +74,7 @@ export default function ExportsPage() {
           [type]: { type, status: 'idle' }
         }))
       }, 3000)
-    } catch (error) {
+    } catch {
       setExportStatuses(prev => ({
         ...prev,
         [type]: { type, status: 'error', message: 'Export failed. Please try again.' }

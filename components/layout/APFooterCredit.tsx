@@ -1,5 +1,5 @@
-import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 interface APFooterCreditProps {
   iconSrc?: string;     // geometric blocks icon
@@ -7,19 +7,21 @@ interface APFooterCreditProps {
   utmSource?: string;   // track which site the click came from
 }
 
-export const APFooterCredit: React.FC<APFooterCreditProps> = ({
-  iconSrc = "/favicon-48x48.svg", // export just the blocks as a separate file
+export function APFooterCredit({
+  iconSrc = "/images/logo/ap-designs-mark.svg",
   className = "",
   utmSource = "footer",
-}) => {
+}: APFooterCreditProps) {
   return (
     <footer className={`py-6 text-center ${className}`}>
       <div className="inline-flex items-center gap-3 opacity-80 hover:opacity-100 transition-opacity">
 
         {/* LEFT: Logo Icon */}
-        <img
+        <Image
           src={iconSrc}
           alt="AP Designs Logo Icon"
+          width={32}
+          height={32}
           className="h-8 w-auto opacity-90"
         />
 
@@ -41,4 +43,4 @@ export const APFooterCredit: React.FC<APFooterCreditProps> = ({
       </div>
     </footer>
   );
-};
+}

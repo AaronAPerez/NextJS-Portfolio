@@ -39,13 +39,13 @@ export const FloatingCTA = () => {
             <div>
               <h3 className="font-bold mb-1">Looking to Hire?</h3>
               <p className="text-sm text-white/90 mb-3">
-                I'm available for full-time, contract, or freelance opportunities
+                I&apos;m available for full-time, contract, or freelance opportunities
               </p>
               <a
                 href="#contact"
                 className="inline-block px-4 py-2 bg-white text-blue-600 rounded-lg font-semibold text-sm hover:bg-gray-100 transition"
               >
-                Let's Talk
+                Let&apos;s Talk
               </a>
             </div>
           </div>

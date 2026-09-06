@@ -44,8 +44,12 @@ function FilterTabs({
   className = '',
 }: FilterTabsProps) {
   return (
-    <div className={`mb-8 flex flex-wrap gap-2 ${className}`} role="tablist">
-      {FILTER_TABS.map((tab) => {
+    <div
+      className={`mb-10 flex flex-wrap justify-center gap-2 ${className}`}
+      role="tablist"
+    >
+      {/* Categories with nothing in them are noise on a four-project portfolio */}
+      {FILTER_TABS.filter((tab) => tab.id === 'all' || counts[tab.id] > 0).map((tab) => {
         const isActive = activeTab === tab.id;
 
         return (
@@ -55,10 +59,10 @@ function FilterTabs({
             role="tab"
             aria-selected={isActive}
             aria-controls={`projects-panel-${tab.id}`}
-            className={`inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-medium transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 ${
+            className={`inline-flex items-center gap-1.5 rounded-full border px-4 py-2 text-sm font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 ${
               isActive
-                ? 'bg-blue-600 text-white shadow-sm dark:bg-blue-500'
-                : 'bg-white text-gray-600 hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700'
+                ? 'border-transparent bg-blue-600 text-white shadow-sm dark:bg-blue-500'
+                : 'border-gray-200 bg-white text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700'
             }`}
           >
             {tab.label}

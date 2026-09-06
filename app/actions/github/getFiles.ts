@@ -1,6 +1,12 @@
 "use server";
 
-export async function getFiles(owner: string, repo: string, path: string = "") {
+// Minimal shape of a GitHub Contents API entry — only the fields this app uses.
+export interface GitHubFile {
+  name: string;
+  path: string;
+}
+
+export async function getFiles(owner: string, repo: string, path: string = ""): Promise<GitHubFile[]> {
   const res = await fetch(
     `https://api.github.com/repos/${owner}/${repo}/contents/${path}`,
     {

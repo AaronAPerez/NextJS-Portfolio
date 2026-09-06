@@ -94,7 +94,7 @@ export default function DashboardPage() {
         <div>
           <h1 className="text-3xl font-bold text-black">Dashboard</h1>
           <p className="mt-1 text-sm text-earth-500">
-            Welcome back! Here's what's happening with your website.
+            Welcome back! Here&apos;s what&apos;s happening with your website.
           </p>
         </div>
         <Tooltip content="Restart the guided tour">

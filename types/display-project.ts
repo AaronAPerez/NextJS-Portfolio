@@ -11,10 +11,14 @@ export interface ProjectGradient {
   to: string;
 }
 
-// Project statistics for display
+/**
+ * Contextual detail shown on a project card.
+ *
+ * Deliberately narrow: commit counts and Lighthouse scores used to live here as
+ * hardcoded numbers that drifted out of date the moment a project changed, so
+ * only durable context (service area, domain) is kept.
+ */
 export interface ProjectStats {
-  commits?: number;
-  lighthouse?: number;
   label?: string;
 }
 

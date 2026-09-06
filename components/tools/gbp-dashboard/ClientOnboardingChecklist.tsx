@@ -12,7 +12,6 @@ import {
   CheckCircle2,
   Circle,
   Clock,
-  AlertCircle,
   ChevronDown,
   ChevronRight,
   Building2,
@@ -172,7 +171,7 @@ const ONBOARDING_PHASES: OnboardingPhase[] = [
         title: 'Business photos collected (10+ recommended)',
         description: 'Interior, exterior, team, products/services',
         required: true,
-        autoCheck: (c) => (parseInt(c.photo_count || '0') >= 10),
+        autoCheck: (c) => (c.photo_count || 0) >= 10,
       },
       {
         id: 'geotagged',
@@ -363,10 +362,12 @@ export function ClientOnboardingChecklist({
   const [manualChecks, setManualChecks] = useState<string[]>([]);
   const [expandedPhases, setExpandedPhases] = useState<string[]>(['intake']);
 
-  // Load saved progress from localStorage
+  // Load saved progress from localStorage. Synchronous local read, not a
+  // data fetch, so there's no React Query migration that applies here.
   useEffect(() => {
     const saved = localStorage.getItem(`onboarding_${client.id}`);
     if (saved) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setManualChecks(JSON.parse(saved));
     }
   }, [client.id]);

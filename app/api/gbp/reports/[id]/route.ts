@@ -20,7 +20,7 @@ interface RouteParams {
  * Retrieves a single report with all related data
  */
 export async function GET(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: RouteParams
 ) {
   try {
@@ -187,7 +187,7 @@ export async function PUT(
  * Removes a report and its associated goals/action items
  */
 export async function DELETE(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: RouteParams
 ) {
   try {

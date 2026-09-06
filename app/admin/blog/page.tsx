@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import Tooltip from '@/components/admin/Tooltip'
@@ -122,11 +123,13 @@ export default function BlogPage() {
           {filteredPosts?.map((post) => (
             <Card key={post.id} className="overflow-hidden hover:shadow-xl transition-shadow">
               {post.coverImage && (
-                <div className="h-48 bg-earth-200 overflow-hidden">
-                  <img
+                <div className="relative h-48 bg-earth-200 overflow-hidden">
+                  <Image
                     src={post.coverImage}
                     alt={post.title}
-                    className="w-full h-full object-cover hover:scale-105 transition-transform"
+                    fill
+                    unoptimized
+                    className="object-cover hover:scale-105 transition-transform"
                   />
                 </div>
               )}

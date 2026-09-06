@@ -335,7 +335,7 @@ export const AIChat = () => {
                     AI Assistant
                   </h3>
                   <p className="text-gray-400 text-xs sm:text-sm">
-                    Ask me about Aaron's work
+                    Ask me about Aaron&apos;s work
                   </p>
                 </div>
               </div>

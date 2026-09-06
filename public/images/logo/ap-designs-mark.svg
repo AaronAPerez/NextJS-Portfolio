@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="AP Designs">
+  <title>AP Designs</title>
+  <!--
+    The AP Designs block mark: three outlined blocks holding a triangle, a
+    square and a circle. Transparent background so it can sit on any surface —
+    the tab/app-icon variant with its own backdrop lives in app/icon.svg.
+  -->
+  <defs>
+    <linearGradient id="ap-mark" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#60A5FA" />
+      <stop offset="0.55" stop-color="#818CF8" />
+      <stop offset="1" stop-color="#A855F7" />
+    </linearGradient>
+  </defs>
+
+  <g fill="none" stroke="url(#ap-mark)" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round">
+    <!-- Top block: triangle -->
+    <rect x="20.5" y="7.5" width="23" height="23" rx="2.5" />
+    <path d="M32 14.5 L37 24 L27 24 Z" />
+
+    <!-- Bottom-left block: square -->
+    <rect x="8.5" y="31.5" width="23" height="23" rx="2.5" />
+    <rect x="15.5" y="38.5" width="9" height="9" rx="1.5" />
+
+    <!-- Bottom-right block: circle -->
+    <rect x="32.5" y="31.5" width="23" height="23" rx="2.5" />
+    <circle cx="44" cy="43" r="4.75" />
+  </g>
+</svg>

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { z } from 'zod';
+import type { ContactApiResponse } from '@/types';
 
 // Lazy initialization of Resend to avoid build-time errors
 const getResendClient = () => {
@@ -320,8 +321,9 @@ export async function POST(request: NextRequest) {
     const validationResult = contactFormSchema.safeParse(body);
 
     if (!validationResult.success) {
-      return NextResponse.json(
+      return NextResponse.json<ContactApiResponse>(
         {
+          success: false,
           message: 'Validation failed',
           errors: validationResult.error.issues
         },
@@ -335,7 +337,7 @@ export async function POST(request: NextRequest) {
     if (website || _gotcha) {
       console.log('Spam detected: honeypot field filled');
       // Return success to not alert the bot, but don't send email
-      return NextResponse.json(
+      return NextResponse.json<ContactApiResponse>(
         { message: 'Message sent successfully!', success: true },
         { status: 200 }
       );
@@ -347,7 +349,7 @@ export async function POST(request: NextRequest) {
       if (timeToFill < MIN_FORM_FILL_TIME) {
         console.log(`Spam detected: form filled too quickly (${timeToFill}ms)`);
         // Return success to not alert the bot, but don't send email
-        return NextResponse.json(
+        return NextResponse.json<ContactApiResponse>(
           { message: 'Message sent successfully!', success: true },
           { status: 200 }
         );
@@ -359,7 +361,7 @@ export async function POST(request: NextRequest) {
     if (spamCheck.isSpam) {
       console.log(`Spam detected: ${spamCheck.reason} - Name: "${name}", Subject: "${subject}"`);
       // Return success to not alert the bot, but don't send email
-      return NextResponse.json(
+      return NextResponse.json<ContactApiResponse>(
         { message: 'Message sent successfully!', success: true },
         { status: 200 }
       );
@@ -400,7 +402,7 @@ export async function POST(request: NextRequest) {
       // Admin email is more important
     }
 
-    return NextResponse.json(
+    return NextResponse.json<ContactApiResponse>(
       {
         message: 'Message sent successfully! Check your email for confirmation.',
         success: true
@@ -413,8 +415,9 @@ export async function POST(request: NextRequest) {
 
     // Return appropriate error response
     if (error instanceof z.ZodError) {
-      return NextResponse.json(
+      return NextResponse.json<ContactApiResponse>(
         {
+          success: false,
           message: 'Invalid form data',
           errors: error.issues
         },
@@ -422,7 +425,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    return NextResponse.json(
+    return NextResponse.json<ContactApiResponse>(
       {
         message: 'Failed to send message. Please try again later.',
         success: false

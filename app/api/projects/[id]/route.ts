@@ -9,7 +9,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { sql } from '@/lib/db';
 import { slugify } from '@/lib/utils';
-import type { UpdateProjectInput, ProjectImage } from '@/types/project';
+import type { UpdateProjectInput, ProjectImage, ProjectRow } from '@/types/project';
 
 interface RouteParams {
   params: Promise<{ id: string }>;
@@ -19,23 +19,22 @@ interface RouteParams {
  * Transform raw database row to ProjectDB format
  * Handles both legacy and new schema formats
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function transformProject(row: any) {
-  // Handle images - can be ARRAY of strings (legacy) or JSONB array of objects (new)
+function transformProject(row: ProjectRow) {
+  // Handle images - can be ARRAY of strings (legacy) or JSONB array of objects (new).
+  // A single element's typeof check can't narrow the whole array's type, so the
+  // casts below are asserting what the runtime check just confirmed.
   let images: ProjectImage[] = [];
-  if (row.images) {
-    if (Array.isArray(row.images)) {
-      if (row.images.length > 0 && typeof row.images[0] === 'string') {
-        // Legacy format: convert string URLs to ProjectImage objects
-        images = row.images.map((url: string, idx: number) => ({
-          id: `img-${idx}`,
-          url,
-          alt: row.imagesAlt?.[idx] || row.title,
-          isPrimary: idx === 0,
-        }));
-      } else {
-        images = row.images;
-      }
+  if (Array.isArray(row.images) && row.images.length > 0) {
+    if (typeof row.images[0] === 'string') {
+      // Legacy format: convert string URLs to ProjectImage objects
+      images = (row.images as string[]).map((url, idx) => ({
+        id: `img-${idx}`,
+        url,
+        alt: row.imagesAlt?.[idx] || row.title,
+        isPrimary: idx === 0,
+      }));
+    } else {
+      images = row.images as ProjectImage[];
     }
   }
 
@@ -86,7 +85,7 @@ function transformProject(row: any) {
  * Retrieves a single project by ID or slug.
  */
 export async function GET(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: RouteParams
 ) {
   try {
@@ -106,7 +105,7 @@ export async function GET(
       );
     }
 
-    return NextResponse.json({ project: transformProject(projects[0]) });
+    return NextResponse.json({ project: transformProject(projects[0] as ProjectRow) });
   } catch (error) {
     console.error('Error fetching project:', error);
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
@@ -189,6 +188,8 @@ export async function PUT(
         "gradient" = COALESCE(${data.gradient ? JSON.stringify(data.gradient) : null}::jsonb, "gradient"),
         "gradientFrom" = COALESCE(${data.gradient?.from || null}, "gradientFrom"),
         "gradientTo" = COALESCE(${data.gradient?.to || null}, "gradientTo"),
+        "companyLogo" = COALESCE(${data.companyLogo || null}, "companyLogo"),
+        "stats" = COALESCE(${data.stats ? JSON.stringify(data.stats) : null}::jsonb, "stats"),
         "demoLink" = COALESCE(${data.demoLink}, "demoLink"),
         "codeLink" = COALESCE(${data.codeLink}, "codeLink"),
         "websiteLink" = COALESCE(${data.websiteLink}, "websiteLink"),
@@ -203,7 +204,7 @@ export async function PUT(
       RETURNING *
     `;
 
-    return NextResponse.json({ project: transformProject(result[0]) });
+    return NextResponse.json({ project: transformProject(result[0] as ProjectRow) });
   } catch (error) {
     console.error('Error updating project:', error);
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
@@ -223,7 +224,7 @@ export async function PUT(
  * Deletes a project by ID.
  */
 export async function DELETE(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: RouteParams
 ) {
   try {

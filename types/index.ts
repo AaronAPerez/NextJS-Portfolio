@@ -161,6 +161,13 @@ export interface ContactFormErrors {
   message?: string;
 }
 
+// Discriminated union so callers can't read `errors` off a successful
+// response or forget to handle the failure message — shared by the
+// /api/contact route and ContactForm so both sides stay in sync.
+export type ContactApiResponse =
+  | { success: true; message: string }
+  | { success: false; message: string; errors?: { path: PropertyKey[]; message: string }[] };
+
 // Navigation Types
 export interface NavLink {
   label: string;

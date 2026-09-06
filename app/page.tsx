@@ -48,18 +48,15 @@ export default function Home() {
         >
           <HeroSection />
         </section>
+        
 
        {/* Projects Section */}
-        <section 
-          id="projects"
-          aria-label="projects-section">
+        <section id="projects" aria-labelledby="projects-heading">
           <ProjectsSection />
         </section>
 
                 {/* About Section */}
-        <section 
-          id="about"
-          aria-label="about-section">
+        <section id="about" aria-label="About Aaron Perez">
           <AboutSection />
         </section>
 

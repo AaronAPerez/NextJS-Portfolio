@@ -2,7 +2,6 @@
 
 import { useQuery } from '@tanstack/react-query'
 import Link from 'next/link'
-import DashboardTour from '@/components/admin/DashboardTour'
 import Tooltip from '@/components/admin/Tooltip'
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
@@ -66,7 +65,7 @@ export default function AdminDashboard() {
         <div>
           <h1 className="text-3xl font-bold text-earth-900">Dashboard</h1>
           <p className="mt-1 text-sm text-earth-500">
-            Welcome back! Here's what's happening with your website.
+            Welcome back! Here&apos;s what&apos;s happening with your website.
           </p>
         </div>
         <Tooltip content="Restart the guided tour">

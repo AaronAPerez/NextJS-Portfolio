@@ -12,36 +12,42 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { sql, generateId } from '@/lib/db';
 import { slugify } from '@/lib/utils';
-import type { ProjectDB, CreateProjectInput, ProjectImage } from '@/types/project';
+import type {
+  ProjectDB,
+  CreateProjectInput,
+  ProjectImage,
+  ProjectRow,
+  ProjectCategory,
+  ProjectStatus,
+  ClientType,
+} from '@/types/project';
 
 /**
  * Transform raw database row to ProjectDB format
  * Handles both legacy and new schema formats
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function transformProject(row: any): ProjectDB {
-  // Handle images - can be ARRAY of strings (legacy) or JSONB array of objects (new)
+function transformProject(row: ProjectRow): ProjectDB {
+  // Handle images - can be ARRAY of strings (legacy) or JSONB array of objects (new).
+  // A single element's typeof check can't narrow the whole array's type, so the
+  // casts below are asserting what the runtime check just confirmed.
   let images: ProjectImage[] = [];
-  if (row.images) {
-    if (Array.isArray(row.images)) {
-      // Check if it's legacy format (array of strings) or new format (array of objects)
-      if (row.images.length > 0 && typeof row.images[0] === 'string') {
-        // Legacy format: convert string URLs to ProjectImage objects
-        images = row.images.map((url: string, idx: number) => ({
-          id: `img-${idx}`,
-          url,
-          alt: row.imagesAlt?.[idx] || row.title,
-          isPrimary: idx === 0,
-        }));
-      } else {
-        // New format: already ProjectImage objects
-        images = row.images;
-      }
+  if (Array.isArray(row.images) && row.images.length > 0) {
+    if (typeof row.images[0] === 'string') {
+      // Legacy format: convert string URLs to ProjectImage objects
+      images = (row.images as string[]).map((url, idx) => ({
+        id: `img-${idx}`,
+        url,
+        alt: row.imagesAlt?.[idx] || row.title,
+        isPrimary: idx === 0,
+      }));
+    } else {
+      // New format: already ProjectImage objects
+      images = row.images as ProjectImage[];
     }
   }
 
   // Handle gradient - can be JSONB object or separate columns
-  let gradient = row.gradient;
+  let gradient = row.gradient ?? undefined;
   if (!gradient && (row.gradientFrom || row.gradientTo)) {
     gradient = {
       from: row.gradientFrom || '#3B82F6',
@@ -52,8 +58,10 @@ function transformProject(row: any): ProjectDB {
   // Handle tech - can be ARRAY or JSONB
   const tech = Array.isArray(row.tech) ? row.tech : [];
 
-  // Handle status - use status column or derive from published
-  const status = row.status || (row.published ? 'published' : 'draft');
+  // Handle status - use status column or derive from published. The raw row
+  // only has `string`; asserted to ProjectStatus here since the DB is
+  // expected to only ever store one of those literal values.
+  const status = (row.status || (row.published ? 'published' : 'draft')) as ProjectStatus;
 
   // Handle displayOrder - use displayOrder or order column
   const displayOrder = row.displayOrder ?? row.order ?? 0;
@@ -70,8 +78,9 @@ function transformProject(row: any): ProjectDB {
     description: row.description,
     longDescription: row.longDescription || undefined,
     slug: row.slug || row.id, // Fallback to id if no slug
-    category: row.category || 'portfolio',
-    clientType: row.clientType,
+    // Same DB-boundary assertion as `status` above.
+    category: (row.category || 'portfolio') as ProjectCategory,
+    clientType: (row.clientType ?? undefined) as ClientType | undefined,
     status,
     featured: row.featured ?? false,
     isLive: row.isLive ?? false,
@@ -82,15 +91,15 @@ function transformProject(row: any): ProjectDB {
     images,
     gradient,
     companyLogo: row.companyLogo || null,
-    demoLink: row.demoLink,
-    codeLink: row.codeLink,
-    websiteLink: row.websiteLink,
-    businessImpact: row.businessImpact,
-    technicalHighlights: row.technicalHighlights,
-    timeline: row.timeline,
-    teamSize: row.teamSize,
-    role: row.role,
-    seo: row.seo,
+    demoLink: row.demoLink ?? undefined,
+    codeLink: row.codeLink ?? undefined,
+    websiteLink: row.websiteLink ?? undefined,
+    businessImpact: row.businessImpact ?? undefined,
+    technicalHighlights: row.technicalHighlights ?? undefined,
+    timeline: row.timeline ?? undefined,
+    teamSize: row.teamSize ?? undefined,
+    role: row.role ?? undefined,
+    seo: row.seo ?? undefined,
     createdAt: row.createdAt,
     updatedAt: row.updatedAt,
   };
@@ -124,11 +133,13 @@ export async function GET(request: NextRequest) {
     const featured = searchParams.get('featured');
     const search = searchParams.get('search');
 
-    // Fetch all projects with ordering (handle both displayOrder and legacy order column)
-    const rawResult = await sql`
+    // Fetch all projects with ordering (handle both displayOrder and legacy order column).
+    // `sql` returns loosely-typed rows (its tagged-template call isn't generic), so the
+    // shape is asserted once here, at the DB boundary, instead of leaving `any` downstream.
+    const rawResult = (await sql`
       SELECT * FROM "Project"
       ORDER BY COALESCE("displayOrder", "order") ASC, "createdAt" DESC
-    `;
+    `) as ProjectRow[];
 
     // Transform raw results to ProjectDB format (handles legacy schema)
     let projects: ProjectDB[] = rawResult.map(transformProject);
@@ -235,7 +246,8 @@ export async function POST(request: NextRequest) {
         "status", "featured", "isLive", "displayOrder", "order", "published",
         "tech", "highlights", "stats", "images", "imagesAlt", "gradient", "gradientFrom", "gradientTo",
         "demoLink", "codeLink", "websiteLink", "companyLogo", "businessImpact",
-        "technicalHighlights", "timeline", "teamSize", "role", "seo"
+        "technicalHighlights", "timeline", "teamSize", "role", "seo",
+        "createdAt", "updatedAt"
       ) VALUES (
         ${id},
         ${data.title},
@@ -267,13 +279,14 @@ export async function POST(request: NextRequest) {
         ${data.timeline || null},
         ${data.teamSize || null},
         ${data.role || null},
-        ${data.seo ? JSON.stringify(data.seo) : null}
+        ${data.seo ? JSON.stringify(data.seo) : null},
+        NOW(), NOW()
       )
       RETURNING *
     `;
 
     // Transform the result to standard format before returning
-    return NextResponse.json({ project: transformProject(result[0]) }, { status: 201 });
+    return NextResponse.json({ project: transformProject(result[0] as ProjectRow) }, { status: 201 });
   } catch (error) {
     console.error('Error creating project:', error);
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';

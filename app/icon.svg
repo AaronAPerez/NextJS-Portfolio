@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="AP Designs">
+  <title>AP Designs</title>
+  <!--
+    App Router icon convention: Next.js links this automatically, so no icons
+    entry is needed in the layout metadata.
+
+    Carries its own dark backdrop because browser tabs and app launchers render
+    on unpredictable colours — the gradient stroke alone would disappear
+    against a dark tab strip.
+  -->
+  <defs>
+    <linearGradient id="ap-icon" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#60A5FA" />
+      <stop offset="0.55" stop-color="#818CF8" />
+      <stop offset="1" stop-color="#A855F7" />
+    </linearGradient>
+  </defs>
+
+  <rect width="64" height="64" rx="14" fill="#0B1020" />
+
+  <g fill="none" stroke="url(#ap-icon)" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round">
+    <!-- Top block: triangle -->
+    <rect x="21" y="9" width="22" height="22" rx="2.5" />
+    <path d="M32 15.5 L36.5 24 L27.5 24 Z" />
+
+    <!-- Bottom-left block: square -->
+    <rect x="10" y="32" width="22" height="22" rx="2.5" />
+    <rect x="16.75" y="38.75" width="8.5" height="8.5" rx="1.5" />
+
+    <!-- Bottom-right block: circle -->
+    <rect x="32" y="32" width="22" height="22" rx="2.5" />
+    <circle cx="43" cy="43" r="4.5" />
+  </g>
+</svg>

@@ -1,5 +1,4 @@
-import React from "react";
-import { ArrowRight, ExternalLink } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 
 
 const CTASection = () => {
@@ -17,11 +16,11 @@ const CTASection = () => {
           id="cta-heading"
           className="mb-4 text-3xl font-semibold tracking-tight text-gray-900 dark:text-white sm:text-4xl lg:text-5xl"
         >
-          Let's build something real
+          Let&apos;s build something real
         </h2>
         <p className="mb-10 text-base leading-relaxed text-gray-500 dark:text-gray-400 sm:text-lg">
           Full-time, contract, or freelance — remote-first, available in the Central
-          Valley. Let's talk about your project or open role.
+          Valley. Let&apos;s talk about your project or open role.
         </p>
 
         <div className="flex flex-wrap items-center justify-center gap-4">

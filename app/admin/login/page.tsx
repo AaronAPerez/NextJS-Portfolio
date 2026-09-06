@@ -84,7 +84,7 @@ export default function AdminLogin() {
         setError(errorMsg);
         toast.error(errorMsg, { id: toastId });
       }
-    } catch (err) {
+    } catch {
       const errorMsg = "An error occurred. Please try again.";
       setError(errorMsg);
       toast.error(errorMsg, { id: toastId });

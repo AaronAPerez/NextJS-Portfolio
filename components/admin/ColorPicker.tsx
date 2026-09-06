@@ -7,7 +7,7 @@
 
 'use client';
 
-import { useState, useCallback, memo } from 'react';
+import { useState, memo } from 'react';
 import { HexColorPicker, HexColorInput } from 'react-colorful';
 
 interface ColorPickerProps {

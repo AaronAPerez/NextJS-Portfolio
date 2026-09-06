@@ -20,7 +20,7 @@ interface RouteParams {
  * Retrieves a single client with all details
  */
 export async function GET(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: RouteParams
 ) {
   try {
@@ -176,7 +176,7 @@ export async function PUT(
  * Deletes a client and all associated data (cascades)
  */
 export async function DELETE(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: RouteParams
 ) {
   try {

@@ -6,3 +6,5 @@
 
 export { default as StatusBadge } from './StatusBadge';
 export { default as TechChip } from './TechChip';
+export { default as ProjectLogo, monogramFor } from './ProjectLogo';
+export type { ProjectLogoSize } from './ProjectLogo';

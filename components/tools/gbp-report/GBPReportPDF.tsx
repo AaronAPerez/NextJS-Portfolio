@@ -11,14 +11,12 @@
  * Install: npm install @react-pdf/renderer
  */
 
-import React from 'react';
 import {
   Document,
   Page,
   Text,
   View,
   StyleSheet,
-  Font,
   Link,
 } from '@react-pdf/renderer';
 import type { GBPMonthlyReport, KeywordRanking } from '@/types/gbp-report';

@@ -3,6 +3,8 @@
 // only extend with portfolio-specific tokens.
 
 import type { Config } from 'tailwindcss';
+import typographyPlugin from '@tailwindcss/typography';
+import formsPlugin from '@tailwindcss/forms';
 
 const config: Config = {
   // ── Dark mode — class-based so ThemeProvider / next-themes controls it ──
@@ -272,10 +274,10 @@ const config: Config = {
 
   plugins: [
     // @tailwindcss/typography — for prose content if you add a blog/case studies
-    require('@tailwindcss/typography'),
+    typographyPlugin,
 
     // @tailwindcss/forms — normalizes form elements (used in ContactSection)
-    require('@tailwindcss/forms')({
+    formsPlugin({
       strategy: 'class', // only apply to elements with .form-* classes
     }),
 
