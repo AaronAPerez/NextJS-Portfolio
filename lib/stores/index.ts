@@ -1,16 +1,10 @@
 /**
  * Store Exports - Central export point for all Zustand stores
  * Import from here for cleaner imports throughout the application
+ *
+ * Theme state lives in context/ThemeContext.tsx, not a Zustand store —
+ * a parallel Zustand-based theme store/provider was removed as dead code.
  */
-
-// Theme store for light/dark mode management
-export {
-  useThemeStore,
-  selectTheme,
-  selectResolvedTheme,
-  selectIsDarkMode,
-  type Theme,
-} from './theme-store'
 
 // GBP store for GBP Optimization feature state
 export {

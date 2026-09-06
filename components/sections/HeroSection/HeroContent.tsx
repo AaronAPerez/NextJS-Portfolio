@@ -172,7 +172,7 @@ export const HeroContent = memo(({ className = '' }: HeroContentProps) => {
         text-lg sm:text-xl text-gray-600 dark:text-gray-300
         max-w-xl mx-auto lg:mx-0
       ">
-        I build <span className="font-semibold text-gray-900 dark:text-white">
+        I build <span className="font-semibold text-gray-900 dark:text-white underline">
           production websites
         </span> that drive real business results.
       </p>

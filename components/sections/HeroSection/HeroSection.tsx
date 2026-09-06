@@ -66,9 +66,9 @@ export const HeroSection = () => {
 
       {/* Main content container */}
       <div className="
-        relative z-10 min-h-screen flex items-center justify-center overflow-hidden
+        relative z-10 min-h-screen flex items-center overflow-hidden
         py-8 sm:py-12 lg:py-2 px-4 sm:px-6 lg:px-8
-        pt-16 sm:pt-12 md:pt-14 lg:-mt-10
+        pt-12 sm:pt-12 md:pt-14 lg:-mt-10
       ">
         <div className="relative max-w-7xl mx-auto w-full">
           {/* Two-column grid layout */}

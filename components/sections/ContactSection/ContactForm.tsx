@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Send, Loader2, Mail, User, MessageSquare, Sparkles } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { z } from 'zod';
+import type { ContactApiResponse } from '@/types';
 
 // Validation schema with detailed error messages
 const contactFormSchema = z.object({
@@ -51,7 +52,7 @@ interface InputFieldProps {
   rows?: number;
 }
 
-const InputField: React.FC<InputFieldProps> = ({
+function InputField({
   label,
   name,
   type,
@@ -65,7 +66,7 @@ const InputField: React.FC<InputFieldProps> = ({
   touched,
   isTextarea = false,
   rows = 6,
-}) => {
+}: InputFieldProps) {
   const hasError = touched && error;
   const isValid = touched && !error && value.length > 0;
 
@@ -192,7 +193,7 @@ const InputField: React.FC<InputFieldProps> = ({
       )}
     </div>
   );
-};
+}
 
 export const ContactForm = () => {
   const [formData, setFormData] = useState<FormData>({
@@ -303,23 +304,19 @@ export const ContactForm = () => {
         }),
       });
 
-      const data = await response.json();
+      // Typed as the discriminated union the API route returns — `data.message`
+      // is guaranteed on both branches, so no `|| fallback` is needed here.
+      const data: ContactApiResponse = await response.json();
 
-      if (response.ok) {
-        toast.success(
-          'Message sent successfully! Check your email for confirmation.',
-          { id: loadingToast, duration: 6000 }
-        );
+      if (data.success) {
+        toast.success(data.message, { id: loadingToast, duration: 6000 });
 
         // Reset form
         setFormData({ name: '', email: '', subject: '', message: '' });
         setErrors({});
         setTouched({});
       } else {
-        toast.error(
-          data.message || 'Failed to send message. Please try again.',
-          { id: loadingToast }
-        );
+        toast.error(data.message, { id: loadingToast });
       }
     } catch (error) {
       console.error('Form submission error:', error);

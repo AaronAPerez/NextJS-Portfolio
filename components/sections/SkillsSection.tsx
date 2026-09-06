@@ -1,6 +1,8 @@
 'use client'
 
 import Image from 'next/image'
+import { Code2 } from 'lucide-react'
+import { SectionHeader } from '@/components/sections/shared'
 import { skills } from '@/data/skills'
 
 // Primary stack skill IDs - these get highlighted styling
@@ -21,20 +23,16 @@ function SkillsSection() {
   const secondarySkills = skills.filter((skill) => !CORE_SKILL_IDS.includes(skill.id))
 
   return (
-    <section id="skills" className="bg-gray-50 py-20 dark:bg-gray-900/50 sm:py-28">
+    <div className="bg-gray-50 py-20 dark:bg-gray-900/50 sm:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Section header */}
-        <div className="mb-10 flex flex-col text-center">
-          <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-blue-600 dark:text-blue-400">
-            Skills
-          </p>
-          <h2 className="text-3xl font-semibold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
-            Technical toolkit
-          </h2>
-          <p className="mt-3 text-sm text-gray-500 dark:text-gray-400">
-            Highlighted = primary stack I use on every production project.
-          </p>
-        </div>
+        {/* Section header — shared treatment with About/Projects/Contact */}
+        <SectionHeader
+          icon={Code2}
+          titleId="skills-heading"
+          title="Technical Toolkit"
+          description="Highlighted entries are the primary stack behind every production project; the rest are tools I reach for as a project needs them."
+          className="mb-12"
+        />
 
         {/* Skills grid */}
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
@@ -77,7 +75,7 @@ function SkillsSection() {
           ))}
         </div>
       </div>
-    </section>
+    </div>
   )
 }
 

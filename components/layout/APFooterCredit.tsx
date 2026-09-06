@@ -1,4 +1,3 @@
-import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -8,11 +7,11 @@ interface APFooterCreditProps {
   utmSource?: string;   // track which site the click came from
 }
 
-export const APFooterCredit: React.FC<APFooterCreditProps> = ({
-  iconSrc = "/favicon-48x48.svg", // export just the blocks as a separate file
+export function APFooterCredit({
+  iconSrc = "/images/logo/ap-designs-mark.svg",
   className = "",
   utmSource = "footer",
-}) => {
+}: APFooterCreditProps) {
   return (
     <footer className={`py-6 text-center ${className}`}>
       <div className="inline-flex items-center gap-3 opacity-80 hover:opacity-100 transition-opacity">
@@ -44,4 +43,4 @@ export const APFooterCredit: React.FC<APFooterCreditProps> = ({
       </div>
     </footer>
   );
-};
+}

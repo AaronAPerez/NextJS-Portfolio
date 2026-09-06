@@ -13,10 +13,13 @@ export interface Project {
   category: 'client' | 'saas' | 'tool';
   image?: string;
   accentColor: string;
-  companyLogo?: string;  // URL to company/client logo image
+  companyLogo?: string;  // URL to a brand mark; cards fall back to a monogram
   stats: {
-    commits?: number;
-    lighthouse?: number;
+    /**
+     * Durable context for the card (service area, domain). Point-in-time
+     * metrics are deliberately excluded — a hardcoded commit count or
+     * Lighthouse score is wrong the day after it is written.
+     */
     label?: string;
   };
   tech: string[];
@@ -36,13 +39,11 @@ export const PROJECTS: Project[] = [
     featured: true,
     status: 'production',
     category: 'client',
-    image: '/images/projects/amp-vending/amp-vending-1.webp',
-    companyLogo: '/images/projects/amp-vending/AMP_logo.png',
+    image: '/images/projects/amp-vending/hero-screenshot.png',
+    companyLogo: '/images/projects/amp-vending/AMP_logo.webp',
     accentColor: '#FD5A1E',
     stats: {
-      commits: 446,
-      lighthouse: 98,
-      label: 'Sub-1s load',
+      label: 'Modesto, CA',
     },
     tech: [
       'Next.js 16.1',
@@ -84,10 +85,12 @@ export const PROJECTS: Project[] = [
     status: 'production',
     category: 'client',
     image: '/images/projects/balderas-concrete/balderas-concrete-hero.webp',
-    accentColor: '#888780',
+    // Icon-only mark (309x301, near-square) — the full "BALDERAS CONCRETE"
+    // wordmark file is a 2.6:1 banner that doesn't fit the card's square tile.
+    companyLogo: '/images/projects/balderas-concrete/logo.png',
+    // Sampled from the logo's actual navy ink (#183C60/#184860 dominant pixels).
+    accentColor: '#1F4A6E',
     stats: {
-      commits: 87,
-      lighthouse: 95,
       label: 'Houston, TX',
     },
     tech: [
@@ -127,10 +130,11 @@ export const PROJECTS: Project[] = [
     status: 'production',
     category: 'client',
     image: '/images/projects/goldmine/Goldmine-Hero-Screenshot.webp',
-    accentColor: '#EF9F27',
+    companyLogo: '/images/projects/goldmine/logo-circular.webp',
+    // Sampled from the badge's metallic gold ink (~#D0A870), not the brighter
+    // amber the placeholder value used.
+    accentColor: '#C9A063',
     stats: {
-      commits: 115,
-      lighthouse: 95,
       label: 'Bay Area, CA',
     },
     tech: [
@@ -150,8 +154,7 @@ export const PROJECTS: Project[] = [
       'B2B-optimized post scheduling with content generated from project data',
       'Dynamic project portfolio with photos from 4 states',
       'Service area coverage: Bay Area, Northern CA, Nevada, Oregon',
-      'WCAG 2.1 AA, Lighthouse 95+, semantic structured data',
-      '115 commits — full production deployment on Vercel',
+      'WCAG 2.1 AA compliant with semantic structured data',
     ],
   },
   {
@@ -166,10 +169,10 @@ export const PROJECTS: Project[] = [
     featured: false,
     status: 'production',
     category: 'tool',
+    image: '/images/projects/portfolio/hero-screenshot.webp',
+    companyLogo: '/images/logo/ap-designs-mark.svg',
     accentColor: '#3B82F6',
     stats: {
-      commits: 121,
-      lighthouse: 98,
       label: 'aaronaperez.dev',
     },
     tech: [
@@ -190,7 +193,49 @@ export const PROJECTS: Project[] = [
       'AI chat assistant for visitor Q&A',
       'Neon PostgreSQL for contact and data persistence',
       'WCAG 2.1 AA compliant, JSON-LD structured data, dynamic sitemap',
-      'Lighthouse 98 — lazy-loaded sections, optimized images, sub-1s load',
+      'Lazy-loaded sections and optimized images for fast first paint',
+    ],
+  },
+  {
+    id: 'the-glamping-spot',
+    title: 'The Glamping Spot',
+    description:
+      'Marketing and guest-onboarding site for a geodesic dome rental in Kountze, Texas. Bookings route to Airbnb; the in-house piece is a digital liability waiver with e-signature and PDF generation.',
+    longDescription:
+      'Next.js 16 marketing site for "Nice Dreams @ The Glamping Spot", a single luxury geodesic dome listing in Kountze, Texas (East Texas, ~90 minutes from Houston). Reservations are handled on Airbnb rather than a custom checkout, so the site is built to drive qualified traffic there: geographic SEO targeting for Kountze and the Houston metro, structured data, generated XML sitemap, and a property gallery. The custom build is the guest waiver flow — a multi-step liability waiver with e-signature that renders a signed PDF via @react-pdf/renderer and emails it out through Nodemailer. UI state runs through Zustand, forms through React Hook Form + Zod, and the site ships WCAG 2.1 AA support with Core Web Vitals monitoring in production.',
+    liveUrl: 'https://theglampingspot.net',
+    githubUrl: 'https://github.com/AaronAPerez/the-glamping-spot',
+    featured: false,
+    status: 'production',
+    category: 'client',
+    image: '/images/projects/the-glamping-spot/hero-screenshot.png',
+    companyLogo: '/images/projects/the-glamping-spot/logo.png',
+    // Sampled from the logo's dome-sky teal (#00B4D8 dominant), matching the
+    // live site's navbar color — not the green placeholder value.
+    accentColor: '#00A8C4',
+    stats: {
+      label: 'Kountze, TX',
+    },
+    tech: [
+      'Next.js 16',
+      'React 19',
+      'TypeScript 5',
+      'Tailwind CSS 4',
+      'Framer Motion',
+      'Zustand',
+      'React Hook Form',
+      'Zod',
+      'React PDF',
+      'Nodemailer',
+      'Vercel Analytics',
+    ],
+    highlights: [
+      'Digital liability waiver — e-signature, PDF generation, emailed confirmation',
+      'Airbnb-routed booking funnel instead of a custom checkout',
+      'Geographic SEO for Kountze, TX and the Houston metro',
+      'Zustand UI store with React Hook Form + Zod validation',
+      'WCAG 2.1 AA — keyboard navigation, focus management, 44px touch targets',
+      'Core Web Vitals monitoring and image optimization in production',
     ],
   },
 ];

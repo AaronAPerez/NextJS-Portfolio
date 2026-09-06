@@ -54,11 +54,6 @@ const nextConfig: NextConfig = {
             key: 'Cross-Origin-Opener-Policy',
             value: 'same-origin',
           },
-          // Cache static assets
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
-          },
         ],
       },
       // Specific caching for fonts

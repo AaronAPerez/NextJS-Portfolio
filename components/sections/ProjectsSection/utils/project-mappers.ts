@@ -21,51 +21,99 @@ export interface TechSkillInfo {
 }
 
 /**
- * Match a tech string to a skill from the skills data
+ * Aliases mapping a project's tech string to a skill id.
  *
- * Handles version numbers (e.g., "Next.js 16" -> "Next.js")
- * and common variations (e.g., "Tailwind CSS" matches "tailwind")
+ * Explicit rather than fuzzy on purpose: the previous substring matcher paired
+ * every "Next.js" chip with the JavaScript logo, because the 'js' alias for
+ * JavaScript is a substring of "next.js" and JavaScript is declared first in
+ * the skills list. Anything not listed here renders as a text-only chip, which
+ * is the correct outcome for a tool we have no icon for.
  *
- * @param techString - Technology string from project (e.g., "React 19", "TypeScript 5.7")
- * @returns TechSkillInfo with icon and color if matched, otherwise just the label
+ * Keys are compared against the tech string lowercased with any trailing
+ * version number stripped ("TypeScript 5.7" -> "typescript").
+ */
+const TECH_ALIASES: Record<string, string> = {
+  // Frontend
+  'next.js': 'nextjs',
+  next: 'nextjs',
+  nextjs: 'nextjs',
+  react: 'react',
+  'react.js': 'react',
+  reactjs: 'react',
+  typescript: 'typescript',
+  ts: 'typescript',
+  javascript: 'javascript',
+  js: 'javascript',
+  html: 'html5',
+  html5: 'html5',
+  css: 'css3',
+  css3: 'css3',
+  'tailwind css': 'tailwind',
+  tailwindcss: 'tailwind',
+  tailwind: 'tailwind',
+  vite: 'vite',
+  bootstrap: 'bootstrap',
+  'react bootstrap': 'react-bootstrap',
+  'chakra ui': 'chakra-ui',
+
+  // Backend and data
+  'node.js': 'nodejs',
+  nodejs: 'nodejs',
+  node: 'nodejs',
+  'nest.js': 'nestjs',
+  nestjs: 'nestjs',
+  postgresql: 'postgresql',
+  postgres: 'postgresql',
+  'neon postgresql': 'neon',
+  neon: 'neon',
+  supabase: 'supabase',
+  mysql: 'mysql',
+  'azure sql': 'azure-sql',
+  prisma: 'prisma',
+  'prisma orm': 'prisma',
+  'socket.io': 'socketio',
+  socketio: 'socketio',
+  'c#': 'csharp',
+  csharp: 'csharp',
+  '.net': 'dotnet',
+  'asp.net': 'dotnet',
+  dotnet: 'dotnet',
+
+  // Platform and tooling
+  vercel: 'vercel',
+  'vercel analytics': 'vercel',
+  azure: 'azure',
+  'google cloud': 'googlecloud',
+  docker: 'docker',
+  git: 'git',
+  postman: 'postman',
+  swagger: 'swagger',
+  axios: 'axios',
+  json: 'json',
+  unity: 'unity',
+  'google analytics': 'ga4',
+  ga4: 'ga4',
+  'google ads': 'google-ads',
+};
+
+/**
+ * Match a tech string to a skill from the skills data.
+ *
+ * @param techString - Technology string from project (e.g. "React 19")
+ * @returns TechSkillInfo with icon and color when the tech has a known icon,
+ *   otherwise just the label
  */
 export function matchTechToSkill(techString: string): TechSkillInfo {
-  // Normalize the tech string: remove version numbers and lowercase
+  // "TypeScript 5.7" and "TypeScript" should resolve to the same skill.
   const normalized = techString
     .toLowerCase()
-    .replace(/\s*\d+(\.\d+)*\s*$/g, '') // Remove version numbers
+    .replace(/\s*\d+(\.\d+)*\s*$/, '')
     .trim();
 
-  // Find matching skill
-  const matchedSkill = skills.find((skill) => {
-    const skillName = skill.name.toLowerCase();
-    const skillId = skill.id.toLowerCase();
-
-    // Direct match on name or id
-    if (skillName === normalized || skillId === normalized) return true;
-
-    // Partial matches for common variations
-    if (normalized.includes(skillName) || skillName.includes(normalized)) return true;
-
-    // Handle special cases
-    const specialMatches: Record<string, string[]> = {
-      'nextjs': ['next.js', 'next'],
-      'tailwind': ['tailwind css', 'tailwindcss'],
-      'typescript': ['ts'],
-      'javascript': ['js'],
-      'nodejs': ['node.js', 'node'],
-      'react': ['react.js', 'reactjs'],
-      'postgresql': ['postgres', 'neon postgresql', 'supabase'],
-      'prisma': ['prisma orm'],
-      'vercel': ['vercel analytics'],
-      'socketio': ['socket.io'],
-      'dotnet': ['.net', 'asp.net'],
-      'csharp': ['c#'],
-    };
-
-    const variations = specialMatches[skillId] || [];
-    return variations.some((v) => normalized.includes(v) || v.includes(normalized));
-  });
+  const skillId = TECH_ALIASES[normalized];
+  const matchedSkill = skillId
+    ? skills.find((skill) => skill.id === skillId)
+    : undefined;
 
   return {
     label: techString,
@@ -140,13 +188,20 @@ export function mapDBToDisplay(project: ProjectDB): DisplayProject {
     category: getCategory(),
     gradient: project.gradient || DEFAULT_GRADIENT,
     image: primaryImage,
-    companyLogo: (project as ProjectDB & { companyLogo?: string }).companyLogo,
+    companyLogo: project.companyLogo ?? undefined,
     stats: {
-      lighthouse: project.technicalHighlights?.performanceScore,
-      label: project.clientType === 'business' ? 'Client Project' : undefined,
+      // The stored label ("Houston, TX") is more informative than the generic
+      // fallback, which is why it wins when a row has one.
+      label:
+        project.stats?.label ??
+        (project.clientType === 'business' ? 'Client Project' : undefined),
     },
     tech: project.tech || [],
-    highlights: project.technicalHighlights?.innovations || [],
+    // The real content lives in the row's own `highlights` column — not
+    // `technicalHighlights.innovations`, which no row in this DB populates,
+    // so reading it here silently dropped every DB-backed project's
+    // highlights list.
+    highlights: project.highlights || [],
   };
 }
 
@@ -213,20 +268,4 @@ export function filterProjectsByCategory(
 ): DisplayProject[] {
   if (category === 'all') return projects;
   return projects.filter((p) => p.category === category);
-}
-
-/**
- * Separate featured project from others
- *
- * @param projects - Array of DisplayProject
- * @returns Object with featured project and remaining projects
- */
-export function separateFeaturedProject(projects: DisplayProject[]): {
-  featured: DisplayProject | undefined;
-  others: DisplayProject[];
-} {
-  return {
-    featured: projects.find((p) => p.featured),
-    others: projects.filter((p) => !p.featured),
-  };
 }
