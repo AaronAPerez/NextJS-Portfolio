@@ -27,7 +27,7 @@ export function APFooterCredit({
 
         {/* RIGHT: Text */}
         <div className="flex flex-col items-start leading-tight text-xs">
-          <span className="text-[var(--text-secondary,theme(colors.gray.500))]">
+          <span className="text-gray-600 dark:text-gray-400">
             Designed & Built by
           </span>
 

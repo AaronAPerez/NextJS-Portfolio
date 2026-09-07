@@ -11,10 +11,16 @@ const config: Config = {
   darkMode: 'class',
 
   // ── Content paths — tell Tailwind where to scan for class usage ──
+  // app/admin, app/tools, and components/admin are excluded here and scanned
+  // separately by tailwind.admin.config.ts (see app/admin-tools.css) so the
+  // public site's CSS bundle doesn't carry internal-tooling-only utility classes.
   content: [
     './app/**/*.{js,ts,jsx,tsx,mdx}',
+    '!./app/admin/**',
+    '!./app/tools/**',
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
+    '!./components/admin/**',
     './lib/**/*.{js,ts,jsx,tsx}',
     './hooks/**/*.{js,ts,jsx,tsx}',
   ],

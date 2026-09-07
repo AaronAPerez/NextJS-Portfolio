@@ -1,0 +1,6 @@
+/* Admin/tools-only Tailwind utilities — imported by app/admin/layout.tsx and
+   app/tools/layout.tsx. Kept separate from globals.css so these classes never
+   ship to public routes. Base styles/reset already come from globals.css,
+   which every route inherits via the root layout. */
+@config "../tailwind.admin.config.ts";
+@tailwind utilities;

@@ -80,9 +80,11 @@ const nextConfig: NextConfig = {
   },
 
   // Experimental optimizations
+  // Note: optimizeCss (critters-based critical CSS inlining) was removed —
+  // it only hooks into the webpack pipeline, and Next 16 builds with
+  // Turbopack by default, where it's a silent no-op.
   experimental: {
     optimizePackageImports: ['framer-motion', 'lucide-react', 'react-icons', '@tabler/icons-react'],
-    optimizeCss: true,
   },
 };
 
