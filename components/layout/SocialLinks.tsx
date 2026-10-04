@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { cn } from "@/lib/utils";
 import { socialLinks } from '../config/social';
 
@@ -14,7 +14,7 @@ export const SocialLinks = ({
   orientation = 'vertical' 
 }: SocialLinksProps) => {
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
       className={cn(
@@ -27,7 +27,7 @@ export const SocialLinks = ({
       {socialLinks.map((link, index) => {
         const Icon = link.icon;
         return (
-          <motion.a
+          <m.a
             key={link.name}
             href={link.url}
             target="_blank"
@@ -46,9 +46,9 @@ export const SocialLinks = ({
             aria-label={link.name}
           >
             <Icon className="w-5 h-5" />
-          </motion.a>
+          </m.a>
         );
       })}
-    </motion.div>
+    </m.div>
   );
 };

@@ -10,7 +10,7 @@
 
 import Image from 'next/image';
 import { memo, useMemo } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import { m, useReducedMotion } from 'framer-motion';
 import { ExternalLink, Github, MapPin } from 'lucide-react';
 import type { DisplayProject } from '@/types/display-project';
 import { DEFAULT_GRADIENT } from '@/types/display-project';
@@ -86,7 +86,7 @@ function ProjectCard({ project, priority = false }: ProjectCardProps) {
   );
 
   return (
-    <motion.article
+    <m.article
       variants={shouldReduceMotion ? undefined : cardVariants}
       initial="initial"
       whileInView="animate"
@@ -103,7 +103,7 @@ function ProjectCard({ project, priority = false }: ProjectCardProps) {
             src={project.image}
             alt={`Screenshot of ${project.title}`}
             fill
-            className="object-contain object-top transition-transform duration-500 group-hover:scale-105"
+            className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             loading={priority ? undefined : 'lazy'}
             priority={priority}
@@ -140,6 +140,50 @@ function ProjectCard({ project, priority = false }: ProjectCardProps) {
                   />
                 ))}
               </div>
+            </div>
+          </div>
+        )}
+
+        {/* Hover actions — visual duplicate of the action row below, for mouse
+            users who hover the screenshot directly. aria-hidden + tabIndex=-1
+            keep it out of the a11y tree and tab order entirely, so keyboard
+            and screen-reader users see exactly one set of links (the row
+            below), not two pointing at the same destinations. */}
+        {(hasLiveSite || project.githubUrl !== '#') && (
+          <div
+            className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+            aria-hidden="true"
+          >
+            {/* Frosted panel sized to the buttons only — the rest of the
+                screenshot stays sharp and unobscured on hover. */}
+            <div className="flex items-center gap-3 rounded-2xl bg-black/50 px-4 py-3 shadow-lg backdrop-blur-md">
+              {hasLiveSite && (
+                <a
+                  href={project.liveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  tabIndex={-1}
+                  className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium text-white shadow-sm"
+                  style={{
+                    background: `linear-gradient(135deg, ${gradient.from}, ${gradient.to})`,
+                  }}
+                >
+                  <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
+                  View live site
+                </a>
+              )}
+              {project.githubUrl !== '#' && (
+                <a
+                  href={project.githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  tabIndex={-1}
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-white/30 bg-white/10 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-sm"
+                >
+                  <Github className="h-3.5 w-3.5" aria-hidden="true" />
+                  View source
+                </a>
+              )}
             </div>
           </div>
         )}
@@ -247,7 +291,7 @@ function ProjectCard({ project, priority = false }: ProjectCardProps) {
           )}
         </div>
       </div>
-    </motion.article>
+    </m.article>
   );
 }
 

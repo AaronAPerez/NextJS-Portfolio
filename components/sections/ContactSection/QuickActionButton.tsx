@@ -7,7 +7,7 @@
  * Handles different action types with appropriate visual feedback.
  */
 
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { CheckCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { QuickAction } from '@/data/contact';
@@ -87,7 +87,7 @@ export const QuickActionButton = ({
   const backgroundColor = showCopied ? '#22C55E' : action.bgColor;
 
   return (
-    <motion.button
+    <m.button
       onClick={handleClick}
       whileHover={{ scale: 1.05, backgroundColor: showCopied ? '#22C55E' : action.hoverBgColor }}
       whileTap={{ scale: 0.95 }}
@@ -104,7 +104,7 @@ export const QuickActionButton = ({
       aria-live={isCopyAction ? 'polite' : undefined}
     >
       {/* Icon with animation on state change */}
-      <motion.div
+      <m.div
         key={showCopied ? 'copied' : 'default'}
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
@@ -115,13 +115,13 @@ export const QuickActionButton = ({
         ) : (
           <IconComponent className="w-6 h-6" aria-hidden="true" />
         )}
-      </motion.div>
+      </m.div>
 
       {/* Label text */}
       <span className="text-xs font-medium">
         {showCopied ? 'Copied!' : action.label}
       </span>
-    </motion.button>
+    </m.button>
   );
 };
 

@@ -7,7 +7,7 @@
  * Animated cards with icons and values.
  */
 
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { stats, StatItem } from '@/data/about';
 import { staggerContainer, scaleUp } from './animations';
@@ -40,7 +40,7 @@ const StatCard = ({
   const IconComponent = stat.icon;
 
   return (
-    <motion.div
+    <m.div
       variants={scaleUp}
       className="text-center p-6 backdrop-blur-sm bg-white/80 dark:bg-gray-800/80 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-blue-500/50 dark:hover:border-blue-400/50 transition-all duration-300 hover:shadow-lg"
     >
@@ -59,7 +59,7 @@ const StatCard = ({
       <div className="text-sm text-gray-600 dark:text-gray-400 font-medium">
         {stat.label}
       </div>
-    </motion.div>
+    </m.div>
   );
 };
 
@@ -80,7 +80,7 @@ export const AboutStats = ({
   };
 
   return (
-    <motion.div
+    <m.div
       variants={staggerContainer}
       initial="hidden"
       whileInView="visible"
@@ -92,7 +92,7 @@ export const AboutStats = ({
       {items.map((stat) => (
         <StatCard key={stat.id} stat={stat} />
       ))}
-    </motion.div>
+    </m.div>
   );
 };
 

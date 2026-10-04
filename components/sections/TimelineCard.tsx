@@ -1,6 +1,6 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { m } from 'framer-motion'
 import {
   GraduationCap,
   Briefcase,
@@ -98,7 +98,7 @@ const TimelineCard = ({
   }
 
   return (
-    <motion.article
+    <m.article
       initial={{ opacity: 0, y: 50, scale: 0.9 }}
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true }}
@@ -168,7 +168,7 @@ const TimelineCard = ({
             </h4>
             <ul className="space-y-3" role="list">
               {details.map((detail, idx) => (
-                <motion.li
+                <m.li
                   key={idx}
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
@@ -179,7 +179,7 @@ const TimelineCard = ({
                 >
                   <div className="w-1.5 h-1.5 bg-gray-400 dark:bg-gray-500 rounded-full mt-2 flex-shrink-0" aria-hidden="true" />
                   <span className="leading-normal">{detail}</span>
-                </motion.li>
+                </m.li>
               ))}
             </ul>
           </div>
@@ -223,7 +223,7 @@ const TimelineCard = ({
           </div>
         </CardContent>
       </Card>
-    </motion.article>
+    </m.article>
   )
 }
 

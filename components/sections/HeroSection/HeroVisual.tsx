@@ -11,7 +11,7 @@
  */
 
 import { memo } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import { m, useReducedMotion } from 'framer-motion';
 import Image from 'next/image';
 import { fadeInRight, scaleIn, buttonHover, tapScale, withReducedMotion } from './animations';
 import { heroContent, profileImage, floatingTechIcons } from './constants';
@@ -149,7 +149,7 @@ const ConnectButton = memo(({ prefersReducedMotion }: {
   };
 
   return (
-    <motion.button
+    <m.button
       onClick={scrollToContact}
       className="
         backdrop-blur-sm bg-white/90 dark:bg-gray-800/90
@@ -165,7 +165,7 @@ const ConnectButton = memo(({ prefersReducedMotion }: {
       <span className="text-xs sm:text-sm font-semibold text-blue-800 dark:text-blue-300">
         {heroContent.ctaConnect}
       </span>
-    </motion.button>
+    </m.button>
   );
 });
 ConnectButton.displayName = 'ConnectButton';
@@ -176,7 +176,7 @@ ConnectButton.displayName = 'ConnectButton';
 const AchievementBadges = memo(({ prefersReducedMotion }: {
   prefersReducedMotion: boolean | null;
 }) => (
-  <motion.div
+  <m.div
     variants={scaleIn}
     initial="hidden"
     animate="visible"
@@ -188,7 +188,7 @@ const AchievementBadges = memo(({ prefersReducedMotion }: {
   >
     <AvailabilityBadge />
     <ConnectButton prefersReducedMotion={prefersReducedMotion} />
-  </motion.div>
+  </m.div>
 ));
 AchievementBadges.displayName = 'AchievementBadges';
 
@@ -199,7 +199,7 @@ export const HeroVisual = memo(({ className = '' }: HeroVisualProps) => {
   const prefersReducedMotion = useReducedMotion();
 
   return (
-    <motion.div
+    <m.div
       variants={fadeInRight}
       initial={{ opacity: 0, x: 50 }}
       animate={{ opacity: 1, x: 0 }}
@@ -215,7 +215,7 @@ export const HeroVisual = memo(({ className = '' }: HeroVisualProps) => {
         <ProfileImage prefersReducedMotion={prefersReducedMotion} />
         <AchievementBadges prefersReducedMotion={prefersReducedMotion} />
       </div>
-    </motion.div>
+    </m.div>
   );
 });
 HeroVisual.displayName = 'HeroVisual';

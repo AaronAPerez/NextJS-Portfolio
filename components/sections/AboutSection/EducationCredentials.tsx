@@ -7,7 +7,7 @@
  * Designed to highlight Bachelor's and Associate's degrees for job applications.
  */
 
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { GraduationCap, Award, CheckCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Card } from '@/components/ui/Card';
@@ -46,7 +46,7 @@ const CredentialCard = ({
   const IconComponent = credential.icon === 'degree' ? GraduationCap : Award;
 
   return (
-    <motion.div variants={staggerItem} className="h-full">
+    <m.div variants={staggerItem} className="h-full">
       <Card
         variant="elevated"
         padding="none"
@@ -134,7 +134,7 @@ const CredentialCard = ({
           )}
         </div>
       </Card>
-    </motion.div>
+    </m.div>
   );
 };
 
@@ -142,7 +142,7 @@ const CredentialCard = ({
  * Section header for education credentials
  */
 const CredentialsHeader = () => (
-  <motion.div
+  <m.div
     variants={scaleUp}
     className="flex items-center gap-3 mb-6"
   >
@@ -157,7 +157,7 @@ const CredentialsHeader = () => (
         Bachelor&apos;s Degree • Associate&apos;s Degree • Professional Certification
       </p>
     </div>
-  </motion.div>
+  </m.div>
 );
 
 // =============================================================================
@@ -177,7 +177,7 @@ export const EducationCredentials = ({
   };
 
   return (
-    <motion.div
+    <m.div
       variants={staggerContainer}
       initial="hidden"
       whileInView="visible"
@@ -195,7 +195,7 @@ export const EducationCredentials = ({
           />
         ))}
       </div>
-    </motion.div>
+    </m.div>
   );
 };
 

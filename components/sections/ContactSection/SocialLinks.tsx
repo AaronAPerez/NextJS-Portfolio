@@ -7,7 +7,7 @@
  * Reusable component that can be configured via props or use defaults.
  */
 
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { ExternalLink } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { socialLinks as defaultSocialLinks, SocialLink } from '@/data/contact';
@@ -85,7 +85,7 @@ export const SocialLinks = ({
         const IconComponent = link.icon;
 
         return (
-          <motion.a
+          <m.a
             key={link.id}
             href={link.href}
             target="_blank"
@@ -121,7 +121,7 @@ export const SocialLinks = ({
                 aria-hidden="true"
               />
             )}
-          </motion.a>
+          </m.a>
         );
       })}
     </div>

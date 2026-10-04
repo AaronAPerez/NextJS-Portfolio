@@ -7,7 +7,7 @@
  * Highlights key phrases and presents the developer's background.
  */
 
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { narrative } from '@/data/about';
 import { fadeInLeft, staggerContainer, staggerItem } from './animations';
 
@@ -69,7 +69,7 @@ export const AboutNarrative = ({
   const displayTitle = title || content.title;
 
   return (
-    <motion.div
+    <m.div
       variants={fadeInLeft}
       initial="hidden"
       whileInView="visible"
@@ -87,7 +87,7 @@ export const AboutNarrative = ({
       </h2>
 
       {/* Narrative paragraphs with staggered animation */}
-      <motion.div
+      <m.div
         variants={staggerContainer}
         initial="hidden"
         whileInView="visible"
@@ -95,15 +95,15 @@ export const AboutNarrative = ({
         className="space-y-4 text-base leading-relaxed text-gray-600 dark:text-gray-400"
       >
         {content.content.map((paragraph, index) => (
-          <motion.p key={index} variants={staggerItem}>
+          <m.p key={index} variants={staggerItem}>
             <HighlightedText
               text={paragraph}
               highlights={content.highlights}
             />
-          </motion.p>
+          </m.p>
         ))}
-      </motion.div>
-    </motion.div>
+      </m.div>
+    </m.div>
   );
 };
 

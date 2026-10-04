@@ -10,7 +10,7 @@
  * or TimelineCard component from the sections folder.
  */
 
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { simpleTimeline, SimpleTimelineItem } from '@/data/about';
 import { fadeInRight, staggerContainer, staggerItem } from './animations';
 
@@ -39,7 +39,7 @@ const TimelineItem = ({
 }: {
   item: SimpleTimelineItem;
 }) => (
-  <motion.li
+  <m.li
     variants={staggerItem}
     className="mb-8 ml-6 last:mb-0"
   >
@@ -75,7 +75,7 @@ const TimelineItem = ({
         {item.detail}
       </p>
     </div>
-  </motion.li>
+  </m.li>
 );
 
 // =============================================================================
@@ -88,7 +88,7 @@ export const SimpleTimeline = ({
   className
 }: SimpleTimelineProps) => {
   return (
-    <motion.div
+    <m.div
       variants={fadeInRight}
       initial="hidden"
       whileInView="visible"
@@ -101,7 +101,7 @@ export const SimpleTimeline = ({
       </p>
 
       {/* Timeline list */}
-      <motion.ol
+      <m.ol
         variants={staggerContainer}
         initial="hidden"
         whileInView="visible"
@@ -113,8 +113,8 @@ export const SimpleTimeline = ({
         {items.map((item, index) => (
           <TimelineItem key={index} item={item} />
         ))}
-      </motion.ol>
-    </motion.div>
+      </m.ol>
+    </m.div>
   );
 };
 

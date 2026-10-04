@@ -158,45 +158,6 @@ export const PROJECTS: Project[] = [
     ],
   },
   {
-    id: 'portfolio',
-    title: 'aaronaperez.dev',
-    description:
-      'Personal developer portfolio built on Next.js 16 + React 19. Features a live admin dashboard, GBP optimization tools, AI chat assistant, and full contact/invoice management — all deployed on Vercel.',
-    longDescription:
-      'Full-featured developer portfolio and business platform for AP Designs. Beyond a standard portfolio site, it includes a full admin dashboard with authentication, a Google Business Profile (GBP) audit and optimization toolset, AI-powered chat assistant, invoice management, client intake wizards, and trademark search tools. Contact form with Resend email integration, Neon PostgreSQL for data persistence, Vercel Analytics, and lazy-loaded sections for optimal performance. Built for 100 Lighthouse scores with WCAG 2.1 AA compliance, JSON-LD structured data, and mobile-first responsive design.',
-    liveUrl: 'https://www.aaronaperez.dev',
-    githubUrl: 'https://github.com/AaronAPerez/portfolio',
-    featured: false,
-    status: 'production',
-    category: 'tool',
-    image: '/images/projects/portfolio/hero-screenshot.webp',
-    companyLogo: '/images/logo/ap-designs-mark.svg',
-    accentColor: '#3B82F6',
-    stats: {
-      label: 'aaronaperez.dev',
-    },
-    tech: [
-      'Next.js 16',
-      'React 19',
-      'TypeScript 5',
-      'Tailwind CSS',
-      'Neon PostgreSQL',
-      'Resend',
-      'Framer Motion',
-      'Vercel Analytics',
-      'React Hook Form',
-      'Zod',
-    ],
-    highlights: [
-      'Full admin dashboard — auth, invoice management, GBP tools, client intake',
-      'GBP audit and optimization toolset for local SEO clients',
-      'AI chat assistant for visitor Q&A',
-      'Neon PostgreSQL for contact and data persistence',
-      'WCAG 2.1 AA compliant, JSON-LD structured data, dynamic sitemap',
-      'Lazy-loaded sections and optimized images for fast first paint',
-    ],
-  },
-  {
     id: 'the-glamping-spot',
     title: 'The Glamping Spot',
     description:

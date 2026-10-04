@@ -82,8 +82,12 @@ const nextConfig: NextConfig = {
   // Experimental optimizations
   // Note: optimizeCss (critters-based critical CSS inlining) was removed —
   // it only hooks into the webpack pipeline, and Next 16 builds with
-  // Turbopack by default, where it's a silent no-op.
+  // Turbopack by default, where it's a silent no-op. inlineCss is the
+  // Turbopack-compatible replacement: it puts the stylesheet in the HTML so
+  // first paint doesn't wait on a render-blocking CSS request. Fine for a
+  // single-page site; it'd be a poor trade for many pages sharing one cached CSS file.
   experimental: {
+    inlineCss: true,
     optimizePackageImports: ['framer-motion', 'lucide-react', 'react-icons', '@tabler/icons-react'],
   },
 };

@@ -8,7 +8,7 @@
  */
 
 import { memo } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import { m, useReducedMotion } from 'framer-motion';
 import { socialLinks } from '@/data/contact';
 import { fadeIn, hoverScale, tapScale, withReducedMotion } from './animations';
 
@@ -33,7 +33,7 @@ const SocialLinkItem = memo(({
   const IconComponent = social.icon;
 
   return (
-    <motion.a
+    <m.a
       href={social.href}
       target={social.href.startsWith('mailto:') ? undefined : '_blank'}
       rel={social.href.startsWith('mailto:') ? undefined : 'noopener noreferrer'}
@@ -51,7 +51,7 @@ const SocialLinkItem = memo(({
       whileTap={withReducedMotion(tapScale, prefersReducedMotion)}
     >
       <IconComponent className="w-5 h-5" />
-    </motion.a>
+    </m.a>
   );
 });
 SocialLinkItem.displayName = 'SocialLinkItem';
@@ -73,7 +73,7 @@ export const SocialLinks = memo(({
     : 'lg:justify-start justify-center';
 
   return (
-    <motion.div
+    <m.div
       variants={fadeIn}
       initial="hidden"
       animate="visible"
@@ -87,7 +87,7 @@ export const SocialLinks = memo(({
       {socialLinks.map((social) => (
         <SocialLinkItem key={social.id} social={social} />
       ))}
-    </motion.div>
+    </m.div>
   );
 });
 SocialLinks.displayName = 'SocialLinks';

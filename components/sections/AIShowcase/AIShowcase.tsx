@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import SectionTitle from '@/components/SectionTitle';
 import { FiCpu, FiMessageCircle, FiZap, FiCode, FiDatabase } from 'react-icons/fi';
@@ -51,7 +51,7 @@ export const AIShowcase = () => {
         />
 
         {/* Main Feature Card */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -100,12 +100,12 @@ export const AIShowcase = () => {
               </div>
             </div>
           </div>
-        </motion.div>
+        </m.div>
 
         {/* Features Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto mb-16">
           {features.map((feature, index) => (
-            <motion.div
+            <m.div
               key={index}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -129,12 +129,12 @@ export const AIShowcase = () => {
               </div>
               <h4 className="text-white font-semibold text-lg mb-2">{feature.title}</h4>
               <p className="text-gray-400 text-sm leading-normal">{feature.description}</p>
-            </motion.div>
+            </m.div>
           ))}
         </div>
 
         {/* Tech Stack */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -144,7 +144,7 @@ export const AIShowcase = () => {
           <h3 className="text-2xl font-bold text-white text-center mb-8">Technologies Used</h3>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             {techStack.map((tech, index) => (
-              <motion.div
+              <m.div
                 key={index}
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
@@ -164,13 +164,13 @@ export const AIShowcase = () => {
                   <span className="text-white font-semibold text-sm">{tech.name}</span>
                 </div>
                 <p className="text-gray-400 text-xs">{tech.description}</p>
-              </motion.div>
+              </m.div>
             ))}
           </div>
-        </motion.div>
+        </m.div>
 
         {/* CTA */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -194,7 +194,7 @@ export const AIShowcase = () => {
               </span>
             ))}
           </div>
-        </motion.div>
+        </m.div>
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
 interface SectionTitleProps {
@@ -11,7 +11,7 @@ interface SectionTitleProps {
 
 const SectionTitle = ({ title, subtitle, className }: SectionTitleProps) => {
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -39,7 +39,7 @@ const SectionTitle = ({ title, subtitle, className }: SectionTitleProps) => {
             </span>
 
             {/* Animated Underline */}
-            <motion.div
+            <m.div
               className="absolute bottom-0 left-1/2 h-px w-0 bg-gradient-to-r from-transparent via-blue-500 to-transparent"
               initial={{ width: "0%" }}
               whileInView={{ width: "100%" }}
@@ -53,7 +53,7 @@ const SectionTitle = ({ title, subtitle, className }: SectionTitleProps) => {
 
       {/* Subtitle with Enhanced Styling */}
       {subtitle && (
-        <motion.p
+        <m.p
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.7, duration: 0.5 }}
@@ -66,14 +66,14 @@ const SectionTitle = ({ title, subtitle, className }: SectionTitleProps) => {
           )}
         >
           {subtitle}
-        </motion.p>
+        </m.p>
       )}
 
       {/* Decorative Elements */}
       <div className="absolute -bottom-4 left-1/2 -translate-x-1/2">
         <div className="h-1 w-20 bg-gradient-to-r from-transparent via-blue-500/50 to-transparent blur-sm" />
       </div>
-    </motion.div>
+    </m.div>
   );
 };
 

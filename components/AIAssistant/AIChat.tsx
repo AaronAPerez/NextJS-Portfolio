@@ -13,7 +13,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect, useCallback, memo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { FiSend, FiX, FiMessageCircle, FiCpu, FiChevronDown } from 'react-icons/fi';
 
@@ -33,7 +33,7 @@ const MessageBubble = memo(function MessageBubble({
   index: number;
 }) {
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.03, duration: 0.2 }}
@@ -61,7 +61,7 @@ const MessageBubble = memo(function MessageBubble({
           })}
         </p>
       </div>
-    </motion.div>
+    </m.div>
   );
 });
 
@@ -99,7 +99,7 @@ const SuggestedQuestion = memo(function SuggestedQuestion({
 // Loading indicator component
 const LoadingIndicator = memo(function LoadingIndicator() {
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       className="flex justify-start"
@@ -115,7 +115,7 @@ const LoadingIndicator = memo(function LoadingIndicator() {
           <span className="sr-only">Loading response...</span>
         </div>
       </div>
-    </motion.div>
+    </m.div>
   );
 });
 
@@ -246,7 +246,7 @@ export const AIChat = () => {
       {/* Floating Action Button - Always visible when chat is closed */}
       <AnimatePresence>
         {!isOpen && (
-          <motion.button
+          <m.button
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0, opacity: 0 }}
@@ -275,14 +275,14 @@ export const AIChat = () => {
             <FiMessageCircle className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
             {/* Online indicator */}
             <span className="absolute -top-0.5 -right-0.5 sm:-top-1 sm:-right-1 w-3.5 h-3.5 sm:w-4 sm:h-4 bg-green-500 rounded-full border-2 border-gray-900 motion-reduce:animate-none animate-pulse" />
-          </motion.button>
+          </m.button>
         )}
       </AnimatePresence>
 
       {/* Chat Window - Full screen on mobile, floating on desktop */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div
+          <m.div
             ref={chatContainerRef}
             initial={{ opacity: 0, y: 100, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -398,7 +398,7 @@ export const AIChat = () => {
             {/* Scroll to bottom button - shown when not at bottom */}
             <AnimatePresence>
               {messages.length > 3 && (
-                <motion.button
+                <m.button
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 10 }}
@@ -415,7 +415,7 @@ export const AIChat = () => {
                   aria-label="Scroll to latest messages"
                 >
                   <FiChevronDown className="w-5 h-5" />
-                </motion.button>
+                </m.button>
               )}
             </AnimatePresence>
 
@@ -477,7 +477,7 @@ export const AIChat = () => {
                 Press Enter to send · Shift+Enter for new line
               </p>
             </div>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </>

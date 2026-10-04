@@ -14,7 +14,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { Layers } from 'lucide-react';
 
 // Hooks
@@ -67,11 +67,11 @@ const itemVariants = {
 
 function EmptyState() {
   return (
-    <motion.div variants={itemVariants} className="py-12 text-center">
+    <m.div variants={itemVariants} className="py-12 text-center">
       <p className="text-gray-500 dark:text-gray-400">
         No projects found in this category.
       </p>
-    </motion.div>
+    </m.div>
   );
 }
 
@@ -131,7 +131,7 @@ const ProjectsSection = () => {
           <ProjectsSkeleton count={5} />
         ) : (
           <AnimatePresence mode="wait">
-            <motion.div
+            <m.div
               key={activeFilter}
               variants={containerVariants}
               initial="hidden"
@@ -142,20 +142,20 @@ const ProjectsSection = () => {
               className="w-full"
             >
               {/* Projects grid — every project renders as the same card */}
-              <motion.div
+              <m.div
                 variants={containerVariants}
                 className="grid sm:grid-cols-1 gap-6 text-left md:grid-cols-2"
               >
                 {filteredProjects.map((project, index) => (
-                  <motion.div key={project.id} variants={itemVariants}>
+                  <m.div key={project.id} variants={itemVariants}>
                     <ProjectCard project={project} priority={index < 3} />
-                  </motion.div>
+                  </m.div>
                 ))}
-              </motion.div>
+              </m.div>
 
               {/* Empty state */}
               {filteredProjects.length === 0 && <EmptyState />}
-            </motion.div>
+            </m.div>
           </AnimatePresence>
         )}
       </div>

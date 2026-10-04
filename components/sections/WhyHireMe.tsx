@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import {
   Rocket,
   Users,
@@ -99,7 +99,7 @@ export default function WhyHireMe() {
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section header */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -119,10 +119,10 @@ export default function WhyHireMe() {
             I bring a unique combination of hands-on development skills and years of understanding
             what users actually need.
           </p>
-        </motion.div>
+        </m.div>
 
         {/* Career journey - compelling narrative */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -143,7 +143,7 @@ export default function WhyHireMe() {
             {/* Timeline visualization */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
               {journeyMilestones.map((milestone, index) => (
-                <motion.div
+                <m.div
                   key={milestone.year}
                   initial={{ opacity: 0, y: 10 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -166,11 +166,11 @@ export default function WhyHireMe() {
                       {milestone.description}
                     </p>
                   </div>
-                </motion.div>
+                </m.div>
               ))}
             </div>
           </div>
-        </motion.div>
+        </m.div>
 
         {/* Key differentiators grid */}
         <div className="grid sm:grid-cols-2 gap-6 mb-12">
@@ -183,7 +183,7 @@ export default function WhyHireMe() {
               amber: 'bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400',
             };
             return (
-              <motion.div
+              <m.div
                 key={item.title}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -209,13 +209,13 @@ export default function WhyHireMe() {
                   <CheckCircle2 className="w-4 h-4 text-green-500" />
                   <span className="text-gray-500 dark:text-gray-400">{item.proof}</span>
                 </div>
-              </motion.div>
+              </m.div>
             );
           })}
         </div>
 
         {/* CTA - make it easy for recruiters to take action */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -240,7 +240,7 @@ export default function WhyHireMe() {
           <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">
             Available for full-time, contract, or freelance opportunities
           </p>
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );

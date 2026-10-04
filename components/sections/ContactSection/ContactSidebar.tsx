@@ -7,7 +7,7 @@
  * Uses motion animations for smooth entrance effects.
  */
 
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { Card } from '@/components/ui/Card';
 import { quickActions } from '@/data/contact';
 import { ContactInfoCard } from './ContactInfoCard';
@@ -38,7 +38,7 @@ export const ContactSidebar = ({
   className
 }: ContactSidebarProps) => {
   return (
-    <motion.aside
+    <m.aside
       variants={fadeInRight}
       initial="hidden"
       whileInView="visible"
@@ -79,7 +79,7 @@ export const ContactSidebar = ({
           className='flex flex-wrap' />
         </Card>
       </div>
-    </motion.aside>
+    </m.aside>
   );
 };
 

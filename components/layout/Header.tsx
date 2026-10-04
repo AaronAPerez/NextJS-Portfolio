@@ -74,7 +74,7 @@ export function Header() {
         </div>
       </header>
 
-      <div className="h-16 sm:h-20" aria-hidden="true" />
+      <div className="h-16 sm:h-18" aria-hidden="true" />
     </>
   );
 }

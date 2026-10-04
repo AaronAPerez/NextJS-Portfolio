@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { CheckCircle, Code, Users, Zap } from 'lucide-react';
 
 const credibilityMetrics = [
@@ -42,7 +42,7 @@ export const CredibilitySection = () => {
           {credibilityMetrics.map((metric, index) => {
             const Icon = metric.icon;
             return (
-              <motion.div
+              <m.div
                 key={index}
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
@@ -56,7 +56,7 @@ export const CredibilitySection = () => {
                 </div>
                 <div className="font-semibold text-white mb-1">{metric.label}</div>
                 <div className="text-xs text-gray-400">{metric.description}</div>
-              </motion.div>
+              </m.div>
             );
           })}
         </div>

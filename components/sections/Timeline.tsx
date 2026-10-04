@@ -1,6 +1,6 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { m } from 'framer-motion'
 import {
   GraduationCap,
   Briefcase,
@@ -195,7 +195,7 @@ const timelineData: { education: TimelineItem[]; experience: TimelineItem[] } = 
  * Section Header Component matching Contact/About section style
  */
 const SectionHeader = () => (
-  <motion.header
+  <m.header
     initial={{ opacity: 0, y: 50 }}
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
@@ -218,7 +218,7 @@ const SectionHeader = () => (
     <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
       My comprehensive journey in technology, showcasing continuous growth from systems administration to full-stack development
     </p>
-  </motion.header>
+  </m.header>
 )
 
 
@@ -236,7 +236,7 @@ const Statistics = () => {
   ]
 
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -248,7 +248,7 @@ const Statistics = () => {
       {stats.map((stat, index) => {
         const IconComponent = stat.icon
         return (
-          <motion.div
+          <m.div
             key={stat.label}
             initial={{ opacity: 0, scale: 0.8 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -263,10 +263,10 @@ const Statistics = () => {
             <div className="text-sm text-gray-400 font-medium">
               {stat.label}
             </div>
-          </motion.div>
+          </m.div>
         )
       })}
-    </motion.div>
+    </m.div>
   )
 }
 */
@@ -297,7 +297,7 @@ export const Timeline = () => {
           {/* Timeline Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 pt-12">
             {/* Experience Column */}
-            <motion.section
+            <m.section
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
@@ -326,10 +326,10 @@ export const Timeline = () => {
                   />
                 ))}
               </div>
-            </motion.section>
+            </m.section>
 
             {/* Education Column */}
-            <motion.section
+            <m.section
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
@@ -358,7 +358,7 @@ export const Timeline = () => {
                   />
                 ))}
               </div>
-            </motion.section>
+            </m.section>
           </div>
         </Container >
       </div >

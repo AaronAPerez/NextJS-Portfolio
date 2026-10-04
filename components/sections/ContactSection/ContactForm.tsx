@@ -1,29 +1,11 @@
 'use client';
 
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { Send, Loader2, Mail, User, MessageSquare, Sparkles } from 'lucide-react';
 import toast from 'react-hot-toast';
-import { z } from 'zod';
+import { validateField as validateFieldValue, validateForm } from './validation';
 import type { ContactApiResponse } from '@/types';
-
-// Validation schema with detailed error messages
-const contactFormSchema = z.object({
-  name: z.string()
-    .min(2, 'Name must be at least 2 characters')
-    .max(50, 'Name must be less than 50 characters')
-    .regex(/^[a-zA-Z\s'-]+$/, 'Name can only contain letters, spaces, hyphens, and apostrophes'),
-  email: z.string()
-    .min(5, 'Email is too short')
-    .max(100, 'Email is too long')
-    .regex(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'Please enter a valid email address'),
-  subject: z.string()
-    .min(5, 'Subject must be at least 5 characters')
-    .max(100, 'Subject must be less than 100 characters'),
-  message: z.string()
-    .min(10, 'Message must be at least 10 characters')
-    .max(1000, 'Message must be less than 1000 characters'),
-});
 
 interface FormData {
   name: string;
@@ -134,7 +116,7 @@ function InputField({
         {/* Validation indicator */}
         <AnimatePresence>
           {isValid && (
-            <motion.div
+            <m.div
               initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0, opacity: 0 }}
@@ -153,7 +135,7 @@ function InputField({
                   <path d="M5 13l4 4L19 7" />
                 </svg>
               </div>
-            </motion.div>
+            </m.div>
           )}
         </AnimatePresence>
       </div>
@@ -161,7 +143,7 @@ function InputField({
       {/* Error message */}
       <AnimatePresence>
         {hasError && (
-          <motion.p
+          <m.p
             id={`${name}-error`}
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -181,7 +163,7 @@ function InputField({
               />
             </svg>
             {error}
-          </motion.p>
+          </m.p>
         )}
       </AnimatePresence>
 
@@ -214,23 +196,16 @@ export const ContactForm = () => {
 
   // Live validation as user types
   const validateField = (name: keyof FormData, value: string) => {
-    try {
-      const fieldSchema = contactFormSchema.shape[name];
-      fieldSchema.parse(value);
-      setErrors(prev => {
-        const newErrors = { ...prev };
-        delete newErrors[name];
-        return newErrors;
-      });
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        const errorMessage = error.issues?.[0]?.message || 'Invalid input';
-        setErrors(prev => ({
-          ...prev,
-          [name]: errorMessage,
-        }));
+    const error = validateFieldValue(name, value);
+    setErrors(prev => {
+      const next = { ...prev };
+      if (error) {
+        next[name] = error;
+      } else {
+        delete next[name];
       }
-    }
+      return next;
+    });
   };
 
   const handleChange = (
@@ -268,20 +243,11 @@ export const ContactForm = () => {
     });
 
     // Validate all fields
-    try {
-      contactFormSchema.parse(formData);
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        const fieldErrors: FieldError = {};
-        error.issues.forEach(err => {
-          if (err.path[0]) {
-            fieldErrors[err.path[0] as string] = err.message;
-          }
-        });
-        setErrors(fieldErrors);
-        toast.error('Please fix the errors in the form');
-        return;
-      }
+    const fieldErrors = validateForm(formData);
+    if (Object.keys(fieldErrors).length > 0) {
+      setErrors(fieldErrors);
+      toast.error('Please fix the errors in the form');
+      return;
     }
 
     setIsSubmitting(true);
@@ -336,7 +302,7 @@ export const ContactForm = () => {
     formData.message;
 
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -433,7 +399,7 @@ export const ContactForm = () => {
         />
 
         {/* Submit Button */}
-        <motion.button
+        <m.button
           type="submit"
           disabled={isSubmitting || !isFormValid}
           whileHover={!isSubmitting && isFormValid ? { scale: 1.02 } : {}}
@@ -462,7 +428,7 @@ export const ContactForm = () => {
               Send Message
             </>
           )}
-        </motion.button>
+        </m.button>
 
         {/* Privacy notice */}
         <p className="text-xs text-center text-gray-500 dark:text-gray-500">
@@ -470,7 +436,7 @@ export const ContactForm = () => {
           By submitting this form, you agree to receive a confirmation email.
         </p>
       </form>
-    </motion.div>
+    </m.div>
   );
 };
 

@@ -18,6 +18,7 @@ import { ThemeProvider } from "@/context/ThemeContext";
 import { Analytics } from '@vercel/analytics/react';
 import { generatePersonSchema, generateWebsiteSchema } from "@/lib/utils";
 import { ToastProvider } from "@/components/providers/ToastProvider";
+import { MotionProvider } from "@/components/providers/MotionProvider";
 import { QueryProvider } from "@/lib/providers/QueryProvider";
 import { WebVitals } from "./web-vitals";
 import LayoutProvider from "@/lib/providers/LayoutProvider";
@@ -179,9 +180,11 @@ export default function RootLayout({
             <ToastProvider />
 
             {/* Layout wrapper handles header/footer/main structure */}
-            <LayoutProvider>
-              {children}
-            </LayoutProvider>
+            <MotionProvider>
+              <LayoutProvider>
+                {children}
+              </LayoutProvider>
+            </MotionProvider>
 
             {/* Performance monitoring */}
             <WebVitals />
