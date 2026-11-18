@@ -50,13 +50,6 @@ export const CATEGORIES = [
     color: '#06B6D4',
     description: 'Cloud services and deployment',
     icon: '☁️'
-  },
-  {
-    id: 'game',
-    name: 'Game Dev',
-    color: '#EF4444',
-    description: 'Game development and engines',
-    icon: '🎮'
   }
 ] as const
 

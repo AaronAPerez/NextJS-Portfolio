@@ -2,13 +2,10 @@
  * ProjectsSection Component
  *
  * Main projects showcase section displaying every project as a uniform card.
- * Fetches from database with fallback to static data.
  *
- * Features:
- * - Database integration with fallback to static projects
- * - Category filtering with animated transitions
- * - Loading skeleton states
- * - Responsive grid layout
+ * Projects come from components/config/projects.ts, not the database: the
+ * list a reviewer sees lives in the repo, and the cards are in the
+ * server-rendered HTML instead of appearing after a client-side fetch.
  */
 
 'use client';
@@ -16,9 +13,6 @@
 import { useState, useMemo } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
 import { Layers } from 'lucide-react';
-
-// Hooks
-import { useProjects } from '@/hooks/useProjects';
 
 // Data
 import { PROJECTS } from '@/components/config/projects';
@@ -30,15 +24,16 @@ import type { FilterTab } from '@/types/display-project';
 import { SectionHeader } from '@/components/sections/shared';
 import ProjectCard from './ProjectCard';
 import FilterTabs from './FilterTabs';
-import ProjectsSkeleton from './ProjectsSkeleton';
 
 // Utilities
 import {
-  mapDBToDisplay,
   mapStaticToDisplay,
   calculateFilterCounts,
   filterProjectsByCategory,
 } from './utils/project-mappers';
+
+const DISPLAY_PROJECTS = PROJECTS.map(mapStaticToDisplay);
+const FILTER_COUNTS = calculateFilterCounts(DISPLAY_PROJECTS);
 
 // Animations
 const containerVariants = {
@@ -81,29 +76,9 @@ const ProjectsSection = () => {
   // Filter state
   const [activeFilter, setActiveFilter] = useState<FilterTab>('all');
 
-  // Fetch projects from database with fallback to static
-  const { projects: dbProjects, isLoading } = useProjects({
-    fallbackToStatic: true,
-  });
-
-  // Convert projects to display format
-  const displayProjects = useMemo(() => {
-    if (dbProjects && dbProjects.length > 0) {
-      return dbProjects.map(mapDBToDisplay);
-    }
-    return PROJECTS.map(mapStaticToDisplay);
-  }, [dbProjects]);
-
-  // Filter projects by category
   const filteredProjects = useMemo(
-    () => filterProjectsByCategory(displayProjects, activeFilter),
-    [displayProjects, activeFilter]
-  );
-
-  // Calculate counts for filter tabs
-  const filterCounts = useMemo(
-    () => calculateFilterCounts(displayProjects),
-    [displayProjects]
+    () => filterProjectsByCategory(DISPLAY_PROJECTS, activeFilter),
+    [activeFilter]
   );
 
   return (
@@ -113,8 +88,8 @@ const ProjectsSection = () => {
         <SectionHeader
           icon={Layers}
           titleId="projects-heading"
-          title="Production Projects"
-          description="Real sites for real businesses — not demos. Each one is live, maintained, and driving results for clients."
+          title="Projects"
+          description="Four client sites in production, plus an internal estimating tool, a QA automation suite and a computer vision project."
           className="mb-12 w-full"
         />
 
@@ -122,42 +97,38 @@ const ProjectsSection = () => {
         <FilterTabs
           activeTab={activeFilter}
           onTabChange={setActiveFilter}
-          counts={filterCounts}
+          counts={FILTER_COUNTS}
           className="w-full"
         />
 
         {/* Content area */}
-        {isLoading ? (
-          <ProjectsSkeleton count={5} />
-        ) : (
-          <AnimatePresence mode="wait">
+        <AnimatePresence mode="wait">
+          <m.div
+            key={activeFilter}
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            role="tabpanel"
+            id={`projects-panel-${activeFilter}`}
+            className="w-full"
+          >
+            {/* Projects grid — every project renders as the same card */}
             <m.div
-              key={activeFilter}
               variants={containerVariants}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-              role="tabpanel"
-              id={`projects-panel-${activeFilter}`}
-              className="w-full"
+              className="grid sm:grid-cols-1 gap-6 text-left md:grid-cols-2"
             >
-              {/* Projects grid — every project renders as the same card */}
-              <m.div
-                variants={containerVariants}
-                className="grid sm:grid-cols-1 gap-6 text-left md:grid-cols-2"
-              >
-                {filteredProjects.map((project, index) => (
-                  <m.div key={project.id} variants={itemVariants}>
-                    <ProjectCard project={project} priority={index < 3} />
-                  </m.div>
-                ))}
-              </m.div>
-
-              {/* Empty state */}
-              {filteredProjects.length === 0 && <EmptyState />}
+              {filteredProjects.map((project, index) => (
+                <m.div key={project.id} variants={itemVariants}>
+                  <ProjectCard project={project} priority={index < 3} />
+                </m.div>
+              ))}
             </m.div>
+
+            {/* Empty state */}
+            {filteredProjects.length === 0 && <EmptyState />}
+          </m.div>
           </AnimatePresence>
-        )}
       </div>
     </div>
   );

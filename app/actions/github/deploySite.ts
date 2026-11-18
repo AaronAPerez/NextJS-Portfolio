@@ -1,6 +1,9 @@
 "use server";
 
+import { assertAdmin } from "@/lib/admin-session-server";
+
 export async function deploySite(repo: string) {
+  await assertAdmin();
   await fetch(`https://api.github.com/repos/${repo}/dispatches`, {
     method: "POST",
     headers: {

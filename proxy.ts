@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+import { ADMIN_SESSION_COOKIE, verifyAdminSessionToken } from '@/lib/admin-session'
 
 /**
  * Admin auth gate.
@@ -32,9 +33,11 @@ function isPublicApiException(pathname: string, method: string): boolean {
   return PUBLIC_API_EXCEPTIONS.some((r) => r.method === method && r.pattern.test(pathname))
 }
 
-export function proxy(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
-  const isAuthenticated = request.cookies.get('admin-auth')?.value === 'true'
+  const isAuthenticated = await verifyAdminSessionToken(
+    request.cookies.get(ADMIN_SESSION_COOKIE)?.value
+  )
 
   // Gate every /admin/* page except the login page itself
   const isProtectedPage = pathname.startsWith('/admin') && pathname !== '/admin/login'

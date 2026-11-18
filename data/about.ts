@@ -18,22 +18,6 @@ import {
 // Types
 // =============================================================================
 
-export interface TimelineItem {
-  id: string;
-  title: string;
-  company?: string;
-  institution?: string;
-  period: string;
-  location: string;
-  type: 'work' | 'education' | 'certification' | 'degree';
-  status: 'completed' | 'current';
-  details: string[];
-  skills: string[];
-  gradient: string;
-  achievements?: string[];
-  website?: string;
-}
-
 export interface NarrativeSection {
   id: string;
   title: string;
@@ -61,7 +45,7 @@ export const narrative: NarrativeSection[] = [
       `I came up through 7+ years of IT support before writing a single line of production code. That means I understand how real users break things, what causes downtime, and why accessibility isn't optional — it's engineering.`,
       `I graduated CodeStack Academy's Full Stack Web Development program and immediately shipped production sites for real clients — built on Next.js, TypeScript, Tailwind CSS, deployed to Vercel. Not portfolio demos — actual businesses depending on my work every day.`,
       `My stack matches what modern client-site work demands: Supabase for databases and backend logic, PostgreSQL for relational data, GA4 for real performance insight, and AI-assisted tools to ship faster without cutting corners.`,
-      `I run AP Designs as a freelance web development practice while actively looking for a full-time role where I can build and maintain client websites at scale.`
+      `I run AP Designs as a freelance web development practice and I'm looking for a full-time software developer role.`
     ],
     highlights: [
       'actual businesses depending on my work',
@@ -107,132 +91,6 @@ export const stats: StatItem[] = [
 ];
 
 // =============================================================================
-// Experience Timeline
-// =============================================================================
-
-export const experience: TimelineItem[] = [
-  {
-    id: 'amp-vending',
-    title: 'Full Stack Developer',
-    company: 'AMP Vending Machines',
-    period: 'Mar 2025 - Present',
-    location: 'Modesto, CA (Remote)',
-    type: 'work',
-    status: 'current',
-    website: 'https://www.ampvendingmachines.com',
-    details: [
-      'First Production Role: Transitioned from IT Support to Full Stack Development',
-      'Architected and developed complete digital presence for AMP Vending Machines',
-      'Built comprehensive Next.js application with TypeScript and React',
-      'Developed WCAG-compliant components ensuring inclusive user experiences',
-      'Implemented advanced SEO strategies resulting in enhanced search visibility',
-      'Created scalable component architecture with reusable UI elements',
-      'Established automated deployment pipelines achieving sub-800ms load times'
-    ],
-    skills: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'SEO', 'WCAG Accessibility'],
-    gradient: 'from-emerald-500 to-teal-500'
-  },
-  {
-    id: 'user-support',
-    title: 'User Support Specialist',
-    company: 'San Joaquin County Office of Education',
-    period: 'Aug. 2017 - Jan. 2025',
-    location: 'Stockton, CA',
-    type: 'work',
-    status: 'completed',
-    details: [
-      'QA testing and validation for educational software systems ensuring 99% uptime',
-      'Technical support for SEIS serving 50+ school districts',
-      'Compliance validation and data quality assurance with zero violations',
-      'Help desk support with 95% first-call resolution rate',
-      'Database maintenance and user account management for 5,000+ users',
-      'Created automated testing scripts reducing manual QA time by 60%'
-    ],
-    skills: ['QA Testing', 'Technical Support', 'Database Management', 'Freshdesk', 'Documentation'],
-    gradient: 'from-green-500 to-emerald-500'
-  },
-  {
-    id: 'systems-analyst',
-    title: 'Information Systems Analyst',
-    company: 'San Joaquin County - Information Systems Division',
-    period: '2017',
-    location: 'Stockton, CA',
-    type: 'work',
-    status: 'completed',
-    details: [
-      'Help desk support for 2,000+ county employees across 15+ departments',
-      'Workstation setup, configuration, and Windows domain management',
-      'Technical troubleshooting with average resolution time under 4 hours',
-      'User account management using Microsoft SCCM and Active Directory',
-      'Emergency response coordination during system outages'
-    ],
-    skills: ['Help Desk', 'System Administration', 'Network Support', 'Active Directory', 'SCCM'],
-    gradient: 'from-orange-500 to-red-500'
-  }
-];
-
-// =============================================================================
-// Education Timeline
-// =============================================================================
-
-export const education: TimelineItem[] = [
-  {
-    id: 'codestack',
-    title: 'Software Development Certification',
-    institution: 'CodeStack Academy',
-    period: '2023 - 2024',
-    location: 'San Joaquin County, CA',
-    type: 'certification',
-    status: 'completed',
-    details: [
-      'Frontend Development: React, TypeScript, Next.js, Tailwind CSS',
-      'Backend Development: C#, .NET Core, SQL Server, RESTful APIs',
-      'DevOps & Tools: Git, Azure cloud services, CI/CD pipelines',
-      'Built 5+ full-stack applications including business websites',
-      'Collaborative development using Agile methodologies'
-    ],
-    skills: ['React', 'TypeScript', 'Next.js', 'C#', '.NET Core', 'SQL Server', 'Azure'],
-    gradient: 'from-blue-500 to-yellow-500'
-  },
-  {
-    id: 'itt-tech-bs',
-    title: 'BS Information Systems & Cyber Security',
-    institution: 'ITT Technical Institute',
-    period: 'Graduated 2016',
-    location: 'Rancho Cordova, CA',
-    type: 'degree',
-    status: 'completed',
-    details: [
-      'Network Systems Administration and Security',
-      'Information Security and Risk Management',
-      'Database Design and Management using SQL Server',
-      'Senior Capstone: Designed secure network infrastructure',
-      'Graduated Cum Laude with GPA: 3.5/4.0'
-    ],
-    skills: ['Network Security', 'Database Management', 'System Administration', 'Risk Management'],
-    gradient: 'from-purple-500 to-pink-500'
-  },
-  {
-    id: 'itt-tech-as',
-    title: 'AS Network System Administration',
-    institution: 'ITT Technical Institute',
-    period: '2012 - 2014',
-    location: 'Lathrop, CA',
-    type: 'degree',
-    status: 'completed',
-    details: [
-      'Network Infrastructure and Administration',
-      'TCP/IP protocols, routing, switching, and network topology',
-      'Active Directory management and domain administration',
-      'Hardware installation and enterprise system troubleshooting',
-      'Hands-on experience with Cisco networking equipment'
-    ],
-    skills: ['Windows Server', 'Active Directory', 'TCP/IP', 'Network Administration', 'Cisco'],
-    gradient: 'from-indigo-500 to-blue-500'
-  }
-];
-
-// =============================================================================
 // Simple Timeline (for compact display)
 // =============================================================================
 
@@ -244,33 +102,35 @@ export interface SimpleTimelineItem {
   current: boolean;
 }
 
+// Keep these entries in step with the resume (public/resume/Aaron-Perez-Resume.pdf);
+// recruiters compare the two.
 export const simpleTimeline: SimpleTimelineItem[] = [
   {
-    role: 'Full Stack Developer',
-    company: 'AMP Vending · AP Designs',
-    period: '2024 – Present',
-    detail: 'Building and maintaining 4 production client sites on Next.js + Supabase + Vercel. Integrating third-party APIs, GA4 tracking, and PostgreSQL schemas. Running AP Designs as a freelance web development business.',
+    role: 'Freelance Full Stack Developer',
+    company: 'AP Designs',
+    period: 'Mar 2025 – Present',
+    detail: "Building and maintaining four production client sites on Next.js and Vercel, including AMP Vending's site and admin dashboard on Supabase PostgreSQL, plus a separate Playwright and Cypress QA suite for it.",
     current: true
   },
   {
     role: 'CodeStack Academy',
-    company: 'Full Stack Web Development',
-    period: '2023 – 2024',
-    detail: 'Intensive full-stack development program. React, TypeScript, Next.js, C#, .NET, SQL Server.',
+    company: 'Full Stack Web Development Program',
+    period: 'Sep 2023 – Apr 2025',
+    detail: 'Full stack program at the San Joaquin County Office of Education: React, TypeScript, Next.js, C#, ASP.NET MVC, SQL Server and Azure.',
     current: false
   },
   {
-    role: 'User Support Specialist',
+    role: 'User Support Specialist, QA Testing and Support (SEIS)',
     company: 'San Joaquin County Office of Education',
-    period: '2017 – 2025',
-    detail: 'QA testing, technical support, and compliance validation for educational software serving 50+ districts.',
+    period: 'Aug 2017 – Jan 2025',
+    detail: 'Tested new features during SEIS rollout sprints for 100+ SELPAs statewide, wrote bug reports developers could act on, and verified fixes before release.',
     current: false
   },
   {
     role: 'Information Systems Analyst',
-    company: 'San Joaquin County',
-    period: '2017',
-    detail: 'Help desk support for 2,000+ county employees across 15+ departments.',
+    company: 'San Joaquin County, Information Systems Division',
+    period: 'Feb 2017 – May 2017',
+    detail: 'Supported county systems and applications, managed user access, and documented troubleshooting procedures for the team knowledge base.',
     current: false
   }
 ];
@@ -282,7 +142,7 @@ export const simpleTimeline: SimpleTimelineItem[] = [
 export interface EducationCredential {
   id: string;
   degree: string;
-  degreeType: 'BS' | 'AS' | 'Certification';
+  degreeType: 'BAS' | 'AS' | 'Certification';
   field: string;
   institution: string;
   year: string;
@@ -300,7 +160,7 @@ export const educationCredentials: EducationCredential[] = [
     degreeType: 'Certification',
     field: 'Full Stack Web Development',
     institution: 'CodeStack Academy',
-    year: '2024',
+    year: '2025',
     icon: 'certification',
     gradient: 'from-blue-600 to-yellow-600',
     highlights: [
@@ -312,8 +172,8 @@ export const educationCredentials: EducationCredential[] = [
   },
   {
     id: 'bs-degree',
-    degree: 'Bachelor of Science',
-    degreeType: 'BS',
+    degree: 'Bachelor of Applied Science',
+    degreeType: 'BAS',
     field: 'Information Systems & Cyber Security',
     institution: 'ITT Technical Institute',
     year: '2016',

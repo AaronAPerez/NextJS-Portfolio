@@ -145,14 +145,6 @@ export const skills: Skill[] = [
     category: 'backend',
     description: 'Cross-platform framework for building modern applications'
   },
-  {
-    id: 'nestjs',
-    name: 'NestJS',
-    icon: '/icons/frontend/nestjs.svg',
-    color: '#E0234E',
-    category: 'backend',
-    description: 'Progressive Node.js framework for building scalable server-side applications'
-  },
 
   // Database Technologies
   {
@@ -267,40 +259,7 @@ export const skills: Skill[] = [
     category: 'tools',
     description: 'Next-generation ORM for Node.js and TypeScript'
   },
-  {
-    id: 'socketio',
-    name: 'Socket.IO',
-    icon: '/icons/tools/socketio.svg',
-    color: '#010101',
-    category: 'tools',
-    description: 'Real-time bidirectional event-based communication'
-  },
-  {
-    id: 'docker',
-    name: 'Docker',
-    icon: '/icons/tools/docker.svg',
-    color: '#2496ED',
-    category: 'tools',
-    description: 'Container platform for building and deploying applications'
-  },
-  {
-    id: 'googlecloud',
-    name: 'Google Cloud',
-    icon: '/icons/tools/google-cloud.svg',
-    color: '#4285F4',
-    category: 'cloud',
-    description: 'Cloud computing services for hosting and infrastructure'
-  },
 
-  // Game Development
-  {
-    id: 'unity',
-    name: 'Unity',
-    icon: '/icons/game/unity.svg',
-    color: '#000000',
-    category: 'game',
-    description: 'Cross-platform game engine for 2D and 3D game development'
-  }
 ]
 
 // Helper functions for working with skills data

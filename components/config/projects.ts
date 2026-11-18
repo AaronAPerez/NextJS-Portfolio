@@ -199,6 +199,81 @@ export const PROJECTS: Project[] = [
       'Core Web Vitals monitoring and image optimization in production',
     ],
   },
+  {
+    id: 'ampvending-qa',
+    title: 'AMP Vending QA Suite',
+    description:
+      'Test automation for the AMP Vending contact form, the business\'s lead source. Runs against production without ever sending a real lead.',
+    longDescription:
+      'A risk-based test plan with 20 prioritized cases, implemented in Playwright (Chromium, Firefox, WebKit) and ported to Cypress with shared test data. Covers functional, negative, boundary, API-contract and accessibility testing. Six defects found and written up as GitHub issues on the website repo; known bugs are tracked with test.fail() so a fix shows up as a passing-but-expected-to-fail test.',
+    liveUrl: '#',
+    githubUrl: 'https://github.com/AaronAPerez/ampvending-qa',
+    featured: false,
+    status: 'in-progress',
+    category: 'tool',
+    accentColor: '#16A34A',
+    stats: {
+      label: 'QA automation',
+    },
+    tech: ['Playwright', 'Cypress', 'TypeScript', 'axe-core', 'GitHub Actions'],
+    highlights: [
+      'Risk-based test plan with 20 prioritized cases',
+      'Page Object Model with accessibility-first locators',
+      'Boundary and negative tests on the limits the server enforces',
+      'API-contract tests that stub the real 400 and 500 responses',
+      'axe-core WCAG 2.1 A/AA scan that fails on any new violation',
+      'Six defects found and filed as issues on the website repo',
+    ],
+  },
+  {
+    id: 'construction-takeoff',
+    title: 'Construction Takeoff and Bid App',
+    description:
+      'Internal estimating tool for concrete and insulated-metal-panel jobs. Estimators trace blueprint PDFs on a custom canvas, and the app produces quantities, costs and the contractor\'s 78-line bid form.',
+    longDescription:
+      'Built for a contractor\'s estimators. Blueprint PDFs render with pdf.js under a custom canvas engine for tracing walls, slabs and panels; the app turns those measurements into quantities, labor and material costs, and the contractor\'s bid form. Nearly 500 Vitest unit tests cover the costing and geometry math, with expected values tied to cited rates or real engineered schedules. The code is private client work; a walkthrough is available on request.',
+    liveUrl: '#',
+    githubUrl: '#',
+    featured: false,
+    status: 'in-progress',
+    category: 'tool',
+    accentColor: '#EA580C',
+    stats: {
+      label: 'Private client tool',
+    },
+    tech: ['Next.js 16', 'React 19', 'TypeScript', 'Neon PostgreSQL', 'Zustand', 'pdf.js', 'Vitest'],
+    highlights: [
+      'Custom canvas engine for tracing blueprint PDFs',
+      'Quantities, costs and a 78-line bid form generated from the takeoff',
+      'Nearly 500 Vitest unit tests on the costing and geometry math',
+      'Expected test values tied to cited rates and engineered schedules',
+      'UI changes verified in the running app with Playwright',
+    ],
+  },
+  {
+    id: 'cat-sprinkler',
+    title: 'Cat Sprinkler',
+    description:
+      'Computer vision project: a Python app watches a WiFi camera, detects cats with YOLO11, and aims an ESP32-driven pan/tilt water sprayer.',
+    longDescription:
+      'The laptop reads the camera\'s RTSP stream, runs YOLO11 detection, and sends aim and spray commands over WiFi to an ESP32 that drives the servos and a water valve. A Flask page gives live view, manual aim and spray from a phone, and each event is saved as a video clip.',
+    liveUrl: '#',
+    githubUrl: '#',
+    featured: false,
+    status: 'in-progress',
+    category: 'tool',
+    accentColor: '#0EA5E9',
+    stats: {
+      label: 'Hardware + computer vision',
+    },
+    tech: ['Python', 'OpenCV', 'YOLO11', 'Flask', 'ESP32 (C++)'],
+    highlights: [
+      'YOLO11 cat detection on a live RTSP camera stream',
+      'ESP32 firmware driving pan/tilt servos and a water valve',
+      'Flask control page for live view and manual aim from a phone',
+      'Every event saved as a video clip',
+    ],
+  },
 ];
 
 export const FEATURED_PROJECT = PROJECTS.find((p) => p.featured)!;

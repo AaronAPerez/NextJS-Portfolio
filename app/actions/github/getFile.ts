@@ -1,6 +1,9 @@
 "use server";
 
+import { assertAdmin } from "@/lib/admin-session-server";
+
 export async function getFile(owner: string, repo: string, path: string) {
+  await assertAdmin();
   const res = await fetch(
     `https://api.github.com/repos/${owner}/${repo}/contents/${path}`,
     {

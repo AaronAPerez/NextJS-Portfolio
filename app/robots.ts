@@ -8,11 +8,9 @@ export default function robots(): MetadataRoute.Robots {
         allow: "/",
         disallow: [
           "/admin",
-          "/test-components",
           "/tools",
           "/invoice",
           "/hosting-options",
-          "/blog",
           "/api",
         ],
       },

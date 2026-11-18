@@ -27,11 +27,13 @@ const RULES: Record<ContactField, FieldRule> = {
   name: {
     min: 2,
     max: 50,
-    pattern: /^[a-zA-Z\s'-]+$/,
+    // \p{L}\p{M} accept accented and non-Latin letters (José, Peña, Nguyễn);
+    // the old [a-zA-Z] rule blocked those visitors from sending a message.
+    pattern: /^[\p{L}\p{M}\s'.-]+$/u,
     messages: {
       min: 'Name must be at least 2 characters',
       max: 'Name must be less than 50 characters',
-      pattern: 'Name can only contain letters, spaces, hyphens, and apostrophes',
+      pattern: 'Name can only contain letters, spaces, periods, hyphens, and apostrophes',
     },
   },
   email: {

@@ -84,14 +84,14 @@ export const metadata: Metadata = {
     "C#",
     ".NET",
     "ASP.NET",
-    "NestJS",
     "REST API",
-    "Socket.IO",
-    // Cloud & tooling
+    "Python",
+    // Testing, cloud & tooling
+    "Playwright",
+    "Vitest",
+    "Cypress",
     "Microsoft Azure",
     "Vercel",
-    "Docker",
-    "Google Cloud",
     "Git",
     // SEO & delivery
     "SEO Optimization",

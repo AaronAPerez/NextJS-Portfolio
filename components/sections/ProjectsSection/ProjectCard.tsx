@@ -148,10 +148,12 @@ function ProjectCard({ project, priority = false }: ProjectCardProps) {
             users who hover the screenshot directly. aria-hidden + tabIndex=-1
             keep it out of the a11y tree and tab order entirely, so keyboard
             and screen-reader users see exactly one set of links (the row
-            below), not two pointing at the same destinations. */}
+            below), not two pointing at the same destinations.
+            pointer-events stay off until hover so the invisible links can't
+            catch a tap on a touch screen. */}
         {(hasLiveSite || project.githubUrl !== '#') && (
           <div
-            className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+            className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:pointer-events-auto group-hover:opacity-100"
             aria-hidden="true"
           >
             {/* Frosted panel sized to the buttons only — the rest of the
