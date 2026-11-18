@@ -18,7 +18,7 @@
  * @see data/contact.ts for contact data constants
  */
 
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { Mail, Send } from 'lucide-react';
 import { Card } from '@/components/ui/Card';
 import { useCopyToClipboard } from '@/hooks/useCopyToClipboard';
@@ -53,7 +53,7 @@ const SectionDecorator = () => (
  * Section header with title and description
  */
 const ContactHeader = () => (
-  <motion.header
+  <m.header
     variants={fadeInUp}
     initial="hidden"
     whileInView="visible"
@@ -70,14 +70,14 @@ const ContactHeader = () => (
       Have a project in mind? Send me a message and I&apos;ll get back to you
       within 24-48 hours.
     </p>
-  </motion.header>
+  </m.header>
 );
 
 /**
  * Form card wrapper with header icon
  */
 const FormCard = () => (
-  <motion.div
+  <m.div
     variants={fadeInLeft}
     initial="hidden"
     whileInView="visible"
@@ -98,7 +98,7 @@ const FormCard = () => (
       {/* Contact form component */}
       <ContactForm />
     </Card>
-  </motion.div>
+  </m.div>
 );
 
 /**

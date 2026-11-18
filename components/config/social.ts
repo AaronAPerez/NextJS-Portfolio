@@ -15,7 +15,7 @@ export const socialLinks = [
   },
   {
     name: 'Email',
-    url: 'mailto:aaperez06@gmail.com',
+    url: 'mailto:aaronperezdev@gmail.com',
     icon: Mail,
     color: '#EA4335'
   }

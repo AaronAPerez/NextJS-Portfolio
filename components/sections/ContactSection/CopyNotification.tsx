@@ -7,7 +7,7 @@
  * Uses AnimatePresence for smooth enter/exit animations.
  */
 
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { CheckCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { slideDown } from './animations';
@@ -37,7 +37,7 @@ export const CopyNotification = ({
   return (
     <AnimatePresence mode="wait">
       {visible && (
-        <motion.div
+        <m.div
           variants={slideDown}
           initial="hidden"
           animate="visible"
@@ -58,7 +58,7 @@ export const CopyNotification = ({
             <CheckCircle className="w-4 h-4" aria-hidden="true" />
             <span>{message}</span>
           </div>
-        </motion.div>
+        </m.div>
       )}
     </AnimatePresence>
   );

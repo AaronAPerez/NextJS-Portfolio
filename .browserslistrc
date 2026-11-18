@@ -1,8 +1,13 @@
 # Modern browsers only - reduces JavaScript polyfills and transpilation
-# This targets browsers with native ES6+ support
+# This targets browsers with native ES2022 support (Array.prototype.at,
+# Object.hasOwn, etc.) so Next.js's compatibility polyfill bundle can be
+# dropped. ">0.5%" was pulling in old/niche engines (old Samsung Internet,
+# Android WebView, Baidu) that predate ES2022, forcing the polyfill back in.
 
-> 0.5%
-last 2 versions
+last 2 Chrome versions
+last 2 Firefox versions
+last 2 Safari versions
+last 2 Edge versions
 not dead
 not IE 11
 not op_mini all

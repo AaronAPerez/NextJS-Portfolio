@@ -1,5 +1,7 @@
 "use server";
 
+import { assertAdmin } from "@/lib/admin-session-server";
+
 export async function commitFile({
   owner,
   repo,
@@ -15,6 +17,7 @@ export async function commitFile({
   sha: string;
   message: string;
 }) {
+  await assertAdmin();
   const res = await fetch(
     `https://api.github.com/repos/${owner}/${repo}/contents/${path}`,
     {

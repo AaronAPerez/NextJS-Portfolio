@@ -1,11 +1,11 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { Calendar } from 'lucide-react';
 
 export const AvailableBanner = () => {
   return (
-    <motion.div
+    <m.div
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-green-600 to-emerald-600 text-white py-3 text-center"
@@ -16,6 +16,6 @@ export const AvailableBanner = () => {
         <Calendar className="w-4 h-4" />
         <span className="text-sm">| Full-time, Contract, or Freelance</span>
       </div>
-    </motion.div>
+    </m.div>
   );
 };

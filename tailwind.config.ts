@@ -11,6 +11,10 @@ const config: Config = {
   darkMode: 'class',
 
   // ── Content paths — tell Tailwind where to scan for class usage ──
+  // One config for the whole app. A separate admin build (a second CSS file
+  // with `@config`) was tried and reverted: under Turbopack the public
+  // globals.css got compiled with the admin config, dropping classes such as
+  // md:hidden and translate-x-full from every public page.
   content: [
     './app/**/*.{js,ts,jsx,tsx,mdx}',
     './pages/**/*.{js,ts,jsx,tsx,mdx}',

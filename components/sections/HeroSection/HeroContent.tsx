@@ -13,12 +13,12 @@
  */
 
 import { memo } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import { m, useReducedMotion } from 'framer-motion';
 import { ArrowDown, Download, MapPin } from 'lucide-react';
 import { HeroHighlight, Highlight } from '@/components/ui/hero-highlight';
 import { contactInfo } from '@/data/contact';
 import { heroContent } from './constants';
-import { fadeInLeft, fadeInUp, buttonHover, tapScale, withReducedMotion, getTransition } from './animations';
+import { buttonHover, tapScale, withReducedMotion } from './animations';
 import SocialLinks from './SocialLinks';
 import TechRotation from './TechRotation';
 
@@ -41,7 +41,7 @@ const PrimaryButton = memo(({ onClick, prefersReducedMotion }: {
   onClick: () => void;
   prefersReducedMotion: boolean | null;
 }) => (
-  <motion.button
+  <m.button
     onClick={onClick}
     className="
       group touch-target px-8 py-3 text-base
@@ -56,7 +56,7 @@ const PrimaryButton = memo(({ onClick, prefersReducedMotion }: {
   >
     <span>View My Work</span>
     <ArrowDown className="w-4 h-4 group-hover:translate-y-1 transition-transform" />
-  </motion.button>
+  </m.button>
 ));
 PrimaryButton.displayName = 'PrimaryButton';
 
@@ -77,7 +77,7 @@ const ResumeButton = memo(({ prefersReducedMotion }: {
   };
 
   return (
-    <motion.a
+    <m.a
       href={heroContent.resumePath}
       download
       onClick={handleResumeDownload}
@@ -96,7 +96,7 @@ const ResumeButton = memo(({ prefersReducedMotion }: {
     >
       <Download className="w-4 h-4 group-hover:scale-110 transition-transform" />
       <span>Download Resume</span>
-    </motion.a>
+    </m.a>
   );
 });
 ResumeButton.displayName = 'ResumeButton';
@@ -105,10 +105,7 @@ ResumeButton.displayName = 'ResumeButton';
  * Location display with map pin icon
  */
 const LocationBadge = memo(() => (
-  <motion.div
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    transition={{ delay: 0.6, duration: 0.6 }}
+  <div
     className="
       flex flex-wrap items-center justify-center lg:justify-start gap-2
       text-sm text-gray-600 dark:text-gray-400
@@ -116,7 +113,7 @@ const LocationBadge = memo(() => (
   >
     <MapPin className="w-4 h-4" />
     <span>{contactInfo.location} • {contactInfo.availability}</span>
-  </motion.div>
+  </div>
 ));
 LocationBadge.displayName = 'LocationBadge';
 
@@ -132,11 +129,9 @@ export const HeroContent = memo(({ className = '' }: HeroContentProps) => {
   };
 
   return (
-    <motion.div
-      variants={fadeInLeft}
-      initial={prefersReducedMotion ? { opacity: 1 } : 'hidden'}
-      animate="visible"
-      transition={getTransition(prefersReducedMotion)}
+    // No entrance animation here on purpose: the h1 is the LCP element, and an
+    // opacity:0 initial state keeps it invisible until JS downloads and hydrates.
+    <div
       className={`
         space-y-4 sm:space-y-6 w-full text-center lg:text-left
         order-2 lg:order-1
@@ -157,14 +152,14 @@ export const HeroContent = memo(({ className = '' }: HeroContentProps) => {
 
       {/* Title with highlight effect */}
       <HeroHighlight>
-        <motion.h2 className="
+        <h2 className="
           text-2xl sm:text-3xl md:text-4xl font-bold
           max-w-4xl leading-normal mx-auto lg:mx-0
         ">
           <Highlight className="text-white/90 dark:text-white/90 rounded-xl">
             {heroContent.title}
           </Highlight>
-        </motion.h2>
+        </h2>
       </HeroHighlight>
 
       {/* Value proposition */}
@@ -184,20 +179,14 @@ export const HeroContent = memo(({ className = '' }: HeroContentProps) => {
       <SocialLinks />
 
       {/* CTA Buttons */}
-      <motion.div
-        variants={fadeInUp}
-        initial={prefersReducedMotion ? { opacity: 1 } : 'hidden'}
-        animate="visible"
-        transition={getTransition(prefersReducedMotion, { delay: 0.2, duration: 0.4 })}
-        className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-2"
-      >
+      <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-2">
         <PrimaryButton onClick={scrollToProjects} prefersReducedMotion={prefersReducedMotion} />
         <ResumeButton prefersReducedMotion={prefersReducedMotion} />
-      </motion.div>
+      </div>
 
       {/* Location */}
       <LocationBadge />
-    </motion.div>
+    </div>
   );
 });
 HeroContent.displayName = 'HeroContent';

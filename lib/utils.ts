@@ -112,7 +112,7 @@ export function generatePersonSchema() {
     name: 'Aaron A. Perez',
     jobTitle: 'Full Stack Developer',
     url: 'https://aaronaperez.dev',
-    email: 'aaperez06@gmail.com',
+    email: 'aaronperezdev@gmail.com',
     telephone: '+1-209-470-2061',
     sameAs: [
       'https://linkedin.com/in/aaronaperezdev',

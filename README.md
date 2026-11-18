@@ -34,9 +34,13 @@ Built with Next.js 16.2 App Router, React 19, TypeScript strict mode, and Tailwi
 | Project | Description | Live |
 |---|---|---|
 | **[AMP Vending Machines](https://github.com/AaronAPerez/AMP-Vending-Machines-Website)** | Full-stack local business site · Supabase · admin dashboard · multi-city SEO | [ampvendingmachines.com](https://ampvendingmachines.com) |
-| **[Goldmine Communications](https://github.com/AaronAPerez/Goldmine-Communications-Construction-Website)** | Contractor business website with social media automation | Live |
-| **[Balderas Concrete](https://github.com/AaronAPerez/balderas-concrete)** | Local service business · mobile-first · local SEO | Live |
-| **Construction Estimating SaaS** | IMP takeoff tool · multi-layer architecture · React | In progress |
+| **[AMP Vending QA Suite](https://github.com/AaronAPerez/ampvending-qa)** | Playwright + Cypress tests for the AMP contact form · axe-core WCAG scan · runs in GitHub Actions | — |
+| **[Goldmine Communications](https://github.com/AaronAPerez/Goldmine-Communications-Construction-Website)** | Contractor business website with social media automation | [goldminecomm.net](https://www.goldminecomm.net) |
+| **[Balderas Concrete](https://github.com/AaronAPerez/balderas-concrete)** | Local service business · mobile-first · local SEO | [balderasconcrete.com](https://www.balderasconcrete.com) |
+| **[The Glamping Spot](https://github.com/AaronAPerez/the-glamping-spot)** | Single-listing marketing site · Airbnb booking funnel · digital liability waiver | [theglampingspot.net](https://theglampingspot.net) |
+| **Construction Takeoff and Bid App** | Internal estimating tool for a contractor · blueprint tracing on a custom canvas · private code | In progress |
+
+The homepage project cards are defined in [`components/config/projects.ts`](components/config/projects.ts).
 
 ---
 

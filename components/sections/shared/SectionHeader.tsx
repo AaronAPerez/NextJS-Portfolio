@@ -12,7 +12,7 @@
 'use client';
 
 import { memo } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import { m, useReducedMotion } from 'framer-motion';
 import type { LucideIcon } from 'lucide-react';
 
 /**
@@ -63,7 +63,7 @@ function SectionHeader({
   const colors = ACCENTS[accent];
 
   return (
-    <motion.header
+    <m.header
       initial={shouldReduceMotion ? undefined : { opacity: 0, y: 24 }}
       whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -98,7 +98,7 @@ function SectionHeader({
           {description}
         </p>
       )}
-    </motion.header>
+    </m.header>
   );
 }
 

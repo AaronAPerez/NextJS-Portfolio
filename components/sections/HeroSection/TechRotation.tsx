@@ -8,7 +8,7 @@
  */
 
 import { useState, useEffect, memo } from 'react';
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import { m, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { featuredTechnologies, TECH_ROTATION_INTERVAL } from './constants';
 import { techRotation, getTransition } from './animations';
 
@@ -50,7 +50,7 @@ export const TechRotation = memo(({
     `}>
       <span>{prefix}</span>
       <AnimatePresence mode="wait">
-        <motion.span
+        <m.span
           key={currentTech.id}
           variants={techRotation}
           initial={prefersReducedMotion ? { opacity: 1 } : 'initial'}
@@ -60,7 +60,7 @@ export const TechRotation = memo(({
           className="font-semibold text-primary-600 dark:text-primary-400"
         >
           {currentTech.name}
-        </motion.span>
+        </m.span>
       </AnimatePresence>
     </div>
   );

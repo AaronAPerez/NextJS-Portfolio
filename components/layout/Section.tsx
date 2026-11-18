@@ -1,7 +1,7 @@
 'use client';
 
 import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { forwardRef } from "react";
 
 interface SectionProps {
@@ -34,7 +34,7 @@ export const Section = forwardRef<HTMLElement, SectionProps>(function Section({
   };
 
   return (
-    <motion.section
+    <m.section
       ref={ref}
       id={id}
       initial="hidden"
@@ -53,6 +53,6 @@ export const Section = forwardRef<HTMLElement, SectionProps>(function Section({
       style={style}
     >
       {children}
-    </motion.section>
+    </m.section>
   );
 });

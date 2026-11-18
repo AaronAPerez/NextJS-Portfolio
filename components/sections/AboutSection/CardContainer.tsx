@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { m, useMotionValue, useSpring } from "framer-motion";
 import { JSX, MouseEvent, PropsWithChildren, useRef, useState } from "react";
 
 interface CardItemProps {
@@ -54,7 +54,7 @@ export const CardContainer = ({
   };
 
   return (
-    <motion.div
+    <m.div
       ref={containerRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
@@ -64,7 +64,7 @@ export const CardContainer = ({
       }}
       className={cn("flex justify-center my-2", containerClassName)}
     >
-      <motion.div
+      <m.div
         style={{
           rotateX: rotateX,
           rotateY: rotateY,
@@ -73,8 +73,8 @@ export const CardContainer = ({
         className={cn("relative", className)}
       >
         {children}
-      </motion.div>
-    </motion.div>
+      </m.div>
+    </m.div>
   );
 };
 

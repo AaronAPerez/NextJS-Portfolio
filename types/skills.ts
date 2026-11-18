@@ -1,7 +1,7 @@
 export interface Skill {
   id: string
   name: string
-  category: 'frontend' | 'backend' | 'database' | 'tools' | 'cloud' | 'game'
+  category: 'frontend' | 'backend' | 'database' | 'tools' | 'cloud'
   icon: string
   description?: string
   color: string

@@ -18,7 +18,7 @@
  * @see data/about.ts for all data constants
  */
 
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { User } from 'lucide-react';
 import { AboutNarrative } from './AboutNarrative';
 import { SimpleTimeline } from './SimpleTimeline';
@@ -50,7 +50,7 @@ const SectionDecorator = () => (
  * Section header with title and description
  */
 const SectionHeader = () => (
-  <motion.header
+  <m.header
     variants={fadeInUp}
     initial="hidden"
     whileInView="visible"
@@ -66,7 +66,7 @@ const SectionHeader = () => (
     <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
       Full stack developer with a passion for building intuitive and robust applications
     </p>
-  </motion.header>
+  </m.header>
 );
 
 /**

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { ArrowUpCircle } from 'lucide-react';
 
 export const ScrollToTop = () => {
@@ -30,7 +30,7 @@ export const ScrollToTop = () => {
   return (
     <AnimatePresence>
       {isVisible && (
-        <motion.button
+        <m.button
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.5 }}
@@ -41,7 +41,7 @@ export const ScrollToTop = () => {
           aria-label="Scroll to top"
         >
           <ArrowUpCircle className="w-6 h-6 text-blue-400" />
-        </motion.button>
+        </m.button>
       )}
     </AnimatePresence>
   );

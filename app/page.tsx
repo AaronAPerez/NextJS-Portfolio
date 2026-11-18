@@ -78,9 +78,6 @@ export default function Home() {
         </section>
 
       </div>
-
-      {/* AI Chat Assistant - Floating widget for visitor questions */}
-      {/* <AIChat /> */}
     </>
   );
 }

@@ -60,23 +60,25 @@ const ContactInfoItem = ({
   // If there's a link, wrap in anchor tag
   if (href) {
     return (
-      <a
-        href={href}
-        className={contentClasses}
-        aria-label={`Contact via ${value}`}
-      >
-        <Icon
-          className={cn('w-4 h-4 flex-shrink-0', iconColor)}
-          aria-hidden="true"
-        />
-        <span className="text-sm truncate">{value}</span>
-      </a>
+      <div role="listitem">
+        <a
+          href={href}
+          className={contentClasses}
+          aria-label={`Contact via ${value}`}
+        >
+          <Icon
+            className={cn('w-4 h-4 flex-shrink-0', iconColor)}
+            aria-hidden="true"
+          />
+          <span className="text-sm truncate">{value}</span>
+        </a>
+      </div>
     );
   }
 
   // Otherwise render as div (for non-clickable items like location)
   return (
-    <div className={contentClasses}>
+    <div role="listitem" className={contentClasses}>
       <Icon
         className={cn('w-4 h-4 flex-shrink-0', iconColor)}
         aria-hidden="true"
