@@ -39,6 +39,18 @@ function StatusBadge({ status }: StatusBadgeProps) {
     );
   }
 
+  if (status === 'active') {
+    return (
+      <span className="inline-flex items-center gap-1.5 rounded-full border border-sky-200 bg-sky-50 px-2.5 py-1 text-xs font-medium text-sky-700 dark:border-sky-800 dark:bg-sky-950/40 dark:text-sky-400">
+        <span
+          className="h-1.5 w-1.5 rounded-full bg-sky-500"
+          aria-hidden="true"
+        />
+        Active
+      </span>
+    );
+  }
+
   if (status === 'in-progress') {
     return (
       <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-200 bg-amber-50 px-2.5 py-1 text-xs font-medium text-amber-700 dark:border-amber-800 dark:bg-amber-950/40 dark:text-amber-400">

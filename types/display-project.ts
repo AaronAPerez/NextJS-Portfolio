@@ -23,7 +23,8 @@ export interface ProjectStats {
 }
 
 // Project status options for UI display
-export type ProjectDisplayStatus = 'production' | 'in-progress' | 'archived';
+// 'active' = maintained and in use, but not a site with a live URL (e.g. a test suite).
+export type ProjectDisplayStatus = 'production' | 'active' | 'in-progress' | 'archived';
 
 // Project category options for filtering
 export type ProjectCategory = 'client' | 'saas' | 'tool';
@@ -69,7 +70,7 @@ export const FILTER_TABS: FilterTabConfig[] = [
   { id: 'all', label: 'All Projects' },
   { id: 'client', label: 'Client Work' },
   { id: 'saas', label: 'SaaS' },
-  { id: 'tool', label: 'Tools' },
+  { id: 'tool', label: 'Engineering' },
 ];
 
 // Default gradient for projects without one

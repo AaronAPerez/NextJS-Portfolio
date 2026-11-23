@@ -9,7 +9,7 @@ export interface Project {
   liveUrl: string;
   githubUrl: string;
   featured: boolean;
-  status: 'production' | 'in-progress' | 'archived';
+  status: 'production' | 'active' | 'in-progress' | 'archived';
   category: 'client' | 'saas' | 'tool';
   image?: string;
   accentColor: string;
@@ -31,7 +31,7 @@ export const PROJECTS: Project[] = [
     id: 'amp-vending',
     title: 'AMP Vending Machines',
     description:
-      'Full-stack B2B platform for a vending machine company serving Central California. Features a full admin dashboard, Supabase backend, and E2E test coverage.',
+      'Production site and admin dashboard for a Central California vending company, so the owner can update machines, products and photos without a developer.',
     longDescription:
       'Modern full-stack web application for AMP Vending, serving Stanislaus County, San Joaquin County, and Central Valley California. Built a complete platform with machine catalog (detailed specs and galleries), 50+ customizable product showcase, contact/feedback forms, and location-specific landing pages. Full admin dashboard with JWT and Google OAuth authentication, machine/product CRUD, contact submission tracking, email log management, SEO/marketing tools, and photo management. Backed by Supabase (PostgreSQL + Auth), automated email via Resend, Google Maps service area visualization, Vercel Analytics, and Microsoft Clarity. Includes Jest unit tests and Playwright E2E tests.',
     liveUrl: 'https://www.ampvendingmachines.com',
@@ -73,88 +73,54 @@ export const PROJECTS: Project[] = [
     ],
   },
   {
-    id: 'balderas-concrete',
-    title: 'Balderas Concrete',
+    id: 'ampvending-qa',
+    title: 'AMP Vending QA Suite',
     description:
-      'Professional site for a Houston concrete contractor with 30+ years of experience. Built with Tailwind CSS 4, Neon PostgreSQL via Prisma, and contact forms backed by a real database.',
+      'Test automation for the AMP Vending contact form, the business\'s lead source. Runs against production without ever sending a real lead.',
     longDescription:
-      'Modern SEO-optimized website for Balderas Concrete, a commercial and industrial contractor specializing in turnkey concrete, earthwork & site work, and underground utilities across a 75-mile radius from Houston. Contact form submissions are persisted in a Neon PostgreSQL database via Prisma 6, with email notifications through Resend. State management via Zustand, data fetching via React Query. Includes dynamic sitemap, JSON-LD structured data, service area pages, and Vercel Analytics.',
-    liveUrl: 'https://www.balderasconcrete.com',
-    githubUrl: 'https://github.com/AaronAPerez/balderas-concrete',
+      'A risk-based test plan with 20 prioritized cases, implemented in Playwright (Chromium, Firefox, WebKit) and ported to Cypress with shared test data. Covers functional, negative, boundary, API-contract and accessibility testing. Six defects found and written up as GitHub issues on the website repo; known bugs are tracked with test.fail() so a fix shows up as a passing-but-expected-to-fail test.',
+    liveUrl: '#',
+    githubUrl: 'https://github.com/AaronAPerez/ampvending-qa',
     featured: false,
-    status: 'production',
-    category: 'client',
-    image: '/images/projects/balderas-concrete/balderas-concrete-hero.webp',
-    // Icon-only mark (309x301, near-square) — the full "BALDERAS CONCRETE"
-    // wordmark file is a 2.6:1 banner that doesn't fit the card's square tile.
-    companyLogo: '/images/projects/balderas-concrete/logo.png',
-    // Sampled from the logo's actual navy ink (#183C60/#184860 dominant pixels).
-    accentColor: '#1F4A6E',
+    status: 'active',
+    category: 'tool',
+    accentColor: '#16A34A',
     stats: {
-      label: 'Houston, TX',
+      label: 'QA automation',
     },
-    tech: [
-      'Next.js 16',
-      'React 19',
-      'TypeScript 5',
-      'Tailwind CSS 4',
-      'Neon PostgreSQL',
-      'Prisma 6',
-      'Resend',
-      'Zustand',
-      'React Query',
-      'Framer Motion',
-      'Zod',
-      'Vercel',
-    ],
+    tech: ['Playwright', 'Cypress', 'TypeScript', 'axe-core', 'GitHub Actions'],
     highlights: [
-      'Tailwind CSS 4 — bleeding-edge styling setup',
-      'Neon PostgreSQL + Prisma 6 ORM for contact persistence',
-      'Dynamic service area pages (75-mile radius from Houston)',
-      'Zustand + React Query state and data management',
-      'Dynamic sitemap generation and JSON-LD structured data',
-      'WCAG compliant with keyboard navigation and screen reader support',
+      'Risk-based test plan with 20 prioritized cases',
+      'Page Object Model with accessibility-first locators',
+      'Boundary and negative tests on the limits the server enforces',
+      'API-contract tests that stub the real 400 and 500 responses',
+      'axe-core WCAG 2.1 A/AA scan that fails on any new violation',
+      'Six defects found and filed as issues on the website repo',
     ],
   },
   {
-    id: 'goldmine-communications',
-    title: 'Goldmine Communications',
+    id: 'construction-takeoff',
+    title: 'Construction Takeoff and Bid App',
     description:
-      'Full-platform site for a Bay Area communications & construction contractor. Includes social media automation, project portfolio, lead generation, and multi-state service area coverage.',
+      'Internal estimating tool for concrete and metal-panel jobs. Estimators trace blueprint PDFs on a custom canvas, and the app outputs quantities, costs and the bid form.',
     longDescription:
-      'Comprehensive digital platform for Goldmine Construction Services — a licensed Bay Area contractor (Lic #1099543) specializing in communications infrastructure, commercial construction, and AV charging stations across California, Nevada, and Oregon. Beyond a standard marketing site, the platform includes an automated social media management system (Facebook/Instagram Graph API integration), B2B-optimized scheduling, content generation from project data, and a full admin testing suite. Project portfolio with photos from Bodega Bay, Winnemucca NV, Sparks NV, and Oregon AV Station.',
-    liveUrl: 'https://www.goldminecomm.net',
-    githubUrl:
-      'https://github.com/AaronAPerez/Goldmine-Communications-Construction-Website',
+      'Built for a contractor\'s estimators. Blueprint PDFs render with pdf.js under a custom canvas engine for tracing walls, slabs and panels; the app turns those measurements into quantities, labor and material costs, and the contractor\'s bid form. Nearly 500 Vitest unit tests cover the costing and geometry math, with expected values tied to cited rates or real engineered schedules. The code is private client work; a walkthrough is available on request.',
+    liveUrl: '#',
+    githubUrl: '#',
     featured: false,
-    status: 'production',
-    category: 'client',
-    image: '/images/projects/goldmine/Goldmine-Hero-Screenshot.webp',
-    companyLogo: '/images/projects/goldmine/logo-circular.webp',
-    // Sampled from the badge's metallic gold ink (~#D0A870), not the brighter
-    // amber the placeholder value used.
-    accentColor: '#C9A063',
+    status: 'in-progress',
+    category: 'tool',
+    accentColor: '#EA580C',
     stats: {
-      label: 'Bay Area, CA',
+      label: 'Private client tool',
     },
-    tech: [
-      'Next.js 14',
-      'React 18',
-      'TypeScript 5',
-      'Tailwind CSS',
-      'Framer Motion',
-      'Nodemailer',
-      'Facebook Graph API',
-      'Supabase',
-      'React Hook Form',
-      'Lucide React',
-    ],
+    tech: ['Next.js 16', 'React 19', 'TypeScript', 'Neon PostgreSQL', 'Zustand', 'pdf.js', 'Vitest'],
     highlights: [
-      'Social media automation — Facebook & Instagram Graph API',
-      'B2B-optimized post scheduling with content generated from project data',
-      'Dynamic project portfolio with photos from 4 states',
-      'Service area coverage: Bay Area, Northern CA, Nevada, Oregon',
-      'WCAG 2.1 AA compliant with semantic structured data',
+      'Custom canvas engine for tracing blueprint PDFs',
+      'Quantities, costs and a 78-line bid form generated from the takeoff',
+      'Nearly 500 Vitest unit tests on the costing and geometry math',
+      'Expected test values tied to cited rates and engineered schedules',
+      'UI changes verified in the running app with Playwright',
     ],
   },
   {
@@ -200,54 +166,88 @@ export const PROJECTS: Project[] = [
     ],
   },
   {
-    id: 'ampvending-qa',
-    title: 'AMP Vending QA Suite',
+    id: 'balderas-concrete',
+    title: 'Balderas Concrete',
     description:
-      'Test automation for the AMP Vending contact form, the business\'s lead source. Runs against production without ever sending a real lead.',
+      'Site for a Houston concrete contractor. Contact submissions are saved to Neon PostgreSQL through Prisma and emailed with Resend, with service area pages for a 75-mile radius.',
     longDescription:
-      'A risk-based test plan with 20 prioritized cases, implemented in Playwright (Chromium, Firefox, WebKit) and ported to Cypress with shared test data. Covers functional, negative, boundary, API-contract and accessibility testing. Six defects found and written up as GitHub issues on the website repo; known bugs are tracked with test.fail() so a fix shows up as a passing-but-expected-to-fail test.',
-    liveUrl: '#',
-    githubUrl: 'https://github.com/AaronAPerez/ampvending-qa',
+      'Modern SEO-optimized website for Balderas Concrete, a commercial and industrial contractor specializing in turnkey concrete, earthwork & site work, and underground utilities across a 75-mile radius from Houston. Contact form submissions are persisted in a Neon PostgreSQL database via Prisma 6, with email notifications through Resend. State management via Zustand, data fetching via React Query. Includes dynamic sitemap, JSON-LD structured data, service area pages, and Vercel Analytics.',
+    liveUrl: 'https://www.balderasconcrete.com',
+    githubUrl: 'https://github.com/AaronAPerez/balderas-concrete',
     featured: false,
-    status: 'in-progress',
-    category: 'tool',
-    accentColor: '#16A34A',
+    status: 'production',
+    category: 'client',
+    image: '/images/projects/balderas-concrete/balderas-concrete-hero.webp',
+    // Icon-only mark (309x301, near-square) — the full "BALDERAS CONCRETE"
+    // wordmark file is a 2.6:1 banner that doesn't fit the card's square tile.
+    companyLogo: '/images/projects/balderas-concrete/logo.png',
+    // Sampled from the logo's actual navy ink (#183C60/#184860 dominant pixels).
+    accentColor: '#1F4A6E',
     stats: {
-      label: 'QA automation',
+      label: 'Houston, TX',
     },
-    tech: ['Playwright', 'Cypress', 'TypeScript', 'axe-core', 'GitHub Actions'],
+    tech: [
+      'Next.js 16',
+      'React 19',
+      'TypeScript 5',
+      'Tailwind CSS 4',
+      'Neon PostgreSQL',
+      'Prisma 6',
+      'Resend',
+      'Zustand',
+      'React Query',
+      'Framer Motion',
+      'Zod',
+      'Vercel',
+    ],
     highlights: [
-      'Risk-based test plan with 20 prioritized cases',
-      'Page Object Model with accessibility-first locators',
-      'Boundary and negative tests on the limits the server enforces',
-      'API-contract tests that stub the real 400 and 500 responses',
-      'axe-core WCAG 2.1 A/AA scan that fails on any new violation',
-      'Six defects found and filed as issues on the website repo',
+      'Tailwind CSS 4 — bleeding-edge styling setup',
+      'Neon PostgreSQL + Prisma 6 ORM for contact persistence',
+      'Dynamic service area pages (75-mile radius from Houston)',
+      'Zustand + React Query state and data management',
+      'Dynamic sitemap generation and JSON-LD structured data',
+      'WCAG compliant with keyboard navigation and screen reader support',
     ],
   },
   {
-    id: 'construction-takeoff',
-    title: 'Construction Takeoff and Bid App',
+    id: 'goldmine-communications',
+    title: 'Goldmine Communications',
     description:
-      'Internal estimating tool for concrete and insulated-metal-panel jobs. Estimators trace blueprint PDFs on a custom canvas, and the app produces quantities, costs and the contractor\'s 78-line bid form.',
+      'Site for a Bay Area communications and construction contractor, with a project portfolio and Facebook and Instagram posts scheduled through the Graph API from project data.',
     longDescription:
-      'Built for a contractor\'s estimators. Blueprint PDFs render with pdf.js under a custom canvas engine for tracing walls, slabs and panels; the app turns those measurements into quantities, labor and material costs, and the contractor\'s bid form. Nearly 500 Vitest unit tests cover the costing and geometry math, with expected values tied to cited rates or real engineered schedules. The code is private client work; a walkthrough is available on request.',
-    liveUrl: '#',
-    githubUrl: '#',
+      'Comprehensive digital platform for Goldmine Construction Services — a licensed Bay Area contractor (Lic #1099543) specializing in communications infrastructure, commercial construction, and AV charging stations across California, Nevada, and Oregon. Beyond a standard marketing site, the platform includes an automated social media management system (Facebook/Instagram Graph API integration), B2B-optimized scheduling, content generation from project data, and a full admin testing suite. Project portfolio with photos from Bodega Bay, Winnemucca NV, Sparks NV, and Oregon AV Station.',
+    liveUrl: 'https://www.goldminecomm.net',
+    githubUrl:
+      'https://github.com/AaronAPerez/Goldmine-Communications-Construction-Website',
     featured: false,
-    status: 'in-progress',
-    category: 'tool',
-    accentColor: '#EA580C',
+    status: 'production',
+    category: 'client',
+    image: '/images/projects/goldmine/Goldmine-Hero-Screenshot.webp',
+    companyLogo: '/images/projects/goldmine/logo-circular.webp',
+    // Sampled from the badge's metallic gold ink (~#D0A870), not the brighter
+    // amber the placeholder value used.
+    accentColor: '#C9A063',
     stats: {
-      label: 'Private client tool',
+      label: 'Bay Area, CA',
     },
-    tech: ['Next.js 16', 'React 19', 'TypeScript', 'Neon PostgreSQL', 'Zustand', 'pdf.js', 'Vitest'],
+    tech: [
+      'Next.js 14',
+      'React 18',
+      'TypeScript 5',
+      'Tailwind CSS',
+      'Framer Motion',
+      'Nodemailer',
+      'Facebook Graph API',
+      'Supabase',
+      'React Hook Form',
+      'Lucide React',
+    ],
     highlights: [
-      'Custom canvas engine for tracing blueprint PDFs',
-      'Quantities, costs and a 78-line bid form generated from the takeoff',
-      'Nearly 500 Vitest unit tests on the costing and geometry math',
-      'Expected test values tied to cited rates and engineered schedules',
-      'UI changes verified in the running app with Playwright',
+      'Social media automation — Facebook & Instagram Graph API',
+      'B2B-optimized post scheduling with content generated from project data',
+      'Dynamic project portfolio with photos from 4 states',
+      'Service area coverage: Bay Area, Northern CA, Nevada, Oregon',
+      'WCAG 2.1 AA compliant with semantic structured data',
     ],
   },
   {

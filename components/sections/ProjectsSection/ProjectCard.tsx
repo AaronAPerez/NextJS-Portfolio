@@ -55,6 +55,13 @@ const STATUS_CONFIG = {
     dot: 'bg-green-500',
     pulse: true,
   },
+  active: {
+    label: 'Active',
+    className:
+      'border-sky-500/30 bg-sky-500/15 text-sky-700 dark:text-sky-300',
+    dot: 'bg-sky-500',
+    pulse: false,
+  },
   'in-progress': {
     label: 'In Progress',
     className:
@@ -197,7 +204,7 @@ function ProjectCard({ project, priority = false }: ProjectCardProps) {
         />
 
         <span
-          className={`absolute right-3 top-50 inline-flex items-center gap-1.5 rounded-full border px-2 py-1 text-[10px] font-medium backdrop-blur-sm ${status.className}`}
+          className={`absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-full border px-2 py-1 text-[10px] font-medium backdrop-blur-sm ${status.className}`}
         >
           <span
             className={`h-1.5 w-1.5 rounded-full ${status.dot} ${status.pulse ? 'animate-pulse' : ''}`}
